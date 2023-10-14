@@ -1,16 +1,17 @@
 import React from "react";
+import {cn} from "../utils/merge";
 
-export interface ButtonProps {
-  className?: string;
-  onClick?: () => void;
-  children: React.ReactNode
+export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {}
+
+export const Button = (props: ButtonProps) => {
+  const {className, ...rest} = props;
+
+  return (
+    <button
+      className={cn("bg-primary text-white py-3 px-6 rounded leading-[1.15]", className)}
+      {...rest}
+    >
+      {props.children}
+    </button>
+  )
 }
-
-export const Button = (props: ButtonProps) => (
-  <button
-    className={"bg-primary text-white py-3 px-6 rounded leading-[1.15] px-1/3"}
-    onClick={props.onClick}
-  >
-    {props.children}
-  </button>
-)

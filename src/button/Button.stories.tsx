@@ -1,7 +1,7 @@
 import {Button} from "./Button";
 
 export const ButtonStory = () => (
-  <Button onClick={() => {}}>
+  <Button>
     Hello Button
   </Button>
 );
