@@ -1,2 +1,24 @@
 .idea
 node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directory
+**/node_modules/**
+_node_modules
+.pnp.cjs
+
+dist
+
+# Visual Studio Code configs
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
+# as we use pnpm
+package-lock.json
+yarn.lock
