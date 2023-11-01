@@ -1,15 +1,27 @@
 {
-  "name": "shared-ui-components-lib",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@hotosm/ui",
+  "version": "0.1.0",
+  "description": "Shared React components with theming for use across HOTOSM tools.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ladle dev"
+    "dev": "ladle dev --host 0.0.0.0 --port 3000"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "HOTOSM",
+    "email": "sysadmin@hotosm.org"
+  },
+  "contributors": [
+    {
+      "name": "Joe",
+      "url": "https://github.com/joltcode"
+    },
+    {
+      "name": "Sam Woodcock",
+      "url": "https://github.com/spwoodcock"
+    }
+  ],
+  "license": "GPL-3.0-only",
   "devDependencies": {
     "@ladle/react": "^3.2.1",
     "@types/react": "^18.2.28",
@@ -22,5 +34,13 @@
     "clsx": "^2.0.0",
     "react": "^18.2.0",
     "tailwind-merge": "^1.14.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hotosm/shared-ui-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hotosm/shared-ui-components/issues"
+  },
+  "homepage": "https://github.com/hotosm/shared-ui-components#readme"
 }
