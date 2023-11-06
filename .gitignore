@@ -25,5 +25,5 @@ package-lock.json
 yarn.lock
 
 # Docs build
-stories
+docs/stories
 site
