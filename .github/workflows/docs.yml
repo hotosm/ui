@@ -19,7 +19,7 @@ jobs:
 
   publish_docs:
     uses: hotosm/gh-workflows/.github/workflows/mkdocs_build.yml@1.2.1
-    needs: [build_doxygen]
+    # needs: [build_stories]
     with:
       image: ghcr.io/${{ github.repository }}:ci
       # stories: true
