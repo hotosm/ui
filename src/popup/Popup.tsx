@@ -1,4 +1,4 @@
-import { Card } from "../card/Card.js";
+import { Card } from "@/card/Card.js";
 
 export interface PopupProps {
   children?: React.ReactNode;

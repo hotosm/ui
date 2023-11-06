@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "../button/Button.js";
+import { Button } from "@/button/Button.js";
 
 export interface DropdownProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: { value: string; label: string }[];

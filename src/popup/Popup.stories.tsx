@@ -1,5 +1,5 @@
 import { Popup } from "./Popup.js";
-import { Button } from "../button/Button.js";
+import { Button } from "@/button/Button.js";
 
 export const PopupStory = () => {
   return (
