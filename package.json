@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ladle dev --host 0.0.0.0 --port 3000",
-    "build": "tsup src/index.ts"
+    "build": "tsup src/index.ts",
+    "build:stories": "ladle build --outDir=stories"
   },
   "keywords": [],
   "author": {

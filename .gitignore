@@ -11,6 +11,7 @@ npm-debug.log*
 _node_modules
 .pnp.cjs
 
+# Build output
 dist
 
 # Visual Studio Code configs
@@ -22,3 +23,7 @@ dist
 # as we use pnpm
 package-lock.json
 yarn.lock
+
+# Docs build
+stories
+site
