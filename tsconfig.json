@@ -5,6 +5,11 @@
 		"lib": [
 			"es2020"
 		],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"],
+			"$ladle/*": [".ladle/*"]
+		},
 		"isolatedModules": true,
 		"module": "node16",
 		"moduleResolution": "node16",
