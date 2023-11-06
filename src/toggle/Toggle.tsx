@@ -1,7 +1,7 @@
 export interface ToggleProps {
-  checked: boolean
-  onChange: () => void
-  label: string
+  checked: boolean;
+  onChange: () => void;
+  label: string;
 }
 
 export const Toggle = (props: ToggleProps) => {
@@ -14,9 +14,17 @@ export const Toggle = (props: ToggleProps) => {
         checked={props.checked}
         onChange={props.onChange}
       />
-      <div className={`w-12 h-6 ${props.checked ? "bg-primary" : "bg-[#929db3]"} rounded-full shadow-inner z-[1] relative`}>
-        <div className={`w-5 h-5 top-[0.125rem] bottom-[0.125rem] bg-white rounded-full shadow-md transform transition-all duration-300 ease-in-out translate-x-0 absolute ${props.checked ? "left-[1.625rem]" : "left-[0.125rem]"}`}></div>
+      <div
+        className={`w-12 h-6 ${
+          props.checked ? "bg-primary" : "bg-[#929db3]"
+        } rounded-full shadow-inner z-[1] relative`}
+      >
+        <div
+          className={`w-5 h-5 top-[0.125rem] bottom-[0.125rem] bg-white rounded-full shadow-md transform transition-all duration-300 ease-in-out translate-x-0 absolute ${
+            props.checked ? "left-[1.625rem]" : "left-[0.125rem]"
+          }`}
+        ></div>
       </div>
     </div>
-  )
-}
+  );
+};

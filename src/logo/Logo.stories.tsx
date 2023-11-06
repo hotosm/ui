@@ -1,5 +1,3 @@
 import { Logo } from "./Logo.js";
 
-export const LogoStory = () => (
-  <Logo />
-)
+export const LogoStory = () => <Logo />;

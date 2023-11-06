@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Toggle } from "./Toggle.js";
 
 export const ToggleStory = () => {
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(false);
 
   return (
     <Toggle
@@ -10,5 +10,5 @@ export const ToggleStory = () => {
       checked={checked}
       label="Toggle"
     />
-  )
-}
+  );
+};

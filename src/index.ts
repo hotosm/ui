@@ -1,4 +1,4 @@
-import "$ladle/styles.css"
+import "$ladle/styles.css";
 
 export { Button } from "@/button/Button.js";
 export { Card } from "@/card/Card.js";

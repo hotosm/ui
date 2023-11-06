@@ -1,8 +1,8 @@
-import React, { ReactElement, Component } from 'react';
+import React, { ReactElement, Component } from "react";
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-    /** Description of prop "someProp". */
-    someProp: string
+  /** Description of prop "someProp". */
+  someProp: string;
 }
 
 /**

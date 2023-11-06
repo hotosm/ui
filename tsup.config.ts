@@ -9,4 +9,4 @@ export default defineConfig({
   target: "node16",
   splitting: true,
   outDir: "dist",
-})
+});

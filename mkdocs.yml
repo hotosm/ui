@@ -53,7 +53,7 @@ plugins:
 nav:
   - Home: index.md
   - Components:
-    - Example: components/example.md
+      - Example: components/example.md
   - Visual: stories/index.html
   - License: LICENSE
   - Changelog: CHANGELOG.md

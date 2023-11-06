@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/button/Button.js";
 
-export interface DropdownProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export interface DropdownProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: { value: string; label: string }[];
 }
 
 export const Dropdown = (props: DropdownProps) => {
   const { options, ...rest } = props;
-  
+
   // Use destructuring to get the selected state and the setter function
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
@@ -16,13 +17,19 @@ export const Dropdown = (props: DropdownProps) => {
       <Button>
         <span className="block truncate">{props.placeholder}</span>
       </Button>
-      <select {...rest} className="absolute" onChange={(element) => {
-        const selectedValue = element.target.value;
-        const selectedOption = options.find((option) => option.value === selectedValue);
-        if (!selectedOption) return;
-        setSelectedOption(selectedOption);
-        props.onChange && props.onChange(element);
-      }}>
+      <select
+        {...rest}
+        className="absolute"
+        onChange={(element) => {
+          const selectedValue = element.target.value;
+          const selectedOption = options.find(
+            (option) => option.value === selectedValue,
+          );
+          if (!selectedOption) return;
+          setSelectedOption(selectedOption);
+          props.onChange && props.onChange(element);
+        }}
+      >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -31,4 +38,4 @@ export const Dropdown = (props: DropdownProps) => {
       </select>
     </div>
   );
-}
+};
