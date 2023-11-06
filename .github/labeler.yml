@@ -1,0 +1,9 @@
+"devops":
+  - ".github/**/*"
+"dependency":
+  - "package.json"
+  - "pnpm-lock.yaml"
+"documentation":
+  - "docs/**/*"
+  - "mkdocs.yml"
+  - "README.md"
