@@ -1,7 +1,9 @@
 # HOT Shared UI Components
 
-Shared React components with theming for use across HOTOSM tools,
+Shared UI components with theming for use across HOTOSM tools,
 to reduce code duplication.
+
+The components are currently written in **React**, using TypeScript.
 
 ## Install
 
@@ -17,4 +19,20 @@ pnpm install @hotosm/ui
 
 ## Usage
 
-TBC
+```js
+import Button from '@hotosm/ui';
+
+const HomePage = ({}) => {
+  return (
+    <div className="your-css-classes">
+      <div
+        ...
+      >
+        <Button />
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;
+```

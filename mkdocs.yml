@@ -1,10 +1,10 @@
-site_name: shared-ui-components
-site_description: Shared React components with theming for use across HOTOSM tools.
+site_name: ui
+site_description: Shared UI components with theming for use across HOTOSM tools.
 # strict: true
 site_url: "https://www.hotosm.org"
 
-repo_name: "hotosm/shared-ui-components"
-repo_url: "https://github.com/hotosm/shared-ui-components/"
+repo_name: "hotosm/ui"
+repo_url: "https://github.com/hotosm/ui/"
 edit_uri: "edit/main/docs/"
 
 extra:
