@@ -1,4 +1,4 @@
-import {Logo} from "./Logo";
+import { Logo } from "./Logo.js";
 
 export const LogoStory = () => (
   <Logo />

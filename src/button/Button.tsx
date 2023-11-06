@@ -1,5 +1,4 @@
-import React from "react";
-import {cn} from "../utils/merge";
+import { cn } from "../utils/merge.js";
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {}
 

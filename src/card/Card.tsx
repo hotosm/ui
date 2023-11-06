@@ -1,4 +1,4 @@
-import {cn} from "../utils/merge";
+import { cn } from "../utils/merge.js";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
 

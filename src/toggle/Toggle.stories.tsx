@@ -1,5 +1,5 @@
-import {Toggle} from "./Toggle";
-import {useState} from "react";
+import { useState } from "react";
+import { Toggle } from "./Toggle.js";
 
 export const ToggleStory = () => {
   const [checked, setChecked] = useState(false)
