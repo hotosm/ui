@@ -1,0 +1,59 @@
+site_name: shared-ui-components
+site_description: Shared React components with theming for use across HOTOSM tools.
+# strict: true
+site_url: "https://www.hotosm.org"
+
+repo_name: "hotosm/shared-ui-components"
+repo_url: "https://github.com/hotosm/shared-ui-components/"
+edit_uri: "edit/main/docs/"
+
+extra:
+  social:
+    - icon: "fontawesome/brands/github"
+      link: "https://github.com/hotosm/"
+    - icon: "fontawesome/brands/twitter"
+      link: "https://twitter.com/hotosm"
+    - icon: "fontawesome/solid/globe"
+      link: "https://www.hotosm.org"
+  copyright: Copyright &copy; 2010 HOTOSM
+  generator: false
+
+theme:
+  name: material
+  palette:
+    primary: custom
+  favicon: images/favicon.png
+  logo: images/hot_logo.png
+  # custom_dir: docs/overrides
+
+extra_css:
+  - css/extra.css
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+      title: Page contents
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.extra
+  - pymdownx.emoji:
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search
+  - exclude:
+      glob:
+        - plugins/*
+        - node_modules/*
+
+nav:
+  - Home: index.md
+  - Components:
+    - Example: components/example.md
+  - Visual: stories/index.html
+  - License: LICENSE
+  - Changelog: CHANGELOG.md
