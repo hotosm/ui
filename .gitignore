@@ -26,4 +26,5 @@ yarn.lock
 
 # Docs build
 docs/stories
+docs/components.json
 site
