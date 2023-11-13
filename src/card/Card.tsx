@@ -15,7 +15,8 @@ export const Card = (props: CardProps) => {
   );
 };
 
-export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface CardTitleProps
+  extends React.HTMLAttributes<HTMLHeadingElement> {}
 const CardTitle = (props: CardTitleProps) => {
   const { className, ...rest } = props;
 

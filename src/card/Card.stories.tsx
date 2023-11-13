@@ -1,16 +1,16 @@
-import {Card, CardProps} from "./Card.js";
-import {Story} from "@ladle/react";
+import { Card, CardProps } from "./Card.js";
+import { Story } from "@ladle/react";
 
-export const CardStory: Story<CardProps & {
-  title: string,
-  body: string,
-  footer: string,
-}> = (props) => (
+export const CardStory: Story<
+  CardProps & {
+    title: string;
+    body: string;
+    footer: string;
+  }
+> = (props) => (
   <Card>
     <Card.CardTitle>{props.title}</Card.CardTitle>
-    <Card.CardBody>
-      {props.body}
-    </Card.CardBody>
+    <Card.CardBody>{props.body}</Card.CardBody>
     <Card.CardFooter>{props.footer}</Card.CardFooter>
   </Card>
 );
@@ -26,15 +26,16 @@ CardStory.argTypes = {
     control: {
       type: "text",
     },
-    defaultValue: "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,\n" +
+    defaultValue:
+      "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,\n" +
       "voluptatum. lorem ipsum dolor sit amet consectetur adipisicing elit.\n" +
       "Quisquam, voluptatum. lorem ipsum dolor sit amet consectetur adipisicing\n" +
       "elit. Quisquam, voluptatum.",
   },
-footer: {
+  footer: {
     control: {
       type: "text",
     },
     defaultValue: "Card Footer",
   },
-}
+};
