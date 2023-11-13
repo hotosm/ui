@@ -15,7 +15,7 @@ export const Card = (props: CardProps) => {
   );
 };
 
-interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
 const CardTitle = (props: CardTitleProps) => {
   const { className, ...rest } = props;
 
@@ -28,7 +28,7 @@ const CardTitle = (props: CardTitleProps) => {
 
 Card.CardTitle = CardTitle;
 
-interface CardBodyProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardBodyProps extends React.HTMLAttributes<HTMLDivElement> {}
 const CardBody = (props: CardBodyProps) => {
   const { className, ...rest } = props;
 
@@ -41,7 +41,7 @@ const CardBody = (props: CardBodyProps) => {
 
 Card.CardBody = CardBody;
 
-interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 const CardFooter = (props: CardFooterProps) => {
   const { className, ...rest } = props;
 
