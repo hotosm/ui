@@ -1,3 +1,12 @@
-import { Button } from "./Button.js";
+import {Button, ButtonProps} from "./Button.js";
+import {Story} from "@ladle/react";
 
-export const ButtonStory = () => <Button>Hello Button</Button>;
+export const ButtonStory: Story<ButtonProps> = (props) => <Button {...props} />;
+ButtonStory.argTypes = {
+  children: {
+    control: {
+      type: "text",
+    },
+    defaultValue: "Button",
+  }
+}
