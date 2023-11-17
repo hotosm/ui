@@ -10,7 +10,8 @@ export const Dropdown = (props: DropdownProps) => {
   const { options, ...rest } = props;
 
   // Use destructuring to get the selected state and the setter function
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  // TODO: Finish component
+  const [_selectedOption, setSelectedOption] = useState(options[0]);
 
   return (
     <div className="relative">
