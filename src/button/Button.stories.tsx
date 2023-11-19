@@ -14,5 +14,5 @@ ButtonStory.argTypes = {
       type: "boolean",
     },
     defaultValue: false,
-  }
+  },
 };
