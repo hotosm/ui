@@ -17,7 +17,7 @@
     "build:docstrings": "react-docgen --out docs/components.json src/**/*.ts --ignore src/utils/**",
     "build:markdown": "node docs/json2md.mjs",
     "build:stories": "ladle build --outDir=docs/stories",
-    "build:docs": "npm run build:markdown && npm run build:stories"
+    "build:docs": "npm run build:docstrings && npm run build:markdown && npm run build:stories"
   },
   "keywords": [],
   "author": {
