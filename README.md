@@ -15,7 +15,7 @@
       <img src="https://github.com/hotosm/ui/actions/workflows/docs.yml/badge.svg" alt="Publish Docs">
   </a>
   <a href="https://www.npmjs.com/package/@hotosm/ui" target="_blank">
-      <img src="https://img.shields.io/npm/v/%40hotosm/ui"
+      <img src="https://img.shields.io/npm/v/%40hotosm/ui?color=334D058"
       alt="Package version">
   </a>
   <a href="https://npmtrends.com/@hotosm/ui" target="_blank">
