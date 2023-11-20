@@ -5,7 +5,7 @@
   <img src="https://github.com/hotosm/fmtm/blob/main/images/hot_logo.png?raw=true" style="width: 200px;" alt="HOT"></a>
 </p>
 <p align="center">
-  <em>Shared UI components for use across HOT's tools.</em>
+  <em>Shared React components with theming for use across HOTOSM tools.</em>
 </p>
 <p align="center">
   <a href="https://github.com/hotosm/ui/actions/workflows/publish.yml" target="_blank">
