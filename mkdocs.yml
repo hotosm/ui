@@ -54,6 +54,6 @@ nav:
   - Home: index.md
   - Components:
       - Example: components/example.md
-  - Visual: stories/index.html
+  - Visual: visual.md
   - License: LICENSE
   - Changelog: CHANGELOG.md
