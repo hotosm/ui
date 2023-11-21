@@ -22,8 +22,8 @@ ButtonStory.argTypes = {
       labels: {
         primary: "Primary",
         secondary: "Secondary",
-      }
+      },
     },
     defaultValue: "primary",
-  }
+  },
 };
