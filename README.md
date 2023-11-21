@@ -57,7 +57,7 @@ pnpm install @hotosm/ui
 ## Usage
 
 ```js
-import Button from '@hotosm/ui';
+import { Button } from '@hotosm/ui';
 
 const HomePage = ({}) => {
   return (
