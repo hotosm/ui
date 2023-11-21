@@ -15,4 +15,15 @@ ButtonStory.argTypes = {
     },
     defaultValue: false,
   },
+  intent: {
+    options: ["primary", "secondary"],
+    control: {
+      type: "select",
+      labels: {
+        primary: "Primary",
+        secondary: "Secondary",
+      }
+    },
+    defaultValue: "primary",
+  }
 };
