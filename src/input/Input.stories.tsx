@@ -1,5 +1,3 @@
-import {Input} from "@/input/Input.js";
+import { Input } from "@/input/Input.js";
 
-export const InputStory = () => (
-  <Input placeholder="Input" />
-)
+export const InputStory = () => <Input placeholder="Input" />;
