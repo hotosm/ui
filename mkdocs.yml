@@ -53,7 +53,12 @@ plugins:
 nav:
   - Home: index.md
   - Components:
-      - Example: components/example.md
+      - Button: components/button.md
+      - Card: components/card.md
+      - Dropdown: components/dropdown.md
+      - Logo: components/logo.md
+      - Popup: components/popup.md
+      - Toggle: components/toggle.md
   - Visual: visual.md
   - License: LICENSE
   - Changelog: CHANGELOG.md
