@@ -2,6 +2,9 @@ import { cn } from "@/utils/merge.js";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+/**
+ * Card component.
+ */
 export const Card = (props: CardProps) => {
   const { className, ...rest } = props;
 

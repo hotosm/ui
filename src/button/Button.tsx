@@ -4,6 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 export interface ButtonProps
   extends React.HTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonStyle> {
+  /** Disable the button, greyed out, not clickable. */
   disabled?: boolean;
 }
 
@@ -23,6 +24,9 @@ const buttonStyle = cva(
   },
 );
 
+/**
+ * Button component.
+ */
 export const Button = (props: ButtonProps) => {
   const { className, intent, ...rest } = props;
 

@@ -3,9 +3,13 @@ import { Button } from "@/button/Button.js";
 
 export interface DropdownProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  /** The available options in the dropdown. */
   options: { value: string; label: string }[];
 }
 
+/**
+ * Dropdown component.
+ */
 export const Dropdown = (props: DropdownProps) => {
   const { options, ...rest } = props;
 

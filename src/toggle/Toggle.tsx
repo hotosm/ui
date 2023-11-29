@@ -1,9 +1,15 @@
 export interface ToggleProps {
+  /** Set the state of the toggle: checked/unchecked. */
   checked: boolean;
+  /** Trigger on change toggle (checked) state. */
   onChange: () => void;
+  /** Label associated with toggle . */
   label: string;
 }
 
+/**
+ * Toggle component.
+ */
 export const Toggle = (props: ToggleProps) => {
   return (
     <div className="relative flex flex-row gap-2">

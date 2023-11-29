@@ -1,9 +1,13 @@
 import { Card } from "@/card/Card.js";
 
 export interface PopupProps {
+  /** Nest child elements. */
   children?: React.ReactNode;
+  /** Title in the card header. */
   title?: string;
+  /** Actions available in footer (buttons etc). */
   actions?: React.ReactNode;
+  /** Position of popup, attached to side of viewport. */
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }
 
@@ -22,6 +26,9 @@ const positionToClassName = (position: PopupProps["position"]) => {
   }
 };
 
+/**
+ * Popup component, attached to side of the viewport.
+ */
 export const Popup = (props: PopupProps) => {
   const positionClassName = positionToClassName(props.position);
 
