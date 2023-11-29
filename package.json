@@ -14,7 +14,7 @@
     "dev": "ladle dev --host 0.0.0.0 --port 3000",
     "prepare": "tsup src/index.ts",
     "build": "tsup src/index.ts",
-    "build:docstrings": "react-docgen --out docs/components.json src/**/*.ts --ignore src/utils/**",
+    "build:docstrings": "react-docgen --out docs/components.json src/**/*.tsx --ignore src/**/*.stories.tsx,src/utils/**,src/theme/**",
     "build:markdown": "node docs/json2md.mjs",
     "build:stories": "ladle build --outDir=docs/stories --base /ui/stories",
     "build:docs": "npm run build:docstrings && npm run build:markdown && npm run build:stories"
