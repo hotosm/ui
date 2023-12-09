@@ -45,17 +45,20 @@
   "license": "GPL-3.0-only",
   "devDependencies": {
     "@ladle/react": "^3.2.1",
+    "@lit/react": "^1.0.2",
     "@react-docgen/cli": "^2.0.0",
     "@types/react": "^18.2.28",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^5.0.7"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "lit": "^3.1.0",
     "react": "^18.2.0",
     "tailwind-merge": "^1.14.0"
   },

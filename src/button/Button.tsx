@@ -1,5 +1,9 @@
 import { cn } from "@/utils/merge.js";
 import { cva, VariantProps } from "class-variance-authority";
+import {html, LitElement} from "lit";
+import {property} from "lit/decorators"
+import {createComponent} from "@lit/react";
+import React from "react";
 
 export interface ButtonProps
   extends React.HTMLAttributes<HTMLButtonElement>,
@@ -23,26 +27,50 @@ const buttonStyle = cva(
     },
   },
 );
+//
+// /**
+//  * Button component.
+//  */
+// export const Button = (props: ButtonProps) => {
+//   const { className, intent, ...rest } = props;
+//
+//   return (
+//     <button
+//       className={cn(
+//         buttonStyle({
+//           disabled: props.disabled,
+//           intent: intent,
+//           className: className,
+//         }),
+//         className,
+//       )}
+//       {...rest}
+//     >
+//       {props.children}
+//     </button>
+//   );
+// };
 
-/**
- * Button component.
- */
-export const Button = (props: ButtonProps) => {
-  const { className, intent, ...rest } = props;
+export class button extends LitElement {
+  @property({ type: Boolean }) disabled: boolean;
 
-  return (
-    <button
-      className={cn(
-        buttonStyle({
-          disabled: props.disabled,
-          intent: intent,
-          className: className,
-        }),
-        className,
-      )}
-      {...rest}
+  constructor() {
+    super();
+    this.disabled = false;
+  }
+
+  protected render() {
+    return html`<button
+      class="bg-primary text-white py-3 px-6 rounded leading-[1.15]"
+      ?disabled=${this.disabled}
     >
-      {props.children}
-    </button>
-  );
-};
+      ${this.children}
+    </button>`;
+  }
+}
+
+export const Button = createComponent({
+  elementClass: button,
+  react: React,
+  tagName: "Button",
+})
