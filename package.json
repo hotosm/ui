@@ -17,7 +17,9 @@
     "build:docstrings": "react-docgen --out docs/components.json src/**/*.tsx --ignore src/**/*.stories.tsx,src/utils/**,src/theme/**",
     "build:markdown": "node docs/json2md.mjs",
     "build:stories": "ladle build --outDir=docs/stories --base /ui/stories",
-    "build:docs": "npm run build:docstrings && npm run build:markdown && npm run build:stories"
+    "build:docs": "npm run build:docstrings && npm run build:markdown && npm run build:stories",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "keywords": [],
   "author": {
@@ -47,9 +49,16 @@
     "@ladle/react": "^3.2.1",
     "@lit/react": "^1.0.2",
     "@react-docgen/cli": "^2.0.0",
+    "@storybook/addon-essentials": "^7.6.4",
+    "@storybook/addon-links": "^7.6.4",
+    "@storybook/blocks": "^7.6.4",
+    "@storybook/web-components": "^7.6.4",
+    "@storybook/web-components-vite": "^7.6.4",
     "@types/react": "^18.2.28",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.4",
     "tailwindcss": "^3.3.3",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",

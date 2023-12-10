@@ -1,4 +1,3 @@
-import { cn } from "@/utils/merge.js";
 import { cva, VariantProps } from "class-variance-authority";
 import {html, LitElement} from "lit";
 import {property} from "lit/decorators"
@@ -69,8 +68,8 @@ export class button extends LitElement {
   }
 }
 
-export const Button = createComponent({
-  elementClass: button,
-  react: React,
-  tagName: "Button",
-})
+// export const Button = createComponent({
+//   elementClass: button,
+//   react: React,
+//   tagName: "Button",
+// })
