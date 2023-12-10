@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { button } from "./Button";
+import "./Button";
 
 const meta: Meta = {
-  component: 'button',
+  component: 'hot-button',
 };
 export default meta;
 
-export const Template: StoryObj = (props) => {
-  return button(props);
-};
+export const Template: StoryObj = {
+  args: {
+    children: "Button",
+  },
+  render: (args) => `<hot-button>${args.children}</hot-button>`,
+}

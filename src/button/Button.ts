@@ -1,8 +1,8 @@
 import { cva, VariantProps } from "class-variance-authority";
-import {html, LitElement} from "lit";
-import {property} from "lit/decorators"
-import {createComponent} from "@lit/react";
+import {css, html, LitElement, unsafeCSS} from "lit";
+import {property, customElement} from "lit/decorators.js"
 import React from "react";
+import reset from "../tailwind-reset"
 
 export interface ButtonProps
   extends React.HTMLAttributes<HTMLButtonElement>,
@@ -50,6 +50,7 @@ const buttonStyle = cva(
 //   );
 // };
 
+@customElement("hot-button")
 export class button extends LitElement {
   @property({ type: Boolean }) disabled: boolean;
 
@@ -58,12 +59,14 @@ export class button extends LitElement {
     this.disabled = false;
   }
 
+  static styles = [css`@unocss-placeholder`, unsafeCSS(reset)]
+
   protected render() {
     return html`<button
       class="bg-primary text-white py-3 px-6 rounded leading-[1.15]"
       ?disabled=${this.disabled}
     >
-      ${this.children}
+      <slot></slot>
     </button>`;
   }
 }
