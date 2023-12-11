@@ -14,10 +14,9 @@
     "dev": "storybook dev -p 3001",
     "prepare": "tsup src/index.ts",
     "build": "tsup src/index.ts",
-    "build:docstrings": "react-docgen --out docs/components.json src/**/*.tsx --ignore src/**/*.stories.tsx,src/utils/**,src/theme/**",
-    "build:markdown": "node docs/json2md.mjs",
+    "build:docstrings": "wca analyze 'src/**/*.{js,ts}' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "storybook build --output-dir=docs/stories",
-    "build:docs": "pnpm run build:docstrings && pnpm run build:markdown && pnpm run build:stories"
+    "build:docs": "pnpm run build:docstrings && pnpm run build:stories"
   },
   "keywords": [],
   "author": {
