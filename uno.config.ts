@@ -1,11 +1,9 @@
 // uno.config.ts
-import {defineConfig, presetWind} from 'unocss'
+import { defineConfig, presetWind } from "unocss";
 
 const config = defineConfig({
   content: {
-    filesystem: [
-      '**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}',
-    ]
+    filesystem: ["**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}"],
   },
   theme: {
     borderRadius: {
@@ -20,9 +18,7 @@ const config = defineConfig({
       success: "rgb(var(--hot-success-rgb) / <alpha-value>)",
     },
   },
-  presets: [
-    presetWind(),
-  ],
-})
+  presets: [presetWind()],
+});
 
-export default config
+export default config;

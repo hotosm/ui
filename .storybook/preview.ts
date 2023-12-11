@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/web-components";
-import "../src/theme/hot.css"
+import "../src/theme/hot.css";
 
 const preview: Preview = {
   parameters: {
