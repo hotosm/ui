@@ -408,4 +408,4 @@ Make elements with the HTML hidden attribute stay hidden by default.
 
 [hidden] {
   display: none;
-}`
+}`;
