@@ -1,11 +1,11 @@
-# HOT Shared UI Components
+# HOT Shared UI
 
 <!-- markdownlint-disable -->
 <p align="center">
   <img src="https://github.com/hotosm/fmtm/blob/main/images/hot_logo.png?raw=true" style="width: 200px;" alt="HOT"></a>
 </p>
 <p align="center">
-  <em>Shared React components with theming for use across HOTOSM tools.</em>
+  <em>Shared Web Components with theming for use across HOTOSM tools.</em>
 </p>
 <p align="center">
   <a href="https://github.com/hotosm/ui/actions/workflows/publish.yml" target="_blank">
@@ -40,7 +40,9 @@
 Shared UI components with theming for use across HOTOSM tools,
 to reduce code duplication.
 
-The components are currently written in **React**, using TypeScript.
+The components are
+[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components),
+currently written in **Lit**, using TypeScript.
 
 ## Install
 
@@ -56,8 +58,18 @@ pnpm install @hotosm/ui
 
 ## Usage
 
+### HTML / HTMX
+
+```html
+<div>
+  <hot-button disabled="false"> </hot-button>
+</div>
+```
+
+### React
+
 ```js
-import { Button } from '@hotosm/ui';
+import { hot-button } from '@hotosm/ui';
 
 const HomePage = ({}) => {
   return (
@@ -65,7 +77,8 @@ const HomePage = ({}) => {
       <div
         ...
       >
-        <Button />
+        <hot-button disabled="false">
+        </hot-button>
       </div>
     </div>
   );
