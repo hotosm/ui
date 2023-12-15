@@ -1,6 +1,6 @@
-import {LitElement} from "lit";
-import {cva, CxOptions, CxReturn} from "class-variance-authority"
-import {ClassValue} from "clsx";
+import { LitElement } from "lit";
+import { cva, CxOptions, CxReturn } from "class-variance-authority";
+import { ClassValue } from "clsx";
 
 function decorateCva(cvaStyle: CxOptions[number]) {
   return function (target: any, propertyKey: string) {
@@ -11,7 +11,7 @@ function decorateCva(cvaStyle: CxOptions[number]) {
 export default decorateCva;
 
 type CvaParams = Parameters<typeof cva>;
-type CvaVariantOptions = NonNullable<CxOptions[1]>
+type CvaVariantOptions = NonNullable<CxOptions[1]>;
 
 export const hotcva = <T extends CvaVariantOptions>(cvaParams: {
   base: ClassValue;
@@ -20,6 +20,6 @@ export const hotcva = <T extends CvaVariantOptions>(cvaParams: {
   const string = cva<T>(cvaParams.base, cvaParams.variants);
   return {
     string,
-    cvaParams
-  }
-}
+    cvaParams,
+  };
+};

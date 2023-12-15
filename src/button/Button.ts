@@ -1,9 +1,9 @@
 import { cva, VariantProps } from "class-variance-authority";
-import {css, html, LitElement, unsafeCSS} from "lit";
-import {property, customElement} from "lit/decorators.js"
+import { css, html, LitElement, unsafeCSS } from "lit";
+import { property, customElement } from "lit/decorators.js";
 import React from "react";
-import reset from "../tailwind-reset"
-import decorateCva, {hotcva} from "@/utils/cva";
+import reset from "../tailwind-reset";
+import decorateCva, { hotcva } from "@/utils/cva";
 
 export interface ButtonProps
   extends React.HTMLAttributes<HTMLButtonElement>,
@@ -18,7 +18,7 @@ type buttonTypeConfigProps = Parameters<buttonType>[0];
 // how to convert buttonStyle type to an object containing all the variants?
 
 // get the config from buttStyle with js, not ts
-const buttonStyleConfig: buttonTypeConfigProps = buttonStyle
+const buttonStyleConfig: buttonTypeConfigProps = buttonStyle;
 
 const foostyle = hotcva({
   base: "",
@@ -31,15 +31,15 @@ const foostyle = hotcva({
       true: "opacity-50 cursor-not-allowed",
       false: "",
     },
-  }
-})
+  },
+});
 
 const foo = foostyle.string({
   disabled: true,
-  intent: "primary"
-})
+  intent: "primary",
+});
 
-const variants = foostyle.cvaParams.variants
+const variants = foostyle.cvaParams.variants;
 
 const buttonStyle = cva(
   "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
@@ -57,9 +57,7 @@ const buttonStyle = cva(
   },
 );
 
-buttonStyle({
-
-})
+buttonStyle({});
 //
 // /**
 //  * Button component.
@@ -84,16 +82,13 @@ buttonStyle({
 //   );
 // };
 
-buttonStyle({
-
-})
+buttonStyle({});
 
 @customElement("hot-button")
 export class button extends LitElement {
   /** Disable the button, greyed out, not clickable. */
   @property({ type: Boolean }) disabled: boolean;
   @decorateCva(buttonStyle) static cva: any;
-
 
   constructor() {
     super();

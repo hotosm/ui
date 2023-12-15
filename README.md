@@ -61,12 +61,27 @@ pnpm install @hotosm/ui
 ### HTML / HTMX
 
 ```html
+<!-- <script src="https://cdn.hotosm.org/ui/latest/core.js"> -->
+<script src="https://cdn.hotosm.org/ui/v1/core.js">
+
 <div>
   <hot-button disabled="false"> </hot-button>
 </div>
 ```
 
+> core.js will contain the minimal low level components.
+>
+> extra.js will contain additional wrapper components.
+>
+> There should be versioning of the components, plus a /latest/ version too.
+
 ### React
+
+Install your required version with a pin, or latest:
+
+```bash
+pnpm install @hotosm/ui
+```
 
 ```js
 import { hot-button } from '@hotosm/ui';
