@@ -3,21 +3,19 @@ import { property, customElement } from "lit/decorators.js";
 import reset from "../tailwind-reset";
 import decorateCva, { hotcva } from "@/utils/cva";
 
-const buttonStyle = hotcva(
-  {
-    base: "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
-    variants: {
-      intent: {
-        primary: "bg-primary text-white",
-        secondary: "bg-secondary text-white",
-      },
-      disabled: {
-        true: "opacity-50 cursor-not-allowed",
-        false: "",
-      },
+const buttonStyle = hotcva({
+  base: "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
+  variants: {
+    intent: {
+      primary: "bg-primary text-white",
+      secondary: "bg-secondary text-white",
+    },
+    disabled: {
+      true: "opacity-50 cursor-not-allowed",
+      false: "",
     },
   },
-);
+});
 
 @customElement("hot-button")
 export class button extends LitElement {
