@@ -1,0 +1,18 @@
+env:
+  browser: true
+  es2021: true
+extends:
+  - standard-with-typescript
+  - eslint:recommended
+  - plugin:wc/recommended
+  - plugin:lit/recommended
+  - prettier
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+rules: {}
+settings:
+  wc:
+    elementBaseClasses:
+      # // Recognize `LitElement` as a Custom Element base class
+      - LitElement
