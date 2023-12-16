@@ -21,7 +21,7 @@ const buttonStyle = hotcva({
 export class button extends LitElement {
   /** Disable the button, greyed out, not clickable. */
   @property({ type: Boolean }) disabled: boolean;
-  @decorateCva(buttonStyle) static cva: any;
+  @decorateCva(buttonStyle.variants) static cva: any;
 
   constructor() {
     super();
