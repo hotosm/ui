@@ -1,8 +1,11 @@
 import { cva, CxOptions } from "class-variance-authority";
 import { ClassValue } from "clsx";
-import {Simplify} from "type-fest";
-import {ClassProp, StringToBoolean} from "class-variance-authority/dist/types";
-import {LitElement} from "lit";
+import { Simplify } from "type-fest";
+import {
+  ClassProp,
+  StringToBoolean,
+} from "class-variance-authority/dist/types";
+import { LitElement } from "lit";
 
 function decorateCva(cvaStyle: ReturnType<typeof hotcva>["variants"]) {
   return function (target: LitElement, propertyKey: string) {
