@@ -1,31 +1,35 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
-import { property, customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import reset from "../tailwind-reset";
-import decorateCva, { hotcva } from "@/utils/cva";
+import { cva } from "class-variance-authority";
 
-const buttonStyle = hotcva({
-  base: "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
-  variants: {
-    intent: {
-      primary: "bg-primary text-white",
-      secondary: "bg-secondary text-white",
+const buttonStyle = cva(
+  "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
+  {
+    variants: {
+      intent: {
+        primary: "bg-primary text-white",
+        secondary: "bg-secondary text-white",
+      },
+      disabled: {
+        true: "opacity-50 cursor-not-allowed",
+        false: "",
+      },
     },
-    disabled: {
-      true: "opacity-50 cursor-not-allowed",
-      false: "",
-    },
-  },
-});
+  }
+);
 
 @customElement("hot-button")
 export class button extends LitElement {
   /** Disable the button, greyed out, not clickable. */
   @property({ type: Boolean }) disabled: boolean;
-  // @decorateCva(buttonStyle.variants) static cva: any;
+
+  @property({ type: String }) intent: "primary" | "secondary";
 
   constructor() {
     super();
     this.disabled = false;
+    this.intent = "primary";
   }
 
   static styles = [
@@ -37,7 +41,10 @@ export class button extends LitElement {
 
   protected render() {
     return html`<button
-      class="bg-primary text-white py-3 px-6 rounded leading-[1.15]"
+      class=${buttonStyle({
+        intent: this.intent,
+        disabled: this.disabled,
+      })}
       ?disabled=${this.disabled}
     >
       <slot></slot>
