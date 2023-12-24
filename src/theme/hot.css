@@ -25,6 +25,8 @@
   --hot-darkred: var(--hot-darkred-700);
   --hot-darkred-rgb: 108 32 32;
 
+  --hot-light-gray: #e1e0e0;
+  --hot-light-gray-rgb: 225 224 224;
   --hot-gray-900: #2c3038;
   --hot-gray-800: #3f444f;
   --hot-gray-700: #4f5765;

@@ -10,6 +10,17 @@ export default meta;
 export const Template: StoryObj = {
   args: {
     children: "Button",
+    intent: "primary",
+    disabled: false,
   },
-  render: (args) => html`<hot-button>${args.children}</hot-button>`,
+  argTypes: {
+    intent: {
+      options: ["primary", "secondary"],
+      control: {
+        type: "select",
+      },
+    },
+  },
+  render: (args) =>
+    html`<hot-button intent=${args.intent}>${args.children}</hot-button>`,
 };

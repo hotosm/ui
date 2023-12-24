@@ -9,7 +9,8 @@ const buttonStyle = cva(
     variants: {
       intent: {
         primary: "bg-primary text-white",
-        secondary: "bg-secondary text-white",
+        secondary:
+          "bg-white border-2 border-primary text-primary! hover:bg-lightGray focus:bg-transparent focus:border-white",
       },
       disabled: {
         true: "opacity-50 cursor-not-allowed",
