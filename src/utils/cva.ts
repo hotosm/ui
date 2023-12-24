@@ -1,25 +1,69 @@
-import { LitElement } from "lit";
-import { cva, CxOptions, CxReturn } from "class-variance-authority";
-import { ClassValue } from "clsx";
+import { cva } from "class-variance-authority";
+import { type ClassValue } from "clsx";
+import { Simplify } from "type-fest";
+import {
+  type ClassProp,
+  type StringToBoolean,
+} from "class-variance-authority/dist/types";
+import { type LitElement } from "lit";
 
-function decorateCva(cvaStyle: CxOptions[number]) {
-  return function (target: any, propertyKey: string) {
+function decorateCva(cvaStyle: ReturnType<typeof hotcva>["variants"]) {
+  return function (target: LitElement, propertyKey: string) {
     console.log("decorateCva", target, propertyKey);
   };
 }
 
-export default decorateCva;
+export function generateCvaProperties(cvaReturn: ReturnType<typeof hotcva>) {
+  const cvaProperties: Record<
+    string,
+    {
+      type: StringConstructor;
+    }
+  > = {};
+  for (const variant in cvaReturn.variants) {
+    cvaProperties[variant] = {
+      type: String,
+    };
+  }
+  return cvaProperties as GeneratedCvaProperties<typeof cvaReturn.variants>;
+}
 
-type CvaParams = Parameters<typeof cva>;
-type CvaVariantOptions = NonNullable<CxOptions[1]>;
+export type GeneratedCvaProperties<T> = {
+  [Variant in keyof T]: {
+    type: StringConstructor;
+  };
+};
 
-export const hotcva = <T extends CvaVariantOptions>(cvaParams: {
-  base: ClassValue;
-  variants: T;
-}) => {
-  const string = cva<T>(cvaParams.base, cvaParams.variants);
+/**
+ * From class-variance authority;
+ *
+ */
+type ConfigVariantsMulti<T extends ConfigSchema> = {
+  [Variant in keyof T]?:
+    | StringToBoolean<keyof T[Variant]>
+    | Array<StringToBoolean<keyof T[Variant]>>
+    | undefined;
+};
+type ConfigSchema = Record<string, Record<string, ClassValue>>;
+type ConfigVariants<T extends ConfigSchema> = {
+  [Variant in keyof T]?: StringToBoolean<keyof T[Variant]> | null | undefined;
+};
+type Config<T> = T extends ConfigSchema
+  ? {
+      variants?: T;
+      defaultVariants?: ConfigVariants<T>;
+      compoundVariants?: Array<
+        T extends ConfigSchema
+          ? (ConfigVariants<T> | ConfigVariantsMulti<T>) & ClassProp
+          : ClassProp
+      >;
+    }
+  : never;
+
+export const hotcva = <T>(base: ClassValue, config?: Config<T>) => {
+  const string = cva<T>(base, config);
   return {
     string,
-    cvaParams,
+    variants: config?.variants,
   };
 };

@@ -28,3 +28,5 @@ yarn.lock
 docs/stories
 docs/components.json
 site
+
+.cache
