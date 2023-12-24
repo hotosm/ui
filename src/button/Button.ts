@@ -16,7 +16,7 @@ const buttonStyle = cva(
         false: "",
       },
     },
-  }
+  },
 );
 
 @customElement("hot-button")
