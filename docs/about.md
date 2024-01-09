@@ -29,35 +29,35 @@ The solution to this is Web Components, which are framework agnostic.
 
 Web Components are built upon four existing technologies:
 
-- Custom Elements:
+- Custom Elements
   - Allows developers to define their own HTML elements with custom
     behavior and properties.
-- Shadow DOM:
+- Shadow DOM
   - Provides encapsulation by creating a scoped DOM subtree for a component,
     isolating its styles and structure from the rest of the document.
-- HTML Templates:
+- HTML Templates
   - Enables the creation of template elements that can be cloned
     and inserted into the DOM.
   - Represented by the `<template>` and `<slot>` elements
-- ~~HTML Imports~~:
+- ~~HTML Imports~~
   - This fourth technology related to Web Components was since abandoned.
   - This is no longer required, e.g. **ES6 module imports** can be used instead.
 
 ### Advantages
 
-- Reusability:
+- Reusability
   - Components can be easily reused across different projects,
     promoting code modularity and reducing redundancy.
-- Encapsulation:
+- Encapsulation
   - Shadow DOM enables encapsulation, preventing style and structure
     conflicts between components and the rest of the page.
 - Interoperability:
   - Web Components can be used with any modern web framework or library,
     enhancing interoperability and flexibility.
-- Maintainability:
+- Maintainability
   - Components provide a cleaner and more maintainable code structure by
     breaking down the application into manageable, isolated units.
-- Consistency:
+- Consistency
   - Web Components promote consistency in design and functionality
     by encouraging the use of standardized, reusable elements.
 
@@ -69,12 +69,13 @@ Web Components are built upon four existing technologies:
     a work in progress since 2017.
   - This is not an issue, as Lit provides
     [React wrappers](https://lit.dev/docs/frameworks/react/) to solve this.
-- Standardization Challenges:
+- Standardization Challenges
   - Although Web Components are a W3C standard, the lack of universal adoption
     and variations in implementation can create challenges for consistent
     behavior across different environments.
-- ~~Browser Support~~ this is
-  [no longer a major issue](https://caniuse.com/?search=web%20components)
+- ~~Browser Support~~
+  - This is
+    [no longer a major issue](https://caniuse.com/?search=web%20components).
 - ~~Performance Concerns~~
   - The use of Shadow DOM and other features may introduce performance overhead.
   - This is partly solved by Lit's use of `DOM Diffing` and other performance
