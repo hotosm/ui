@@ -52,6 +52,7 @@ plugins:
 
 nav:
   - Home: index.md
+  - About: about.md
   - Components:
       - Button: components/hot-button.md
   - Visual: visual.md
