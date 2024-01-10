@@ -50,6 +50,9 @@ jobs:
           aws-region: us-east-1
 
       - name: Copy files to the production website with the AWS CLI
+        env:
+          # latest for main branch, else tag name
+          PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
           aws s3 sync dist/index.js \
-          s3://${{ var.S3_BUCKET_NAME }}/ui/${{ github.ref_name }}.js
+          s3://${{ var.S3_BUCKET_NAME }}/ui/${{ env.PATH }}/all.js
