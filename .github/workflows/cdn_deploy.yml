@@ -1,0 +1,55 @@
+name: 🚩 Deploy to CDN
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+    # Workflow is triggered only if src changes
+    paths:
+      - src/**
+  # Allow manual trigger (workflow_dispatch)
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+          cache-dependency-path: "pnpm-lock.yaml"
+
+      - name: Install dependencies
+        working-directory: .
+        run: CI=true pnpm install
+
+      - name: Build Dist
+        working-directory: .
+        run: pnpm build
+
+      - name: Configure AWS Creds
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.ORG_AWS_ACCOUNT_ID }}:role/Github-AWS-OIDC
+          aws-region: us-east-1
+
+      - name: Copy files to the production website with the AWS CLI
+        run: |
+          aws s3 sync dist/index.js \
+          s3://${{ var.S3_BUCKET_NAME }}/ui/${{ github.ref_name }}.js
