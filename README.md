@@ -11,6 +11,9 @@
   <a href="https://github.com/hotosm/ui/actions/workflows/publish.yml" target="_blank">
       <img src="https://github.com/hotosm/ui/actions/workflows/publish.yml/badge.svg" alt="Publish">
   </a>
+  <a href="https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml" target="_blank">
+      <img src="https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml/badge.svg?branch=main" alt="CDN Deploy">
+  </a>
   <a href="https://github.com/hotosm/ui/actions/workflows/docs.yml" target="_blank">
       <img src="https://github.com/hotosm/ui/actions/workflows/docs.yml/badge.svg" alt="Publish Docs">
   </a>
@@ -27,7 +30,7 @@
   </a>
 </p>
 
----
+## [![🚩 Deploy to CDN](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml/badge.svg?branch=main)](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml)
 
 📖 **Documentation**: <a href="https://hotosm.github.io/ui/" target="_blank">https://hotosm.github.io/ui/</a>
 
