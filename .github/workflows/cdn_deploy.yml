@@ -56,7 +56,7 @@ jobs:
 
           # Upload latest components dist
           mkdir -p dist
-          cp ${{ github.workspace }}/dist/index.js dist/all.js
+          cp ${{ github.workspace }}/dist/index.js dist/core.js
 
           # Push content to gh-pages
           git add .
@@ -75,4 +75,4 @@ jobs:
           PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
           aws s3 sync ${{ github.workspace }}/dist/index.js \
-          s3://${{ vars.S3_BUCKET_NAME }}/ui/${{ env.PATH }}/all.js
+          s3://${{ vars.S3_BUCKET_NAME }}/ui/${{ env.PATH }}/core.js
