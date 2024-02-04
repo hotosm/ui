@@ -58,5 +58,5 @@ nav:
   - Components:
       - Button: components/hot-button.md
   - Visual: visual.md
-  - License: LICENSE
+  - License: LICENSE.md
   - Changelog: CHANGELOG.md

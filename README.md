@@ -22,7 +22,7 @@
       <img src="https://img.shields.io/npm/dm/%40hotosm%2Fui"
       alt="Downloads">
   </a>
-  <a href="https://github.com/hotosm/ui/blob/main/LICENSE" target="_blank">
+  <a href="https://github.com/hotosm/ui/blob/main/LICENSE.md" target="_blank">
       <img src="https://img.shields.io/github/license/hotosm/ui.svg" alt="License">
   </a>
 </p>

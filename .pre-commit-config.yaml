@@ -12,11 +12,25 @@ repos:
     hooks:
       - id: prettier
         args:
-          [--ignore-unknown, --no-error-on-unmatched-pattern, "!pnpm-lock.yaml"]
+          [
+            --ignore-unknown,
+            --no-error-on-unmatched-pattern,
+            "!LICENSE.md",
+            "!pnpm-lock.yaml",
+          ]
 
   # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.38.0
     hooks:
       - id: markdownlint
-        args: [--fix, --ignore, CHANGELOG.md, --ignore, docs/components]
+        args:
+          [
+            --fix,
+            --ignore,
+            CHANGELOG.md,
+            --ignore,
+            LICENSE.md,
+            --ignore,
+            docs/components,
+          ]
