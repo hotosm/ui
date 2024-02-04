@@ -44,7 +44,6 @@ jobs:
         run: pnpm build
 
       - name: Upload to GH Pages
-        if: ${{ inputs.coverage }}
         run: |
           # Checkout to gh-pages
           mkdir tmp_pages
