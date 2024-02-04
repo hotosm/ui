@@ -18,7 +18,7 @@ jobs:
     # These permissions are needed to interact with GitHub's OIDC Token endpoint
     permissions:
       id-token: write
-      contents: read
+      contents: write
 
     steps:
       - name: Checkout
@@ -43,16 +43,36 @@ jobs:
         working-directory: .
         run: pnpm build
 
+      - name: Upload to GH Pages
+        if: ${{ inputs.coverage }}
+        run: |
+          # Checkout to gh-pages
+          mkdir tmp_pages
+          cd tmp_pages
+          git init --initial-branch=gh-pages
+          git config user.name svchot
+          git config user.email sysadmin@hotosm.org
+          git pull https://x-access-token:$TOKEN@github.com/${{ github.repository }}.git gh-pages
+
+          # Upload latest components dist
+          mkdir -p dist
+          cp ${{ github.workspace }}/dist/index.js dist/all.js
+
+          # Push content to gh-pages
+          git add .
+          git commit -m "docs: update component dist to latest"
+          git push --set-upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+
       - name: Configure AWS Creds
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.ORG_AWS_ACCOUNT_ID }}:role/Github-AWS-OIDC
           aws-region: us-east-1
 
-      - name: Copy files to the production website with the AWS CLI
+      - name: Upload to S3
         env:
           # latest for main branch, else tag name
           PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
-          aws s3 sync dist/index.js \
+          aws s3 sync ${{ github.workspace }}/dist/index.js \
           s3://${{ var.S3_BUCKET_NAME }}/ui/${{ env.PATH }}/all.js
