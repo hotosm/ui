@@ -57,6 +57,7 @@ nav:
   - About: about.md
   - Components:
       - Button: components/hot-button.md
+  - Usage: usage.md
   - Storybook: storybook.md
   - License: LICENSE.md
   - Changelog: CHANGELOG.md

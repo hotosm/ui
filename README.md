@@ -30,8 +30,6 @@
   </a>
 </p>
 
-## [![🚩 Deploy to CDN](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml/badge.svg?branch=main)](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml)
-
 📖 **Documentation**: <a href="https://hotosm.github.io/ui/" target="_blank">https://hotosm.github.io/ui/</a>
 
 🖥️ **Source Code**: <a href="https://github.com/hotosm/ui" target="_blank">https://github.com/hotosm/ui</a>
