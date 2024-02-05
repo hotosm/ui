@@ -14,7 +14,8 @@
     "lint": "eslint --ext .js,.ts ./",
     "dev": "storybook dev -p 3001",
     "prepare": "tsup src/index.ts",
-    "build": "tsup src/index.ts",
+    "build": "tsup src/index.ts && postcss build ./src/styles.css -o ./dist/styles.css && postcss build ./src/theme/hot.css -o ./dist/hot-theme.css",
+    "build:vite": "vite build",
     "build:docstrings": "wca analyze 'src/**/*.{js,ts}' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "storybook build --output-dir=docs/stories",
     "build:docs": "pnpm run build:docstrings && pnpm run build:stories"
@@ -50,6 +51,7 @@
     "@storybook/web-components": "^7.6.5",
     "@storybook/web-components-vite": "^7.6.5",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@unocss/postcss": "^0.58.5",
     "autoprefixer": "^10.4.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -77,9 +79,7 @@
     "react": "Required for Storybook",
     "react-dom": "Required for Storybook"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "publishConfig": {
     "access": "public"
   },
@@ -90,5 +90,8 @@
   "bugs": {
     "url": "https://github.com/hotosm/ui/issues"
   },
-  "homepage": "https://github.com/hotosm/ui#readme"
+  "homepage": "https://github.com/hotosm/ui#readme",
+  "dependencies": {
+    "postcss-cli": "^11.0.0"
+  }
 }
