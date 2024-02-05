@@ -75,8 +75,8 @@ jobs:
           PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
           # Install AWS CLI
-          sudo apt-get update
-          sudo apt-get install -y awscli --no-install-recommends
+          apt-get update
+          apt-get install -y awscli --no-install-recommends
 
           # Push to S3
           aws s3 sync ${{ github.workspace }}/dist/index.js \
