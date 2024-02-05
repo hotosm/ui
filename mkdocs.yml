@@ -26,6 +26,9 @@ theme:
   logo: images/hot_logo.png
   # custom_dir: docs/overrides
 
+extra_javascript:
+  - https://hotosm.github.io/ui/dist/core.js
+
 extra_css:
   - css/extra.css
 
