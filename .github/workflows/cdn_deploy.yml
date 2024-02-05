@@ -44,6 +44,7 @@ jobs:
         run: pnpm build
 
       - name: Upload to GH Pages
+        continue-on-error: true
         run: |
           # Checkout to gh-pages
           mkdir tmp_pages
