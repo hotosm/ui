@@ -28,7 +28,7 @@ theme:
 
 extra_javascript:
   # - https://s3.amazonaws.com/hotosm-ui/latest/ui.js
-  - path: https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/ui.js
+  - path: https://s3.amazonaws.com/hotosm-ui/latest/ui.js
     type: module
 
 extra_css:
