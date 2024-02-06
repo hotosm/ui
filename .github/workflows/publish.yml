@@ -7,8 +7,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  steps:
-    publish_to_npmjs:
-      uses: ./npm_publish.yml@1.0.0
-      secrets:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Publish to npmjs.org
+        uses: ./npm_publish.yml@1.0.0
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
