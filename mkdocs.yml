@@ -27,7 +27,9 @@ theme:
   # custom_dir: docs/overrides
 
 extra_javascript:
-  - https://s3.amazonaws.com/hotosm-ui/latest/ui.js
+  # - https://s3.amazonaws.com/hotosm-ui/latest/ui.js
+  - path: https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/ui.js
+    type: module
 
 extra_css:
   - css/extra.css
