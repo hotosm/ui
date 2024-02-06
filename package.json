@@ -77,7 +77,9 @@
     "react": "Required for Storybook",
     "react-dom": "Required for Storybook"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },

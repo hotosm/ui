@@ -12,7 +12,7 @@ _node_modules
 .pnp.cjs
 
 # Build output
-# dist
+dist
 
 # Visual Studio Code configs
 .vscode/
