@@ -75,5 +75,5 @@ jobs:
           S3_PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
           # Push dist to correct S3 dir
-          aws s3 cp --recursive ${{ github.workspace }}/dist/ \
+          aws s3 sync ${{ github.workspace }}/dist/ \
           s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/
