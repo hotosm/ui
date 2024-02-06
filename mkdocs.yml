@@ -31,7 +31,7 @@ extra_javascript:
 
 extra_css:
   - css/extra.css
-  - https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/style.css
+  - https://s3.amazonaws.com/hotosm-ui/latest/style.css
 
 markdown_extensions:
   - tables
