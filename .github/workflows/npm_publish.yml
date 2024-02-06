@@ -1,0 +1,40 @@
+name: Publish to npmjs.org
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        description: "The npmjs.org API token for your project."
+        required: true
+
+jobs:
+  publish_to_npmjs:
+    name: Publish to NPMJS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+          cache-dependency-path: "pnpm-lock.yaml"
+
+      - name: Install dependencies
+        working-directory: .
+        run: CI=true pnpm install
+
+      - name: Set publishing config
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Publish
+        working-directory: .
+        run: pnpm publish --access=public

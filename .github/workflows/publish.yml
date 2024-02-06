@@ -8,6 +8,6 @@ on:
 
 jobs:
   publish_to_npmjs:
-    uses: hotosm/gh-workflows/.github/workflows/pnpm_publish.yml@1.2.1
+    uses: ./npm_publish.yml
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
