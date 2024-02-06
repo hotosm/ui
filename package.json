@@ -13,8 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js,.ts ./",
     "dev": "storybook dev -p 3001",
-    "prepare": "tsup src/index.ts",
-    "build:vite": "vite build",
+    "build": "vite build",
     "build:docstrings": "wca analyze 'src/**/*.{js,ts}' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "storybook build --output-dir=docs/stories",
     "build:docs": "pnpm run build:docstrings && pnpm run build:stories"
