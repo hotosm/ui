@@ -56,7 +56,7 @@ jobs:
 
           # Upload latest components dist
           mkdir -p dist
-          cp -r ${{ github.workspace }}/dist/ dist/
+          cp -r ${{ github.workspace }}/dist/* dist/
 
           # Push content to gh-pages
           git add .
