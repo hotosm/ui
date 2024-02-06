@@ -1,21 +1,62 @@
 # Usage
 
-## Code
+It production either the HOT S3-based CDN can be used, or JSDelivr.
 
-```js
-<script src="https://hotosm.github.io/ui/dist/core.js">
+## AWS S3 CDN
 
-<div>
-  <hot-button intent="primary"> </hot-button>
-</div>
+```html
+// Import the components
+<script
+  type="module"
+  src="https://s3.amazonaws.com/hotosm-ui/latest/ui.js"
+>
+
+// Import the styles (or create your own)
+<link
+    rel="stylesheet"
+    href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
+/>
+
+<hot-button>Click Me!</hot-button>
 ```
 
-## Visual Representation
+## JSDelivr (NPM CDN)
+
+```html
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/ui.js"
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/style.css"
+/>
+
+<hot-button>Click Me!</hot-button>
+```
+
+## Github Pages
+
+This deployment is mostly use for development and tracks the most recent
+changes.
+
+```html
+<script
+  type="module"
+  src="https://hotosm.github.io/ui/dist/ui.js"
+>
+<link
+    rel="stylesheet"
+    href="https://hotosm.github.io/ui/dist/style.css"
+/>
+
+<hot-button>Click Me!</hot-button>
+```
+
+## Example
 
 <!-- markdownlint-disable -->
 
-<div>
-  <hot-button intent="primary">Click Me!</hot-button> 
-</div>
+<hot-button>Click Me!</hot-button>
 
 <!-- markdownlint-enable -->

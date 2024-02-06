@@ -62,13 +62,24 @@ pnpm install @hotosm/ui
 ### HTML / HTMX
 
 ```html
-<!-- <script src="https://cdn.hotosm.org/ui/latest/core.js"> -->
-<script src="https://cdn.hotosm.org/ui/v1/core.js">
+// Import the components
+<script
+  type="module"
+  src="https://s3.amazonaws.com/hotosm-ui/latest/ui.js"
+>
+
+// Import the styles (or create your own)
+<link
+    rel="stylesheet"
+    href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
+/>
 
 <div>
-  <hot-button disabled="false"> </hot-button>
+  <hot-button disabled="true"> </hot-button>
 </div>
 ```
+
+See the docs for more [usage examples](https://hotosm.github.io/ui/usage/).
 
 > core.js will contain the minimal low level components.
 >
@@ -93,7 +104,7 @@ const HomePage = ({}) => {
       <div
         ...
       >
-        <hot-button disabled="false">
+        <hot-button disabled="true">
         </hot-button>
       </div>
     </div>

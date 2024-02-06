@@ -27,10 +27,11 @@ theme:
   # custom_dir: docs/overrides
 
 extra_javascript:
-  - https://hotosm.github.io/ui/dist/core.js
+  - https://s3.amazonaws.com/hotosm-ui/latest/ui.js
 
 extra_css:
   - css/extra.css
+  - https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/style.css
 
 markdown_extensions:
   - tables
