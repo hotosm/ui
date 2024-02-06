@@ -74,10 +74,6 @@ jobs:
           # latest for main branch, else tag name
           S3_PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
-          # Push core.js to S3
-          # aws s3 cp ${{ github.workspace }}/dist/index.js \
-          # s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/core.js
-
-          # Push dist folder to aws S3
-          aws s3 cp ${{ github.workspace }}/dist \
-          s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/dist --recursive
+          # Push dist to correct S3 dir
+          aws s3 cp --recursive ${{ github.workspace }}/dist/ \
+          s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/
