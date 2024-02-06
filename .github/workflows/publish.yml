@@ -8,6 +8,6 @@ on:
 
 jobs:
   publish_to_npmjs:
-    uses: ./npm_publish.yml
+    uses: ./npm_publish.yml@latest
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
