@@ -75,7 +75,7 @@ pnpm install @hotosm/ui
 />
 
 <div>
-  <hot-button disabled="true"> </hot-button>
+  <hot-button disabled> </hot-button>
 </div>
 ```
 

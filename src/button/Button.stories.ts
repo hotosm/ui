@@ -22,5 +22,5 @@ export const Template: StoryObj = {
     },
   },
   render: (args) =>
-    html`<hot-button intent=${args.intent}>${args.children}</hot-button>`,
+    html`<hot-button ?disabled=${args.disabled}>${args.children}</hot-button>`,
 };
