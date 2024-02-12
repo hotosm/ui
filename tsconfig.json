@@ -10,7 +10,7 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/*"]
     },
     "pretty": true,
     "newLine": "lf",
@@ -23,12 +23,12 @@
     "noEmitOnError": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
   "ts-node": {
     "transpileOnly": true,
     "files": true,
-    "experimentalResolver": true,
-  },
+    "experimentalResolver": true
+  }
 }

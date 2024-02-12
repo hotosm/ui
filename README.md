@@ -104,7 +104,7 @@ const HomePage = ({}) => {
       <div
         ...
       >
-        <hot-button disabled="true">
+        <hot-button disabled>
         </hot-button>
       </div>
     </div>
