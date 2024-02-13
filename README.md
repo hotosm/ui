@@ -52,7 +52,7 @@ Via NPM:
 ```bash
 npm install @hotosm/ui
 
-yarn install @hotosm/ui
+yarn add @hotosm/ui
 
 pnpm install @hotosm/ui
 ```
