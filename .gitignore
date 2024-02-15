@@ -30,3 +30,4 @@ docs/components.json
 site
 
 .cache
+.DS_Store

@@ -3,29 +3,30 @@ import { customElement, property } from "lit/decorators.js";
 import reset from "../tailwind-reset";
 import { cva } from "class-variance-authority";
 
-const buttonStyle = cva(
-  "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
-  {
-    variants: {
-      intent: {
-        primary: "bg-primary text-white",
-        secondary:
-          "bg-white border-2 border-primary text-primary! hover:bg-lightGray focus:bg-transparent focus:border-white",
-      },
-      disabled: {
-        true: "opacity-50 cursor-not-allowed",
-        false: "",
+export type IntentType = "primary" | "secondary";
+
+export const buttonStyle = cva(
+    "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
+    {
+      variants: {
+        intent: {
+          primary: "bg-primary text-white",
+          secondary:
+            "bg-white border-2 border-primary text-primary! hover:bg-lightGray focus:bg-transparent focus:border-white",
+        },
+        disabled: {
+          true: "opacity-50 cursor-not-allowed",
+          false: "",
+        },
       },
     },
-  },
 );
 
 @customElement("hot-button")
-export class button extends LitElement {
+export class Button extends LitElement {
   /** Disable the button, greyed out, not clickable. */
   @property({ type: Boolean }) disabled: boolean;
-
-  @property({ type: String }) intent: "primary" | "secondary";
+  @property({ type: String }) intent: IntentType;
 
   constructor() {
     super();

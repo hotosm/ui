@@ -3,7 +3,7 @@ import { defineConfig, presetWind } from "unocss";
 
 const config = defineConfig({
   content: {
-    filesystem: ["**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}"],
+    filesystem: ["src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}"],
   },
   theme: {
     borderRadius: {

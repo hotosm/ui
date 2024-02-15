@@ -11,7 +11,7 @@ export const Template: StoryObj = {
   args: {
     children: "Button",
     intent: "primary",
-    disabled: false,
+    disabled: false
   },
   argTypes: {
     intent: {
@@ -21,6 +21,11 @@ export const Template: StoryObj = {
       },
     },
   },
-  render: (args) =>
-    html`<hot-button ?disabled=${args.disabled}>${args.children}</hot-button>`,
+  render: (args) => {
+    return (html`<hot-button
+        ?disabled=${args.disabled}
+        onClick="alert('click!')"
+      >${args.children}</hot-button>`
+    )
+  },
 };

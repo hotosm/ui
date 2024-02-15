@@ -1,4 +1,4 @@
 import "./theme/hot.css";
 import "./styles.css";
 import '@unocss/reset/tailwind.css'
-export { Button } from "@/button/Button.js";
+export { default as Button } from './button/ReactButton';
