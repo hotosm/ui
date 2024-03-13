@@ -51,6 +51,13 @@ changes.
 
 <!-- markdownlint-disable -->
 
-<hot-button>Click Me!</hot-button>
+<hot-button id="hotButton">Click Me!</hot-button>
+<script>
+  const button = document.getElementById('hotButton');
+
+  button.addEventListener('click', () => {
+    alert('Button Clicked!');
+  });
+</script>
 
 <!-- markdownlint-enable -->
