@@ -1,10 +1,14 @@
 # hot-button
 
-A button web component.
-
 ## Properties
 
-| Property   | Attribute  | Type                           | Default | Description                                    |
-| ---------- | ---------- | ------------------------------ | ------- | ---------------------------------------------- |
-| `disabled` | `disabled` | `boolean`                      | false   | Disable the button, greyed out, not clickable. |
-| `intent`   | `intent`   | `"primary" &#124; "secondary"` | false   | Changes the colour scheme/intent of the button |
+| Property   | Attribute  | Type                       | Default   | Description                                    |
+| ---------- | ---------- | -------------------------- | --------- | ---------------------------------------------- |
+| `disabled` | `disabled` | `boolean`                  | false     | Disable the button, greyed out, not clickable. |
+| `intent`   | `intent`   | `"primary" \| "secondary"` | "primary" |                                                |
+
+## Events
+
+| Event   |
+| ------- |
+| `click` |
