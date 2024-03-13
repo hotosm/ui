@@ -10,6 +10,7 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  // base: "",
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
