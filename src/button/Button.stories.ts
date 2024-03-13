@@ -21,21 +21,11 @@ export const Template: StoryObj = {
     },
   },
   render: (args) => {
-    let buttonRendered = false;
-    const handleClick = () => {
-      // Function required as the click event is triggered once on render
-      if (buttonRendered) {
-        alert("Button Clicked");
-        return;
-      }
-      buttonRendered = true;
-    };
-
     return html`
       <hot-button
         intent=${args.intent}
         ?disabled=${args.disabled}
-        @click=${handleClick}
+        @click=${() => {alert("Button Clicked")}}
       >
         Button
       </hot-button>

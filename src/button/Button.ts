@@ -47,12 +47,16 @@ export class button extends LitElement {
         disabled: this.disabled,
       })}
       ?disabled=${this.disabled}
+      @click=${(e: MouseEvent) => {this._handleClick(e)}}
     >
       <slot></slot>
     </button>`;
   }
 
-  updated(changedProperties) {
+  private _handleClick(e: MouseEvent) {
+    // As the original event is also named 'click'
+    // stop propagation of the original event
+    e.stopPropagation();
     this.dispatchEvent(new Event("click"));
   }
 }
