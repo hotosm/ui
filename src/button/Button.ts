@@ -51,4 +51,8 @@ export class button extends LitElement {
       <slot></slot>
     </button>`;
   }
+
+  updated(changedProperties) {
+    this.dispatchEvent(new Event("click"));
+  }
 }

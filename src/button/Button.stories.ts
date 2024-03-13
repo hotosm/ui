@@ -9,7 +9,6 @@ export default meta;
 
 export const Template: StoryObj = {
   args: {
-    children: "Button",
     intent: "primary",
     disabled: false,
   },
@@ -21,6 +20,25 @@ export const Template: StoryObj = {
       },
     },
   },
-  render: (args) =>
-    html`<hot-button ?disabled=${args.disabled}>${args.children}</hot-button>`,
+  render: (args) => {
+    let buttonRendered = false;
+    const handleClick = () => {
+      // Function required as the click event is triggered once on render
+      if (buttonRendered) {
+        alert("Button Clicked");
+        return;
+      }
+      buttonRendered = true;
+    };
+
+    return html`
+      <hot-button
+        intent=${args.intent}
+        ?disabled=${args.disabled}
+        @click=${handleClick}
+      >
+        Button
+      </hot-button>
+    `;
+  },
 };
