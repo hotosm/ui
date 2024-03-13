@@ -9,12 +9,12 @@ It production either the HOT S3-based CDN can be used, or JSDelivr.
 <script
   type="module"
   src="https://s3.amazonaws.com/hotosm-ui/latest/ui.js"
->
+></script>
 
 // Import the styles (or create your own)
 <link
-    rel="stylesheet"
-    href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
+  rel="stylesheet"
+  href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
 />
 
 <hot-button>Click Me!</hot-button>
@@ -41,14 +41,8 @@ This deployment is mostly use for development and tracks the most recent
 changes.
 
 ```html
-<script
-  type="module"
-  src="https://hotosm.github.io/ui/dist/ui.js"
->
-<link
-    rel="stylesheet"
-    href="https://hotosm.github.io/ui/dist/style.css"
-/>
+<script type="module" src="https://hotosm.github.io/ui/dist/ui.js"></script>
+<link rel="stylesheet" href="https://hotosm.github.io/ui/dist/style.css" />
 
 <hot-button>Click Me!</hot-button>
 ```

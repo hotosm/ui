@@ -66,12 +66,12 @@ pnpm install @hotosm/ui
 <script
   type="module"
   src="https://s3.amazonaws.com/hotosm-ui/latest/ui.js"
->
+></script>
 
 // Import the styles (or create your own)
 <link
-    rel="stylesheet"
-    href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
+  rel="stylesheet"
+  href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
 />
 
 <div>
