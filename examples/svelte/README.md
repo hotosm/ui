@@ -1,4 +1,4 @@
-# React Demo
+# Svelte Demo
 
 ## Running
 

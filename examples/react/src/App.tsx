@@ -8,7 +8,6 @@ const App = () => {
   const [counter, setCounter] = useState(0);
 
   const clickButton = () => {
-    console.log('test')
     setCounter((prevCounter) => prevCounter + 1);
   };
 
