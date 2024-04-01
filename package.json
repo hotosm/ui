@@ -43,6 +43,9 @@
     }
   ],
   "license": "GPL-3.0-only",
+  "dependencies": {
+    "@lit/react": "^1.0.4"
+  },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.5",
     "@storybook/addon-links": "^7.6.5",
@@ -91,8 +94,5 @@
   "bugs": {
     "url": "https://github.com/hotosm/ui/issues"
   },
-  "homepage": "https://github.com/hotosm/ui#readme",
-  "dependencies": {
-    "postcss-cli": "^11.0.0"
-  }
+  "homepage": "https://github.com/hotosm/ui#readme"
 }

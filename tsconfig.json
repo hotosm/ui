@@ -25,7 +25,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["components"],
+  "include": ["components", "react"],
   "ts-node": {
     "transpileOnly": true,
     "files": true,
