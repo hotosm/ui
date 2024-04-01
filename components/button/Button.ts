@@ -24,7 +24,7 @@ const buttonStyle = cva(
   },
 );
 
-export default class button extends HotElement implements HotElementProps {
+export class button extends HotElement implements HotElementProps {
   @property() name = 'hot-button';
 
   /** Disable the button, greyed out, not clickable. */
@@ -60,3 +60,5 @@ export default class button extends HotElement implements HotElementProps {
     this.dispatchEvent(new Event("click"));
   }
 }
+
+export default button;
