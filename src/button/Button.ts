@@ -1,7 +1,9 @@
-import { css, html, LitElement, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { css, html, unsafeCSS } from "lit";
+import { property } from "lit/decorators.js";
 import reset from "../tailwind-reset";
 import { cva } from "class-variance-authority";
+import HotElement from "../hot-element";
+import type { HotElementProps } from "../hot-element";
 
 const buttonStyle = cva(
   "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
@@ -22,18 +24,14 @@ const buttonStyle = cva(
   },
 );
 
-@customElement("hot-button")
-export class button extends LitElement {
+export default class button extends HotElement implements HotElementProps {
+  @property() name = 'hot-button';
+
   /** Disable the button, greyed out, not clickable. */
-  @property({ type: Boolean }) disabled: boolean;
+  @property({ type: Boolean }) disabled: boolean = false;
 
-  @property({ type: String }) intent: "primary" | "secondary";
-
-  constructor() {
-    super();
-    this.disabled = false;
-    this.intent = "primary";
-  }
+  /** CVA button type. */
+  @property({ type: String }) intent: "primary" | "secondary" = "primary";
 
   static styles = [
     css`
