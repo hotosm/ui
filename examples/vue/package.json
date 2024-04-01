@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev:serve-web-components": "pnpm --prefix ../../ run serve",
+    "dev:start-server": "vite",
+    "dev": "pnpm run '/^dev:.*/'",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
