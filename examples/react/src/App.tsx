@@ -1,7 +1,7 @@
 import hotLogo from './assets/hot_logo.png';
 import { useState } from 'react';
 
-import  HotButton from './HotButton';
+import HotButton from '../../../react/HotButton';
 
 
 const App = () => {
