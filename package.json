@@ -15,7 +15,7 @@
     "dev": "storybook dev -p 3001",
     "build": "vite build",
     "serve": "vite preview",
-    "build:docstrings": "wca analyze 'src/**/*.{js,ts}' --outDir 'docs/components' --format 'markdown'",
+    "build:docstrings": "wca analyze 'components/**/*.{js,ts}' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "storybook build --output-dir=docs/stories",
     "build:docs": "pnpm run build:docstrings && pnpm run build:stories"
   },
