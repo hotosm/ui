@@ -1,8 +1,7 @@
-import { css, html, unsafeCSS } from "lit";
+import { LitElement, css, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 import reset from "../tailwind-reset";
 import { cva } from "class-variance-authority";
-import HotElement from "../hot-element";
 import type { HotElementProps } from "../hot-element";
 
 const buttonStyle = cva(
@@ -12,9 +11,9 @@ const buttonStyle = cva(
       intent: {
         primary: "bg-primary border-2 border-primary text-white",
         secondary: `
-          bg-white border-2 border-primary text-primary! hover:bg-lightGray 
+          bg-white border-2 border-primary text-primary! hover:bg-lightGray
           focus:bg-transparent focus:border-primary
-        `
+        `,
       },
       disabled: {
         true: "opacity-50 cursor-not-allowed",
@@ -24,8 +23,8 @@ const buttonStyle = cva(
   },
 );
 
-export class button extends HotElement implements HotElementProps {
-  @property() name = 'hot-button';
+export class Button extends LitElement implements HotElementProps {
+  @property() name = "hot-button";
 
   /** Disable the button, greyed out, not clickable. */
   @property({ type: Boolean }) disabled: boolean = false;
@@ -47,7 +46,9 @@ export class button extends HotElement implements HotElementProps {
         disabled: this.disabled,
       })}
       ?disabled=${this.disabled}
-      @click=${(e: MouseEvent) => {this._handleClick(e)}}
+      @click=${(e: MouseEvent) => {
+        this._handleClick(e);
+      }}
     >
       <slot></slot>
     </button>`;
@@ -61,4 +62,4 @@ export class button extends HotElement implements HotElementProps {
   }
 }
 
-export default button;
+export default Button;
