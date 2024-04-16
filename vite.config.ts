@@ -13,8 +13,12 @@ export default defineConfig({
   // base: "",
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
+      entry: resolve(__dirname, "components/index.ts"),
       name: "hot",
     },
   },
+  preview: {
+    host: "0.0.0.0",
+    port: 8080
+  }
 });

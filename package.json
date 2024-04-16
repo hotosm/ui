@@ -14,7 +14,8 @@
     "lint": "eslint --ext .js,.ts ./",
     "dev": "storybook dev -p 3001",
     "build": "vite build",
-    "build:docstrings": "wca analyze 'src/**/*.{js,ts}' --outDir 'docs/components' --format 'markdown'",
+    "serve": "vite preview",
+    "build:docstrings": "wca analyze 'components/**/*.{js,ts}' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "storybook build --output-dir=docs/stories",
     "build:docs": "pnpm run build:docstrings && pnpm run build:stories"
   },
@@ -42,6 +43,9 @@
     }
   ],
   "license": "GPL-3.0-only",
+  "dependencies": {
+    "@lit/react": "^1.0.4"
+  },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.5",
     "@storybook/addon-links": "^7.6.5",
@@ -90,8 +94,5 @@
   "bugs": {
     "url": "https://github.com/hotosm/ui/issues"
   },
-  "homepage": "https://github.com/hotosm/ui#readme",
-  "dependencies": {
-    "postcss-cli": "^11.0.0"
-  }
+  "homepage": "https://github.com/hotosm/ui#readme"
 }

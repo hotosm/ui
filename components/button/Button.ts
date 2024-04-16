@@ -1,7 +1,8 @@
-import { css, html, LitElement, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { LitElement, css, html, unsafeCSS } from "lit";
+import { property } from "lit/decorators.js";
 import reset from "../tailwind-reset";
 import { cva } from "class-variance-authority";
+import type { HotElementProps } from "../hot-element";
 
 const buttonStyle = cva(
   "bg-primary text-white py-3 px-6 rounded leading-[1.15]",
@@ -10,9 +11,9 @@ const buttonStyle = cva(
       intent: {
         primary: "bg-primary border-2 border-primary text-white",
         secondary: `
-          bg-white border-2 border-primary text-primary! hover:bg-lightGray 
+          bg-white border-2 border-primary text-primary! hover:bg-lightGray
           focus:bg-transparent focus:border-primary
-        `
+        `,
       },
       disabled: {
         true: "opacity-50 cursor-not-allowed",
@@ -22,18 +23,14 @@ const buttonStyle = cva(
   },
 );
 
-@customElement("hot-button")
-export class button extends LitElement {
+export class Button extends LitElement implements HotElementProps {
+  @property() name = "hot-button";
+
   /** Disable the button, greyed out, not clickable. */
-  @property({ type: Boolean }) disabled: boolean;
+  @property({ type: Boolean }) disabled: boolean = false;
 
-  @property({ type: String }) intent: "primary" | "secondary";
-
-  constructor() {
-    super();
-    this.disabled = false;
-    this.intent = "primary";
-  }
+  /** CVA button type. */
+  @property({ type: String }) intent: "primary" | "secondary" = "primary";
 
   static styles = [
     css`
@@ -49,7 +46,9 @@ export class button extends LitElement {
         disabled: this.disabled,
       })}
       ?disabled=${this.disabled}
-      @click=${(e: MouseEvent) => {this._handleClick(e)}}
+      @click=${(e: MouseEvent) => {
+        this._handleClick(e);
+      }}
     >
       <slot></slot>
     </button>`;
@@ -62,3 +61,5 @@ export class button extends LitElement {
     this.dispatchEvent(new Event("click"));
   }
 }
+
+export default Button;
