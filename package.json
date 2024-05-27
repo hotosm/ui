@@ -75,7 +75,6 @@
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-css-only": "^4.5.2",
     "storybook": "^7.6.5",
-    "tsup": "^7.2.0",
     "type-fest": "^4.8.3",
     "typescript": "^5.2.2",
     "unocss": "^0.58.0",
