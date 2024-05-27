@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: .
-        run: CI=true pnpm install --frozen-lockfile
+        run: CI=true pnpm install
 
       - name: Publish
         working-directory: .
