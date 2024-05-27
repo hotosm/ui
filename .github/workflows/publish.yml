@@ -1,4 +1,4 @@
-name: 🚩 Publish to npmjs.org
+name: 🚀 Publish to npmjs.org
 
 on:
   release:
@@ -27,17 +27,10 @@ jobs:
 
       - name: Install dependencies
         working-directory: .
-        run: CI=true pnpm install
-
-      - name: Run build
-        working-directory: .
-        run: pnpm build
-
-      - name: Set publishing config
-        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: CI=true pnpm install --frozen-lockfile
 
       - name: Publish
         working-directory: .
         run: pnpm publish --access=public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
