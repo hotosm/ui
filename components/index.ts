@@ -1,4 +1,4 @@
-import "./theme/hot.css";
+import "../theme/hot.css";
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import '@shoelace-style/shoelace/dist/themes/dark.css';
 
