@@ -40,4 +40,4 @@ jobs:
 
       - name: Publish
         working-directory: .
-        run: pnpm publish --access=public
+        run: pnpm publish --access=public --no-git-checks
