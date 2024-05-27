@@ -45,10 +45,10 @@ importers:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.32)
       class-variance-authority:
-        specifier: ^0.7.0
+        specifier: 0.7.0
         version: 0.7.0
       clsx:
-        specifier: ^2.0.0
+        specifier: 2.0.0
         version: 2.0.0
       eslint:
         specifier: ^8.0.1
