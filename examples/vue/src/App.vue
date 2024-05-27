@@ -8,11 +8,25 @@
 
         <h2>HOTOSM UI Vue Example</h2>
 
-        <hot-button intent="secondary" @click="clickButton"
-            >Click Me</hot-button
-        >
+        <hot-toolbar tooltip-position="bottom"
+            @hot-undo-click="incrementCounter('undo')"
+            @hot-redo-click="incrementCounter('redo')"
+            @hot-bold-click="incrementCounter('bold')"
+            @hot-italic-click="incrementCounter('italic')"
+            @hot-underline-click="incrementCounter('underline')"
+            @hot-leftalign-click="incrementCounter('leftAlign')"
+            @hot-centeralign-click="incrementCounter('centerAlign')"
+            @hot-rightalign-click="incrementCounter('rightAlign')"
+        ></hot-toolbar>
 
-        <p>Counter: {{ counter }}</p>
+        <p>Undo: {{ counters.undo }}</p>
+        <p>Redo: {{ counters.redo }}</p>
+        <p>Bold: {{ counters.bold }}</p>
+        <p>Italic: {{ counters.italic }}</p>
+        <p>Underline: {{ counters.underline }}</p>
+        <p>Justify Left: {{ counters.leftAlign }}</p>
+        <p>Justify Center: {{ counters.centerAlign }}</p>
+        <p>Justify Right: {{ counters.rightAlign }}</p>
     </main>
 </template>
 
@@ -20,10 +34,19 @@
 import hotLogo from "./assets/hot_logo.png";
 import { ref } from "vue";
 
-const counter = ref(0);
+const counters = {
+    undo: ref(0),
+    redo: ref(0),
+    bold: ref(0),
+    italic: ref(0),
+    underline: ref(0),
+    leftAlign: ref(0),
+    centerAlign: ref(0),
+    rightAlign: ref(0),
+};
 
-const clickButton = () => {
-    counter.value++;
+const incrementCounter = (key) => {
+    counters[key].value++;
 };
 </script>
 

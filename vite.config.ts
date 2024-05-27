@@ -1,7 +1,8 @@
+import { resolve } from "path";
 import { defineConfig } from "vite";
 import UnoCSS from "unocss/vite";
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tsconfigPaths from "vite-tsconfig-paths";
-import { resolve } from "path";
 
 export default defineConfig({
   plugins: [
@@ -9,6 +10,14 @@ export default defineConfig({
       mode: "shadow-dom",
     }),
     tsconfigPaths(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'node_modules/@shoelace-style/shoelace/dist/assets/icons/*.svg',
+          dest: 'shoelace/assets/icons'
+        }
+      ]
+    }),
   ],
   // base: "",
   build: {

@@ -1,14 +1,46 @@
 import hotLogo from './assets/hot_logo.png';
 import { useState } from 'react';
-
-import HotButton from '../../../react/HotButton';
-
+import Toolbar from '../../../react/HotToolbar';
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
+  const [undoCount, setUndoCount] = useState(0);
+  const [redoCount, setRedoCount] = useState(0);
+  const [boldCount, setBoldCount] = useState(0);
+  const [italicCount, setItalicCount] = useState(0);
+  const [underlineCount, setUnderlineCount] = useState(0);
+  const [leftAlignCount, setLeftAlignCount] = useState(0);
+  const [centerAlignCount, setCenterAlignCount] = useState(0);
+  const [rightAlignCount, setRightAlignCount] = useState(0);
 
-  const clickButton = () => {
-    setCounter((prevCounter) => prevCounter + 1);
+  const incrementCounter = (type) => {
+    switch (type) {
+      case 'undo':
+        setUndoCount((prevCount) => prevCount + 1);
+        break;
+      case 'redo':
+        setRedoCount((prevCount) => prevCount + 1);
+        break;
+      case 'bold':
+        setBoldCount((prevCount) => prevCount + 1);
+        break;
+      case 'italic':
+        setItalicCount((prevCount) => prevCount + 1);
+        break;
+      case 'underline':
+        setUnderlineCount((prevCount) => prevCount + 1);
+        break;
+      case 'leftAlign':
+        setLeftAlignCount((prevCount) => prevCount + 1);
+        break;
+      case 'centerAlign':
+        setCenterAlignCount((prevCount) => prevCount + 1);
+        break;
+      case 'rightAlign':
+        setRightAlignCount((prevCount) => prevCount + 1);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -21,12 +53,26 @@ const App = () => {
 
       <h2>HOTOSM UI React Example</h2>
 
-      <HotButton
-        intent="secondary"
-        onclick={clickButton}
-      >Click Me</HotButton>
+      <Toolbar
+        tooltipPosition="bottom"
+        onHotUndoClick={() => { incrementCounter('undo'); }}
+        onHotRedoClick={() => { incrementCounter('redo'); }}
+        onHotBoldClick={() => { incrementCounter('bold'); }}
+        onHotItalicClick={() => { incrementCounter('italic'); }}
+        onHotUnderlineClick={() => { incrementCounter('underline'); }}
+        onHotLeftalignClick={() => { incrementCounter('leftAlign'); }}
+        onHotCenteralignClick={() => { incrementCounter('centerAlign'); }}
+        onHotRightalignClick={() => { incrementCounter('rightAlign'); }}
+      />
 
-      <p>Counter: {counter}</p>
+      <p>Undo: {undoCount}</p>
+      <p>Redo: {redoCount}</p>
+      <p>Bold: {boldCount}</p>
+      <p>Italic: {italicCount}</p>
+      <p>Underline: {underlineCount}</p>
+      <p>Justify Left: {leftAlignCount}</p>
+      <p>Justify Center: {centerAlignCount}</p>
+      <p>Justify Right: {rightAlignCount}</p>
     </main>
   );
 };

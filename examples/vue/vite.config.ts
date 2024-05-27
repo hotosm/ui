@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,10 +10,18 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) => ['hot-button'].includes(tag),
+          isCustomElement: (tag) => ['hot-toolbar'].includes(tag),
         }
       },
-    })
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: '../../dist/*',
+          dest: '.'
+        }
+      ]
+    }),
   ],
   resolve: {
     alias: {

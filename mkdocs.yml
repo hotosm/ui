@@ -62,7 +62,7 @@ nav:
   - Home: index.md
   - About: about.md
   - Components:
-      - Button: components/hot-button.md
+      - Toolbar: components/hot-toolbar.md
   - Usage: usage.md
   - Storybook: storybook.md
   - License: LICENSE.md
