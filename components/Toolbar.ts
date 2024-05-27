@@ -1,19 +1,32 @@
+import "../theme/hot.css";
+import '@shoelace-style/shoelace/dist/themes/light.css';
+import '@shoelace-style/shoelace/dist/themes/dark.css';
+
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import '@shoelace-style/shoelace/dist/components/button-group/button-group.js';
+import '@shoelace-style/shoelace/dist/components/icon/icon.js';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
+
+import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
-import reset from "../tailwind-reset";
-import { cva } from "class-variance-authority";
 
-const toolbarStyle = cva(
-  "some-css-var",
-  {
-    variants: {
-      someProperty: {
-        true: "some-css-var",
-        false: "some-css-var",
-      },
-    },
-  },
-);
+setBasePath('node_modules/@shoelace-style/shoelace/dist');
+
+// import reset from "./tailwind-reset";
+// import { cva } from "class-variance-authority";
+
+// const toolbarStyle = cva(
+//   "some-css-var",
+//   {
+//     variants: {
+//       someProperty: {
+//         true: "some-css-var",
+//         false: "some-css-var",
+//       },
+//     },
+//   },
+// );
 
 export class Toolbar extends LitElement {
   @property() name = "hot-toolbar";
@@ -25,7 +38,7 @@ export class Toolbar extends LitElement {
     css`
       @unocss-placeholder;
     `,
-    unsafeCSS(reset),
+    // unsafeCSS(reset),
   ];
 
   // class=${toolbarStyle({
@@ -112,3 +125,6 @@ export class Toolbar extends LitElement {
 }
 
 export default Toolbar;
+
+// Define web component
+customElements.define("hot-toolbar", Toolbar);

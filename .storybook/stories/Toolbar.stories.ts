@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import "./Toolbar";
+import "../../components/Toolbar.js";
 import { html } from "lit";
 
 const meta: Meta = {
