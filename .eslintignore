@@ -6,4 +6,3 @@ node_modules
 site
 public
 uno.config.ts
-vite.config.ts
