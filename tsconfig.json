@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
     "target": "es2021",
-    "module": "es2015",
+    "module": "esnext",
+    "declaration": true,
     "moduleResolution": "node",
     "lib": ["es2021", "dom"],
-    // "declarationMap": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "outDir": "./dist",
     "paths": {
       "@/*": ["components/*"]
     },
-    "pretty": true,
-    "newLine": "lf",
-    "stripInternal": true,
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
