@@ -54,9 +54,13 @@ jobs:
           git config user.email sysadmin@hotosm.org
           git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
 
-          # Upload latest components dist
-          mkdir -p dist
-          cp -r ${{ github.workspace }}/dist/* dist/
+          # Include all .js and .d.ts files in all dirs
+          rsync -av \
+            --include='*/' \
+            --include='*.js' \
+            --include='*.d.ts' \
+            --exclude='*' \
+            "${{ github.workspace }}" ./
 
           # Push content to gh-pages
           git add .
@@ -74,6 +78,6 @@ jobs:
           # latest for main branch, else tag name
           S3_PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
-          # Push dist to correct S3 dir
-          aws s3 sync --delete ${{ github.workspace }}/dist/ \
+          aws s3 sync --delete --include "*.js" --include "*.d.ts" \
+          ${{ github.workspace }} \
           s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/
