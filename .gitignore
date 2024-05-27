@@ -30,3 +30,8 @@ docs/components.json
 site
 
 .cache
+
+# TS compiled
+**/**/*.js
+**/**/*.js.map
+**/**/*.d.ts
