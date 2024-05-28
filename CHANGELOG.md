@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0a1 (2024-05-28)
+
+### Fix
+
+- restructure components, fix storybook
+
 ## 0.2.0a0 (2024-05-27)
 
 ### Feat
