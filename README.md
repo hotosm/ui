@@ -65,13 +65,13 @@ pnpm install @hotosm/ui
 // Import the components
 <script
   type="module"
-  src="https://s3.amazonaws.com/hotosm-ui/latest/ui.js"
+  src="https://s3.amazonaws.com/hotosm-ui/latest/components/Button.js"
 ></script>
 
 // Import the styles (or create your own)
 <link
   rel="stylesheet"
-  href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
+  href="https://s3.amazonaws.com/hotosm-ui/latest/theme/hot.css"
 />
 
 <div>
@@ -96,7 +96,7 @@ pnpm install @hotosm/ui
 ```
 
 ```js
-import { hot-button } from '@hotosm/ui';
+import '@hotosm/ui/components/Button'
 
 const HomePage = ({}) => {
   return (
