@@ -9,7 +9,7 @@
 </p>
 <p align="center">
   <a href="https://github.com/hotosm/ui/actions/workflows/publish.yml" target="_blank">
-      <img src="https://github.com/hotosm/ui/actions/workflows/publish.yml/badge.svg" alt="Publish">
+      <img src="https://github.com/hotosm/ui/actions/workflows/publish.yml/badge.svg?event=release" alt="Publish">
   </a>
   <a href="https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml" target="_blank">
       <img src="https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml/badge.svg?branch=main" alt="CDN Deploy">
