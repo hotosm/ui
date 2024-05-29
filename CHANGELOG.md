@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0a6 (2024-05-29)
+
+### Fix
+
+- do not run matomo tracking if domain does not match current host
+
 ## 0.2.0a5 (2024-05-29)
 
 ## 0.2.0a4 (2024-05-29)
