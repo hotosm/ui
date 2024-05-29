@@ -44,7 +44,6 @@ jobs:
         run: pnpm build
 
       - name: Upload to GH Pages
-        continue-on-error: true
         run: |
           # Checkout to gh-pages
           mkdir tmp_pages
@@ -64,6 +63,9 @@ jobs:
             --include='i18n/*' \
             --exclude='*' \
             "${{ github.workspace }}/" ./
+
+          # Add a dummy file to ensure something to commit (prevent exit 1)
+          echo "$(date)" > .timestamp
 
           # Push content to gh-pages
           git add .
