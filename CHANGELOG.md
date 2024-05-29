@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0a4 (2024-05-29)
+
+### Fix
+
+- fix react wrapper for demo toolbar
+
 ## 0.2.0a3 (2024-05-29)
 
 ### Feat

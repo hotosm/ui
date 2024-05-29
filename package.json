@@ -1,6 +1,6 @@
 {
   "name": "@hotosm/ui",
-  "version": "0.2.0a3",
+  "version": "0.2.0a4",
   "description": "Shared UI components with theming for use across HOTOSM tools.",
   "type": "module",
   "engines": {
