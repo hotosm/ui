@@ -76,9 +76,12 @@
     "react-dom": "Required for Storybook"
   },
   "files": [
-    "*.js",
-    "*.d.ts",
-    "./theme/hot.css"
+    "components/*.js",
+    "components/*.d.ts",
+    "react/*.js",
+    "react/*.d.ts",
+    "theme/hot.css",
+    "i18n/*.xliff"
   ],
   "publishConfig": {
     "access": "public"
