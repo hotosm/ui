@@ -61,8 +61,10 @@ jobs:
           
           mkdir -p dist
           rsync -av \
-            --include='components/*' \
-            --include='react/*' \
+            --include='components/*.js' \
+            --include='components/*.d.ts' \
+            --include='react/*.js' \
+            --include='react/*.d.ts' \
             --include='theme/*' \
             --include='i18n/*' \
             --exclude='*' \
@@ -90,9 +92,11 @@ jobs:
           # Sync the necessary files to S3
           aws s3 sync --delete \
           --exclude "*" \
-          --include "components/*" \
-          --include "react/*" \
-          --include "theme/*" \
-          --include "i18n/*" \
+          --include "components/*.js" \
+          --include='components/*.d.ts' \
+          --include "react/*.js" \
+          --include='react/*.d.ts' \
+          --include "theme/*.css" \
+          --include "i18n/*.xliff" \
           ${{ github.workspace }} \
           s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/
