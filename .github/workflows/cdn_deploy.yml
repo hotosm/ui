@@ -58,11 +58,10 @@ jobs:
           cd dist
 
           rsync -av \
-            --include='components/' \
-            --include='react/' \
-            --include='react/' \
-            --include='theme/' \
-            --include='i18n/' \
+            --include='components/*' \
+            --include='react/*' \
+            --include='theme/*' \
+            --include='i18n/*' \
             --exclude='*' \
             "${{ github.workspace }}/" ./
 
