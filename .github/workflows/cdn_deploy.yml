@@ -53,6 +53,9 @@ jobs:
           git config user.name svchot
           git config user.email sysadmin@hotosm.org
           git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
+          
+          mkdir -p dist
+          cd dist
 
           rsync -av --exclude='.git' --exclude='node_modules' \
             --include='components/*.js' \
