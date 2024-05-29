@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0a3 (2024-05-29)
+
+### Feat
+
+- add matomo tracking banner & standard button components
+
 ## 0.2.0a2 (2024-05-29)
 
 ## 0.2.0a1 (2024-05-28)
