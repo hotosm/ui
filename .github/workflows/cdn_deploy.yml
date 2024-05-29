@@ -78,6 +78,14 @@ jobs:
           # latest for main branch, else tag name
           S3_PATH: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
         run: |
-          aws s3 sync --delete --include "*.js" --include "*.d.ts" \
+          # Sync the necessary files to S3
+          aws s3 sync --delete \
+          --exclude "*" \
+          --include "components/*.js" \
+          --include "components/*.d.ts" \
+          --include "react/*.js" \
+          --include "react/*.d.ts" \
+          --include "theme/hot.css" \
+          --include "i18n/*.xliff" \
           ${{ github.workspace }} \
           s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/
