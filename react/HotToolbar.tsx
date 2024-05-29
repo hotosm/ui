@@ -2,7 +2,7 @@
 // @ts-ignore
 import * as React from 'react';
 import { createComponent } from '@lit/react';
-import Toolbar from '../Toolbar';
+import Toolbar from '../components/Toolbar';
 
 const reactWrapper = createComponent({
   tagName: 'hot-toolbar',
