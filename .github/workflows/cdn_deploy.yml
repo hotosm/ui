@@ -54,13 +54,15 @@ jobs:
           git config user.email sysadmin@hotosm.org
           git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
 
-          # Include all .js and .d.ts files in all dirs
-          rsync -av \
-            --include='*/' \
-            --include='*.js' \
-            --include='*.d.ts' \
+          rsync -av --exclude='.git' --exclude='node_modules' \
+            --include='components/*.js' \
+            --include='components/*.d.ts' \
+            --include='react/*.js' \
+            --include='react/*.d.ts' \
+            --include='theme/hot.css' \
+            --include='i18n/*.xliff' \
             --exclude='*' \
-            "${{ github.workspace }}" ./
+            "${{ github.workspace }}/" ./
 
           # Push content to gh-pages
           git add .
