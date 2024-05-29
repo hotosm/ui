@@ -21,6 +21,9 @@ export const Template: StoryObj = {
   },
   render: (args) => {
     return html`
+      <h1>Toolbar</h1>
+      <br>
+      <br>
       <hot-toolbar
         tooltip-position="${args.tooltipPosition}"
         @hot-redo-click=${() => {alert("Redo Clicked")}}

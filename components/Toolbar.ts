@@ -10,8 +10,6 @@ import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-
-// import reset from "./tailwind-reset";
 // import { cva } from "class-variance-authority";
 
 // const toolbarStyle = cva(
