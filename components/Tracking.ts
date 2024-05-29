@@ -116,9 +116,16 @@ export class Tracking extends LitElement {
   connectedCallback() {
     super.connectedCallback()
 
+    // Close automatically if already optout
     if (localStorage.getItem(`${this.siteId}-optout-closed`) === 'true') {
-      // Close automatically if already optout
       this.isOpen = false;
+      return;
+    }
+
+    // Close automatically if wrong domain
+    if (window.location.hostname !== this.domain) {
+      this.isOpen = false;
+      return;
     }
   
     // Configure Matomo tracking
