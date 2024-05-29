@@ -10,7 +10,7 @@
     "dev": "pnpm run build && storybook dev -p 3001",
     "prepare": "pnpm run build",
     "build": "tsc",
-    "build:docstrings": "wca analyze 'components/**/*.{ts}' --outDir 'docs/components' --format 'markdown'",
+    "build:docstrings": "wca analyze 'components/*.ts' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "pnpm run build && storybook build --output-dir=docs/stories",
     "build:docs": "pnpm run build:docstrings && pnpm run build:stories",
     "test": "echo \"Error: no test specified\" && exit 1",
