@@ -45,6 +45,12 @@ jobs:
 
       - name: Upload to GH Pages
         run: |
+          # Debug info
+          echo "Content of repo:"
+          ls -lahs "${{ github.workspace }}"
+          echo ""
+          echo "Current dir: ${PWD}"
+
           # Checkout to gh-pages
           mkdir tmp_pages
           cd tmp_pages
@@ -54,15 +60,13 @@ jobs:
           git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
           
           mkdir -p dist
-          cd dist
-
           rsync -av \
             --include='components/*' \
             --include='react/*' \
             --include='theme/*' \
             --include='i18n/*' \
             --exclude='*' \
-            "${{ github.workspace }}/" ./
+            "${{ github.workspace }}/" ./dist/
 
           # Add a dummy file to ensure something to commit (prevent exit 1)
           echo "$(date)" > .timestamp
