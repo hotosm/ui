@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "pnpm run compile && storybook dev -p 3001 --no-open",
-    "prepare": "pnpm run compile",
+    "prepare": "pnpm run build",
     "compile": "tsc",
     "copy-shoelace-assets": "rm -rf dist/assets/icons && cp -r node_modules/@shoelace-style/shoelace/dist/assets dist/",
     "build": "pnpm run compile && rollup --config && pnpm run copy-shoelace-assets",
