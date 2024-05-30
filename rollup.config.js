@@ -1,5 +1,6 @@
 // import { rollupPluginHTML as html } from "@web/rollup-plugin-html";
 import css from 'rollup-plugin-css-only'
+import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 // Replace with @lit-labs/rollup-plugin-minify-html-literals when available
@@ -25,6 +26,9 @@ export default {
     css({
       output: 'styles.css' 
     }),
+
+    // Bundles additional assets (images)
+    importMetaAssets(),
 
     // Minify JS
     terser({
