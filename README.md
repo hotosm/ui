@@ -112,6 +112,8 @@ pnpm install @hotosm/ui
 <hot-button disabled></hot-button>
 ```
 
+> Note that web components must always have a closing tag.
+
 #### Importing Icons
 
 The icon pack for Shoelace must be imported to display in components.
@@ -175,7 +177,7 @@ pnpm install @hotosm/ui
 ```
 
 ```js
-import '@hotosm/ui/react/Button'
+import { Button } from '@hotosm/ui/react/Button'
 
 const HomePage = ({}) => {
   return (
@@ -183,8 +185,7 @@ const HomePage = ({}) => {
       <div
         ...
       >
-        <hot-button disabled>
-        </hot-button>
+        <Button disabled />
       </div>
     </div>
   );
