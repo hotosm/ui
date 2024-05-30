@@ -20,19 +20,13 @@ that your app requires, in addition to tree-shaking in the final bundle
 
 The icon pack for Shoelace must be imported to display in components.
 
-There are two options:
+#### 1. Loading Assets from CDN
 
-#### 1. CDN Assets
+If the component is imported via CDN, the icons will be bundled automatically:
 
-Just add the Shoelace icons via CDN in your HTML file:
-
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style
-/shoelace@2.15.1/cdn/themes/light.css" />
-
-// Or dark
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style
-/shoelace@2.15.1/cdn/themes/dark.css" />
+```js
+import "https://cdn.jsdelivr.net/npm/@shoelace-style
+/shoelace@2.15.1/cdn/components/Button.js"
 ```
 
 #### 2. Bundle Assets Yourself
@@ -164,7 +158,7 @@ To determine which version:
 If you are using a bundler, you must bundle the (icon) assets yourself,
 as described above.
 
-## Example Component In Markdown
+## Example Markdown Components
 
 <!-- markdownlint-disable -->
 
@@ -176,5 +170,9 @@ as described above.
     alert('Button Clicked!');
   });
 </script>
+
+<br>
+
+<hot-toolbar></hot-toolbar>
 
 <!-- markdownlint-enable -->
