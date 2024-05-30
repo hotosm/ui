@@ -10,18 +10,18 @@ export default meta;
 
 export const Template: StoryObj = {
   args: {
-    siteId: "",
-    domain: "somedomain1",
+    siteId: "1",
+    domain: "localhost",
   },
   argTypes: {
     siteId: {
-      options: ["", "1"],
+      options: ["", "1", "2"],
       control: {
         type: "select",
       },
     },
     domain: {
-      options: ["somedomain1", "somedomain2"],
+      options: ["localhost", "anotherdomain"],
       control: {
         type: "select",
       },
