@@ -4,10 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "serve-web-components": "pnpm --prefix ../../ run serve",
-    "dev:build-web-components": "pnpm --prefix ../../ run build",
-    "dev:start-server": "vite",
-    "dev": "pnpm run '/^dev:.*/'",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
@@ -21,5 +18,11 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "vite-plugin-static-copy": "^1.0.2"
+  },
+  "peerDependencies": {
+    "@shoelace-style/shoelace": "^2.15.1"
+  },
+  "dependencies": {
+    "@hotosm/ui": "link:../.."
   }
 }

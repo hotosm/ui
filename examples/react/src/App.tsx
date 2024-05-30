@@ -1,6 +1,7 @@
-import hotLogo from './assets/hot_logo.png';
 import { useState } from 'react';
-import Toolbar from '../../../react/HotToolbar';
+import '@hotosm/ui/theme/hot.css';
+import hotLogo from '@hotosm/ui/theme/logo.png';
+import Toolbar from '@hotosm/ui/react/HotToolbar';
 
 const App = () => {
   const [undoCount, setUndoCount] = useState(0);

@@ -14,14 +14,14 @@ export default defineConfig({
         }
       },
     }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: '../../dist/*',
-          dest: '.'
-        }
-      ]
-    }),
+		viteStaticCopy({
+			targets: [
+			  {
+				src: 'node_modules/@shoelace-style/shoelace/dist/assets',
+				dest: ''
+			  }
+			]
+		}),
   ],
   resolve: {
     alias: {

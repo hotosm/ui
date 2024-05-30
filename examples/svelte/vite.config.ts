@@ -6,14 +6,14 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 export default defineConfig({
   plugins: [
     svelte(),
-    viteStaticCopy({
-      targets: [
-        {
-          src: '../../dist/*',
-          dest: '.'
-        }
-      ]
-    }),
+		viteStaticCopy({
+			targets: [
+			  {
+				src: 'node_modules/@shoelace-style/shoelace/dist/assets',
+				dest: ''
+			  }
+			]
+		}),
   ],
   server: {
     host: "0.0.0.0",

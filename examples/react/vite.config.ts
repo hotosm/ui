@@ -8,14 +8,14 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 export default defineConfig({
   plugins: [
     react({}),
-    viteStaticCopy({
-      targets: [
-        {
-          src: '../../dist/*',
-          dest: '.'
-        }
-      ]
-    }),
+		viteStaticCopy({
+			targets: [
+			  {
+				src: 'node_modules/@shoelace-style/shoelace/dist/assets',
+				dest: ''
+			  }
+			]
+		}),
   ],
   resolve: {
     alias: {

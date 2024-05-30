@@ -31,7 +31,9 @@
 </template>
 
 <script setup>
-import hotLogo from "./assets/hot_logo.png";
+import '@hotosm/ui/theme/hot.css';
+import '@hotosm/ui/components/Toolbar';
+import hotLogo from '@hotosm/ui/theme/logo.png';
 import { ref } from "vue";
 
 const counters = {

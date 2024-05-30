@@ -1,5 +1,7 @@
 <script type="module" lang="ts">
-  import hotLogo from './assets/hot_logo.png';
+  import '@hotosm/ui/theme/hot.css';
+  import '@hotosm/ui/components/Toolbar';
+  import hotLogo from '@hotosm/ui/theme/logo.png';
   import { onMount } from 'svelte';
 
   let undoCount = 0;
