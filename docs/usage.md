@@ -39,18 +39,6 @@ The recommended approach if possible, see the [README](./index.md).
 <hot-button>Click Me!</hot-button>
 ```
 
-## Github Pages
-
-This deployment is mostly use for development and tracks the most recent
-changes.
-
-```html
-<script type="module" src="https://hotosm.github.io/ui/components/Button.js"></script>
-<link rel="stylesheet" href="https://hotosm.github.io/ui/theme/styles.css" />
-
-<hot-button>Click Me!</hot-button>
-```
-
 ## Example Component In Markdown
 
 <!-- markdownlint-disable -->
