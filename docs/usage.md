@@ -2,6 +2,10 @@
 
 It production either the HOT S3-based CDN can be used, or JSDelivr.
 
+## ES6 Modules (NPM Package)
+
+The recommended approach if possible, see the [README](./index.md).
+
 ## AWS S3 CDN
 
 ```html
@@ -47,7 +51,7 @@ changes.
 <hot-button>Click Me!</hot-button>
 ```
 
-## Example
+## Example Component In Markdown
 
 <!-- markdownlint-disable -->
 

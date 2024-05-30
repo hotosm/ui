@@ -59,35 +59,43 @@ pnpm install @hotosm/ui
 
 ## Usage
 
-### HTML / HTMX
+### CDN (HTML / HTMX)
 
 ```html
-// Import the components
+// Import Shoelace dependency
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@shoelace-style
+  /shoelace@2.15.1/cdn/themes/light.css" />
 <script
   type="module"
-  src="https://s3.amazonaws.com/hotosm-ui/latest/components/Button.js"
+  src="https://cdn.jsdelivr.net/npm/@shoelace-style/
+  shoelace@2.15.1/cdn/shoelace-autoloader.js"
 ></script>
 
-// Import the styles (or create your own)
+// Import the components & styles (or add your own styling)
 <link
   rel="stylesheet"
   href="https://s3.amazonaws.com/hotosm-ui/latest/theme/hot.css"
 />
+<script
+  type="module"
+  src="https://s3.amazonaws.com/hotosm-ui/latest/components/Button.js"
+></script>
 
 <div>
   <hot-button disabled> </hot-button>
 </div>
 ```
 
+> Using the Shoelace autoloader will lazy load only the components you use.
+
 See the docs for more [usage examples](https://hotosm.github.io/ui/usage/).
 
-> core.js will contain the minimal low level components.
->
-> extra.js will contain additional wrapper components.
->
-> There should be versioning of the components, plus a /latest/ version too.
+> Components are versioned under subdirectories, with /latest/ tracking the
+> `main` branch, plus versioned releases.
 
-### React
+### ES6 Imports (most frameworks)
 
 Install your required version with a pin, or latest:
 
@@ -96,7 +104,78 @@ pnpm install @hotosm/ui
 ```
 
 ```js
-import '@hotosm/ui/components/Button'
+<script>
+  import '@hotosm/ui/theme/hot.css'
+  import '@hotosm/ui/components/Button'
+</script>
+
+<hot-button disabled></hot-button>
+```
+
+#### Importing Icons
+
+The icon pack for Shoelace must be imported to display in components.
+
+There are two options:
+
+##### CDN Assets
+
+Just add the Shoelace icons via CDN in your HTML file:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style
+/shoelace@2.15.1/cdn/themes/light.css" />
+
+// Or dark
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style
+/shoelace@2.15.1/cdn/themes/dark.css" />
+```
+
+##### Bundle Assets Yourself
+
+- Add Shoelace as a `peerDependency` and to your `package.json`:
+
+    ```json
+      "peerDependencies": {
+        "@shoelace-style/shoelace": "^2.15.1"
+      }
+    ```
+
+- Also add `vite-plugin-static-copy` as a devDependency:
+    `pnpm install -D vite-plugin-static-copy`
+- Add to your `vite.config.ts`:
+
+    ```js
+    import { viteStaticCopy } from 'vite-plugin-static-copy';
+
+    export default defineConfig({
+      plugins: [
+        viteStaticCopy({
+          targets: [
+            {
+            src: 'node_modules/@shoelace-style/shoelace/dist/assets',
+            dest: ''
+            }
+          ]
+        }),
+      ],
+    ```
+
+- Now the Shoelace assets will be bundled with your dist, under `/shoelace`.
+
+#### React
+
+Versions of React below v19 require a specific 'wrapper' component to use the
+web components.
+
+Use these instead of the standard `@hotosm/ui/components/xxx`:
+
+```bash
+pnpm install @hotosm/ui
+```
+
+```js
+import '@hotosm/ui/react/Button'
 
 const HomePage = ({}) => {
   return (
