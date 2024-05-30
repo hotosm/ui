@@ -9,6 +9,9 @@ on:
     # Workflow is triggered only if src changes
     paths:
       - components/**
+      - i18n/**
+      - react/**
+      - theme/**
   # Allow manual trigger (workflow_dispatch)
   workflow_dispatch:
 
