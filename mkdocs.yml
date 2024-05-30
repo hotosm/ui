@@ -62,6 +62,7 @@ nav:
   - About: about.md
   - Components:
       - Button: components/hot-button.md
+      - Header: components/hot-header.md
       - Toolbar: components/hot-toolbar.md
       - Tracking: components/hot-tracking.md
   - Usage: usage.md
