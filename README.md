@@ -118,7 +118,7 @@ The icon pack for Shoelace must be imported to display in components.
 
 There are two options:
 
-##### CDN Assets
+##### 1. CDN Assets
 
 Just add the Shoelace icons via CDN in your HTML file:
 
@@ -131,7 +131,7 @@ Just add the Shoelace icons via CDN in your HTML file:
 /shoelace@2.15.1/cdn/themes/dark.css" />
 ```
 
-##### Bundle Assets Yourself
+##### 2. Bundle Assets Yourself
 
 - Add Shoelace as a `peerDependency` and to your `package.json`:
 
