@@ -35,3 +35,6 @@ site
 **/**/*.js
 **/**/*.js.map
 **/**/*.d.ts
+
+# Allow rollup config
+!rollup.config.js
