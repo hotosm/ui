@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.0a7 (2024-05-30)
+
+### Feat
+
+- add index.ts files for importing all components at once
+- add logo and icons to theme dir
+
+### Fix
+
+- update all examples with latest syntax
+
+### Refactor
+
+- rename HotElement --> Element for react
+
 ## 0.2.0a6 (2024-05-29)
 
 ### Fix
