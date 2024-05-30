@@ -18,7 +18,7 @@ The recommended approach if possible, see the [README](./index.md).
 // Import the styles (or create your own)
 <link
   rel="stylesheet"
-  href="https://s3.amazonaws.com/hotosm-ui/latest/theme/hot.css"
+  href="https://s3.amazonaws.com/hotosm-ui/latest/theme/styles.css"
 />
 
 <hot-button>Click Me!</hot-button>
@@ -33,7 +33,7 @@ The recommended approach if possible, see the [README](./index.md).
 ></script>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/hotosm/ui@latest/theme/hot.css"
+  href="https://cdn.jsdelivr.net/gh/hotosm/ui@latest/theme/styles.css"
 />
 
 <hot-button>Click Me!</hot-button>
@@ -46,7 +46,7 @@ changes.
 
 ```html
 <script type="module" src="https://hotosm.github.io/ui/components/Button.js"></script>
-<link rel="stylesheet" href="https://hotosm.github.io/ui/theme/hot.css" />
+<link rel="stylesheet" href="https://hotosm.github.io/ui/theme/styles.css" />
 
 <hot-button>Click Me!</hot-button>
 ```

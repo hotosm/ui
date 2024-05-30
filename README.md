@@ -76,7 +76,7 @@ pnpm install @hotosm/ui
 // Import the components & styles (or add your own styling)
 <link
   rel="stylesheet"
-  href="https://s3.amazonaws.com/hotosm-ui/latest/theme/hot.css"
+  href="https://s3.amazonaws.com/hotosm-ui/latest/theme/styles.css"
 />
 <script
   type="module"
@@ -105,7 +105,7 @@ pnpm install @hotosm/ui
 
 ```js
 <script>
-  import '@hotosm/ui/theme/hot.css'
+  import '@hotosm/ui/theme/styles.css'
   import '@hotosm/ui/components/Button'
 </script>
 
@@ -193,3 +193,23 @@ const HomePage = ({}) => {
 
 export default HomePage;
 ```
+
+## Using Extra Shoelace Components
+
+The UI library is not comprehensive & you may wish to use additional components
+from Shoelace in your app.
+
+Ideally you should install the same version of @shoelace-style/shoelace as this
+library.
+
+To determine which version:
+
+- View the
+  [@hotosm/ui](https://www.npmjs.com/package/@hotosm/ui?activeTab=versions)
+  package on npmjs.com.
+- Select the version you are using.
+- Go to the `Code` tab, then open the `package.json` file.
+- The version of shoelace used should be in the `dependencies` section.
+
+If you are using a bundler, you must bundle the (icon) assets yourself,
+as described above.
