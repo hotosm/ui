@@ -61,6 +61,7 @@ jobs:
           
           mkdir -p dist
           rsync -av \
+            --include='dist/***' \
             --include='components/*.js' \
             --include='components/*.d.ts' \
             --include='react/*.js' \
@@ -92,6 +93,7 @@ jobs:
           # Sync the necessary files to S3
           aws s3 sync --delete \
           --exclude "*" \
+          --include='dist' \
           --include "components/*.js" \
           --include='components/*.d.ts' \
           --include "react/*.js" \
