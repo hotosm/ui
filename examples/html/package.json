@@ -1,0 +1,17 @@
+{
+  "name": "hotosm-ui-html-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "get-js": "cd ../../ && pnpm run build && cp dist/components.js examples/html/public/components.js",
+    "get-css": "cd ../../ && cp dist/styles.css examples/html/public/styles.css",
+    "clean-icons": "rm -rf public/assets ",
+    "get-icons": "pnpm run clean-icons && cd ../../ && cp -r dist/assets examples/html/public/",
+    "setup-dist": "pnpm run get-js && pnpm run get-css && pnpm run get-icons",
+    "dev": "pnpm run setup-dist && vite"
+  },
+  "devDependencies": {
+    "vite": "^5.1.4"
+  }
+}
