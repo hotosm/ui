@@ -43,42 +43,6 @@ jobs:
         working-directory: .
         run: pnpm build
 
-      - name: Upload to GH Pages
-        run: |
-          # Debug info
-          echo "Content of repo:"
-          ls -lahs "${{ github.workspace }}"
-          echo ""
-          echo "Current dir: ${PWD}"
-
-          # Checkout to gh-pages
-          mkdir tmp_pages
-          cd tmp_pages
-          git init --initial-branch=gh-pages
-          git config user.name svchot
-          git config user.email sysadmin@hotosm.org
-          git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
-          
-          mkdir -p dist
-          rsync -av \
-            --include='dist/***' \
-            --include='components/*.js' \
-            --include='components/*.d.ts' \
-            --include='react/*.js' \
-            --include='react/*.d.ts' \
-            --include='theme/*' \
-            --include='i18n/*' \
-            --exclude='*' \
-            "${{ github.workspace }}/" ./dist/
-
-          # Add a dummy file to ensure something to commit (prevent exit 1)
-          echo "$(date)" > .timestamp
-
-          # Push content to gh-pages
-          git add .
-          git commit -m "docs: update component dist to latest"
-          git push --set-upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
-
       - name: Configure AWS Creds
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -93,7 +57,7 @@ jobs:
           # Sync the necessary files to S3
           aws s3 sync --delete \
           --exclude "*" \
-          --include='dist' \
+          --include='dist/*' \
           --include "components/*.js" \
           --include='components/*.d.ts' \
           --include "react/*.js" \
