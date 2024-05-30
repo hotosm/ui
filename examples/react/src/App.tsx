@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import '@hotosm/ui/theme/hot.css';
 import hotLogo from '@hotosm/ui/theme/logo.png';
 import Toolbar from '@hotosm/ui/react/Toolbar';
 
