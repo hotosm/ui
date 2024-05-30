@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.0a8 (2024-05-30)
+
+### Feat
+
+- add a started Header component
+
+### Fix
+
+- storybook for Tracking component correct props
+- do not import hot.css inside app templates
+
+### Refactor
+
+- update refs to cdn hot.css --> combined styles.css (shoelace)
+
 ## 0.2.0a7 (2024-05-30)
 
 ### Feat
