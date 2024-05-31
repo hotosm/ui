@@ -7,7 +7,7 @@ import '@shoelace-style/shoelace/dist/components/alert/alert.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 
-import registerBundledIcons from '../theme/icons/bundled';
+import registerBundledIcons from '../components/icons';
 
 registerBundledIcons();
 

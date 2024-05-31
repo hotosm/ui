@@ -10,7 +10,7 @@ import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import registerBundledIcons from '../theme/icons/bundled';
+import registerBundledIcons from '../components/icons';
 
 registerBundledIcons();
 
