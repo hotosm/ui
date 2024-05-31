@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0b2 (2024-05-31)
+
+### Fix
+
+- minor fixes to matomo tracking component, add 'force' var
+
+### Refactor
+
+- rename all react events onHotXx --> onXx
+
 ## 0.2.0b1 (2024-05-31)
 
 ### Fix
