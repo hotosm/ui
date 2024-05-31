@@ -11,8 +11,8 @@ export default defineConfig({
 		viteStaticCopy({
 			targets: [
 			  {
-				src: 'node_modules/@shoelace-style/shoelace/dist/assets',
-				dest: ''
+          src: 'node_modules/@hotosm/ui/dist/assets',
+          dest: ''
 			  }
 			]
 		}),

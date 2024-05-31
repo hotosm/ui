@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "compile-ui": "pnpm --prefix ../../ run build",
+    "dev": "pnpm run compile-ui && vite",
     "build": "vite build",
     "preview": "vite preview",
     "build-only": "vite build"
@@ -36,8 +37,5 @@
     "@hotosm/ui": "link:../..",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  },
-  "peerDependencies": {
-    "@shoelace-style/shoelace": "^2.15.1"
   }
 }

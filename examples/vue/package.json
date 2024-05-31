@@ -4,12 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "serve-web-components": "pnpm --prefix ../../ run serve",
-    "dev:build-web-components": "pnpm --prefix ../../ run build",
-    "dev:start-server": "vite",
-    "dev": "pnpm run '/^dev:.*/'",
+    "compile-ui": "pnpm --prefix ../../ run build",
+    "dev": "pnpm run compile-ui && vite",
     "build": "vite build",
-    "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force"
   },
@@ -27,8 +24,5 @@
     "vite": "^5.1.6",
     "vite-plugin-static-copy": "^1.0.2",
     "vue-tsc": "^2.0.6"
-  },
-  "peerDependencies": {
-    "@shoelace-style/shoelace": "^2.15.1"
   }
 }
