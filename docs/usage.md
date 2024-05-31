@@ -128,11 +128,11 @@ The example below imports the compiled bundle (i.e. all components and styles):
 ```html
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/components.js"
+  src="https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/components.js"
 ></script>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/hotosm/ui@latest/dist/styles.css"
+  href="https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/styles.css"
 />
 
 <hot-button>Click Me!</hot-button>
