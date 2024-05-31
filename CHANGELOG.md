@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0b0 (2024-05-31)
+## 0.2.0b0 (2024-05-31) Beta
 
 ### Feat
 
@@ -25,7 +25,7 @@
 - update refs to cdn hot.css --> combined styles.css (shoelace)
 - rename HotElement --> Element for react
 
-## 0.2.0a0 (2024-05-27)
+## 0.2.0a0 (2024-05-27) Alpha
 
 ### Feat
 
