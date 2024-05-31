@@ -8,8 +8,8 @@ const reactWrapper = createComponent({
   elementClass: Tracking,
   react: React,
   events: {
-    onHotAgree: 'agree',
-    onHotDisagree: 'disagree',
+    onAgree: 'agree',
+    onDisagree: 'disagree',
   },
   displayName: 'hot-tracking'
 });

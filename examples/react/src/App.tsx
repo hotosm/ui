@@ -55,14 +55,14 @@ const App = () => {
 
       <Toolbar
         tooltipPosition="bottom"
-        onHotUndoClick={() => { incrementCounter('undo'); }}
-        onHotRedoClick={() => { incrementCounter('redo'); }}
-        onHotBoldClick={() => { incrementCounter('bold'); }}
-        onHotItalicClick={() => { incrementCounter('italic'); }}
-        onHotUnderlineClick={() => { incrementCounter('underline'); }}
-        onHotLeftalignClick={() => { incrementCounter('leftAlign'); }}
-        onHotCenteralignClick={() => { incrementCounter('centerAlign'); }}
-        onHotRightalignClick={() => { incrementCounter('rightAlign'); }}
+        onUndoClick={() => { incrementCounter('undo'); }}
+        onRedoClick={() => { incrementCounter('redo'); }}
+        onBoldClick={() => { incrementCounter('bold'); }}
+        onItalicClick={() => { incrementCounter('italic'); }}
+        onUnderlineClick={() => { incrementCounter('underline'); }}
+        onLeftalignClick={() => { incrementCounter('leftAlign'); }}
+        onCenteralignClick={() => { incrementCounter('centerAlign'); }}
+        onRightalignClick={() => { incrementCounter('rightAlign'); }}
       />
 
       <p>Undo: {undoCount}</p>
