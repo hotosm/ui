@@ -27,12 +27,12 @@ theme:
   # custom_dir: docs/overrides
 
 extra_javascript:
-  - path: https://s3.amazonaws.com/hotosm-ui/latest/dist/components.js
+  - path: https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/components.js
     type: module
 
 extra_css:
   - css/extra.css
-  - https://s3.amazonaws.com/hotosm-ui/latest/dist/styles.css
+  - https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/styles.css
 
 markdown_extensions:
   - tables
