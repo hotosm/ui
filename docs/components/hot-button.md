@@ -13,3 +13,20 @@
 | Event   |
 |---------|
 | `click` |
+
+## Example
+
+<!-- markdownlint-disable -->
+
+<hot-button id="hotButton">Click Me!</hot-button>
+<script>
+  const button = document.getElementById('hotButton');
+
+  button.addEventListener('click', () => {
+    alert('Button Clicked!');
+  });
+</script>
+
+<br>
+
+<!-- markdownlint-enable -->
