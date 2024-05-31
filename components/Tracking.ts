@@ -26,6 +26,9 @@ export class Tracking extends LitElement {
   /** The domains to apply tracking. */
   @property({ type: String }) domain: string = "";
 
+  /** Force display the banner. */
+  @property({ type: Boolean }) force: boolean = false;
+
   @state() isOpen: boolean = true;
 
   static styles = [
@@ -78,78 +81,75 @@ export class Tracking extends LitElement {
     By clicking "I Agree", you consent to the use of cookies.
     </p>
 
-    <sl-button @click=${(e: MouseEvent) => {
-      this._setAgree(e);
-    }}>I Agree</sl-button>
-    <sl-button @click=${(e: MouseEvent) => {
-      this._setDisagree(e);
-    }}>I Do Not Agree</sl-button>
+    <sl-button @click=${this._setAgree}>I Agree</sl-button>
+    <sl-button @click=${this._setDisagree}>I Do Not Agree</sl-button>
     </sl-alert>`;
-  }
-
-  private _closeAlert() {
-    this.isOpen = false;
-    localStorage.setItem(`${this.siteId}-optout-closed`, 'true');
   }
 
   private _setAgree(_e: MouseEvent) {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
-    if (_paq.length === 0) {
-      return;
-    }
+    if (_paq.length === 0) return;
 
     _paq.push(['rememberConsentGiven']);
-    this._closeAlert()
+    this.isOpen = false;
+    localStorage.setItem(`${this.siteId}-matomo-agree`, 'true');
     this.dispatchEvent(new Event('agree', {bubbles: true, composed: true}));
   }
 
   private _setDisagree(_e: MouseEvent) {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
-    if (_paq.length === 0) {
-      return;
-    }
+    if (_paq.length === 0) return;
 
     _paq.push(['forgetConsentGiven']);
-    this._closeAlert()
+    this.isOpen = false;
+    localStorage.setItem(`${this.siteId}-matomo-agree`, 'false');
     this.dispatchEvent(new Event('disagree', {bubbles: true, composed: true}));
   }
 
-
   connectedCallback() {
-    super.connectedCallback()
+    super.connectedCallback();
 
-    // Close automatically if already optout
-    if (localStorage.getItem(`${this.siteId}-optout-closed`) === 'true') {
-      this.isOpen = false;
-      return;
-    }
-
-    // Close automatically if wrong domain
-    if (window.location.hostname !== this.domain) {
+    // Close and halt execution if wrong domain
+    if (!this.force && window.location.hostname !== this.domain) {
+      console.warn('Matomo init failed. Provided domain does not match current domain.');
       this.isOpen = false;
       return;
     }
   
-    // Configure Matomo tracking
     const matomoTrackingId = this.siteId;
 
-    if ((matomoTrackingId.length === 0) || this.domain.length === 0) {
+    // Close and halt execution if siteId or domain not set
+    if (!this.force && (matomoTrackingId.length === 0 || this.domain.length === 0)) {
       console.warn('Matomo init failed. No site id or domains provided.');
       this.isOpen = false;
       return;
     }
 
+    // Close and halt execution if already disagreed
+    const consent = localStorage.getItem(`${this.siteId}-matomo-agree`);
+    if (consent === 'false') {
+      this.isOpen = false;
+      return;
+    }
+
+    // Close prompt only if already agreed, continue
+    if (consent === 'true') {
+      this.isOpen = false;
+    }
+
+    console.log(`Setting Matomo tracking for site=${matomoTrackingId} domain=${this.domain}`);
+
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
   
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    // tracker methods like "setCustomDimension" should be called before "trackPageView"
     _paq.push(['requireConsent']);
     _paq.push(['setDomains', [this.domain]]);
     _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']); // Tracks downloads
-    _paq.push(['trackVisibleContentImpressions']); // Tracks content blocks
+    _paq.push(['enableLinkTracking']);  // Tracks downloads
+    _paq.push(['trackVisibleContentImpressions']);  // Tracks content
   
     (function () {
       const u = '//matomo.hotosm.org/';
@@ -160,7 +160,7 @@ export class Tracking extends LitElement {
       const g = d.createElement('script');
       const s = d.getElementsByTagName('script')[0];
 
-      if ((s?.parentNode) != null) {
+      if (s?.parentNode != null) {
         g.async = true;
         g.src = u + 'matomo.js';
         s.parentNode.insertBefore(g, s);
