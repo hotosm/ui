@@ -7,6 +7,10 @@ import '@shoelace-style/shoelace/dist/components/alert/alert.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 
+import registerBundledIcons from '../theme/icons/bundled';
+
+registerBundledIcons();
+
 declare global {
   interface Window {
     _paq: any[];
@@ -55,7 +59,7 @@ export class Tracking extends LitElement {
       variant="danger"
       ?open=${this.isOpen}
     >
-    <sl-icon id="hot-red-text" slot="icon" name="info-circle"></sl-icon>
+    <sl-icon id="hot-red-text" library="bundled" slot="icon" name="info-circle"></sl-icon>
 
     <p id="tracking-header">
     About the information we collect

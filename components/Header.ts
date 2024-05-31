@@ -9,6 +9,10 @@ import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
+import registerBundledIcons from '../theme/icons/bundled';
+
+registerBundledIcons();
+
 const hotLogo = new URL('../theme/logo.png', import.meta.url);
 
 // import { cva } from "class-variance-authority";
@@ -128,7 +132,7 @@ export class Header extends LitElement {
 
       ${this.drawer ? html`
         <div id="drawer-block" style="font-size: 32px;">
-          <sl-icon-button name="list" label="drawer-open"></sl-icon-button>
+          <sl-icon-button library="bundled" name="list" label="drawer-open"></sl-icon-button>
         </div>
       ` : null}
 

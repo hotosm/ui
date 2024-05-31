@@ -10,6 +10,10 @@ import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
+import registerBundledIcons from '../theme/icons/bundled';
+
+registerBundledIcons();
+
 // import { cva } from "class-variance-authority";
 
 // const toolbarStyle = cva(
@@ -72,7 +76,7 @@ export class Toolbar extends LitElement {
   private renderButton({ content, icon, label, action }: { content: string, icon: string, label: string, action?: (e: MouseEvent) => void }) {
     return html`
       <sl-tooltip content=${content} placement="${this.tooltipPosition}">
-        <sl-button @click=${action ?? (() => {})}><sl-icon name=${icon} label=${label}></sl-icon></sl-button>
+        <sl-button @click=${action ?? (() => {})}><sl-icon library="bundled" name=${icon} label=${label}></sl-icon></sl-button>
       </sl-tooltip>
     `;
   }
