@@ -65,7 +65,6 @@ nav:
       - Header: components/hot-header.md
       - Toolbar: components/hot-toolbar.md
       - Tracking: components/hot-tracking.md
-  - Usage: usage.md
   - Storybook: storybook.md
   - License: LICENSE.md
   - Changelog: CHANGELOG.md
