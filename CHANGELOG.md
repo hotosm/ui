@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0b1 (2024-05-31)
+
+### Fix
+
+- move bundled icons to components dir and update refs
+
 ## 0.2.0b0 (2024-05-31) Beta
 
 ### Feat
