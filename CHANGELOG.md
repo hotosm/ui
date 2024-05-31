@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.2.0b0 (2024-05-31)
+
+### Feat
+
+- add a started Header component
+- add index.ts files for importing all components at once
+- add logo and icons to theme dir
+- add matomo tracking banner & standard button components
+
+### Fix
+
+- remove setbasepath in favour of bundles icons
+- storybook for Tracking component correct props
+- do not import hot.css inside app templates
+- update all examples with latest syntax
+- do not run matomo tracking if domain does not match current host
+- fix react wrapper for demo toolbar
+- restructure components, fix storybook
+
+### Refactor
+
+- remove bundled icons from storybook config
+- update refs to cdn hot.css --> combined styles.css (shoelace)
+- rename HotElement --> Element for react
+
 ## 0.2.0a0 (2024-05-27)
 
 ### Feat
