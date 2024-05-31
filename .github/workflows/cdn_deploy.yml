@@ -65,7 +65,7 @@ jobs:
           --include='components/*.d.ts' \
           --include "react/*.js" \
           --include='react/*.d.ts' \
-          --include "theme/*.css" \
+          --include "theme/*" \
           --include "i18n/*.xliff" \
           ${{ github.workspace }} \
           s3://${{ vars.S3_BUCKET_NAME }}/${{ env.S3_PATH }}/
