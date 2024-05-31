@@ -19,11 +19,3 @@
 | `hot-rightalign-click`  |
 | `hot-underline-click`   |
 | `hot-undo-click`        |
-
-## Example
-
-<!-- markdownlint-disable -->
-
-<hot-toolbar></hot-toolbar>
-
-<!-- markdownlint-enable -->
