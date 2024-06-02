@@ -4,6 +4,7 @@ import "../../components/Tracking.js";
 import { html } from "lit";
 
 const meta: Meta = {
+  title: "Tracking",
   component: "hot-tracking",
 };
 export default meta;

@@ -3,6 +3,7 @@ import "../../components/Button.js";
 import { html } from "lit";
 
 const meta: Meta = {
+  title: "Button",
   component: "hot-button",
 };
 export default meta;
@@ -30,7 +31,6 @@ export const Template: StoryObj = {
   parameters: {
     showToast: () => {
       const alert = document.getElementById("click-toast");
-      console.log(alert)
       if (alert) {
         alert.show();
       }
@@ -47,6 +47,8 @@ export const Template: StoryObj = {
         ?disabled=${args.disabled}
       >${args.text}</hot-button>
 
+      <br>
+      <br>
       <sl-alert id="click-toast" variant="success" duration="3000" closable>
         <sl-icon slot="icon" name="check2-circle"></sl-icon>
         You clicked the button.

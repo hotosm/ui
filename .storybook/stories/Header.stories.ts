@@ -1,19 +1,54 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
+import { hrefTo } from '@storybook/addon-links';
 import "../../components/Header.js";
 import { html } from "lit";
 
 const defaultLogo = new URL('../../theme/logo.png', import.meta.url).href;
 
 const meta: Meta = {
+  title: "Header",
   component: "hot-header",
 };
 export default meta;
+
+const oneTab = [
+  { label: 'ONE TAB ONLY', clickEvent: () => {} }
+];
+const twoTab = [
+  {
+    label: 'GO TO HEADER PAGE',
+    clickEvent: async () => {
+      const url = await hrefTo('Button', 'Template');
+      window.location.href = url;
+    }
+  },
+  {
+    label: 'GO TO TRACKING PAGE',
+    clickEvent: async () => {
+      const url = await hrefTo('Tracking', 'Template');
+      window.location.href = url;
+    }
+  }
+];
+const threeTab = Array.from({ length: 3 }, (_, index) => ({
+  label: `TAB Number ${index + 1}`,
+  clickEvent: () => {}
+}));
+const fourTab = Array.from({ length: 4 }, (_, index) => ({
+  label: `TAB Number ${index + 1}`,
+  clickEvent: () => {}
+}));
+const fiveTab = Array.from({ length: 5 }, (_, index) => ({
+  label: `TAB Number ${index + 1}`,
+  clickEvent: () => {}
+}));
 
 export const Template: StoryObj = {
   args: {
     title: "",
     logo: defaultLogo,
-    drawer: true
+    drawer: true,
+    tabs: twoTab,
   },
   argTypes: {
     title: {
@@ -34,13 +69,26 @@ export const Template: StoryObj = {
         type: "radio",
       },
     },
+    tabs: {
+      options: {
+        '1 Tab': oneTab,
+        '2 Tabs': twoTab,
+        '3 Tabs': threeTab,
+        '4 Tabs': fourTab,
+        '5 Tabs': fiveTab,
+      },
+      control: {
+        type: "select",
+      },
+    },
   },
   render: (args) => {
     return html`
       <hot-header
-        title="${args.title}"
-        logo="${args.logo}"
+        title=${args.title}
+        logo=${args.logo}
         ?drawer=${args.drawer}
+        .tabs=${args.tabs}
       ></hot-header>
     `;
   },

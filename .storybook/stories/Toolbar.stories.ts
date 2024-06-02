@@ -3,6 +3,7 @@ import "../../components/Toolbar.js";
 import { html } from "lit";
 
 const meta: Meta = {
+  title: "Toolbar",
   component: "hot-toolbar",
 };
 export default meta;
