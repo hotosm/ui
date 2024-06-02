@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0b3 (2024-06-02)
+
+### Refactor
+
+- update logs and css for matomo tracking component
+
 ## 0.2.0b2 (2024-05-31)
 
 ### Fix
