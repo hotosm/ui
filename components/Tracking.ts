@@ -42,9 +42,7 @@ export class Tracking extends LitElement {
         font-weight: var(--sl-font-weight-bold);
         font-size: var(--sl-font-size-large);
         color: #d63f3f;
-      }
-      #hot-red-text {
-        color: #d63f3f;
+        text-align: center;
       }
       sl-alert::part(base) {
         position: absolute;
@@ -53,6 +51,7 @@ export class Tracking extends LitElement {
         transform: translateX(-50%);
         z-index: 1000;
         width: 80vw;
+        text-align: center;
       }
     `
   ];
@@ -73,7 +72,7 @@ export class Tracking extends LitElement {
     and measure traffic usage and activity. You can learn about how we use the data
     about your visit or information you provide reading our
       <a
-        id="hot-red-text"
+        style="color: #d63f3f;"
         href="https://www.hotosm.org/privacy"
         target="_blank"
         rel="noopener noreferrer"
@@ -81,8 +80,8 @@ export class Tracking extends LitElement {
     By clicking "I Agree", you consent to the use of cookies.
     </p>
 
-    <sl-button @click=${this._setAgree}>I Agree</sl-button>
-    <sl-button @click=${this._setDisagree}>I Do Not Agree</sl-button>
+    <sl-button @click=${(e: MouseEvent) => {this._setAgree(e)}}>I Agree</sl-button>
+    <sl-button @click=${(e: MouseEvent) => {this._setDisagree(e)}}>I Do Not Agree</sl-button>
     </sl-alert>`;
   }
 
@@ -113,7 +112,7 @@ export class Tracking extends LitElement {
 
     // Close and halt execution if wrong domain
     if (!this.force && window.location.hostname !== this.domain) {
-      console.warn('Matomo init failed. Provided domain does not match current domain.');
+      console.warn(`Matomo init failed. ${window.location.hostname} does not match ${this.domain}.`);
       this.isOpen = false;
       return;
     }
