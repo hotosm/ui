@@ -9,8 +9,8 @@
 
 ## Events
 
-| Event                   |
-|-------------------------|
+| Event               |
+|---------------------|
 | `bold-click`        |
 | `centeralign-click` |
 | `italic-click`      |
