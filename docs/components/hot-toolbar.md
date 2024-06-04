@@ -11,11 +11,11 @@
 
 | Event                   |
 |-------------------------|
-| `hot-bold-click`        |
-| `hot-centeralign-click` |
-| `hot-italic-click`      |
-| `hot-leftalign-click`   |
-| `hot-redo-click`        |
-| `hot-rightalign-click`  |
-| `hot-underline-click`   |
-| `hot-undo-click`        |
+| `bold-click`        |
+| `centeralign-click` |
+| `italic-click`      |
+| `leftalign-click`   |
+| `redo-click`        |
+| `rightalign-click`  |
+| `underline-click`   |
+| `undo-click`        |

@@ -9,14 +9,14 @@ const reactWrapper = createComponent({
   elementClass: Toolbar,
   react: React,
   events: {
-    onUndoClick: 'hot-undo-click',
-    onRedoClick: 'hot-redo-click',
-    onBoldClick: 'hot-bold-click',
-    onItalicClick: 'hot-italic-click',
-    onUnderlineClick: 'hot-underline-click',
-    onLeftalignClick: 'hot-leftalign-click',
-    onCenteralignClick: 'hot-centeralign-click',
-    onRightalignClick: 'hot-rightalign-click',
+    onUndoClick: 'undo-click',
+    onRedoClick: 'redo-click',
+    onBoldClick: 'bold-click',
+    onItalicClick: 'italic-click',
+    onUnderlineClick: 'underline-click',
+    onLeftalignClick: 'leftalign-click',
+    onCenteralignClick: 'centeralign-click',
+    onRightalignClick: 'rightalign-click',
   },
   displayName: 'hot-toolbar'
 });

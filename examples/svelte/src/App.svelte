@@ -68,14 +68,14 @@
 
   <hot-toolbar
     tooltip-position="bottom"
-    on:hot-undo-click={undoClick}
-    on:hot-redo-click={redoClick}
-    on:hot-bold-click={boldClick}
-    on:hot-italic-click={italicClick}
-    on:hot-underline-click={underlineClick}
-    on:hot-leftalign-click={leftAlignClick}
-    on:hot-centeralign-click={centerAlignClick}
-    on:hot-rightalign-click={rightAlignClick}
+    on:undo-click={undoClick}
+    on:redo-click={redoClick}
+    on:bold-click={boldClick}
+    on:italic-click={italicClick}
+    on:underline-click={underlineClick}
+    on:leftalign-click={leftAlignClick}
+    on:centeralign-click={centerAlignClick}
+    on:rightalign-click={rightAlignClick}
   ></hot-toolbar>
 
   <p>Undo: {undoCount}</p>

@@ -83,42 +83,42 @@ export class Toolbar extends LitElement {
     // As the original event is also named 'click'
     // stop propagation of the original event
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-undo-click"));
+    this.dispatchEvent(new Event("undo-click"));
   }
 
   private readonly redo = (e: MouseEvent) => {
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-redo-click"));
+    this.dispatchEvent(new Event("redo-click"));
   }
 
   private readonly bold = (e: MouseEvent) => {
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-bold-click"));
+    this.dispatchEvent(new Event("bold-click"));
   }
 
   private readonly italic = (e: MouseEvent) => {
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-italic-click"));
+    this.dispatchEvent(new Event("italic-click"));
   }
 
   private readonly underline = (e: MouseEvent) => {
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-underline-click"));
+    this.dispatchEvent(new Event("underline-click"));
   }
 
   private readonly alignLeft = (e: MouseEvent) => {
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-leftalign-click"));
+    this.dispatchEvent(new Event("leftalign-click"));
   }
 
   private readonly alignCenter = (e: MouseEvent) => {
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-centeralign-click"));
+    this.dispatchEvent(new Event("centeralign-click"));
   }
 
   private readonly alignRight = (e: MouseEvent) => {
     e.stopPropagation();
-    this.dispatchEvent(new Event("hot-rightalign-click"));
+    this.dispatchEvent(new Event("rightalign-click"));
   }
 }
 
