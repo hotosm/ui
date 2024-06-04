@@ -130,7 +130,7 @@ pnpm install @hotosm/ui
 ```
 
 ```js
-import { Button } from '@hotosm/ui/react/Button'
+import { Button } from '@hotosm/ui/react/Header'
 
 const HomePage = ({}) => {
   return (
@@ -138,7 +138,7 @@ const HomePage = ({}) => {
       <div
         ...
       >
-        <Button disabled />
+        <Header />
       </div>
     </div>
   );
