@@ -1,14 +1,24 @@
-// uno.config.ts
-import { defineConfig, presetWind } from "unocss";
+import {
+  defineConfig,
+  presetAttributify,
+  presetUno,
+  presetWind,
+  presetTypography,
+  presetIcons,
+  transformerDirectives,
+} from 'unocss';
 
 const config = defineConfig({
   content: {
-    filesystem: ["**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}"],
+    filesystem: ["**/*.ts"],
   },
+  rules: [
+    // ['p-200', { padding: '200px' }],
+  ],
   theme: {
-    borderRadius: {
-      DEFAULT: "0.125rem",
-    },
+    // borderRadius: {
+    //   DEFAULT: "0.125rem",
+    // },
     colors: {
       primary: "rgb(var(--hot-primary-rgb))",
       secondary: "rgb(var(--hot-secondary-rgb) / <alpha-value>)",
@@ -19,7 +29,20 @@ const config = defineConfig({
       success: "rgb(var(--hot-success-rgb) / <alpha-value>)",
     },
   },
-  presets: [presetWind()],
+  presets: [
+    presetUno(),
+    presetAttributify({
+      prefix: 'hot-',
+      prefixedOnly: true,
+    }),
+    presetWind(),
+    presetTypography(),
+    presetIcons(),
+  ],
+  transformers: [
+    // Allows for syntax in CSS like @apply text-center my-0 font-medium;
+    transformerDirectives(),
+  ],
 });
 
 export default config;

@@ -3,9 +3,11 @@
 @import './hot.css';
 /* https://github.com/shoelace-style/shoelace/blob/next/src/themes/light.css */
 @import '@shoelace-style/shoelace/dist/themes/light.css';
-
 /* @import '@shoelace-style/shoelace/dist/themes/dark.css'; */
 /* https://shoelace.style/getting-started/themes#detecting-the-users-color-scheme-preference */
+
+@unocss preflights;
+@unocss default;
 
 :root,
 :host,
