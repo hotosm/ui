@@ -30,7 +30,7 @@ type variants = "classGroup1" | "classGroup2";
 export class Button extends LitElement {
   @property() name = "hot-button";
 
-  /** Type of button. */
+  // Type of button. */
   @property({ type: String }) variant: string = "default";
 
   /** Disable the button, greyed out, not clickable. */

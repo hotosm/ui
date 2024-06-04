@@ -60,8 +60,7 @@ plugins:
 nav:
   - Home: index.md
   - About: about.md
-  - Components:
-      - Button: components/hot-button.md
+  - Custom Components:
       - Header: components/hot-header.md
       - Toolbar: components/hot-toolbar.md
       - Tracking: components/hot-tracking.md
