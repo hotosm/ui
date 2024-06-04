@@ -2,7 +2,7 @@
 // @ts-ignore
 import * as React from 'react';
 import { createComponent } from '@lit/react';
-import Button from '../components/Button';
+import Button from '../components/button/button';
 
 const reactWrapper = createComponent({
   tagName: 'hot-button',

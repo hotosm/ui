@@ -1,5 +1,5 @@
 <script type="module" lang="ts">
-  import '@hotosm/ui/components/Toolbar';
+  import '@hotosm/ui/components/toolbar/toolbar';
   import hotLogo from '@hotosm/ui/theme/logo.png';
   import { onMount } from 'svelte';
 

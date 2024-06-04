@@ -11,7 +11,7 @@
     "prepare": "pnpm run build",
     "compile": "tsc",
     "build": "pnpm run compile && rollup --config",
-    "build:docstrings": "wca analyze 'components/*.ts' --outDir 'docs/components' --format 'markdown'",
+    "build:docstrings": "wca analyze 'components/**/*.ts' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "pnpm run build && storybook build --output-dir=docs/stories",
     "build:docs": "pnpm run build:docstrings && pnpm run build:stories",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -84,8 +84,7 @@
   },
   "files": [
     "dist/**/*",
-    "components/*.js",
-    "components/*.d.ts",
+    "components/**/*",
     "react/*.js",
     "react/*.d.ts",
     "theme/**/*",

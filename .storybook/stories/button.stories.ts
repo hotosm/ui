@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import "../../components/Button.js";
+import "../../components/button/button.js";
 import { html } from "lit";
 
 const meta: Meta = {
@@ -11,12 +11,12 @@ export default meta;
 export const Template: StoryObj = {
   args: {
     text: "Click Me",
-    variant: "primary",
+    variant: "default",
     disabled: false,
   },
   argTypes: {
     variant: {
-      options: ["primary", "secondary"],
+      options: ["default", "primary", "success", "neutral", "warning", "danger"],
       control: {
         type: "select",
       },

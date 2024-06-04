@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { hrefTo } from '@storybook/addon-links';
-import "../../components/Header.js";
+import "../../components/header/header.js";
 import { html } from "lit";
 
 const defaultLogo = new URL('../../theme/logo.png', import.meta.url).href;

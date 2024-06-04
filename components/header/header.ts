@@ -1,6 +1,4 @@
-import "../theme/hot.css";
-import '@shoelace-style/shoelace/dist/themes/light.css';
-import '@shoelace-style/shoelace/dist/themes/dark.css';
+import "../../theme/sl-custom.css";
 
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js';
 import '@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js';
@@ -10,11 +8,11 @@ import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 
-import registerBundledIcons from '../components/icons';
+import registerBundledIcons from '../../components/icons';
 
 registerBundledIcons();
 
-const hotLogo = new URL('../theme/logo.png', import.meta.url);
+const hotLogo = new URL('../../theme/logo.png', import.meta.url);
 
 interface MenuItem {
   label: string,
@@ -91,6 +89,11 @@ export class Header extends LitElement {
         align-items: center;
       }
 
+      #right-section {
+        display: flex;
+        align-items: center;
+      }
+      
       sl-tab-group {
         display: flex;
       }
@@ -113,6 +116,9 @@ export class Header extends LitElement {
       @media(prefers-color-scheme: light) {
         header {
           color: black;
+        }
+        #break {
+          background-color: black;
         }
       }
     `
@@ -149,11 +155,20 @@ export class Header extends LitElement {
           )}
         </sl-tab-group>
       </div>
-
-      <div id="drawer-block" style="font-size: 32px;">
-        ${this.drawer ? html`
-          <sl-icon-button library="bundled" name="list" label="drawer-open"></sl-icon-button>
-        ` : null}
+      <div id="right-section" style="display: flex; align-items: center;">
+        <sl-icon-button
+          library="bundled"
+          name="person-circle"
+          style="font-size: 1.8rem;"
+          label="login"
+          @click=${(e: MouseEvent) => { this._handleLogin(e)}}
+        ></sl-icon-button>
+        
+        <div id="drawer-block" style="font-size: 2rem;">
+          ${this.drawer ? html`
+            <sl-icon-button library="bundled" name="list" label="drawer-open"></sl-icon-button>
+          ` : null}
+        </div>
       </div>
     </header>
     `;
@@ -162,6 +177,10 @@ export class Header extends LitElement {
   private _selectTab(_e: MouseEvent, clickAction: () => void, index: number) {
     this.selectedTab = index;
     clickAction();
+  }
+
+  private _handleLogin(_e: MouseEvent) {
+    console.log("Login button clicked");
   }
 }
 

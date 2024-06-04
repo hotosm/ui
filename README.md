@@ -112,7 +112,7 @@ including a bundler such as rollup/vite/webpack, this is probably the best appro
 Example:
 
 ```js
-import '@hotosm/ui/components/Toolbar';
+import '@hotosm/ui/components/toolbar/toolbar';
 
 // Then in your template
 <hot-button>Click Me</hot-button>

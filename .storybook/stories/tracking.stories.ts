@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import '@shoelace-style/shoelace/dist/components/alert/alert.js';
-import "../../components/Tracking.js";
+import "../../components/tracking/tracking.js";
 import { html } from "lit";
 
 const meta: Meta = {
@@ -42,10 +42,10 @@ export const Template: StoryObj = {
       }
     },
     addKeyLocalStorage: (siteId: number) => {
-      localStorage.setItem(`${siteId}-optout-closed`, 'true');
+      localStorage.setItem(`${siteId}-matomo-agree`, 'true');
     },
     removeKeyLocalStorage: (siteId: number) => {
-      localStorage.removeItem(`${siteId}-optout-closed`);
+      localStorage.removeItem(`${siteId}-matomo-agree`);
     },
   },
   render: (args, { parameters }) => {

@@ -1,6 +1,4 @@
-import "../theme/hot.css";
-import '@shoelace-style/shoelace/dist/themes/light.css';
-import '@shoelace-style/shoelace/dist/themes/dark.css';
+import "../../theme/sl-custom.css";
 
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/button-group/button-group.js';
@@ -10,7 +8,7 @@ import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import registerBundledIcons from '../components/icons';
+import registerBundledIcons from '../../components/icons';
 
 registerBundledIcons();
 

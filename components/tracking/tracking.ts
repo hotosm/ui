@@ -1,13 +1,11 @@
-import "../theme/hot.css";
-import '@shoelace-style/shoelace/dist/themes/light.css';
-import '@shoelace-style/shoelace/dist/themes/dark.css';
+import "../../theme/sl-custom.css";
 
 import '@shoelace-style/shoelace/dist/components/alert/alert.js';
 
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 
-import registerBundledIcons from '../components/icons';
+import registerBundledIcons from '../../components/icons';
 
 registerBundledIcons();
 
@@ -41,7 +39,6 @@ export class Tracking extends LitElement {
       #tracking-header {
         font-weight: var(--sl-font-weight-bold);
         font-size: var(--sl-font-size-large);
-        color: #d63f3f;
         text-align: center;
       }
       sl-alert::part(base) {
