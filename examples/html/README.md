@@ -14,4 +14,4 @@ This will serve the app using the web components on <http://localhost:3000>
   JS, CSS, Icons.
 - This example manually copies these files to the public dir prior to running the
   webserver, as a self-contained demo.
-- In reality, the `components.js` and `styles.css` files should be loaded via CDN.
+- In reality, the `components.js` and `style.css` files should be loaded via CDN.
