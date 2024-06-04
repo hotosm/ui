@@ -1,5 +1,7 @@
+// Uses the default exported Shoelace button component
+
 import type { Meta, StoryObj } from "@storybook/web-components";
-import "../../components/button/button.js";
+import "../../components/index";
 import { html } from "lit";
 
 const meta: Meta = {
@@ -39,8 +41,6 @@ export const Template: StoryObj = {
   render: (args, { parameters }) => {
     return html`
       <h1>Button</h1>
-      <br>
-      <br>
       <hot-button
         variant="${args.variant}"
         @click=${() => {parameters.showToast()}}
