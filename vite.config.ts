@@ -10,9 +10,7 @@ export default defineConfig({
       formats: ['es'],
       fileName:  'components',
     },
-    rollupOptions: {
-      external: /^lit/,
-    },
+    rollupOptions: {},
   },
   plugins: [
     UnoCSS({
