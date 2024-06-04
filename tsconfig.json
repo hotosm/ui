@@ -9,7 +9,7 @@
     "useDefineForClassFields": false,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["components/*"]
+      "@/*": ["./*"]
     },
     "strict": true,
     "noImplicitReturns": true,
