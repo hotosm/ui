@@ -1,4 +1,3 @@
-import path from 'path';
 // import { rollupPluginHTML as html } from "@web/rollup-plugin-html";
 import css from 'rollup-plugin-css-only'
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
@@ -8,7 +7,6 @@ import terser from '@rollup/plugin-terser';
 // https://github.com/lit/lit/issues/4273
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
-import alias from '@rollup/plugin-alias';
 
 export default {
   input: 'components/index.js',
@@ -41,11 +39,6 @@ export default {
 
     // Print bundle summary
     summary(),
-
-    // Add aliases
-    alias({
-      '@': path.resolve('.'), 
-    })
   ],
   output: {
     dir: 'dist',

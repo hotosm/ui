@@ -8,9 +8,6 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "baseUrl": "./",
-    "paths": {
-      "@/*": ["./*"]
-    },
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,

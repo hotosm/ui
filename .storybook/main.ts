@@ -1,4 +1,3 @@
-import path from 'path';
 import type { StorybookConfig } from "@storybook/web-components-vite";
 
 const config: StorybookConfig = {
@@ -11,18 +10,6 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: "tag",
-  },
-  async viteFinal(config) {
-    // Merge custom configuration into the default config
-    const { mergeConfig } = await import('vite');
-
-    return mergeConfig(config, {
-      resolve: {
-        alias: {
-          '@': path.resolve(__dirname, '..'),
-        },
-      },
-    });
   },
 };
 export default config;
