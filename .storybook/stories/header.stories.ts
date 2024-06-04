@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { hrefTo } from '@storybook/addon-links';
-import "../../components/header/header.js";
+import "../../components/header/header.ts";
 import { html } from "lit";
 
 const defaultLogo = new URL('../../theme/logo.png', import.meta.url).href;
@@ -45,12 +45,19 @@ const fiveTab = Array.from({ length: 5 }, (_, index) => ({
 
 export const Template: StoryObj = {
   args: {
+    size: "large",
     title: "",
     logo: defaultLogo,
     drawer: true,
     tabs: twoTab,
   },
   argTypes: {
+    size: {
+      options: ["large", "small"],
+      control: {
+        type: "select",
+      },
+    },
     title: {
       options: ["", "Tasking Manager", "FMTM", "Drone Tasking Manager"],
       control: {
@@ -87,9 +94,14 @@ export const Template: StoryObj = {
       <hot-header
         title=${args.title}
         logo=${args.logo}
+        size=${args.size}
         ?drawer=${args.drawer}
         .tabs=${args.tabs}
       ></hot-header>
+
+      <h1>Page Content</h1>
+      <br>
+      <p>Text on the page</p>
     `;
   },
 };
