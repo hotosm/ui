@@ -45,6 +45,9 @@ The components are
 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components),
 currently written in **Lit**, using TypeScript.
 
+Compositie components (header, sidebar, etc) are generated using Shoelace, with
+the remaining low-level components exported from the Shoelace library too.
+
 ## Install
 
 There are two options for install:
@@ -64,22 +67,30 @@ There are two options for install:
 
 ```html
 <script>
+  import '@hotosm/ui/dist/style.css';
   import '@hotosm/ui/dist/components.js';
 </script>
 
 // Use the components in your templates
-<hot-button disabled> </hot-button>
+<hot-header @login="someFunction()"> </hot-header>
 ```
 
 #### Via CDN
 
 ```html
+// Import the styles (or create your own)
+<link
+  rel="stylesheet"
+  href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
+/>
+
+// Import the components
 <script
   type="module"
   src="https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/components.js"
 ></script>
 
-<hot-button disabled> </hot-button>
+<hot-header @login="someFunction()> </hot-header>
 ```
 
 The `jsdelivr` CDN only includes package releases, with `@latest` pointing to the
@@ -94,28 +105,24 @@ There is also an S3-based CDN, where `latest` tracks the `main` branch of the re
 'tree-shaking' can remove the remaining ones you don't use.
 - If you are developing an application that uses `@hotosm/ui` components,
 including a bundler such as rollup/vite/webpack, this is probably the best approach.
-- However, you must first add Shoelace as a `peerDependency` in your `package.json`:
+- However, you must first add Lit as a `peerDependency` in your `package.json`:
 
     ```json
       "peerDependencies": {
-        "@shoelace-style/shoelace": "^2.15.1"
+        "lit": "^3.1.0"
       }
     ```
 
-    > Ideally the version of Shoelace installed should match the version used in
+    > Ideally the version of Lit installed should match the version used in
     > hotosm/ui.
-
-- This will also install subdependencies such as Lit.
-- If there is a conflict between Lit versions, the `lit` package can also be pinned
-  via `peerDependency`.
 
 Example:
 
 ```js
-import '@hotosm/ui/components/toolbar/toolbar';
+import '@hotosm/ui/components/header/header';
 
 // Then in your template
-<hot-button>Click Me</hot-button>
+<hot-header @login="${someFunction()}"></hot-header>
 ```
 
 ### React
@@ -138,7 +145,7 @@ const HomePage = ({}) => {
       <div
         ...
       >
-        <Header />
+        <Header @onLogin="${someFunction()}" />
       </div>
     </div>
   );
@@ -152,20 +159,21 @@ export default HomePage;
 
 ## Using Extra Shoelace Components
 
-The UI library is not comprehensive & you may wish to use additional components
-from Shoelace in your app.
+The UI library contains many composite components, such as headers, sidebars,
+tracking banners, etc, and does not re-invent the wheel for low-level components.
 
-Ideally you should install the same version of @shoelace-style/shoelace as this
-library (particularly if using the ES Modules)
+Shoelace is an excellent UI library that is exported directly from `@hotosm/ui`.
 
-To determine which version:
+To access the low-level components, such as buttons, dropdowns, modals, etc,
+simply import the component of the same name from the [Shoelace docs]
+(<https://shoelace.style>):
 
-- View the
-  [@hotosm/ui](https://www.npmjs.com/package/@hotosm/ui?activeTab=versions)
-  package on npmjs.com.
-- Select the version you are using.
-- Go to the `Code` tab, then open the `package.json` file.
-- The version of shoelace used should be in the `dependencies` section.
+```js
+import '@hotosm/ui/components/button/button';
+
+// Then in your template
+<hot-button disabled variant="secondary">Can't Click Me</hot-button>
+```
 
 If you are using a bundler, you must bundle the (icon) assets yourself,
 described in the Shoelace docs.
