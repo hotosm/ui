@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.2.0b4 (2024-06-06)
+
+### Feat
+
+- export all shoelace components using hot- prefix
+- add login event to header component
+- update header component to use unocss classes
+- add custom theme for shoelace colour override
+- temp add config for using @ alias in components
+- update stories + header story
+- add simple header component with nav bar items
+
+### Fix
+
+- import ts modules for storybook hot-reload
+- bundle missing shoelace icons with storybook
+
+### Refactor
+
+- remove demo button component, use sl-button directly
+- rename events on toolbar demo component
+- update refs styles.css --> style.css
+- replace custom button with standard shoelace button
+- remove config for using @ alias as breaking upstream es module use
+
 ## 0.2.0b3 (2024-06-02)
 
 ### Refactor
