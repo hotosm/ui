@@ -9,14 +9,14 @@
         <h2>HOTOSM UI Vue Example</h2>
 
         <hot-toolbar tooltip-position="bottom"
-            @undo-click="incrementCounter('undo')"
-            @redo-click="incrementCounter('redo')"
-            @bold-click="incrementCounter('bold')"
-            @italic-click="incrementCounter('italic')"
-            @underline-click="incrementCounter('underline')"
-            @leftalign-click="incrementCounter('leftAlign')"
-            @centeralign-click="incrementCounter('centerAlign')"
-            @rightalign-click="incrementCounter('rightAlign')"
+            @undo="incrementCounter('undo')"
+            @redo="incrementCounter('redo')"
+            @bold="incrementCounter('bold')"
+            @italic="incrementCounter('italic')"
+            @underline="incrementCounter('underline')"
+            @leftalign="incrementCounter('leftAlign')"
+            @centeralign="incrementCounter('centerAlign')"
+            @rightalign="incrementCounter('rightAlign')"
         ></hot-toolbar>
 
         <p>Undo: {{ counters.undo }}</p>

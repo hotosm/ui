@@ -27,7 +27,7 @@ export const Template: StoryObj = {
       <br>
       <hot-toolbar
         tooltip-position="${args.tooltipPosition}"
-        @redo-click=${() => {alert("Redo Clicked")}}
+        @redo=${() => {alert("Redo Clicked")}}
       ></hot-toolbar>
     `;
   },

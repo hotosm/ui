@@ -1,5 +1,7 @@
 # React Demo
 
+This example uses a React wrapper, which were required prior to React v19.
+
 ## Running
 
 ```bash
@@ -7,14 +9,6 @@ pnpm run dev
 ```
 
 This will serve the app using the web components on <http://localhost:3000>
-
-> Typically the components would be loaded via NPM package, or via CDN.
->
-> However, in this example we are building and serving the components
-> on localhost, for the purpose of the demo.
->
-> <http://localhost:8080> is served via `vite preview`, which is basically just a
-> a small webserver - so we have our own localhost CDN!
 
 ## Info
 
