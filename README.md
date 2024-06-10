@@ -105,15 +105,15 @@ There is also an S3-based CDN, where `latest` tracks the `main` branch of the re
 'tree-shaking' can remove the remaining ones you don't use.
 - If you are developing an application that uses `@hotosm/ui` components,
 including a bundler such as rollup/vite/webpack, this is probably the best approach.
-- However, you must first add Lit as a `peerDependency` in your `package.json`:
+- However, you must first add Shoelace as a `peerDependency` in your `package.json`:
 
     ```json
       "peerDependencies": {
-        "lit": "^3.1.0"
+      "@shoelace-style/shoelace": "^2.15.1"
       }
     ```
 
-    > Ideally the version of Lit installed should match the version used in
+    > Ideally the version of Shoelace installed should match the version used in
     > hotosm/ui.
 
 Example:
