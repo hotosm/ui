@@ -61,6 +61,7 @@ nav:
   - Home: index.md
   - About: about.md
   - Custom Components:
+      - Shoelace Components: components/shoelace-components.md
       - Header: components/hot-header.md
       - Toolbar: components/hot-toolbar.md
       - Tracking: components/hot-tracking.md
