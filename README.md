@@ -34,6 +34,8 @@
 
 🖥️ **Source Code**: <a href="https://github.com/hotosm/ui" target="_blank">https://github.com/hotosm/ui</a>
 
+🎯 **Roadmap / Tasks** <a href="https://github.com/orgs/hotosm/projects/37/views/3" target="_blank">https://github.com/orgs/hotosm/projects/37/views/3</a>
+
 ---
 
 <!-- markdownlint-enable -->
