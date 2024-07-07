@@ -46,15 +46,28 @@ We offer usage of hotosm/ui via multiple CDNs. Just include the following script
 ## Usage
 
 <Tabs>
-  <TabItem label="React">
-    hotosm/ui is designed to be used with React. You can import the components and styles like so:
+  <TabItem label="React <19">
+    hotosm/ui uses Lit React wrappers to provide React components when using an older version of React (before 19). You can use the components like so:
+
+    ```jsx
+    import { Button } from '@hotosm/ui/react';
+
+    function App() {
+      return (
+        <HotButton onClick={() => callFunction()}>Click me</HotButton>
+      );
+    }
+    ```
+  </TabItem>
+  <TabItem label="React 19">
+    Since React 19, you can use the components like any other framework.
 
     ```jsx
     import { Button } from '@hotosm/ui';
 
     function App() {
       return (
-        <Button>Click me</Button>
+        <hot-button onClick={() => callFunction()}>Click me</hot-button>
       );
     }
     ```
@@ -63,7 +76,7 @@ We offer usage of hotosm/ui via multiple CDNs. Just include the following script
     Once you have included the hotosm/ui styles and scripts in your project, you can use the components like so:
 
     ```html
-    <hot-button onclick="foo()">Click me</hot-button>
+    <hot-button onclick="callFunction()">Click me</hot-button>
     ```
   </TabItem>
 </Tabs>
