@@ -23,6 +23,10 @@ export default defineConfig({
 				{
 					label: "Guides",
 					autogenerate: { directory: 'guides' },
+				},
+				{
+					label: "License",
+					slug: "license",
 				}
 			],
 			customCss: [
