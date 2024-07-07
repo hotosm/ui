@@ -1,0 +1,69 @@
+---
+title: Quick Start
+description: Get started with hotosm/ui.
+---
+
+import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
+
+hotosm/ui is a collection of components and styles that are designed to be used across all HOTOSM projects. This guide will walk you through the steps to install hotosm/ui into your project.
+
+## Installation
+
+### Package Managers
+
+<Tabs syncKey="pkg">
+  <TabItem label="pnpm">
+    ```sh
+    pnpm add @hotosm/ui
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```sh
+    npm install @hotosm/ui
+    ```
+  </TabItem>
+  <TabItem label="bun">
+    ```sh
+    bun add @hotosm/ui
+    ```
+  </TabItem>
+</Tabs>
+
+### CDN
+We offer usage of hotosm/ui via multiple CDNs. Just include the following script tag in your HTML file:
+
+#### jsdelivr
+```html
+<script src="https://cdn.jsdelivr.net/npm/@hotosm/ui"></script>
+```
+
+#### unpkg
+```html
+<script src="https://unpkg.com/@hotosm/ui"></script>
+```
+
+
+## Usage
+
+<Tabs>
+  <TabItem label="React">
+    hotosm/ui is designed to be used with React. You can import the components and styles like so:
+
+    ```jsx
+    import { Button } from '@hotosm/ui';
+
+    function App() {
+      return (
+        <Button>Click me</Button>
+      );
+    }
+    ```
+  </TabItem>
+  <TabItem label="Vanilla JS">
+    Once you have included the hotosm/ui styles and scripts in your project, you can use the components like so:
+
+    ```html
+    <hot-button onclick="foo()">Click me</hot-button>
+    ```
+  </TabItem>
+</Tabs>
