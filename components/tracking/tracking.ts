@@ -1,11 +1,11 @@
 import "../../theme/sl-custom.css";
 
-import '@shoelace-style/shoelace/dist/components/alert/alert.js';
+import "@shoelace-style/shoelace/dist/components/alert/alert.js";
 
 import { LitElement, css, html, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 
-import registerBundledIcons from '../../components/icons';
+import registerBundledIcons from "../../components/icons";
 
 registerBundledIcons();
 
@@ -50,35 +50,45 @@ export class Tracking extends LitElement {
         width: 80vw;
         text-align: center;
       }
-    `
+    `,
   ];
 
   protected render() {
-    return html`<sl-alert
-      variant="danger"
-      ?open=${this.isOpen}
-    >
-    <sl-icon id="hot-red-text" library="bundled" slot="icon" name="info-circle"></sl-icon>
+    return html`<sl-alert variant="danger" ?open=${this.isOpen}>
+      <sl-icon
+        id="hot-red-text"
+        library="bundled"
+        slot="icon"
+        name="info-circle"
+      ></sl-icon>
 
-    <p id="tracking-header">
-    About the information we collect
-    </p>
+      <p id="tracking-header">About the information we collect</p>
 
-    <p>
-    We use cookies and similar technologies to recognize and analyze your visits,
-    and measure traffic usage and activity. You can learn about how we use the data
-    about your visit or information you provide reading our
-      <a
-        style="color: #d63f3f;"
-        href="https://www.hotosm.org/privacy"
-        target="_blank"
-        rel="noopener noreferrer"
-      >privacy policy</a>.
-    By clicking "I Agree", you consent to the use of cookies.
-    </p>
+      <p>
+        We use cookies and similar technologies to recognize and analyze your
+        visits, and measure traffic usage and activity. You can learn about how
+        we use the data about your visit or information you provide reading our
+        <a
+          style="color: #d63f3f;"
+          href="https://www.hotosm.org/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          >privacy policy</a
+        >. By clicking "I Agree", you consent to the use of cookies.
+      </p>
 
-    <sl-button @click=${(e: MouseEvent) => {this._setAgree(e)}}>I Agree</sl-button>
-    <sl-button @click=${(e: MouseEvent) => {this._setDisagree(e)}}>I Do Not Agree</sl-button>
+      <sl-button
+        @click=${(e: MouseEvent) => {
+          this._setAgree(e);
+        }}
+        >I Agree</sl-button
+      >
+      <sl-button
+        @click=${(e: MouseEvent) => {
+          this._setDisagree(e);
+        }}
+        >I Do Not Agree</sl-button
+      >
     </sl-alert>`;
   }
 
@@ -87,10 +97,10 @@ export class Tracking extends LitElement {
     const _paq = (window._paq = window._paq || []);
     if (_paq.length === 0) return;
 
-    _paq.push(['rememberConsentGiven']);
+    _paq.push(["rememberConsentGiven"]);
     this.isOpen = false;
-    localStorage.setItem(`${this.siteId}-matomo-agree`, 'true');
-    this.dispatchEvent(new Event('agree', {bubbles: true, composed: true}));
+    localStorage.setItem(`${this.siteId}-matomo-agree`, "true");
+    this.dispatchEvent(new Event("agree", { bubbles: true, composed: true }));
   }
 
   private _setDisagree(_e: MouseEvent) {
@@ -98,10 +108,12 @@ export class Tracking extends LitElement {
     const _paq = (window._paq = window._paq || []);
     if (_paq.length === 0) return;
 
-    _paq.push(['forgetConsentGiven']);
+    _paq.push(["forgetConsentGiven"]);
     this.isOpen = false;
-    localStorage.setItem(`${this.siteId}-matomo-agree`, 'false');
-    this.dispatchEvent(new Event('disagree', {bubbles: true, composed: true}));
+    localStorage.setItem(`${this.siteId}-matomo-agree`, "false");
+    this.dispatchEvent(
+      new Event("disagree", { bubbles: true, composed: true })
+    );
   }
 
   connectedCallback() {
@@ -109,59 +121,66 @@ export class Tracking extends LitElement {
 
     // Close and halt execution if wrong domain
     if (!this.force && window.location.hostname !== this.domain) {
-      console.warn(`Matomo init failed. ${window.location.hostname} does not match ${this.domain}.`);
+      console.warn(
+        `Matomo init failed. ${window.location.hostname} does not match ${this.domain}.`
+      );
       this.isOpen = false;
       return;
     }
-  
+
     const matomoTrackingId = this.siteId;
 
     // Close and halt execution if siteId or domain not set
-    if (!this.force && (matomoTrackingId.length === 0 || this.domain.length === 0)) {
-      console.warn('Matomo init failed. No site id or domains provided.');
+    if (
+      !this.force &&
+      (matomoTrackingId.length === 0 || this.domain.length === 0)
+    ) {
+      console.warn("Matomo init failed. No site id or domains provided.");
       this.isOpen = false;
       return;
     }
 
     // Close and halt execution if already disagreed
     const consent = localStorage.getItem(`${this.siteId}-matomo-agree`);
-    if (consent === 'false') {
+    if (consent === "false") {
       this.isOpen = false;
       return;
     }
 
     // Close prompt only if already agreed, continue
-    if (consent === 'true') {
+    if (consent === "true") {
       this.isOpen = false;
     }
 
-    console.log(`Setting Matomo tracking for site=${matomoTrackingId} domain=${this.domain}`);
+    console.log(
+      `Setting Matomo tracking for site=${matomoTrackingId} domain=${this.domain}`
+    );
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
-  
+
     // tracker methods like "setCustomDimension" should be called before "trackPageView"
-    _paq.push(['requireConsent']);
-    _paq.push(['setDomains', [this.domain]]);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);  // Tracks downloads
-    _paq.push(['trackVisibleContentImpressions']);  // Tracks content
-  
+    _paq.push(["requireConsent"]);
+    _paq.push(["setDomains", [this.domain]]);
+    _paq.push(["trackPageView"]);
+    _paq.push(["enableLinkTracking"]); // Tracks downloads
+    _paq.push(["trackVisibleContentImpressions"]); // Tracks content
+
     (function () {
-      const u = '//matomo.hotosm.org/';
-      _paq.push(['setTrackerUrl', u + 'matomo.php']);
-      _paq.push(['setSiteId', matomoTrackingId]);
+      const u = "//matomo.hotosm.org/";
+      _paq.push(["setTrackerUrl", u + "matomo.php"]);
+      _paq.push(["setSiteId", matomoTrackingId]);
 
       const d = document;
-      const g = d.createElement('script');
-      const s = d.getElementsByTagName('script')[0];
+      const g = d.createElement("script");
+      const s = d.getElementsByTagName("script")[0];
 
       if (s?.parentNode != null) {
         g.async = true;
-        g.src = u + 'matomo.js';
+        g.src = u + "matomo.js";
         s.parentNode.insertBefore(g, s);
       } else {
-        console.warn('Script insertion failed. Parent node is null.');
+        console.warn("Script insertion failed. Parent node is null.");
       }
     })();
   }
@@ -170,4 +189,4 @@ export class Tracking extends LitElement {
 export default Tracking;
 
 // Define web component
-customElements.define("hot-tracking", Tracking);
+// customElements.define("hot-tracking", Tracking);

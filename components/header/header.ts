@@ -1,24 +1,23 @@
 import "../../theme/sl-custom.css";
 
-import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js';
-import '@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js';
-import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js';
-import '@shoelace-style/shoelace/dist/components/tab/tab.js';
+import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
+import "@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js";
+import "@shoelace-style/shoelace/dist/components/tab-group/tab-group.js";
+import "@shoelace-style/shoelace/dist/components/tab/tab.js";
 
 import { LitElement, css, html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { cva } from "class-variance-authority";
 
-import registerBundledIcons from '../../components/icons';
+import registerBundledIcons from "../../components/icons";
 
 registerBundledIcons();
-
 
 const headerVariants = cva(
   // Defaults to include in all variants
   `
     flex flex-row bg-[var(--hot-white)] items-center justify-between
-    sm:justify-around p-2 border-b-2 border-b-gray-100 border-b-solid 
+    sm:justify-around p-2 border-b-2 border-b-gray-100 border-b-solid
   `,
   {
     variants: {
@@ -27,12 +26,12 @@ const headerVariants = cva(
         large: "h-14",
       },
     },
-  },
+  }
 );
 type sizes = "small" | "large";
 
 interface MenuItem {
-  label: string,
+  label: string;
   clickEvent: () => void;
 }
 
@@ -40,7 +39,7 @@ export class Header extends LitElement {
   @property() name = "hot-header";
 
   /** Use a text-based title in the header. */
-  @property({ type: String }) title: string = '';
+  @property({ type: String }) title: string = "";
 
   /** Display a logo on the left of the header. */
   @property({ type: String }) logo: string | URL = `
@@ -124,13 +123,15 @@ export class Header extends LitElement {
   @state() private selectedTab: number = 0;
 
   static styles = [
-    css`@unocss-placeholder;`,
+    css`
+      @unocss-placeholder;
+    `,
     css`
       #right-section {
         display: flex;
         align-items: center;
       }
-      
+
       sl-tab-group {
         display: flex;
       }
@@ -150,7 +151,7 @@ export class Header extends LitElement {
         padding-right: 30px;
       }
 
-      @media(prefers-color-scheme: light) {
+      @media (prefers-color-scheme: light) {
         header {
           color: black;
         }
@@ -158,66 +159,90 @@ export class Header extends LitElement {
           background-color: black;
         }
       }
-    `
+    `,
   ];
 
   protected render() {
-    const logoSrc = typeof this.logo === 'string' || this.logo instanceof URL ? (typeof this.logo === 'string' ? this.logo : this.logo.href) : '';
+    const logoSrc =
+      typeof this.logo === "string" || this.logo instanceof URL
+        ? typeof this.logo === "string"
+          ? this.logo
+          : this.logo.href
+        : "";
 
     return html`
-    <header class=${headerVariants({size: this.size})}>
-      <a href="/" class="flex flex-row">
-        ${(logoSrc.length > 0) ? html`
-          <img
-            id="logo"
-            src="${this.logo}"
-            alt="Logo"
-            class="h-10 px-10 hover:opacity-90"
-          >
-        ` : null}
+      <header class=${headerVariants({ size: this.size })}>
+        <a href="/" class="flex flex-row">
+          ${logoSrc.length > 0
+            ? html`
+                <img
+                  id="logo"
+                  src="${this.logo}"
+                  alt="Logo"
+                  class="h-10 px-10 hover:opacity-90"
+                />
+              `
+            : null}
+          ${this.title.length > 0
+            ? html`
+                <h1 class="text-2xl color-primary font-sans font-bold pl-3 m-0">
+                  ${this.title}
+                </h1>
+              `
+            : null}
+        </a>
 
-        ${(this.title.length > 0) ? html`
-          <h1 class="text-2xl color-primary font-sans font-bold pl-3 m-0">${this.title}</h1>
-        ` : null}
-      </a>
+        ${/* Navigation bar for desktop, hide on mobile */ ""}
+        <nav
+          className="hidden sm:flex justify-between items-center gap-4 font-semibold"
+        >
+          <sl-tab-group>
+            ${this.tabs.map(
+              (item, index) => html`
+                <sl-tab
+                  slot="nav"
+                  panel="general"
+                  @click=${(e: MouseEvent) => {
+                    this._selectTab(e, item.clickEvent, index);
+                  }}
+                  ?selected=${this.selectedTab === index}
+                  >${item.label}</sl-tab
+                >
+              `
+            )}
+          </sl-tab-group>
+        </nav>
 
-      ${ /* Navigation bar for desktop, hide on mobile */'' }
-      <nav className="hidden sm:flex justify-between items-center gap-4 font-semibold">
-        <sl-tab-group>
-          ${this.tabs.map(
-            (item, index) => html`
-              <sl-tab 
-                slot="nav" 
-                panel="general"
-                @click=${(e: MouseEvent) => { this._selectTab(e, item.clickEvent, index); }}
-                ?selected=${this.selectedTab === index}
-              >${item.label}</sl-tab>
-            `
-          )}
-        </sl-tab-group>
-      </nav>
+        ${/* Stacked navigation drawer for mobile */ ""}
+        ${/* NOTE this should probably be in a drawer instead */ ""}
+        <nav
+          className="sm:hidden flex flex-col items-end gap-1 font-semibold"
+        ></nav>
 
-      ${ /* Stacked navigation drawer for mobile */'' }
-      ${ /* NOTE this should probably be in a drawer instead */'' }
-      <nav className="sm:hidden flex flex-col items-end gap-1 font-semibold">
-      </nav>
+        <div id="right-section" style="display: flex; align-items: center;">
+          <sl-icon-button
+            library="bundled"
+            name="person-circle"
+            style="font-size: 1.8rem;"
+            label="login"
+            @click=${(e: MouseEvent) => {
+              this._handleLogin(e);
+            }}
+          ></sl-icon-button>
 
-      <div id="right-section" style="display: flex; align-items: center;">
-        <sl-icon-button
-          library="bundled"
-          name="person-circle"
-          style="font-size: 1.8rem;"
-          label="login"
-          @click=${(e: MouseEvent) => { this._handleLogin(e)}}
-        ></sl-icon-button>
-        
-        <div id="drawer-block" style="font-size: 2rem;">
-          ${this.drawer ? html`
-            <sl-icon-button library="bundled" name="list" label="drawer-open"></sl-icon-button>
-          ` : null}
+          <div id="drawer-block" style="font-size: 2rem;">
+            ${this.drawer
+              ? html`
+                  <sl-icon-button
+                    library="bundled"
+                    name="list"
+                    label="drawer-open"
+                  ></sl-icon-button>
+                `
+              : null}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
     `;
   }
 
@@ -234,4 +259,4 @@ export class Header extends LitElement {
 export default Header;
 
 // Define web component
-customElements.define("hot-header", Header);
+// customElements.define("hot-header", Header);
