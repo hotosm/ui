@@ -53,7 +53,6 @@
     "@unocss/postcss": "^0.58.5",
     "@unocss/transformer-directives": "^0.60.4",
     "autoprefixer": "^10.4.16",
-    "class-variance-authority": "0.7.0",
     "clsx": "2.0.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.1.0",
@@ -94,5 +93,8 @@
   "bugs": {
     "url": "https://github.com/hotosm/ui/issues"
   },
-  "homepage": "https://github.com/hotosm/ui#readme"
+  "homepage": "https://github.com/hotosm/ui#readme",
+  "dependencies": {
+    "class-variance-authority": "^0.7.0"
+  }
 }

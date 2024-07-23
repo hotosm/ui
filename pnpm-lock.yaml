@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
     devDependencies:
       '@lit/react':
         specifier: ^1.0.4
@@ -41,9 +45,6 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.38)
-      class-variance-authority:
-        specifier: 0.7.0
-        version: 0.7.0
       clsx:
         specifier: 2.0.0
         version: 2.0.0
