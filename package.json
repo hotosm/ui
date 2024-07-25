@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "pnpm run compile && storybook dev -p 3001 --no-open",
     "prepare": "pnpm run build",
-    "compile": "tsc",
+    "compile": "tsc --noEmit",
     "build": "pnpm run compile && vite build",
     "build:docstrings": "wca analyze 'components/*/**/*.ts' --outDir 'docs/components' --format 'markdown'",
     "build:stories": "pnpm run build && storybook build --output-dir=docs/stories",
