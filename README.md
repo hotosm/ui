@@ -47,8 +47,16 @@ The components are
 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components),
 currently written in **Lit**, using TypeScript.
 
-Compositie components (header, sidebar, etc) are generated using Shoelace, with
-the remaining low-level components exported from the Shoelace library too.
+The main goal of this project is not to re-invent the wheel, or add an extra
+burden of development and maintenance.
+
+Primarily we want to have:
+
+- Low level components exported from the excellent Shoelace web component
+  library, simply re-exported with our default styling / CSS overrides.
+- A few composite components (header, sidebar, etc):
+  - Consistent styling across most of our tools where it counts.
+  - Reduction in duplicated logic, such as user management, OAuth login, etc.
 
 ## Install
 
