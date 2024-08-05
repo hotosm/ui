@@ -57,6 +57,8 @@ Primarily we want to have:
 - A few composite components (header, sidebar, etc):
   - Consistent styling across most of our tools where it counts.
   - Reduction in duplicated logic, such as user management, OAuth login, etc.
+- Improved developer experience, reduced development time for new tools, while
+  maintaining consistency in look and feel of applications.
 
 ## Install
 
