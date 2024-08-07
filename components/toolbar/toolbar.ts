@@ -186,4 +186,4 @@ export class Toolbar extends LitElement {
 export default Toolbar;
 
 // Define web component
-// customElements.define("hot-toolbar", Toolbar);
+customElements.define("hot-toolbar", Toolbar);
