@@ -189,4 +189,4 @@ export class Tracking extends LitElement {
 export default Tracking;
 
 // Define web component
-// customElements.define("hot-tracking", Tracking);
+customElements.define("hot-tracking", Tracking);
