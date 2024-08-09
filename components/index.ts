@@ -1,6 +1,8 @@
 // Index to import all components together
 // import '@hotosm/ui/components';
 
+import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.js';
+
 // Default Shoelace exports
 import SlAlert from '@shoelace-style/shoelace/dist/components/alert/alert.component.js';
 import SlAnimatedImage from '@shoelace-style/shoelace/dist/components/animated-image/animated-image.component.js';
@@ -194,6 +196,9 @@ declare global {
 }
 
 export {
+    // setBasePath helper to use the UI behind proxies etc
+    setBasePath,
+    // Standard shoelace components
     SlAlert,
     SlAnimatedImage,
     SlAnimation,
