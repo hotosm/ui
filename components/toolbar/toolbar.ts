@@ -1,4 +1,4 @@
-import "../../theme/sl-custom.css";
+import "../../theme/hot.css";
 
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import "@shoelace-style/shoelace/dist/components/button-group/button-group.js";

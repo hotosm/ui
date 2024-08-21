@@ -63,6 +63,7 @@ import SlVisuallyHidden from '@shoelace-style/shoelace/dist/components/visually-
 
 // Custom composite components
 import HotHeader from './header/header';
+import HotLogo from './logo/logo';
 import HotToolbar from './toolbar/toolbar';
 import HotTracking from './tracking/tracking';
 
@@ -254,6 +255,7 @@ export {
     SlVisuallyHidden,
     // Custom composite components
     HotHeader,
+    HotLogo,
     HotToolbar,
     HotTracking,
 }
