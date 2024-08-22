@@ -35,3 +35,6 @@ site
 **/**/*.js
 **/**/*.js.map
 **/**/*.d.ts
+
+# Common system files
+.DS_Store

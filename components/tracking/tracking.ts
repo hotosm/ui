@@ -1,4 +1,4 @@
-import "../../theme/sl-custom.css";
+import "../../theme/hot.css";
 
 import "@shoelace-style/shoelace/dist/components/alert/alert.js";
 

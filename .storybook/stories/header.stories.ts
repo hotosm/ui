@@ -3,7 +3,7 @@ import { hrefTo } from '@storybook/addon-links';
 import "../../components/header/header.ts";
 import { html } from "lit";
 
-const defaultLogo = new URL('../../theme/logo.png', import.meta.url).href;
+const defaultLogo = "";
 
 const meta: Meta = {
   title: "Header",
@@ -99,9 +99,17 @@ export const Template: StoryObj = {
         .tabs=${args.tabs}
       ></hot-header>
 
-      <h1>Page Content</h1>
-      <br>
-      <p>Text on the page</p>
+      <h1 class="hot-font-sans hot-font-size-x-large">
+        Page Content
+      </h1>
+      <p class="hot-font-sans hot-font-size-medium">
+        Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.
+      </p>
     `;
   },
 };

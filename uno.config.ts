@@ -20,19 +20,20 @@ const config = defineConfig({
     //   DEFAULT: "0.125rem",
     // },
     colors: {
-      primary: "rgb(var(--hot-primary-rgb))",
-      secondary: "rgb(var(--hot-secondary-rgb) / <alpha-value>)",
-      lightGray: "rgb(var(--hot-light-gray-rgb) / <alpha-value>)",
-      info: "rgb(var(--hot-info-rgb) / <alpha-value>)",
-      error: "rgb(var(--hot-error-rgb) / <alpha-value>)",
-      warning: "rgb(var(--hot-warning-rgb) / <alpha-value>)",
-      success: "rgb(var(--hot-success-rgb) / <alpha-value>)",
+      primary: "rgb(var(--sl-color-primary-rgb))",
+      secondary: "rgb(var(--sl-color-secondary-rgb) / <alpha-value>)",
+      lightGray: "rgb(var(--sl-color-light-gray-rgb) / <alpha-value>)",
+      info: "rgb(var(--sl-color-info-rgb) / <alpha-value>)",
+      error: "rgb(var(--sl-color-error-rgb) / <alpha-value>)",
+      warning: "rgb(var(--sl-color-warning-rgb) / <alpha-value>)",
+      success: "rgb(var(--sl-color-success-rgb) / <alpha-value>)",
     },
   },
   presets: [
-    presetUno(),
-    presetAttributify({
+    presetUno({
       prefix: 'hot-',
+    }),
+    presetAttributify({
       prefixedOnly: true,
     }),
     presetWind(),
