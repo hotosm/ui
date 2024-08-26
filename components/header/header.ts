@@ -80,7 +80,7 @@ export class Header extends LitElement {
         <nav
           className="hot-hidden hot-sm:flex hot-justify-between hot-items-center hot-gap-4 hot-font-semibold"
         >
-          <sl-tab-group className="hot-flex-col>
+          <sl-tab-group className="hot-flex-col">
             ${this.tabs.map(
               (item, index) => html`
                 <sl-tab
