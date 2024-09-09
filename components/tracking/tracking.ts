@@ -1,9 +1,11 @@
-import "../../theme/hot.css";
+import "../../theme/hot-sl.css";
 
 import "@shoelace-style/shoelace/dist/components/alert/alert.js";
 
-import { LitElement, css, html, unsafeCSS } from "lit";
+import { LitElement, html } from "lit";
 import { property, state } from "lit/decorators.js";
+import styles from './tracking.styles.js';
+import type { CSSResultGroup } from 'lit';
 
 import registerBundledIcons from "../../components/icons";
 
@@ -16,45 +18,28 @@ declare global {
 }
 
 export class Tracking extends LitElement {
-  @property() name = "hot-tracking";
+
+  static styles: CSSResultGroup = [styles];
+
+  name = "hot-tracking";
 
   /** The Matomo site id for tracking. */
-  @property({ type: String, attribute: "site-id" }) siteId: string = "";
+  @property({ type: String, attribute: "site-id" })
+  accessor siteId: string = "";
 
   /** The domains to apply tracking. */
-  @property({ type: String }) domain: string = "";
+  @property({ type: String })
+  accessor domain: string = "";
 
   /** Force display the banner. */
-  @property({ type: Boolean }) force: boolean = false;
+  @property({ type: Boolean })
+  accessor force: boolean = false;
 
-  @state() isOpen: boolean = true;
-
-  static styles = [
-    css`
-      @unocss-placeholder;
-    `,
-
-    // Temp styles until UnoCSS setup
-    css`
-      #tracking-header {
-        font-weight: var(--sl-font-weight-bold);
-        font-size: var(--sl-font-size-large);
-        text-align: center;
-      }
-      sl-alert::part(base) {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
-        width: 80vw;
-        text-align: center;
-      }
-    `,
-  ];
+  @property({ type: Boolean })
+  accessor isOpen: boolean = true;
 
   protected render() {
-    return html`<sl-alert variant="danger" ?open=${this.isOpen}>
+    return html`<sl-alert class="tracking" variant="danger" ?open=${this.isOpen}>
       <sl-icon
         id="hot-red-text"
         library="bundled"
@@ -62,14 +47,14 @@ export class Tracking extends LitElement {
         name="info-circle"
       ></sl-icon>
 
-      <p id="tracking-header">About the information we collect</p>
+      <p id="tracking-header" class="tracking--header">About the information we collect</p>
 
       <p>
         We use cookies and similar technologies to recognize and analyze your
         visits, and measure traffic usage and activity. You can learn about how
         we use the data about your visit or information you provide reading our
         <a
-          style="color: #d63f3f;"
+          class="tracking--link"
           href="https://www.hotosm.org/privacy"
           target="_blank"
           rel="noopener noreferrer"

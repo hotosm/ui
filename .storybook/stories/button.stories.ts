@@ -30,29 +30,13 @@ export const Template: StoryObj = {
       },
     },
   },
-  parameters: {
-    showToast: () => {
-      const alert = document.getElementById("click-toast");
-      if (alert) {
-        alert.show();
-      }
-    },
-  },
   render: (args, { parameters }) => {
     return html`
-      <h1>Button</h1>
       <hot-button
         variant="${args.variant}"
-        @click=${() => {parameters.showToast()}}
+        @click=${() => {console.log("click!")}}
         ?disabled=${args.disabled}
       >${args.text}</hot-button>
-
-      <br>
-      <br>
-      <sl-alert id="click-toast" variant="success" duration="3000" closable>
-        <sl-icon slot="icon" name="check2-circle"></sl-icon>
-        You clicked the button.
-      </sl-alert>
     `;
   },
 };

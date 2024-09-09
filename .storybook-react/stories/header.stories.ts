@@ -1,19 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/web-components";
+import type { Meta, StoryObj } from '@storybook/react';
 import { hrefTo } from '@storybook/addon-links';
-import "../../components/header/header.ts";
-import { html } from "lit";
+import { Header } from '../../components/react/index';
 
 const defaultLogo = "";
 
-const meta: Meta = {
-  title: "Header",
-  component: "hot-header",
-};
-export default meta;
-
-const oneTab = [
-  { label: 'ONE TAB ONLY', clickEvent: () => {} }
-];
 const twoTab = [
   {
     label: 'GO TO HEADER PAGE',
@@ -30,20 +20,10 @@ const twoTab = [
     }
   }
 ];
-const threeTab = Array.from({ length: 3 }, (_, index) => ({
-  label: `TAB Number ${index + 1}`,
-  clickEvent: () => {}
-}));
-const fourTab = Array.from({ length: 4 }, (_, index) => ({
-  label: `TAB Number ${index + 1}`,
-  clickEvent: () => {}
-}));
-const fiveTab = Array.from({ length: 5 }, (_, index) => ({
-  label: `TAB Number ${index + 1}`,
-  clickEvent: () => {}
-}));
 
-export const Template: StoryObj = {
+const meta = {
+  title: 'Header',
+  component: Header,
   args: {
     size: "large",
     title: "",
@@ -78,26 +58,19 @@ export const Template: StoryObj = {
     },
     tabs: {
       options: {
-        '1 Tab': oneTab,
         '2 Tabs': twoTab,
-        '3 Tabs': threeTab,
-        '4 Tabs': fourTab,
-        '5 Tabs': fiveTab,
       },
       control: {
         type: "select",
       },
     },
   },
-  render: (args) => {
-    return html`
-      <hot-header
-        title=${args.title}
-        logo=${args.logo}
-        size=${args.size}
-        ?drawer=${args.drawer}
-        .tabs=${args.tabs}
-      ></hot-header>
-    `;
-  },
+} satisfies Meta<typeof Header>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Template: Story = {
+  args: {},
 };
+

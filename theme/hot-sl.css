@@ -3,9 +3,6 @@
 
 @import '@shoelace-style/shoelace/dist/themes/light.css';
 
-@unocss preflights;
-@unocss default;
-
 :root,
 :host,
 .sl-theme-light {
@@ -91,3 +88,4 @@
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
 }
+

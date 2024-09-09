@@ -11,7 +11,7 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "@hotosm/ui": "link:../..",
+    "@hotosm/ui": "git+https://github.com/hotosm/ui.git#dev",
     "vue": "^3.4.21"
   },
   "devDependencies": {

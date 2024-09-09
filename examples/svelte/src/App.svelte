@@ -1,91 +1,49 @@
 <script type="module" lang="ts">
-  import '@hotosm/ui/components/toolbar/toolbar';
-  import hotLogo from '@hotosm/ui/theme/logo.png';
+  import { Logo, Button, Toolbar } from '@hotosm/ui/components';
   import { onMount } from 'svelte';
 
-  let undoCount = 0;
-  let redoCount = 0;
-  let boldCount = 0;
-  let italicCount = 0;
-  let underlineCount = 0;
-  let leftAlignCount = 0;
-  let centerAlignCount = 0;
-  let rightAlignCount = 0;
+  let count = {};
 
-  const undoClick = () => {
-    undoCount++;
+  const incrementCounter = (type: string) => {
+    count = {
+      ...count,
+      [type]: count[type] ? count[type] + 1 : 1
+    }
   };
 
-  const redoClick = () => {
-    redoCount++;
-  };
-
-  const boldClick = () => {
-    boldCount++;
-  };
-
-  const italicClick = () => {
-    italicCount++;
-  };
-
-  const underlineClick = () => {
-    underlineCount++;
-  };
-
-  const leftAlignClick = () => {
-    leftAlignCount++;
-  };
-
-  const centerAlignClick = () => {
-    centerAlignCount++;
-  };
-
-  const rightAlignClick = () => {
-    rightAlignCount++;
-  };
 
   // Reset values when component mounts
   onMount(() => {
-    undoCount = 0;
-    redoCount = 0;
-    boldCount = 0;
-    italicCount = 0;
-    underlineCount = 0;
-    leftAlignCount = 0;
-    centerAlignCount = 0;
-    rightAlignCount = 0;
+    count = {};
   });
 </script>
 
 <main>
   <div>
-    <a href="https://hotosm.org" target="_blank" rel="noreferrer">
-      <img src={hotLogo} class="logo" alt="HOT Logo" />
-    </a>
+    <hot-logo></hot-logo>
   </div>
 
   <h2>HOTOSM UI Svelte Example</h2>
 
   <hot-toolbar
     tooltip-position="bottom"
-    on:undo={undoClick}
-    on:redo={redoClick}
-    on:bold={boldClick}
-    on:italic={italicClick}
-    on:underline={underlineClick}
-    on:leftalign={leftAlignClick}
-    on:centeralign={centerAlignClick}
-    on:rightalign={rightAlignClick}
+    on:undo={() => { incrementCounter('undo'); }}
+    on:redo={() => { incrementCounter('redo'); }}
+    on:bold={() => { incrementCounter('bold'); }}
+    on:italic={() => { incrementCounter('italic'); }}
+    on:underline={() => { incrementCounter('underline'); }}
+    on:leftalign={() => { incrementCounter('leftalign'); }}
+    on:centeralign={() => { incrementCounter('centeralign'); }}
+    on:rightalign={() => { incrementCounter('rightalign'); }}
   ></hot-toolbar>
 
-  <p>Undo: {undoCount}</p>
-  <p>Redo: {redoCount}</p>
-  <p>Bold: {boldCount}</p>
-  <p>Italic: {italicCount}</p>
-  <p>Underline: {underlineCount}</p>
-  <p>Justify Left: {leftAlignCount}</p>
-  <p>Justify Center: {centerAlignCount}</p>
-  <p>Justify Right: {rightAlignCount}</p>
+  <ul>
+  {#each Object.entries(count) as [key, value]}
+      <li>{key} : {value}</li>
+  {/each}
+  </ul>
+
+  <hot-button>Click me!</hot-button>
 
 </main>
 
