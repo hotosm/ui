@@ -11,6 +11,9 @@ importers:
       '@shoelace-style/shoelace':
         specifier: ^2.16.0
         version: 2.16.0(@types/react@18.3.5)
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
       lit:
         specifier: ^3.2.0
         version: 3.2.0
@@ -1697,6 +1700,9 @@ packages:
 
   citty@0.1.6:
     resolution: {integrity: sha512-tskPPKEs8D2KPafUypv2gxwJP8h/OaJmC82QQGGDQcHvXX43xF2VDACcJVmZ0EuSxkpO9Kc4MlrA3q0+FG58AQ==}
+
+  class-variance-authority@0.7.0:
+    resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
 
   cli-cursor@3.1.0:
     resolution: {integrity: sha512-I/zHAwsKf9FqGoXM4WWRACob9+SNukZTd94DWF57E4toouRulbCxcUh6RKUEOQlYTHJnzkPMySvPNaaSLNfLZw==}
@@ -5640,6 +5646,10 @@ snapshots:
   citty@0.1.6:
     dependencies:
       consola: 3.2.3
+
+  class-variance-authority@0.7.0:
+    dependencies:
+      clsx: 2.0.0
 
   cli-cursor@3.1.0:
     dependencies:

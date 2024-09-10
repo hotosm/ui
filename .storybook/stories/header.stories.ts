@@ -44,16 +44,20 @@ const fiveTab = Array.from({ length: 5 }, (_, index) => ({
 }));
 
 export const Template: StoryObj = {
+  parameters: {
+    layout: 'fullscreen',
+  },
   args: {
     size: "large",
     title: "",
     logo: defaultLogo,
     drawer: true,
     tabs: twoTab,
+    borderBottom: true,
   },
   argTypes: {
     size: {
-      options: ["large", "small"],
+      options: ["large", "medium", "small"],
       control: {
         type: "select",
       },
@@ -71,6 +75,12 @@ export const Template: StoryObj = {
       },
     },
     drawer: {
+      options: [true, false],
+      control: {
+        type: "radio",
+      },
+    },
+    borderBottom: {
       options: [true, false],
       control: {
         type: "radio",
@@ -94,6 +104,7 @@ export const Template: StoryObj = {
       <hot-header
         title=${args.title}
         logo=${args.logo}
+        ?borderBottom=${args.borderBottom}
         size=${args.size}
         ?drawer=${args.drawer}
         .tabs=${args.tabs}

@@ -93,6 +93,7 @@
   "homepage": "https://github.com/hotosm/ui#readme",
   "dependencies": {
     "@shoelace-style/shoelace": "^2.16.0",
+    "class-variance-authority": "^0.7.0",
     "lit": "^3.2.0"
   }
 }

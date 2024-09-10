@@ -25,7 +25,7 @@ const meta = {
   title: 'Header',
   component: Header,
   args: {
-    size: "large",
+    size: "small",
     title: "",
     logo: defaultLogo,
     drawer: true,
@@ -33,7 +33,7 @@ const meta = {
   },
   argTypes: {
     size: {
-      options: ["large", "small"],
+      options: ["large", "medium", "small"],
       control: {
         type: "select",
       },
@@ -71,6 +71,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Template: Story = {
+  parameters: {
+    layout: 'fullscreen',
+  },
   args: {},
 };
 

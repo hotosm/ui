@@ -18,6 +18,7 @@ export const Template: StoryObj = {
   args: {
     text: "Click Me",
     variant: "default",
+    size: "medium",
     disabled: false,
     style: "",
     href: "",

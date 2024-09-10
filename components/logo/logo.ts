@@ -22,10 +22,10 @@ export class Logo extends LitElement {
   protected render() {
 
     return html`
-      <h1 class="logo">
+      <div class="logo">
         ${ !this.textOnly ? html`<img src=${HotLogoIconSVG} />` : null }
         ${ !this.iconOnly ? html`<img src=${HotLogoTextSVG} />` : null }
-      </h1>
+      </div>
     `;
   }
 

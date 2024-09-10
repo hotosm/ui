@@ -1,4 +1,5 @@
 import "../../theme/hot-sl.css";
+import "../../theme/hot.css";
 
 import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
 import "@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js";
@@ -7,7 +8,7 @@ import "@shoelace-style/shoelace/dist/components/tab/tab.js";
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
-import styles from './header.styles.js';
+import { headerVariants, type sizes, styles } from './header.styles.js';
 import type { CSSResultGroup } from 'lit';
 
 import registerBundledIcons from "../../components/icons";
@@ -41,6 +42,14 @@ export class Header extends LitElement {
   @property({ type: Array })
   accessor tabs: MenuItem[] = [];
 
+  /** Size of toolbar vertically. */
+  @property({ type: String })
+  accessor size: sizes = "small";
+
+  /** Border bottom. */
+  @property({ type: Boolean })
+  accessor borderBottom: boolean = true;
+  
   @property()
   accessor selectedTab: number = 0;
 
@@ -53,7 +62,10 @@ export class Header extends LitElement {
         : "";
 
     return html`
-      <header class="header">
+      <header class=${headerVariants({ 
+          size: this.size,
+          borderBottom: this.borderBottom
+        })}>
         <a href="/" class="header--link">
           ${logoSrc.length > 0
             ? html`
@@ -87,6 +99,7 @@ export class Header extends LitElement {
             ${this.tabs.map(
               (item, index) => html`
                 <sl-tab
+                  class="header--tab"
                   slot="nav"
                   panel="general"
                   @click=${(e: MouseEvent) => {
