@@ -48,7 +48,7 @@ export const Template: StoryObj = {
     layout: 'fullscreen',
   },
   args: {
-    size: "large",
+    size: "small",
     title: "",
     logo: defaultLogo,
     drawer: true,
