@@ -2,7 +2,7 @@
 
 ## Shared UI components with HOT theming
 
-HOT themed UI components to reduce code duplication and make live easier for developers, available as [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) and React components.
+HOT themed UI components to reduce code duplication and make live easier for developers, available as [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) and witn first-class React support
 
 The main goal of this project is not to re-invent the wheel, or add an extra burden of development and maintenance.
 
@@ -23,7 +23,7 @@ The main goal of this project is not to re-invent the wheel, or add an extra bur
 
 ---
 
-## Install and use
+## Quick start
 
 There are two options: NPM and Components Bundle.
 
