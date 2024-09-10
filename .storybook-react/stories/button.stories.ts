@@ -19,12 +19,42 @@ export const Template: StoryObj = {
   },
   argTypes: {
     variant: {
-      options: ["default", "primary", "success", "neutral", "warning", "danger"],
+      options: ["default", "primary", "success", "neutral", "warning", "danger", "text"],
       control: {
         type: "select",
       },
     },
+    size: {
+      options: ["small", "medium", "large"],
+      control: {
+        type: "select",
+      },
+    },
+    outline: {
+      options: [true, false],
+      control: {
+        type: "radio",
+      },
+    },
+    pill: {
+      options: [true, false],
+      control: {
+        type: "radio",
+      },
+    },
     disabled: {
+      options: [true, false],
+      control: {
+        type: "radio",
+      },
+    },
+    caret: {
+      options: [true, false],
+      control: {
+        type: "radio",
+      },
+    },
+    loading: {
       options: [true, false],
       control: {
         type: "radio",
