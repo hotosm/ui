@@ -1,6 +1,6 @@
 # HOT UI
 
-## Shared UI components with HOT theming.
+## Shared UI components with HOT theming
 
 HOT themed UI components to reduce code duplication and make live easier for developers, available as [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) and React components.
 
@@ -22,7 +22,6 @@ The main goal of this project is not to re-invent the wheel, or add an extra bur
 🎯 **Roadmap / Tasks**: <a href="https://github.com/orgs/hotosm/projects/37/views/3" target="_blank">https://github.com/orgs/hotosm/projects/37/views/3</a>
 
 ---
-
 
 ## Install and use
 
@@ -77,6 +76,7 @@ Appropriate for HTML / Markdown / HTMX.
 
 <hot-logo></hot-logo>
 ```  
+
 ## Using Extra Shoelace Components
 
 The HOT UI library contains many composite components, such as headers, sidebars,
