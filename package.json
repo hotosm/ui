@@ -41,7 +41,7 @@
       "url": "https://github.com/spwoodcock"
     }
   ],
-  "license": "GPL-3.0-only",
+  "license": "AGPL-3.0-only",
   "devDependencies": {
     "@lit/react": "^1.0.4",
     "@storybook/addon-essentials": "^8.2.9",
