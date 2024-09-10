@@ -1,12 +1,4 @@
-# HOT UI
-
-## Shared UI components with HOT theming
-
-HOT themed UI components to reduce code duplication and make live easier for developers, available as [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) and witn first-class React support
-
-The main goal of this project is not to re-invent the wheel, or add an extra burden of development and maintenance.
-
-<img src="https://github.com/hotosm/ui/blob/main/theme/logo/hot-logo-png.png" width="150">
+<img src="https://github.com/hotosm/ui/blob/main/theme/logo/hot-logo-png.png" width="250">
 
 [![Release](https://github.com/hotosm/ui/actions/workflows/publish.yml/badge.svg?event=release)](https://github.com/hotosm/ui/actions/workflows/publish.yml/)
 [![CDN Deploy](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml/badge.svg?branch=main)](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml)
@@ -14,6 +6,15 @@ The main goal of this project is not to re-invent the wheel, or add an extra bur
 [![Package Version](https://img.shields.io/npm/v/%40hotosm/ui?color=334D058)](https://www.npmjs.com/package/@hotosm/ui)
 [![Downloads](https://img.shields.io/npm/dm/%40hotosm%2Fui)](https://npmtrends.com/@hotosm/ui)
 [![License](https://img.shields.io/github/license/hotosm/ui.svg)](https://github.com/hotosm/ui/blob/main/LICENSE.md)
+
+# HOT UI
+
+## Shared UI components with HOT theming
+
+### HOT themed UI components to reduce code duplication and make live easier for developers, available as [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) with support for usage in [almost all](https://custom-elements-everywhere.com) modern web frameworks.
+
+The main goal of this project is not to re-invent the wheel, or add an extra burden of development and maintenance.
+
 
 📖 **Documentation**: <a href="https://hotosm.github.io/ui/" target="_blank">https://hotosm.github.io/ui/</a>
 
