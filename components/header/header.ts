@@ -93,9 +93,9 @@ export class Header extends LitElement {
 
         ${/* Navigation bar for desktop, hide on mobile */ ""}
         <nav
-          className="header--nav"
+          class="header--nav"
         >
-          <sl-tab-group className="header--tab-group">
+          <sl-tab-group class="header--tab-group">
             ${this.tabs.map(
               (item, index) => html`
                 <sl-tab
@@ -116,10 +116,10 @@ export class Header extends LitElement {
         ${/* Stacked navigation drawer for mobile */ ""}
         ${/* NOTE this should probably be in a drawer instead */ ""}
         <nav
-          className="header--nav-mobile"
+          class="header--nav-mobile"
         ></nav>
 
-        <div id="right-section" className="header--right-section">
+        <div id="right-section" class="header--right-section">
           <sl-icon-button
             library="bundled"
             name="person-circle"

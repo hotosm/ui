@@ -66,6 +66,14 @@ export const styles = css`
 
   .header--tab::part(base) {
     font-size: var(--sl-font-size-medium);
+    font-weight: var(--sl-font-weight-normal);
+    color: var(--sl-color-neutral-950);
+    padding: var(--sl-spacing-small) var(--sl-spacing-small);
+  }
+
+  .header--tab-group::part(base) {
+    --track-color: transparent;
+    --indicator-color: var(--sl-color-neutral-950);
   }
 
   .header--nav {
