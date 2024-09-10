@@ -106,6 +106,10 @@ import { Button } from '@hotosm/ui/components';
 <Button disabled variant="secondary">Can't Click Me</Button>
 ```
 
+### Examples
+
+You can found examples for HTML and also all common frameworks (React, Svelte, Vue) under `/examples`.
+
 ### Development
 
 HOT UI is developed in TypeScript, using Lit and @lit/react.
@@ -119,10 +123,6 @@ Primarily we want to have:
   - Reduction in duplicated logic, such as user management, OAuth login, etc.
 - Improved developer experience, reduced development time for new tools, while
   maintaining consistency in look and feel of applications.
-
-### Examples
-
-You can found examples for HTML and also all common frameworks (React, Svelte, Vue) under `/examples`.
 
 ### How to contribute
 
