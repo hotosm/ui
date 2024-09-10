@@ -1,25 +1,31 @@
-import "../../theme/hot.css";
+
+import HotLogoIconSVG from '../../theme/logo/hot-logo-icon.svg';
+import HotLogoTextSVG from '../../theme/logo/hot-logo-text.svg';
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
+import styles from './logo.styles.js';
+import type { CSSResultGroup } from 'lit';
 
 export class Logo extends LitElement {
 
-  @property() name = "hot-logo";
+  static styles: CSSResultGroup = [styles];
 
-  /** Display the icon only */
-  @property({ type: Boolean }) iconOnly: boolean = false;
+  name = 'hot-logo';
 
-  /** Display the text only */
-  @property({ type: Boolean }) textOnly: boolean = false;
+  @property({ type: Boolean })
+  accessor iconOnly = false;
+
+  @property({ type: Boolean })
+  accessor textOnly = false;
 
   protected render() {
 
     return html`
-      <h1 class="hot-flex hot-flex-row">
-        ${ !this.textOnly ? html`<img src="../../theme/logo/hot-logo-icon.svg" />` : null }
-        ${ !this.iconOnly ? html`<img src="../../theme/logo/hot-logo-text.svg" />` : null }
-      </h1>
+      <div class="logo">
+        ${ !this.textOnly ? html`<img src=${HotLogoIconSVG} />` : null }
+        ${ !this.iconOnly ? html`<img src=${HotLogoTextSVG} />` : null }
+      </div>
     `;
   }
 

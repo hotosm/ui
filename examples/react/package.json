@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "compile-ui": "pnpm --prefix ../../ run build",
-    "dev": "pnpm run compile-ui && vite",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "build-only": "vite build"
@@ -33,7 +32,7 @@
     "vite": "^5.1.6"
   },
   "dependencies": {
-    "@hotosm/ui": "link:../..",
+    "@hotosm/ui": "git+https://github.com/hotosm/ui.git#dev",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

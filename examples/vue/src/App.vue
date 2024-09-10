@@ -1,9 +1,7 @@
 <template>
     <main>
         <div>
-            <a href="https://hotosm.org" target="_blank" rel="noreferrer">
-                <img :src="hotLogo" class="logo" alt="HOT Logo" />
-            </a>
+            <hot-logo></hot-logo>
         </div>
 
         <h2>HOTOSM UI Vue Example</h2>
@@ -31,8 +29,7 @@
 </template>
 
 <script setup>
-import '@hotosm/ui/components/toolbar/toolbar';
-import hotLogo from '@hotosm/ui/theme/logo.png';
+import { Toolbar, Logo } from '@hotosm/ui/components';
 import { ref } from "vue";
 
 const counters = {

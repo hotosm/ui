@@ -50,13 +50,6 @@ export const Template: StoryObj = {
   },
   render: (args, { parameters }) => {
     return html`
-      <h1>Matomo Tracking Banner</h1>
-      The banner is disabled if a local storage key is set.
-      <br>
-      Click the buttons below to enable/disable and refresh the page.
-      <br>
-      <br>
-
       <sl-button @click=${() => {
         parameters.removeKeyLocalStorage(args.siteId)
       }}>Re-Enable Banner</sl-button>

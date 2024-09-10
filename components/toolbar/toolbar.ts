@@ -1,51 +1,33 @@
-import "../../theme/hot.css";
+import "../../theme/hot-sl.css";
 
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import "@shoelace-style/shoelace/dist/components/button-group/button-group.js";
 import "@shoelace-style/shoelace/dist/components/icon/icon.js";
 import "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
 
-import { LitElement, css, html, unsafeCSS } from "lit";
+import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
+import styles from './toolbar.styles.js';
+import type { CSSResultGroup } from 'lit';
 
 import registerBundledIcons from "../../components/icons";
 
 registerBundledIcons();
 
-// import { cva } from "class-variance-authority";
-
-// const toolbarStyle = cva(
-//   "some-css-var",
-//   {
-//     variants: {
-//       someProperty: {
-//         true: "some-css-var",
-//         false: "some-css-var",
-//       },
-//     },
-//   },
-// );
-
 export class Toolbar extends LitElement {
-  @property() name = "hot-toolbar";
+
+  static styles: CSSResultGroup = [styles];
+
+  name = "hot-toolbar";
 
   /** Change the position of the tooltips relative to buttons. */
-  @property({ type: String, attribute: "tooltip-position" }) tooltipPosition =
+  @property({ type: String, attribute: "tooltip-position" })
+  accessor tooltipPosition =
     "top";
 
-  static styles = [
-    css`
-      @unocss-placeholder;
-    `,
-    // unsafeCSS(reset),
-  ];
-
-  // class=${toolbarStyle({
-  //   someProperty: this.someProperty,
-  // })}
   protected render() {
     return html`
-      <div class="button-group-toolbar">
+      <div class="toolbar">
         ${this.renderButtonGroup("History", [
           {
             content: "Undo",

@@ -25,7 +25,6 @@ body {
   margin: 0;
   display: flex;
   justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
   min-width: 320px;
   min-height: 100vh;
 }
@@ -45,6 +44,11 @@ h1 {
   text-align: center;
 }
 
+#root {
+  width: 90vw;
+  padding: 10px;;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -57,3 +61,8 @@ h1 {
     background-color: #f9f9f9;
   }
 }
+
+.hot-flex {
+  border: 2px solid red;
+}
+

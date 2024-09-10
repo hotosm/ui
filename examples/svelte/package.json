@@ -19,6 +19,6 @@
     "vite": "^5.1.4"
   },
   "dependencies": {
-    "@hotosm/ui": "link:../.."
+    "@hotosm/ui": "git+https://github.com/hotosm/ui.git#dev"
   }
 }
