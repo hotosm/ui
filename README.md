@@ -24,22 +24,17 @@ The main goal of this project is not to re-invent the wheel, or add an extra bur
 ---
 
 
-## Install
+## Install and use
 
-There are two options for install:
-
-- **NPM**: appropriate for applications that have installable dependencies.
-- **Components Bundle**: appropriate for HTML / Markdown / HTMX.
+There are two options: NPM and Components Bundle.
 
 ### NPM
 
-#### Install
+Appropriate for applications that have installable dependencies
 
 `npm install @hotosm/ui`
 
-#### Web Components
-
-Include the code in your project:
+Import the library in your project and use the components.
 
 ```html
 <script>
@@ -48,22 +43,18 @@ Include the code in your project:
 </script>
 ```
 
-Or:
+```html
+<hot-logo><hot-logo>
+```
+
+#### React
 
 ```js
-  import { Button } from '@hotosm/ui/components';
+  import { Logo } from '@hotosm/ui/components';
 ```
 
-And use the components:
-
-```html
-<hot-button @onClick="someFunction()">Click me!</button>
-```
-
-Or:
-
-```html
-<Button onClick="someFunction()">Click me!</Button>
+```jsx
+<Logo />
 ```
 
 ### Components Bundle
@@ -71,22 +62,20 @@ Or:
 - This is the compiled JavaScript bundle generated from the TypeScript code.
 - The components require no additional dependencies and are minified.
 
-#### Via CDN
+Appropriate for HTML / Markdown / HTMX.
 
 ```html
-// Import the styles
 <link
   rel="stylesheet"
   href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
 />
 
-// Import the components
 <script
   type="module"
   src="https://s3.amazonaws.com/hotosm-ui/latest/dist/components.js"
 ></script>
 
-<hot-button @onClick="someFunction()> </hot-button>
+<hot-logo></hot-logo>
 ```  
 ## Using Extra Shoelace Components
 
@@ -103,19 +92,15 @@ simply import the component of the same name from the [Shoelace docs]
 import '@hotosm/ui/components/button/button';
 ```
 
-And then:
-
 ```html
 <hot-button disabled variant="secondary">Can't Click Me</hot-button>
 ```
 
-Or
+### React
 
 ```js
 import { Button } from '@hotosm/ui/components';
 ```
-
-And then:
 
 ```html
 <Button disabled variant="secondary">Can't Click Me</Button>
