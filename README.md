@@ -1,28 +1,68 @@
-<img src="https://github.com/hotosm/ui/blob/main/theme/logo/hot-logo-png.png" width="250">
+# HOT Shared UI
 
-[![Release](https://github.com/hotosm/ui/actions/workflows/publish.yml/badge.svg?event=release)](https://github.com/hotosm/ui/actions/workflows/publish.yml/)
-[![CDN Deploy](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml/badge.svg?branch=main)](https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml)
-[![Docs](https://github.com/hotosm/ui/actions/workflows/docs.yml/badge.svg)](https://github.com/hotosm/ui/actions/workflows/docs.yml)
-[![Package Version](https://img.shields.io/npm/v/%40hotosm/ui?color=334D058)](https://www.npmjs.com/package/@hotosm/ui)
-[![Downloads](https://img.shields.io/npm/dm/%40hotosm%2Fui)](https://npmtrends.com/@hotosm/ui)
-[![License](https://img.shields.io/github/license/hotosm/ui.svg)](https://github.com/hotosm/ui/blob/main/LICENSE.md)
+<!-- markdownlint-disable -->
+<p align="center">
+  <img src="https://github.com/hotosm/ui/blob/main/theme/logo/hot-logo-png.png?raw=true" width="250" alt="HOT"></a>
+</p>
+<p align="center">
+  <em>Shared Web Components with theming for use across HOTOSM tools.</em>
+</p>
+<p align="center">
+  <a href="https://github.com/hotosm/ui/actions/workflows/publish.yml" target="_blank">
+      <img src="https://github.com/hotosm/ui/actions/workflows/publish.yml/badge.svg?event=release" alt="Publish">
+  </a>
+  <a href="https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml" target="_blank">
+      <img src="https://github.com/hotosm/ui/actions/workflows/cdn_deploy.yml/badge.svg?branch=main" alt="CDN Deploy">
+  </a>
+  <a href="https://github.com/hotosm/ui/actions/workflows/docs.yml" target="_blank">
+      <img src="https://github.com/hotosm/ui/actions/workflows/docs.yml/badge.svg" alt="Publish Docs">
+  </a>
+  <a href="https://www.npmjs.com/package/@hotosm/ui" target="_blank">
+      <img src="https://img.shields.io/npm/v/%40hotosm/ui?color=334D058"
+      alt="Package version">
+  </a>
+  <a href="https://npmtrends.com/@hotosm/ui" target="_blank">
+      <img src="https://img.shields.io/npm/dm/%40hotosm%2Fui"
+      alt="Downloads">
+  </a>
+  <a href="https://github.com/hotosm/ui/blob/main/LICENSE.md" target="_blank">
+      <img src="https://img.shields.io/github/license/hotosm/ui.svg" alt="License">
+  </a>
+</p>
 
-# HOT UI
+<p align="center">
+  📖 <strong>Documentation</strong>: 
+  <a href="https://hotosm.github.io/ui/" target="_blank">https://hotosm.github.io/ui/</a><br>
+</p>
 
-## Shared UI components with HOT theming
+<p align="center">
+  🖥️ <strong>Source Code</strong>: 
+  <a href="https://github.com/hotosm/ui" target="_blank">https://github.com/hotosm/ui</a><br>
+</p>
 
-### HOT themed UI components to reduce code duplication and make live easier for developers, available as [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) with support for usage in [almost all](https://custom-elements-everywhere.com) modern web frameworks.
+<p align="center">
+  🎯 <strong>Roadmap / Tasks</strong>: 
+  <a href="https://github.com/orgs/hotosm/projects/37/views/3" target="_blank">https://github.com/orgs/hotosm/projects/37/views/3</a>
+</p>
 
-The main goal of this project is not to re-invent the wheel, or add an extra burden of development and maintenance.
 
-
-📖 **Documentation**: <a href="https://hotosm.github.io/ui/" target="_blank">https://hotosm.github.io/ui/</a>
-
-🖥️ **Source Code**: <a href="https://github.com/hotosm/ui" target="_blank">https://github.com/hotosm/ui</a>
-
-🎯 **Roadmap / Tasks**: <a href="https://github.com/orgs/hotosm/projects/37/views/3" target="_blank">https://github.com/orgs/hotosm/projects/37/views/3</a>
+<!-- markdownlint-enable -->
 
 ---
+
+## Shared UI Components with HOT Theming
+
+This repository contains HOT themed UI components to reduce code duplication
+and simplify the lives of developers needing to prototype and develop well
+designed web applications quickly.
+
+They are available as
+[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+with support for usage in [almost all](https://custom-elements-everywhere.com)
+modern web frameworks.
+
+The main goal of this project is not to re-invent the wheel, or add an extra burden
+of development and maintenance.
 
 ## Quick start
 
@@ -97,7 +137,7 @@ import '@hotosm/ui/components/button/button';
 <hot-button disabled variant="secondary">Can't Click Me</hot-button>
 ```
 
-### React
+### React Shoelace Wrappers
 
 ```js
 import { Button } from '@hotosm/ui/components';
@@ -109,7 +149,8 @@ import { Button } from '@hotosm/ui/components';
 
 ### Examples
 
-You can found examples for HTML and also all common frameworks (React, Svelte, Vue) under `/examples`.
+You can found examples for HTML and also all common frameworks
+(React, Svelte, Vue) under `/examples`.
 
 ### Development
 
@@ -143,4 +184,5 @@ For **styling**, we have 2 important files under `/theme`:
 
 ### License
 
-HOT UI is free and open source software! you may use any HOT UI project under the terms of the GNU Affero General Public License (AGPL) Version 3.
+HOT UI is free and open source software! you may use any HOT UI project under the
+terms of the GNU Affero General Public License (AGPL) Version 3.
