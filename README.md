@@ -50,7 +50,7 @@ Import the library in your project and use the components.
 #### React
 
 ```js
-  import { Logo } from '@hotosm/ui/components';
+  import { Logo } from '@hotosm/ui/components/react';
 ```
 
 ```jsx
