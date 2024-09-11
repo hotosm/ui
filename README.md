@@ -72,7 +72,7 @@ Appropriate for HTML / Markdown / HTMX.
 
 <script
   type="module"
-  src="https://s3.amazonaws.com/hotosm-ui/latest/dist/components.js"
+  src="https://s3.amazonaws.com/hotosm-ui/latest/dist/hotosm-ui.js"
 ></script>
 
 <hot-logo></hot-logo>
