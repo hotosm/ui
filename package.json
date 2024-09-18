@@ -1,6 +1,6 @@
 {
   "name": "@hotosm/ui",
-  "version": "0.2.05",
+  "version": "0.2.5",
   "description": "Shared UI components with HOT theming.",
   "type": "module",
   "engines": {
