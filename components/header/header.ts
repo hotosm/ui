@@ -1,5 +1,4 @@
 import "../../theme/hot-sl.css";
-import "../../theme/hot.css";
 
 import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
 import "@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js";

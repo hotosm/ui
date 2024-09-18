@@ -31,19 +31,19 @@ export const styles = css`
   }
 
   .header.border-bottom {
-    border-bottom: var(--hot-divider-border-bottom) solid var(--sl-color-neutral-50);
+    border-bottom: var(--sl-spacing-3x-small) solid var(--sl-color-neutral-50);
   }
 
   .header--size-small {
-    height: var(--hot-height-small);
+    height: var(--sl-spacing-4x-large);
   }
 
   .header--size-medium {
-    height: var(--hot-height-medium);
+    height: calc(var(--sl-spacing-4x-large) * 2);
   }
 
   .header--size-large {
-    height: var(--hot-height-large);
+    height: calc(var(--sl-spacing-4x-large) * 4);
   }
 
   .header--link {
