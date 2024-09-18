@@ -179,8 +179,7 @@ There's also a React storybook that you can use for testing:
 
 For **styling**, we have 2 important files under `/theme`:
 
-- `hot-sl.css` has a Shoelace theme, re-defining some variables
-- `hot.css` has custom styles for eveything else, specially composited components
+- `hot-sl.css` has a Shoelace theme, re-defining styles variables
 
 ### License
 
