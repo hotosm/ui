@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0b5 (2024-09-23)
+
+### Feat
+
+- **exports**: export .d.ts files on build
+- **docs-astro**: copy about page from docs -> new docs
+- **docs/quick-start**: add react version info
+- init docs astro
+
+### Fix
+
+- add setBasePath util function to allow changing icon import path
+- **cva**: move to deps from devdeps
+
 ## 0.2.0b4 (2024-06-06)
 
 ### Feat
