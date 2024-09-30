@@ -107,7 +107,7 @@ Appropriate for HTML / Markdown / HTMX.
 ```html
 <link
   rel="stylesheet"
-  href="https://s3.amazonaws.com/hotosm-ui/latest/style.css"
+  href="https://s3.amazonaws.com/hotosm-ui/latest/dist/style.css"
 />
 
 <script
