@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { hrefTo } from '@storybook/addon-links';
-import "../../components/header/header.ts";
 import { html } from "lit";
+
+import "../../src/hotosm-ui";
 
 const defaultLogo = "";
 
@@ -43,7 +44,7 @@ const fiveTab = Array.from({ length: 5 }, (_, index) => ({
   clickEvent: () => {}
 }));
 
-export const Template: StoryObj = {
+export const Header: StoryObj = {
   parameters: {
     layout: 'fullscreen',
   },

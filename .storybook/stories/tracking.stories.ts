@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import '@shoelace-style/shoelace/dist/components/alert/alert.js';
-import "../../components/tracking/tracking.ts";
 import { html } from "lit";
+
+import "../../src/hotosm-ui";
 
 const meta: Meta = {
   title: "Tracking",
@@ -9,7 +10,7 @@ const meta: Meta = {
 };
 export default meta;
 
-export const Template: StoryObj = {
+export const Tracking: StoryObj = {
   args: {
     siteId: "1",
     domain: "localhost",

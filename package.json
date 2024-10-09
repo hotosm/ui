@@ -1,24 +1,8 @@
 {
   "name": "@hotosm/ui",
-  "version": "0.2.0b5",
+  "version": "0.2.0-b5",
   "description": "Shared UI components with HOT theming.",
-  "type": "module",
-  "engines": {
-    "node": ">=14.17"
-  },
-  "scripts": {
-    "dev": "pnpm run compile && storybook dev -p 3001 --no-open",
-    "dev-react": "pnpm run compile && storybook dev -c .storybook-react -p 3002 --no-open",
-    "prepare": "pnpm run build",
-    "compile": "tsc --noEmit",
-    "build": "pnpm run compile && vite build",
-    "build:docstrings": "wca analyze 'components/*/**/*.ts' --outDir 'docs/components' --format 'markdown'",
-    "build:stories": "pnpm run build && storybook build --output-dir=docs/stories",
-    "build:docs": "pnpm run build:docstrings && pnpm run build:stories",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext .js,.ts ./"
-  },
-  "keywords": [],
+  "homepage": "https://github.com/hotosm/ui#readme",
   "author": {
     "name": "HOTOSM",
     "email": "sysadmin@hotosm.org"
@@ -42,58 +26,54 @@
     }
   ],
   "license": "AGPL-3.0-only",
-  "devDependencies": {
-    "@lit/react": "^1.0.4",
-    "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/addon-links": "^8.2.9",
-    "@storybook/blocks": "^8.2.9",
-    "@storybook/react": "^8.2.9",
-    "@storybook/react-vite": "^8.2.9",
-    "@storybook/web-components": "^8.2.9",
-    "@storybook/web-components-vite": "^8.2.9",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "autoprefixer": "^10.4.16",
-    "clsx": "2.0.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard-with-typescript": "^43.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-lit": "^1.10.1",
-    "eslint-plugin-n": "^16.4.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-wc": "^2.0.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "storybook": "^8.2.9",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.12",
-    "vite-plugin-dts": "4.0.0-beta.1",
-    "web-component-analyzer": "^2.0.0"
-  },
-  "dependencies-comments": {
-    "react": "Required for Storybook",
-    "react-dom": "Required for Storybook"
+  "type": "module",
+  "types": "dist/ui.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/ui.d.ts",
+      "import": "./dist/ui.js"
+    },
+    "./dist/ui.js": "./dist/ui.js",
+    "./dist/components/*": "./dist/components/*",
+    "./dist/react": "./dist/react/index.js",
+    "./dist/themes/*": "./dist/themes/*",
+    "./dist/react/*": "./dist/react/*"
   },
   "files": [
-    "dist/**/*",
-    "components/**/*",
-    "theme/**/*",
-    "i18n/*.xliff"
+    "dist"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hotosm/ui.git"
   },
-  "bugs": {
-    "url": "https://github.com/hotosm/ui/issues"
+  "scripts": {
+    "dev": "storybook dev -p 3001 --no-open",
+    "build": "node scripts/build.js && npm run build-themes && npm run build-assets",
+    "build-themes": "cp -R src/themes dist && cp src/style.css dist",
+    "build-assets": "cp -R src/assets dist"
   },
-  "homepage": "https://github.com/hotosm/ui#readme",
+  "engines": {
+    "node": ">=14.17.0"
+  },
   "dependencies": {
-    "@shoelace-style/shoelace": "^2.16.0",
+    "@lit/react": "^1.0.0",
     "class-variance-authority": "^0.7.0",
-    "lit": "^3.2.0"
+    "globby": "^14.0.2",
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {
+    "@shoelace-style/shoelace": "^2.17.1",
+    "@storybook/blocks": "^8.3.5",
+    "@storybook/addon-essentials": "^8.3.5",
+    "@storybook/addon-links": "^8.3.5",
+    "@storybook/web-components": "^8.2.9",
+    "@storybook/web-components-vite": "^8.2.9",
+    "@types/react": "^18.2.28",
+    "del": "^7.1.0",
+    "esbuild": "^0.19.4",
+    "react": "^18.2.0",
+    "storybook": "^8.2.9",
+    "typescript": "^5.2.2",
+    "user-agent-data-types": "^0.3.1"
   }
 }

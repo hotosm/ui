@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import "../../components/toolbar/toolbar.ts";
 import { html } from "lit";
+
+import "../../src/hotosm-ui";
 
 const meta: Meta = {
   title: "Toolbar",
@@ -8,7 +9,7 @@ const meta: Meta = {
 };
 export default meta;
 
-export const Template: StoryObj = {
+export const Toolbar: StoryObj = {
   args: {
     tooltipPosition: "top",
   },

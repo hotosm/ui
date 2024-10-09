@@ -1,0 +1,92 @@
+{/* Typography.mdx */}
+ 
+import { Meta, Typeset, Subtitle } from '@storybook/blocks';
+
+<Meta title="Typography" />
+ 
+export const typography = {
+  type: {
+    primary: "var(--hot-font-sans)"
+  },
+  weight: {
+    light: "var(--hot-font-weight-light)",
+    normal: "var(--hot-font-weight-normal)",
+    semibold: "var(--hot-font-weight-semibold)",
+    bold: "var(--hot-font-weight-bold)",
+  },
+  size: {
+    s1: "var(--hot-font-size-2x-small)",
+    s2: "var(--hot-font-size-x-small)",
+    s3: "var(--hot-font-size-small)",
+    m1: "var(--hot-font-size-medium)",
+    l1: "var(--hot-font-size-large)",
+    l2: "var(--hot-font-size-x-large)",
+    l3: "var(--hot-font-size-2x-large)",
+    l4: "var(--hot-font-size-3x-large)",
+    l5: "var(--hot-font-size-4x-large)",
+  },
+};
+ 
+export const SampleText = 'The quick brown fox jumped over the lazy dog.';
+ 
+# Typography
+
+You can use typography CSS variables for family, size, weight, line-height and letter-spacing,
+for example:
+
+```css
+.title {
+  font-size: var(--hot-font-size-2x-large);
+  letter-spacing: var(--hot-letter-spacing-dense);
+  font-weight: var(--hot-font-weight-light);
+  line-height:  var(--hot-line-height-normal);
+}
+```
+
+## Font family
+
+You have to include the following web fonts if you want to use them:
+
+* [Archivo](https://fonts.google.com/specimen/Archivo) (font-sans)
+* [Barlow Condensed](https://fonts.google.com/specimen/Barlow+Condensed) (font-sans-variant)
+* [Space Mono](https://fonts.google.com/specimen/Space+Mono) (font-mono)
+
+<h4 style={{
+  fontFamily: "var(--hot-font-sans)"
+}}>{SampleText}</h4>
+<Subtitle>var(--hot-font-sans)</Subtitle>
+
+<h4 style={{
+  fontFamily: "var(--hot-font-sans-variant)"
+}}>{SampleText}</h4>
+<Subtitle>var(--hot-font-sans-variant)</Subtitle>
+
+<h4 style={{
+  fontFamily: "var(--hot-font-serif)"
+}}>{SampleText}</h4>
+<Subtitle>var(--hot-font-serif)</Subtitle>
+
+<h4 style={{
+  fontFamily: "var(--hot-font-mono)"
+}}>{SampleText}</h4>
+<Subtitle>var(--hot-font-mono)</Subtitle>
+
+## Font size
+
+<Typeset
+  fontSizes={[
+    typography.size.s1,
+    typography.size.s2,
+    typography.size.s3,
+    typography.size.m1,
+    typography.size.l1,
+    typography.size.l2,
+    typography.size.l3,
+    typography.size.l4,
+    typography.size.l5
+  ]}
+  fontWeight={typography.weight.normal}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+

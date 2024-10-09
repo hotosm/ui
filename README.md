@@ -58,8 +58,7 @@ designed web applications quickly.
 
 They are available as
 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-with support for usage in [almost all](https://custom-elements-everywhere.com)
-modern web frameworks.
+and has first-class React support.
 
 The main goal of this project is not to re-invent the wheel, or add an extra burden
 of development and maintenance.
@@ -78,23 +77,26 @@ Import the library in your project and use the components.
 
 ```html
 <script>
-  import '@hotosm/ui/dist/style.css';
-  import '@hotosm/ui/dist/hotosm-ui.js';
+  import '@hotosm/dist/style.css';
+  import { Logo, Button } from '@hotosm/ui/dist/ui.js';
 </script>
 ```
 
 ```html
 <hot-logo><hot-logo>
+<hot-button variant="primary">Click me!</hot-button>
 ```
 
 #### React
 
 ```js
-  import { Logo } from '@hotosm/ui/components/react';
+import '@hotosm/ui/dist/style.css';
+import { Logo, Button } from '@hotosm/ui/dist/react';
 ```
 
 ```jsx
 <Logo />
+<Button variant="primary">Click me!</Button>
 ```
 
 ### Components Bundle
@@ -112,7 +114,7 @@ Appropriate for HTML / Markdown / HTMX.
 
 <script
   type="module"
-  src="https://s3.amazonaws.com/hotosm-ui/latest/dist/hotosm-ui.js"
+  src="https://s3.amazonaws.com/hotosm-ui/latest/dist/ui.js"
 ></script>
 
 <hot-logo></hot-logo>
@@ -130,7 +132,7 @@ simply import the component of the same name from the [Shoelace docs]
 (<https://shoelace.style>):
 
 ```js
-import '@hotosm/ui/components/button/button';
+import { Button } from '@hotosm/ui/dist/ui.js';
 ```
 
 ```html
@@ -140,7 +142,7 @@ import '@hotosm/ui/components/button/button';
 ### React Shoelace Wrappers
 
 ```js
-import { Button } from '@hotosm/ui/components';
+import { Button } from '@hotosm/ui/dist/react';
 ```
 
 ```html
@@ -173,13 +175,11 @@ Primarily we want to have:
 - Run the storybook `pnpm run dev`
 - Write code!
 
-There's also a React storybook that you can use for testing:
-
-- Run the React storybook `pnpm run dev-react`
-
 For **styling**, check `/theme`:
 
+- `hot.css` has a HOT theme, used across HOT components
 - `hot-sl.css` has a Shoelace theme, re-defining styles variables
+
 
 ### License
 
