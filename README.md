@@ -180,7 +180,6 @@ For **styling**, check `/theme`:
 - `hot.css` has a HOT theme, used across HOT components
 - `hot-sl.css` has a Shoelace theme, re-defining styles variables
 
-
 ### License
 
 HOT UI is free and open source software! you may use any HOT UI project under the
