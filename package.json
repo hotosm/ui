@@ -27,13 +27,13 @@
   ],
   "license": "AGPL-3.0-only",
   "type": "module",
-  "types": "dist/ui.d.ts",
+  "types": "dist/hotosm-ui.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/ui.d.ts",
-      "import": "./dist/ui.js"
+      "types": "./dist/hotosm-ui.d.ts",
+      "import": "./dist/hotosm-ui.js"
     },
-    "./dist/ui.js": "./dist/ui.js",
+    "./dist/hotosm-ui.js": "./dist/hotosm-ui.js",
     "./dist/components/*": "./dist/components/*",
     "./dist/react": "./dist/react/index.js",
     "./dist/themes/*": "./dist/themes/*",
