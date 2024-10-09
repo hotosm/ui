@@ -37,7 +37,8 @@
     "./dist/components/*": "./dist/components/*",
     "./dist/react": "./dist/react/index.js",
     "./dist/themes/*": "./dist/themes/*",
-    "./dist/react/*": "./dist/react/*"
+    "./dist/react/*": "./dist/react/*",
+    "./dist/style.css": "./dist/style.css"
   },
   "files": [
     "dist"
