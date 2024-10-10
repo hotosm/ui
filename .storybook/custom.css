@@ -5,3 +5,7 @@
 .docblock-typeset > div > div:last-child {
     width: 75%;
 }
+
+a {
+    color: var(--hot-color-primary-700)
+}
