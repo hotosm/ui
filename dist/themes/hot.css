@@ -171,22 +171,8 @@
   'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --hot-font-sans-variant: 'Barlow Condensed';
   --hot-font-sefif: Georgia, 'Times New Roman', serif;
-  --hot-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
-
-   /*
-   * Spacings
-   */
-
-  --hot-spacing-3x-small: 0.125rem; /* 2px */
-  --hot-spacing-2x-small: 0.25rem; /* 4px */
-  --hot-spacing-x-small: 0.5rem; /* 8px */
-  --hot-spacing-small: 0.75rem; /* 12px */
-  --hot-spacing-medium: 1rem; /* 16px */
-  --hot-spacing-large: 1.25rem; /* 20px */
-  --hot-spacing-x-large: 1.75rem; /* 28px */
-  --hot-spacing-2x-large: 2.25rem; /* 36px */
-  --hot-spacing-3x-large: 3rem; /* 48px */
-  --hot-spacing-4x-large: 4.5rem; /* 72px */
+  --hot-font-mono: Menlo, Monaco, Consolas, 'Courier New',
+  monospace, Consolas, 'Liberation Mono', Menlo, monospace;
 
   /* Font sizes */
   --hot-font-size-2x-small: 0.625rem; /* 10px */
@@ -218,6 +204,32 @@
   --hot-line-height-normal: 1.8;
   --hot-line-height-loose: 2.2;
   --hot-line-height-looser: 2.6;
+
+   /*
+   * Spacings
+   */
+
+   --hot-spacing-3x-small: 0.125rem; /* 2px */
+   --hot-spacing-2x-small: 0.25rem; /* 4px */
+   --hot-spacing-x-small: 0.5rem; /* 8px */
+   --hot-spacing-small: 0.75rem; /* 12px */
+   --hot-spacing-medium: 1rem; /* 16px */
+   --hot-spacing-large: 1.25rem; /* 20px */
+   --hot-spacing-x-large: 1.75rem; /* 28px */
+   --hot-spacing-2x-large: 2.25rem; /* 36px */
+   --hot-spacing-3x-large: 3rem; /* 48px */
+   --hot-spacing-4x-large: 4.5rem; /* 72px */
+
+  /*
+   * Border radius
+   */
+
+   --hot-border-radius-small: 0.1875rem; /* 3px */
+   --hot-border-radius-medium: 0.25rem; /* 4px */
+   --hot-border-radius-large: 0.5rem; /* 8px */
+   --hot-border-radius-x-large: 1rem; /* 16px */
+   --hot-border-radius-circle: 50%;
+   --hot-border-radius-pill: 9999px;
 
 }
 

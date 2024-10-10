@@ -15,7 +15,7 @@ export class Tracking extends LitElement {
 
   name = "hot-tracking";
 
-  /** The Matomo site id for tracking. */
+  /** The site id for tracking. */
   @property({ type: String, attribute: "site-id" })
   accessor siteId: string = "";
 
@@ -30,7 +30,7 @@ export class Tracking extends LitElement {
   accessor title: string = "About the information we collect";
 
   @property({ type: String })
-  accessor message: html = html`<p>We use cookies and similar technologies to \
+  accessor message = html`<p>We use cookies and similar technologies to \
   recognize and analyze your visits, and measure traffic usage and activity.</p>`
 
   @property({ type: String, attribute: "agree-label" })
