@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import '@shoelace-style/shoelace/dist/components/alert/alert.js';
-import "../../components/tracking/tracking.ts";
 import { html } from "lit";
+
+import "../../src/hotosm-ui";
 
 const meta: Meta = {
   title: "Tracking",
@@ -9,7 +10,7 @@ const meta: Meta = {
 };
 export default meta;
 
-export const Template: StoryObj = {
+export const Tracking: StoryObj = {
   args: {
     siteId: "1",
     domain: "localhost",
@@ -17,12 +18,6 @@ export const Template: StoryObj = {
   argTypes: {
     siteId: {
       options: ["", "1", "2"],
-      control: {
-        type: "select",
-      },
-    },
-    domain: {
-      options: ["localhost", "anotherdomain"],
       control: {
         type: "select",
       },
@@ -42,10 +37,10 @@ export const Template: StoryObj = {
       }
     },
     addKeyLocalStorage: (siteId: number) => {
-      localStorage.setItem(`${siteId}-matomo-agree`, 'true');
+      localStorage.setItem(`${siteId}-tracking-agree`, 'true');
     },
     removeKeyLocalStorage: (siteId: number) => {
-      localStorage.removeItem(`${siteId}-matomo-agree`);
+      localStorage.removeItem(`${siteId}-tracking-agree`);
     },
   },
   render: (args, { parameters }) => {
@@ -56,18 +51,31 @@ export const Template: StoryObj = {
       <sl-button @click=${() => {
         parameters.addKeyLocalStorage(args.siteId)
       }}>Disable Banner</sl-button>
+      <br /><br />
 
       <hot-tracking
-        id="matomo-banner"
-        site-id="${args.siteId}"
-        domain="${args.domain}"
+        id="tracking-banner"
+        site-id=${args.siteId}
+        agree-label="Yes, I accept"
+        not-agree-label="I DO NOT accept"
+        title=${"What info we collect about you?"}
         @agree=${() => {
           parameters.showAgreeToast()
         }}
         @disagree=${() => {
           parameters.showDisagreeToast()
         }}
-      ></hot-tracking>
+      >
+        We use cookies and similar technologies to recognize and analyze your
+        visits, and measure traffic usage and activity. You can learn about how
+        we use the data about your visit or information you provide reading our
+        <a
+          href="https://www.hotosm.org/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          >privacy policy</a
+        >. By clicking "I Agree", you consent to the use of cookies.
+      </hot-tracking>
 
       <sl-alert id="agree-toast" variant="success" duration="3000" closable>
         <sl-icon slot="icon" name="check2-circle"></sl-icon>

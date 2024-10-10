@@ -1,0 +1,35 @@
+{/* shoelace.mdx */}
+ 
+import { Meta, Controls, Canvas, Story } from '@storybook/blocks';
+import * as ShoelaceStories from './shoelace.stories';
+ 
+<Meta of={ShoelaceStories} />
+ 
+# Shoelace
+ 
+The HOT UI library contains many composite components, such as headers, sidebars,
+tracking banners, etc, and does not re-invent the wheel for low-level components.
+
+Shoelace is an UI library that is exported directly from @hotosm/ui.
+
+To access the low-level components, such as buttons, dropdowns, modals, etc,
+simply import the component of the same name from Shoelace
+but with the **`hot-`** prefix instead of **`sl-`**, or without prefix if you're using React.
+
+For example, a button:
+
+```html
+<hot-button variant="primary">Click me!</hot-button>
+```
+
+Or if you're using React:
+
+```jsx
+<Button variant="primary">Click me!</Button>
+```
+
+<Canvas of={ShoelaceStories.Example} />
+
+Check the [Shoelace's documentation](https://shoelace.style/components) for full docs.
+
+

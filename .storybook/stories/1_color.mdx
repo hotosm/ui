@@ -1,0 +1,229 @@
+{/* Color.mdx */}
+ 
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+ 
+<Meta title="Color" />
+
+# Color
+
+Color system is based on the HOT branding document and are inspired in both Shoelace and Tailwind.
+
+You can access any color using CSS variables:
+
+`var(--hot-color-{name}-{number})`
+
+For example:
+
+```css
+.dangerMessage {
+  color: var(--hot-color-danger-700);
+  background: var(--hot-color-danger-50);
+}
+```
+
+## Tokens
+
+<ColorPalette>
+  <ColorItem
+    title="--hot-color-primary"
+    subtitle="Primary"
+    colors={{
+      950: 'var(--hot-color-primary-950)',
+      900: 'var(--hot-color-primary-900)',
+      800: 'var(--hot-color-primary-800)',
+      700: 'var(--hot-color-primary-700)',
+      600: 'var(--hot-color-primary-600)',
+      500: 'var(--hot-color-primary-500)',
+      400: 'var(--hot-color-primary-400)',
+      300: 'var(--hot-color-primary-300)',
+      200: 'var(--hot-color-primary-200)',
+      100: 'var(--hot-color-primary-100)',
+      50: 'var(--hot-color-primary-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-danger"
+    subtitle="Danger"
+    colors={{
+      950: 'var(--hot-color-danger-950)',
+      900: 'var(--hot-color-danger-900)',
+      800: 'var(--hot-color-danger-800)',
+      700: 'var(--hot-color-danger-700)',
+      600: 'var(--hot-color-danger-600)',
+      500: 'var(--hot-color-danger-500)',
+      400: 'var(--hot-color-danger-400)',
+      300: 'var(--hot-color-danger-300)',
+      200: 'var(--hot-color-danger-200)',
+      100: 'var(--hot-color-danger-100)',
+      50: 'var(--hot-color-danger-50)'
+    }}
+  />
+    <ColorItem
+    title="--hot-color-warning"
+    subtitle="Warning"
+    colors={{
+      950: 'var(--hot-color-warning-950)',
+      900: 'var(--hot-color-warning-900)',
+      800: 'var(--hot-color-warning-800)',
+      700: 'var(--hot-color-warning-700)',
+      600: 'var(--hot-color-warning-600)',
+      500: 'var(--hot-color-warning-500)',
+      400: 'var(--hot-color-warning-400)',
+      300: 'var(--hot-color-warning-300)',
+      200: 'var(--hot-color-warning-200)',
+      100: 'var(--hot-color-warning-100)',
+      50: 'var(--hot-color-warning-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-success"
+    subtitle="Success"
+    colors={{
+      950: 'var(--hot-color-success-950)',
+      900: 'var(--hot-color-success-900)',
+      800: 'var(--hot-color-success-800)',
+      700: 'var(--hot-color-success-700)',
+      600: 'var(--hot-color-success-600)',
+      500: 'var(--hot-color-success-500)',
+      400: 'var(--hot-color-success-400)',
+      300: 'var(--hot-color-success-300)',
+      200: 'var(--hot-color-success-200)',
+      100: 'var(--hot-color-success-100)',
+      50: 'var(--hot-color-success-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-neutral"
+    subtitle="Neutral"
+    colors={{
+      1000: 'var(--hot-color-neutral-1000)',
+      950: 'var(--hot-color-neutral-950)',
+      900: 'var(--hot-color-neutral-900)',
+      800: 'var(--hot-color-neutral-800)',
+      700: 'var(--hot-color-neutral-700)',
+      600: 'var(--hot-color-neutral-600)',
+      500: 'var(--hot-color-neutral-500)',
+      400: 'var(--hot-color-neutral-400)',
+      300: 'var(--hot-color-neutral-300)',
+      200: 'var(--hot-color-neutral-200)',
+      100: 'var(--hot-color-neutral-100)',
+      50: 'var(--hot-color-neutral-50)',
+      0: 'var(--hot-color-neutral-0)'
+    }}
+  />
+</ColorPalette>
+
+## Primitives
+
+<ColorPalette>
+  <ColorItem
+    title="--hot-color-red"
+    subtitle="Red"
+    colors={{
+      950: 'var(--hot-color-red-950)',
+      900: 'var(--hot-color-red-900)',
+      800: 'var(--hot-color-red-800)',
+      700: 'var(--hot-color-red-700)',
+      600: 'var(--hot-color-red-600)',
+      500: 'var(--hot-color-red-500)',
+      400: 'var(--hot-color-red-400)',
+      300: 'var(--hot-color-red-300)',
+      200: 'var(--hot-color-red-200)',
+      100: 'var(--hot-color-red-100)',
+      50: 'var(--hot-color-red-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-rose"
+    subtitle="Rose"
+    colors={{
+      950: 'var(--hot-color-rose-950)',
+      900: 'var(--hot-color-rose-900)',
+      800: 'var(--hot-color-rose-800)',
+      700: 'var(--hot-color-rose-700)',
+      600: 'var(--hot-color-rose-600)',
+      500: 'var(--hot-color-rose-500)',
+      400: 'var(--hot-color-rose-400)',
+      300: 'var(--hot-color-rose-300)',
+      200: 'var(--hot-color-rose-200)',
+      100: 'var(--hot-color-rose-100)',
+      50: 'var(--hot-color-rose-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-yellow"
+    subtitle="Yellow"
+    colors={{
+      950: 'var(--hot-color-yellow-950)',
+      900: 'var(--hot-color-yellow-900)',
+      800: 'var(--hot-color-yellow-800)',
+      700: 'var(--hot-color-yellow-700)',
+      600: 'var(--hot-color-yellow-600)',
+      500: 'var(--hot-color-yellow-500)',
+      400: 'var(--hot-color-yellow-400)',
+      300: 'var(--hot-color-yellow-300)',
+      200: 'var(--hot-color-yellow-200)',
+      100: 'var(--hot-color-yellow-100)',
+      50: 'var(--hot-color-yellow-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-blue"
+    subtitle="Blue"
+    colors={{
+      950: 'var(--hot-color-blue-950)',
+      900: 'var(--hot-color-blue-900)',
+      800: 'var(--hot-color-blue-800)',
+      700: 'var(--hot-color-blue-700)',
+      600: 'var(--hot-color-blue-600)',
+      500: 'var(--hot-color-blue-500)',
+      400: 'var(--hot-color-blue-400)',
+      300: 'var(--hot-color-blue-300)',
+      200: 'var(--hot-color-blue-200)',
+      100: 'var(--hot-color-blue-100)',
+      50: 'var(--hot-color-blue-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-cyan"
+    subtitle="Cyan"
+    colors={{
+      950: 'var(--hot-color-cyan-950)',
+      900: 'var(--hot-color-cyan-900)',
+      800: 'var(--hot-color-cyan-800)',
+      700: 'var(--hot-color-cyan-700)',
+      600: 'var(--hot-color-cyan-600)',
+      500: 'var(--hot-color-cyan-500)',
+      400: 'var(--hot-color-cyan-400)',
+      300: 'var(--hot-color-cyan-300)',
+      200: 'var(--hot-color-cyan-200)',
+      100: 'var(--hot-color-cyan-100)',
+      50: 'var(--hot-color-cyan-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-gray"
+    subtitle="Gray"
+    colors={{
+      950: 'var(--hot-color-gray-950)',
+      900: 'var(--hot-color-gray-900)',
+      800: 'var(--hot-color-gray-800)',
+      700: 'var(--hot-color-gray-700)',
+      600: 'var(--hot-color-gray-600)',
+      500: 'var(--hot-color-gray-500)',
+      400: 'var(--hot-color-gray-400)',
+      300: 'var(--hot-color-gray-300)',
+      200: 'var(--hot-color-gray-200)',
+      100: 'var(--hot-color-gray-100)',
+      50: 'var(--hot-color-gray-50)'
+    }}
+  />
+  <ColorItem
+    title="--hot-color-neutral"
+    subtitle="Neutral"
+    colors={{
+      0: 'var(--hot-color-neutral-00)',
+      1000: 'var(--hot-color-neutral-1000)',
+    }}
+  />
+</ColorPalette>
