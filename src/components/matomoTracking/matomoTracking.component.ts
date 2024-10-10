@@ -47,7 +47,7 @@ export class MatomoTracking extends LitElement {
 
       <p id="matomoTracking-header" class="matomoTracking--header">About the information we collect</p>
 
-      <p>
+      <p class="matomoTracking-message">
         We use cookies and similar technologies to recognize and analyze your
         visits, and measure traffic usage and activity. You can learn about how
         we use the data about your visit or information you provide reading our

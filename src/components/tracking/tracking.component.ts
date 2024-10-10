@@ -48,12 +48,12 @@ export class Tracking extends LitElement {
         name="info-circle"
       ></sl-icon>
 
-      <p id="tracking-header" class="tracking--header">
+      <h2 id="tracking-header" class="tracking--header">
         ${this.title}
-      </p>
+      </h2>
 
-      <p>
-        <slot part="label" class="tracking--message"></slot>
+      <p class="tracking--message">
+        <slot part="label"></slot>
       </p>
 
       <sl-button

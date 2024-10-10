@@ -1,6 +1,4 @@
-import { css } from 'lit';
-
-export default css`
+import{css as t}from"lit";var o=t`
   .tracking {
     text-align: center;
   }
@@ -17,4 +15,4 @@ export default css`
   .tracking--message {
     margin-bottom: var(--hot-spacing-large);
   }
-`
+`;export{o as a};

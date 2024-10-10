@@ -1,20 +1,19 @@
-import { css } from 'lit';
-
-export default css`
-  .tracking {
+import{css as o}from"lit";var a=o`
+  .matomoTracking {
     text-align: center;
   }
 
-  .tracking--header {
+  .matomoTracking--header {
     font-weight: var(--hot-font-weight-semibold);
     font-size: var(--hot-font-size-large);
+    text-align: center;
   }
 
-  .tracking--link {
+  .matomoTracking--link {
     color: var(--hot-color-primary-700);
   }
 
-  .tracking--message {
+  .matomoTracking--message {
     margin-bottom: var(--hot-spacing-large);
   }
-`
+`;export{a};
