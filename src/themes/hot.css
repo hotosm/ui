@@ -171,7 +171,8 @@
   'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --hot-font-sans-variant: 'Barlow Condensed';
   --hot-font-sefif: Georgia, 'Times New Roman', serif;
-  --hot-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  --hot-font-mono: Menlo, Monaco, Consolas, 'Courier New',
+  monospace, Consolas, 'Liberation Mono', Menlo, monospace;
 
   /* Font sizes */
   --hot-font-size-2x-small: 0.625rem; /* 10px */
