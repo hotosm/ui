@@ -12,11 +12,10 @@ export default meta;
 
 export const Consent: StoryObj = {
   args: {
-    siteId: "1",
-    domain: "localhost",
+    consentId: "1",
   },
   argTypes: {
-    siteId: {
+    consentId: {
       options: ["", "1", "2"],
       control: {
         type: "select",
@@ -27,35 +26,35 @@ export const Consent: StoryObj = {
     showAgreeToast: () => {
       const agree = document.getElementById("agree-toast");
       if (agree) {
-        // agree.toast();
+        agree.toast();
       }
     },
     showDisagreeToast: () => {
       const disagree = document.getElementById("disagree-toast");
       if (disagree) {
-        // disagree.toast();
+        disagree.toast();
       }
     },
-    addKeyLocalStorage: (siteId: number) => {
-      localStorage.setItem(`${siteId}-consent-agree`, 'true');
+    addKeyLocalStorage: (consentId: number) => {
+      localStorage.setItem(`${consentId}-consent-agree`, 'true');
     },
-    removeKeyLocalStorage: (siteId: number) => {
-      localStorage.removeItem(`${siteId}-consent-agree`);
+    removeKeyLocalStorage: (consentId: number) => {
+      localStorage.removeItem(`${consentId}-consent-agree`);
     },
   },
   render: (args, { parameters }) => {
     return html`
       <sl-button @click=${() => {
-        parameters.removeKeyLocalStorage(args.siteId)
+        parameters.removeKeyLocalStorage(args.consentId)
       }}>Re-Enable Banner</sl-button>
       <sl-button @click=${() => {
-        parameters.addKeyLocalStorage(args.siteId)
+        parameters.addKeyLocalStorage(args.consentId)
       }}>Disable Banner</sl-button>
       <br /><br />
 
       <hot-consent
 
-      site-id=${args.siteId}
+      consent-id=${args.consentId}
         agree-label="Yes, I accept"
         not-agree-label="I DO NOT accept"
         title=${"What info we collect about you?"}

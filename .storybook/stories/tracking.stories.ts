@@ -69,9 +69,7 @@ export const Tracking: StoryObj = {
       <br /><br />
 
       <hot-consent
-        id="matomo-banner"
-        site-id="${args.siteId}"
-        domain="${args.domain}"
+        consent-id="${args.siteId}"
         @agree=${() => {
           parameters.agree(args.siteId, args.domain)
         }}

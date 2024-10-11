@@ -16,8 +16,8 @@ export class Consent extends LitElement {
   name = "hot-consent";
 
   /** The site id for consent. */
-  @property({ type: String, attribute: "site-id" })
-  accessor siteId: string = "";
+  @property({ type: String, attribute: "consent-id" })
+  accessor consentId: string = "";
 
   /** Force display the banner. */
   @property({ type: Boolean })
@@ -73,13 +73,13 @@ export class Consent extends LitElement {
 
   private _setAgree(_e: MouseEvent) {
     this.isOpen = false;
-    localStorage.setItem(`${this.siteId}-consent-agree`, "true");
+    localStorage.setItem(`${this.consentId}-consent-agree`, "true");
     this.dispatchEvent(new Event("agree", { bubbles: true, composed: true }));
   }
 
   private _setDisagree(_e: MouseEvent) {
     this.isOpen = false;
-    localStorage.setItem(`${this.siteId}-consent-agree`, "false");
+    localStorage.setItem(`${this.consentId}-consent-agree`, "false");
     this.dispatchEvent(
       new Event("disagree", { bubbles: true, composed: true })
     );
@@ -89,7 +89,7 @@ export class Consent extends LitElement {
     super.connectedCallback();
 
     // Close and halt execution if already disagreed
-    const consent = localStorage.getItem(`${this.siteId}-consent-agree`);
+    const consent = localStorage.getItem(`${this.consentId}-consent-agree`);
     if (consent === "false") {
       this.isOpen = false;
       return;
