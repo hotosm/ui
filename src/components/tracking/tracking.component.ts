@@ -1,108 +1,97 @@
-import "@shoelace-style/shoelace/dist/components/alert/alert.js";
-
-import { LitElement, html } from "lit";
+import { LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import styles from './tracking.styles.js';
-import type { CSSResultGroup } from 'lit';
 
-import registerBundledIcons from "../icons.js";
+declare global {
+  interface Window {
+    _paq: any[];
+  }
+}
 
-registerBundledIcons();
-
-export class Tracking extends LitElement {
-
-  static styles: CSSResultGroup = [styles];
+export class MatomoTracking extends LitElement {
 
   name = "hot-tracking";
 
-  /** The site id for tracking. */
+  /** The Matomo site id for tracking. */
   @property({ type: String, attribute: "site-id" })
   accessor siteId: string = "";
 
-  /** Force display the banner. */
-  @property({ type: Boolean })
-  accessor force: boolean = false;
-
-  @property({ type: Boolean })
-  accessor isOpen: boolean = true;
-
+  /** The domains to apply tracking. */
   @property({ type: String })
-  accessor title: string = "About the information we collect";
+  accessor domain: string = "";
 
+  /** The Matomo URL */
   @property({ type: String })
-  accessor message = html`<p>We use cookies and similar technologies to \
-  recognize and analyze your visits, and measure traffic usage and activity.</p>`
+  accessor matomoURL: string = "https://matomo.hotosm.org";
 
-  @property({ type: String, attribute: "agree-label" })
-  accessor agreeLabel: string = "I Agree";
-
-  @property({ type: String, attribute: "not-agree-label" })
-  accessor notAgreeLabel: string = "I Do Dot Agree";
-
-  protected render() {
-    return html`<sl-alert class="tracking" variant="danger" ?open=${this.isOpen}>
-      <sl-icon
-        id="hot-red-text"
-        library="bundled"
-        slot="icon"
-        name="info-circle"
-      ></sl-icon>
-
-      <h2 id="tracking-header" class="tracking--header">
-        ${this.title}
-      </h2>
-
-      <p class="tracking--message">
-        <slot part="label"></slot>
-      </p>
-
-      <sl-button
-        @click=${(e: MouseEvent) => {
-          this._setAgree(e);
-        }}
-        >${this.agreeLabel}</sl-button
-      >
-      <sl-button
-        @click=${(e: MouseEvent) => {
-          this._setDisagree(e);
-        }}
-        >${this.notAgreeLabel}</sl-button
-      >
-    </sl-alert>`;
+  agree() {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    const _paq = (window._paq = window._paq || []);
+    if (_paq.length === 0) return;
   }
 
-  private _setAgree(_e: MouseEvent) {
-    this.isOpen = false;
-    localStorage.setItem(`${this.siteId}-tracking-agree`, "true");
-    this.dispatchEvent(new Event("agree", { bubbles: true, composed: true }));
-  }
-
-  private _setDisagree(_e: MouseEvent) {
-    this.isOpen = false;
-    localStorage.setItem(`${this.siteId}-tracking-agree`, "false");
-    this.dispatchEvent(
-      new Event("disagree", { bubbles: true, composed: true })
-    );
+  disagree() {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    const _paq = (window._paq = window._paq || []);
+    if (_paq.length === 0) return;
+    _paq.push(["forgetConsentGiven"]);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // Close and halt execution if already disagreed
-    const consent = localStorage.getItem(`${this.siteId}-tracking-agree`);
-    if (consent === "false") {
-      this.isOpen = false;
+    // Close and halt execution if wrong domain
+    if (window.location.hostname !== this.domain) {
+      console.warn(
+        `Matomo init failed. ${window.location.hostname} does not match ${this.domain}.`
+      );
       return;
     }
 
-    // Close prompt only if already agreed, continue
-    if (consent === "true") {
-      this.isOpen = false;
+    const matomoTrackingId = this.siteId;
+
+    // Close and halt execution if siteId or domain not set
+    if (
+      (matomoTrackingId.length === 0 || this.domain.length === 0)
+    ) {
+      console.warn("Matomo init failed. No site id or domains provided.");
+      return;
     }
+
+    // Close and halt execution if already disagreed
+    console.log(
+      `Setting Matomo tracking for site=${matomoTrackingId} domain=${this.domain}`
+    );
+
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    const _paq = (window._paq = window._paq || []);
+
+    // tracker methods like "setCustomDimension" should be called before "trackPageView"
+    _paq.push(["requireConsent"]);
+    _paq.push(["setDomains", [this.domain]]);
+    _paq.push(["trackPageView"]);
+    _paq.push(["enableLinkTracking"]); // Tracks downloads
+    _paq.push(["trackVisibleContentImpressions"]); // Tracks content
+
+    (function (matomoURL) {
+      _paq.push(["setTrackerUrl", `${matomoURL}/matomo.php`]);
+      _paq.push(["setSiteId", matomoTrackingId]);
+
+      const d = document;
+      const g = d.createElement("script");
+      const s = d.getElementsByTagName("script")[0];
+
+      if (s?.parentNode != null) {
+        g.async = true;
+        g.src = `${matomoURL}/matomo.js`;
+        s.parentNode.insertBefore(g, s);
+      } else {
+        console.warn("Script insertion failed. Parent node is null.");
+      }
+    })(this.matomoURL);
   }
 }
 
-export default Tracking;
+export default MatomoTracking;
 
 // Define web component
-customElements.define("hot-tracking", Tracking);
+customElements.define("hot-tracking", MatomoTracking);

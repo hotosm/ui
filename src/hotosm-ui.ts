@@ -3,8 +3,8 @@
 import HotHeader from './components/header/header.component.js';
 import HotLogo from './components/logo/logo.component.js';
 import HotToolbar from './components/toolbar/toolbar.component.js';
-import HotMatomoTracking from './components/matomoTracking/matomoTracking.component.js';
 import HotTracking from './components/tracking/tracking.component.js';
+import HotConsent from './components/consent/consent.component.js';
 
 // Shoelace components
 
@@ -194,8 +194,8 @@ export {
     HotHeader as Header,
     HotLogo as Logo,
     HotToolbar as Toolbar,
+    HotConsent as Consent,
     HotTracking as Tracking,
-    HotMatomoTracking as MatomoTracking,
     // Shoelace
     setBasePath,
     SlAlert as Alert,

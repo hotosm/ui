@@ -1,8 +1,8 @@
-import Tracking from './tracking.component.js';
+import MatomoTracking from './tracking.component.js';
 export * from './tracking.component.js';
-export default Tracking;
+export default MatomoTracking;
 declare global {
     interface HTMLElementTagNameMap {
-        'hot-tracking': Tracking;
+        'hot-tracking': MatomoTracking;
     }
 }

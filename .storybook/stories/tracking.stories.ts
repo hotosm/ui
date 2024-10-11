@@ -22,25 +22,39 @@ export const Tracking: StoryObj = {
         type: "select",
       },
     },
+    domain: {
+      options: ["localhost", "anotherdomain"],
+      control: {
+        type: "select",
+      },
+    },
   },
   parameters: {
-    showAgreeToast: () => {
-      const agree = document.getElementById("agree-toast");
-      if (agree) {
-        agree.toast();
+    agree: (siteId, domain) => {
+      const tracking = document.getElementById("hot-tracking");
+      console.log(tracking)
+      if (tracking) {
+        tracking.agree(
+          siteId,
+          domain
+        );  
+      }
+      const agreeAlert = document.getElementById("agree-alert");
+      if (agreeAlert) {
+        agreeAlert.toast();
       }
     },
-    showDisagreeToast: () => {
-      const disagree = document.getElementById("disagree-toast");
-      if (disagree) {
-        disagree.toast();
+    disagree: () => {
+      const disagreeAlert = document.getElementById("disagree-alert");
+      if (disagreeAlert) {
+        disagreeAlert.toast();
       }
     },
     addKeyLocalStorage: (siteId: number) => {
-      localStorage.setItem(`${siteId}-tracking-agree`, 'true');
+      localStorage.setItem(`${siteId}-consent-agree`, 'true');
     },
     removeKeyLocalStorage: (siteId: number) => {
-      localStorage.removeItem(`${siteId}-tracking-agree`);
+      localStorage.removeItem(`${siteId}-consent-agree`);
     },
   },
   render: (args, { parameters }) => {
@@ -51,38 +65,34 @@ export const Tracking: StoryObj = {
       <sl-button @click=${() => {
         parameters.addKeyLocalStorage(args.siteId)
       }}>Disable Banner</sl-button>
+
       <br /><br />
 
-      <hot-tracking
-        id="tracking-banner"
-        site-id=${args.siteId}
-        agree-label="Yes, I accept"
-        not-agree-label="I DO NOT accept"
-        title=${"What info we collect about you?"}
+      <hot-consent
+        id="matomo-banner"
+        site-id="${args.siteId}"
+        domain="${args.domain}"
         @agree=${() => {
-          parameters.showAgreeToast()
+          parameters.agree(args.siteId, args.domain)
         }}
         @disagree=${() => {
-          parameters.showDisagreeToast()
+          parameters.disagree()
         }}
+      ></hot-consent>
+
+      <hot-tracking
+        id="hot-tracking"
+        site-id=${args.siteId}
+        domain=${args.domain}
       >
-        We use cookies and similar technologies to recognize and analyze your
-        visits, and measure traffic usage and activity. You can learn about how
-        we use the data about your visit or information you provide reading our
-        <a
-          href="https://www.hotosm.org/privacy"
-          target="_blank"
-          rel="noopener noreferrer"
-          >privacy policy</a
-        >. By clicking "I Agree", you consent to the use of cookies.
       </hot-tracking>
 
-      <sl-alert id="agree-toast" variant="success" duration="3000" closable>
+      <sl-alert id="agree-alert" variant="success" duration="3000" closable>
         <sl-icon slot="icon" name="check2-circle"></sl-icon>
         You clicked agree.
       </sl-alert>
 
-      <sl-alert id="disagree-toast" variant="danger" duration="3000" closable>
+      <sl-alert id="disagree-alert" variant="danger" duration="3000" closable>
         <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
         You clicked disagree.
       </sl-alert>

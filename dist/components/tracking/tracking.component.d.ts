@@ -1,21 +1,19 @@
-import "@shoelace-style/shoelace/dist/components/alert/alert.js";
 import { LitElement } from "lit";
-import type { CSSResultGroup } from 'lit';
-export declare class Tracking extends LitElement {
-    static styles: CSSResultGroup;
+declare global {
+    interface Window {
+        _paq: any[];
+    }
+}
+export declare class MatomoTracking extends LitElement {
     name: string;
-    /** The site id for tracking. */
+    /** The Matomo site id for tracking. */
     accessor siteId: string;
-    /** Force display the banner. */
-    accessor force: boolean;
-    accessor isOpen: boolean;
-    accessor title: string;
-    accessor message: import("lit").TemplateResult<1>;
-    accessor agreeLabel: string;
-    accessor notAgreeLabel: string;
-    protected render(): import("lit").TemplateResult<1>;
-    private _setAgree;
-    private _setDisagree;
+    /** The domains to apply tracking. */
+    accessor domain: string;
+    /** The Matomo URL */
+    accessor matomoURL: string;
+    agree(): void;
+    disagree(): void;
     connectedCallback(): void;
 }
-export default Tracking;
+export default MatomoTracking;
