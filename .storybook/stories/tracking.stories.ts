@@ -32,7 +32,6 @@ export const Tracking: StoryObj = {
   parameters: {
     agree: (siteId, domain) => {
       const tracking = document.getElementById("hot-tracking");
-      console.log(tracking)
       if (tracking) {
         tracking.agree(
           siteId,
