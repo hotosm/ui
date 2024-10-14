@@ -99,5 +99,9 @@ export const styles = css`
 
   .header--logo-img {
   }
+
+  .header--hidden {
+    font-size: .1px;
+  }
 }
 `

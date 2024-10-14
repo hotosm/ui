@@ -1,1 +1,1 @@
-import{a,b}from"../../chunks/chunk.4QDUS5ZV.js";import"../../chunks/chunk.FWYUHKRF.js";export{a as headerVariants,b as styles};
+import{a,b}from"../../chunks/chunk.6NA5HMIF.js";import"../../chunks/chunk.FWYUHKRF.js";export{a as headerVariants,b as styles};

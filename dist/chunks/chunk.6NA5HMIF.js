@@ -77,5 +77,9 @@ import{css as e}from"lit";import{cva as a}from"class-variance-authority";var o=a
 
   .header--logo-img {
   }
+
+  .header--hidden {
+    font-size: .1px;
+  }
 }
 `;export{o as a,i as b};

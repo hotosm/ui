@@ -54,7 +54,7 @@ export const Header: StoryObj = {
     logo: defaultLogo,
     drawer: true,
     tabs: twoTab,
-    borderBottom: true,
+    borderBottom: false,
     selectedTab: 0
   },
   argTypes: {

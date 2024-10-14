@@ -45,7 +45,7 @@ export class Header extends LitElement {
   @property({ type: Boolean })
   accessor borderBottom: boolean = true;
   
-  @property()
+  @property({ type: Number })
   accessor selectedTab: number = 0;
 
   protected render() {
@@ -100,9 +100,11 @@ export class Header extends LitElement {
                   @click=${(e: MouseEvent) => {
                     this._selectTab(e, item.clickEvent, index);
                   }}
-                  ?active=${this.selectedTab.toString() === index.toString()}
-                  >${item.label}</sl-tab
+                  ?active=${this.selectedTab === index}
                 >
+                  ${item.label}
+                  <span class="header--hidden">${this.selectedTab}</span>
+                </sl-tab>
               `
             )}
           </sl-tab-group>
