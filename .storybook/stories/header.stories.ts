@@ -18,17 +18,11 @@ const oneTab = [
 const twoTab = [
   {
     label: 'GO TO HEADER PAGE',
-    clickEvent: async () => {
-      const url = await hrefTo('Button', 'Template');
-      window.location.href = url;
-    }
+    clickEvent: async () => {}
   },
   {
     label: 'GO TO TRACKING PAGE',
-    clickEvent: async () => {
-      const url = await hrefTo('Tracking', 'Template');
-      window.location.href = url;
-    }
+    clickEvent: async () => {}
   }
 ];
 const threeTab = Array.from({ length: 3 }, (_, index) => ({

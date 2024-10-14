@@ -1,0 +1,1 @@
+import{b as e}from"./chunk.4SB2ERYH.js";import*as t from"react";import{createComponent as a}from"@lit/react";var o="hot-header",r=a({tagName:o,elementClass:e,react:t,events:{},displayName:"Header"}),n=r;export{n as a};
