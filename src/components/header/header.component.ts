@@ -100,7 +100,7 @@ export class Header extends LitElement {
                   @click=${(e: MouseEvent) => {
                     this._selectTab(e, item.clickEvent, index);
                   }}
-                  ?selected=${this.selectedTab === index}
+                  ?active=${this.selectedTab === index}
                   >${item.label}</sl-tab
                 >
               `
