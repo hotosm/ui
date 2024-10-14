@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { createComponent } from '@lit/react';
-import Component from '../../components/tracking/tracking.component.js';
+import Component from '../../components/consent/consent.component.js';
 
-const tagName = 'hot-matomo-tracking';
+const tagName = 'hot-consent';
 
 const reactWrapper = createComponent({
   tagName,
   elementClass: Component,
   react: React,
   events: {},
-  displayName: 'MatomoTracking'
+  displayName: 'Consent'
 });
 
 export default reactWrapper;

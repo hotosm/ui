@@ -2,6 +2,7 @@ export { default as Header } from './header/index.js';
 export { default as Logo } from './logo/index.js';
 export { default as Toolbar } from './toolbar/index.js';
 export { default as Tracking } from './tracking/index.js';
+export { default as Consent } from './consent/index.js';
 export { default as Alert } from '@shoelace-style/shoelace/dist/react/alert/index.js';
 export { default as AnimatedImage } from '@shoelace-style/shoelace/dist/react/animated-image/index.js';
 export { default as Animation } from '@shoelace-style/shoelace/dist/react/animation/index.js';

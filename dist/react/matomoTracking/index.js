@@ -1,1 +1,0 @@
-import{b as t}from"../../chunks/chunk.NZIJQUIE.js";import"../../chunks/chunk.FWYUHKRF.js";import*as o from"react";import{createComponent as e}from"@lit/react";var a="hot-matomo-tracking",m=e({tagName:a,elementClass:t,react:o,events:{},displayName:"MatomoTracking"}),p=m;export{p as default};
