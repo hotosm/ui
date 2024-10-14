@@ -55,6 +55,7 @@ export const Header: StoryObj = {
     drawer: true,
     tabs: twoTab,
     borderBottom: true,
+    selectedTab: 0
   },
   argTypes: {
     size: {
@@ -87,6 +88,12 @@ export const Header: StoryObj = {
         type: "radio",
       },
     },
+    selectedTab: {
+      options: [0,1],
+      control: {
+        type: "select",
+      },
+    },
     tabs: {
       options: {
         '1 Tab': oneTab,
@@ -109,6 +116,7 @@ export const Header: StoryObj = {
         size=${args.size}
         ?drawer=${args.drawer}
         .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
       ></hot-header>
     `;
   },
