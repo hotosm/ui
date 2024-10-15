@@ -1,0 +1,50 @@
+import { Meta } from '@storybook/blocks';
+import { Logo, Button } from '../../src/react';
+  
+<Meta title="Intro" />
+ 
+<Logo /><br />
+
+# HOTOSM UI
+
+## Shared UI Components with HOT Theming
+
+This repository contains HOT themed UI components to reduce code duplication
+and simplify the lives of developers needing to prototype and develop well
+designed web applications quickly.
+
+They are available as
+[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+and has first-class React support.
+
+The main goal of this project is not to re-invent the wheel, or add an extra burden
+of development and maintenance.
+
+## Install
+
+`npm install @hotosm/ui`
+
+And import the styles:
+
+```js
+  import '@hotosm/dist/style.css';
+```
+
+## Use
+
+Now you can use any component, you can try with a button:
+
+```html
+<hot-button variant="primary">Click me!</hot-button>
+```
+
+<Button variant="primary">Click me!</Button>
+
+Or the HOT logo!
+
+```html
+<hot-logo></hot-logo>
+```
+
+<Logo />
+

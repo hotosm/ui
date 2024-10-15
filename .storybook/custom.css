@@ -1,0 +1,11 @@
+.docblock-typeset > div > div:first-child {
+    width: 25%;
+}
+
+.docblock-typeset > div > div:last-child {
+    width: 75%;
+}
+
+a {
+    color: var(--hot-color-primary-700)
+}
