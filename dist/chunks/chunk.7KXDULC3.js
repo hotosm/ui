@@ -38,10 +38,6 @@ import{css as e}from"lit";import{cva as a}from"class-variance-authority";var o=a
     font-size: var(--hot-font-size-x-large);
   }
 
-  .header--tab-group {
-    flex-direction: column;
-  }
-
   .header--tab::part(base) {
     font-size: var(--hot-font-size-medium);
     font-weight: var(--hot-font-weight-normal);
@@ -51,7 +47,7 @@ import{css as e}from"lit";import{cva as a}from"class-variance-authority";var o=a
 
   .header--tab-group::part(base) {
     --track-color: transparent;
-    --indicator-color: var(--hot-color-neutral-950);
+    --indicator-color: none;
   }
 
   .header--nav {
@@ -76,6 +72,14 @@ import{css as e}from"lit";import{cva as a}from"class-variance-authority";var o=a
   }
 
   .header--logo-img {
+  }
+
+  .header--tab {
+    border-bottom: 2px solid;
+    border-color: transparent;
+  }
+  .header--tab-active {
+    border-color: var(--hot-color-neutral-1000);
   }
 
 }

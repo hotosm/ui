@@ -60,10 +60,6 @@ export const styles = css`
     font-size: var(--hot-font-size-x-large);
   }
 
-  .header--tab-group {
-    flex-direction: column;
-  }
-
   .header--tab::part(base) {
     font-size: var(--hot-font-size-medium);
     font-weight: var(--hot-font-weight-normal);
@@ -73,7 +69,7 @@ export const styles = css`
 
   .header--tab-group::part(base) {
     --track-color: transparent;
-    --indicator-color: var(--hot-color-neutral-950);
+    --indicator-color: none;
   }
 
   .header--nav {
@@ -98,6 +94,14 @@ export const styles = css`
   }
 
   .header--logo-img {
+  }
+
+  .header--tab {
+    border-bottom: 2px solid;
+    border-color: transparent;
+  }
+  .header--tab-active {
+    border-color: var(--hot-color-neutral-1000);
   }
 
 }

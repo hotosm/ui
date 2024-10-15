@@ -1,5 +1,4 @@
 import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
-import "@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js";
 import "@shoelace-style/shoelace/dist/components/tab-group/tab-group.js";
 import "@shoelace-style/shoelace/dist/components/tab/tab.js";
 import { LitElement, html } from "lit";
@@ -45,8 +44,15 @@ export class Header extends LitElement {
   @property({ type: Boolean })
   accessor borderBottom: boolean = true;
   
+  /** Index of the selected tab. */
   @property({ type: Number })
   accessor selectedTab: number = 0;
+
+  selectTab(index: number) {
+    console.log(index);
+    this.tabs = [...this.tabs];
+    this.selectedTab = index;
+  }
 
   protected render() {
     const logoSrc =
@@ -94,13 +100,11 @@ export class Header extends LitElement {
             ${this.tabs.map(
               (item, index) => html`
                 <sl-tab
-                  class="header--tab"
+                  class=${["header--tab", this.selectedTab === index ? "header--tab-active" : ""].join(" ")}
                   slot="nav"
-                  panel="general"
                   @click=${(e: MouseEvent) => {
-                    this._selectTab(e, item.clickEvent, index);
+                    this._tabClick(e, item.clickEvent, index);
                   }}
-                  active=${this.selectedTab === index}
                 >
                   ${item.label}
                 </sl-tab>
@@ -141,14 +145,15 @@ export class Header extends LitElement {
     `;
   }
 
-  private _selectTab(_e: MouseEvent, clickAction: () => void, index: number) {
-    this.selectedTab = index;
+  private _tabClick(_e: MouseEvent, clickAction: () => void, index: number) {
+    this.selectTab(index);
     clickAction();
   }
 
   private _handleLogin(_e: MouseEvent) {
     this.dispatchEvent(new Event("login"));
   }
+
 }
 
 export default Header;

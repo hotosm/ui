@@ -1,5 +1,4 @@
 import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
-import "@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js";
 import "@shoelace-style/shoelace/dist/components/tab-group/tab-group.js";
 import "@shoelace-style/shoelace/dist/components/tab/tab.js";
 import { LitElement } from "lit";
@@ -24,9 +23,11 @@ export declare class Header extends LitElement {
     accessor size: sizes;
     /** Border bottom. */
     accessor borderBottom: boolean;
+    /** Index of the selected tab. */
     accessor selectedTab: number;
+    selectTab(index: number): void;
     protected render(): import("lit").TemplateResult<1>;
-    private _selectTab;
+    private _tabClick;
     private _handleLogin;
 }
 export default Header;

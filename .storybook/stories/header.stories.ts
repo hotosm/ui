@@ -43,13 +43,13 @@ export const Header: StoryObj = {
     layout: 'fullscreen',
   },
   args: {
+    selectedTab: 0,
     size: "small",
     title: "",
     logo: defaultLogo,
     drawer: true,
     tabs: twoTab,
     borderBottom: false,
-    selectedTab: 0
   },
   argTypes: {
     size: {
@@ -83,7 +83,7 @@ export const Header: StoryObj = {
       },
     },
     selectedTab: {
-      options: [0,1],
+      options: [0,1,2,3,4,5],
       control: {
         type: "select",
       },
