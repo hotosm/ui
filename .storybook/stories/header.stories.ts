@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { hrefTo } from '@storybook/addon-links';
-import "../../components/header/header.ts";
 import { html } from "lit";
+
+import "../../src/hotosm-ui";
 
 const defaultLogo = "";
 
@@ -17,17 +18,11 @@ const oneTab = [
 const twoTab = [
   {
     label: 'GO TO HEADER PAGE',
-    clickEvent: async () => {
-      const url = await hrefTo('Button', 'Template');
-      window.location.href = url;
-    }
+    clickEvent: async () => {}
   },
   {
     label: 'GO TO TRACKING PAGE',
-    clickEvent: async () => {
-      const url = await hrefTo('Tracking', 'Template');
-      window.location.href = url;
-    }
+    clickEvent: async () => {}
   }
 ];
 const threeTab = Array.from({ length: 3 }, (_, index) => ({
@@ -43,17 +38,18 @@ const fiveTab = Array.from({ length: 5 }, (_, index) => ({
   clickEvent: () => {}
 }));
 
-export const Template: StoryObj = {
+export const Header: StoryObj = {
   parameters: {
     layout: 'fullscreen',
   },
   args: {
+    selectedTab: 0,
     size: "small",
     title: "",
     logo: defaultLogo,
     drawer: true,
     tabs: twoTab,
-    borderBottom: true,
+    borderBottom: false,
   },
   argTypes: {
     size: {
@@ -86,6 +82,12 @@ export const Template: StoryObj = {
         type: "radio",
       },
     },
+    selectedTab: {
+      options: [0,1,2,3,4,5],
+      control: {
+        type: "select",
+      },
+    },
     tabs: {
       options: {
         '1 Tab': oneTab,
@@ -108,6 +110,7 @@ export const Template: StoryObj = {
         size=${args.size}
         ?drawer=${args.drawer}
         .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
       ></hot-header>
     `;
   },

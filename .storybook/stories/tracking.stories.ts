@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import '@shoelace-style/shoelace/dist/components/alert/alert.js';
-import "../../components/tracking/tracking.ts";
 import { html } from "lit";
+
+import "../../src/hotosm-ui";
 
 const meta: Meta = {
   title: "Tracking",
@@ -9,7 +10,7 @@ const meta: Meta = {
 };
 export default meta;
 
-export const Template: StoryObj = {
+export const Tracking: StoryObj = {
   args: {
     siteId: "1",
     domain: "localhost",
@@ -29,23 +30,30 @@ export const Template: StoryObj = {
     },
   },
   parameters: {
-    showAgreeToast: () => {
-      const agree = document.getElementById("agree-toast");
-      if (agree) {
-        agree.toast();
+    agree: (siteId, domain) => {
+      const tracking = document.getElementById("hot-tracking");
+      if (tracking) {
+        tracking.agree(
+          siteId,
+          domain
+        );  
+      }
+      const agreeAlert = document.getElementById("agree-alert");
+      if (agreeAlert) {
+        agreeAlert.toast();
       }
     },
-    showDisagreeToast: () => {
-      const disagree = document.getElementById("disagree-toast");
-      if (disagree) {
-        disagree.toast();
+    disagree: () => {
+      const disagreeAlert = document.getElementById("disagree-alert");
+      if (disagreeAlert) {
+        disagreeAlert.toast();
       }
     },
     addKeyLocalStorage: (siteId: number) => {
-      localStorage.setItem(`${siteId}-matomo-agree`, 'true');
+      localStorage.setItem(`${siteId}-consent-agree`, 'true');
     },
     removeKeyLocalStorage: (siteId: number) => {
-      localStorage.removeItem(`${siteId}-matomo-agree`);
+      localStorage.removeItem(`${siteId}-consent-agree`);
     },
   },
   render: (args, { parameters }) => {
@@ -57,24 +65,31 @@ export const Template: StoryObj = {
         parameters.addKeyLocalStorage(args.siteId)
       }}>Disable Banner</sl-button>
 
-      <hot-tracking
-        id="matomo-banner"
-        site-id="${args.siteId}"
-        domain="${args.domain}"
+      <br /><br />
+
+      <hot-consent
+        consent-id="${args.siteId}"
         @agree=${() => {
-          parameters.showAgreeToast()
+          parameters.agree(args.siteId, args.domain)
         }}
         @disagree=${() => {
-          parameters.showDisagreeToast()
+          parameters.disagree()
         }}
-      ></hot-tracking>
+      ></hot-consent>
 
-      <sl-alert id="agree-toast" variant="success" duration="3000" closable>
+      <hot-tracking
+        id="hot-tracking"
+        site-id=${args.siteId}
+        domain=${args.domain}
+      >
+      </hot-tracking>
+
+      <sl-alert id="agree-alert" variant="success" duration="3000" closable>
         <sl-icon slot="icon" name="check2-circle"></sl-icon>
         You clicked agree.
       </sl-alert>
 
-      <sl-alert id="disagree-toast" variant="danger" duration="3000" closable>
+      <sl-alert id="disagree-alert" variant="danger" duration="3000" closable>
         <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
         You clicked disagree.
       </sl-alert>
