@@ -77,8 +77,8 @@ Import the library in your project and use the components.
 
 ```html
 <script>
-  import '@hotosm/dist/style.css';
-  import { Logo, Button } from '@hotosm/ui/dist/ui.js';
+  import '@hotosm/ui/dist/style.css';
+  import { Logo, Button } from '@hotosm/ui/dist/hotosm-ui';
 </script>
 ```
 
@@ -132,7 +132,7 @@ simply import the component of the same name from the [Shoelace docs]
 (<https://shoelace.style>):
 
 ```js
-import { Button } from '@hotosm/ui/dist/ui.js';
+import { Button } from '@hotosm/ui/dist/hotosm-ui';
 ```
 
 ```html
