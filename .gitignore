@@ -38,3 +38,6 @@ site
 
 # Common system files
 .DS_Store
+
+# Build scripts
+!scripts/build.js
