@@ -52,16 +52,25 @@
 
 ## Shared UI Components with HOT Theming
 
-This repository contains HOT themed UI components to reduce code duplication
-and simplify the lives of developers needing to prototype and develop well
-designed web applications quickly.
+This repository contains HOT themed UI components, with three goals:
+
+1. Reduced code duplication across HOT tools (we repeat a lot!)
+2. Simplified developer experience to create a HOT app.
+3. Reasonably consistent theming and style across tools.
 
 They are available as
 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-and has first-class React support.
+and have first-class React support.
 
 The main goal of this project is not to re-invent the wheel, or add an extra burden
-of development and maintenance.
+of development and maintenance. It should include a minimal number of components:
+
+- Header, including auth flows (OSM, Google) and login info.
+- Sidebar with links to extra resources.
+- Footer with links.
+- File upload component (including dropzone).
+- Date picker component.
+- Workflow stepper component.
 
 ## Quick start
 
