@@ -32,7 +32,7 @@
 
 <p align="center">
   📖 <strong>Documentation</strong>: 
-  <a href="https://hotosm.github.io/ui/" target="_blank">https://hotosm.github.io/ui/</a><br>
+  <a href="https://ui.hotosm.org" target="_blank">https://ui.hotosm.org</a><br>
 </p>
 
 <p align="center">
