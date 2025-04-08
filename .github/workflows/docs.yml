@@ -14,7 +14,7 @@ jobs:
   build_stories:
     uses: hotosm/gh-workflows/.github/workflows/pnpm_build.yml@2.0.1
     with:
-      command: build
+      command: build:docs
       output_path: docs/stories
 
   publish_docs:

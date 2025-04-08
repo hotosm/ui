@@ -49,6 +49,7 @@
   },
   "scripts": {
     "dev": "storybook dev -p 3001 --no-open",
+    "build:docs": "storybook build --output-dir docs/stories",
     "build": "node scripts/build.js && npm run build-themes && npm run build-assets",
     "build-themes": "cp -R src/themes dist && cp src/style.css dist",
     "build-assets": "cp -R src/assets dist"
