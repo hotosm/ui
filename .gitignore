@@ -34,7 +34,9 @@ site
 # TS compiled
 **/**/*.js
 **/**/*.js.map
-**/**/*.d.ts
+components/**/*.d.ts
+react/**/*.d.ts
+examples/**/*.d.ts
 
 # Common system files
 .DS_Store
