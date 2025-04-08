@@ -4,5 +4,5 @@
   - "package.json"
   - "pnpm-lock.yaml"
 "documentation":
-  - "docs/**/*"
+  - ".storybook/**/*"
   - "README.md"

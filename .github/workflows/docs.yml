@@ -3,7 +3,7 @@ name: 📖 Publish Docs
 on:
   push:
     paths:
-      - docs/**
+      - .storybook/**
       - components/**
     branches: [main]
   # Allow manual trigger (workflow_dispatch)
