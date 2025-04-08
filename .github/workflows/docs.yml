@@ -5,20 +5,14 @@ on:
     paths:
       - docs/**
       - components/**
-      - mkdocs.yml
     branches: [main]
   # Allow manual trigger (workflow_dispatch)
   workflow_dispatch:
 
 jobs:
-  build_stories:
-    uses: hotosm/gh-workflows/.github/workflows/pnpm_build.yml@2.0.1
+  build:
+    uses: hotosm/gh-workflows/.github/workflows/pnpm_build.yml@2.0.3
     with:
       command: build:docs
-      output_path: docs/stories
-
-  publish_docs:
-    uses: hotosm/gh-workflows/.github/workflows/mkdocs_build.yml@2.0.1
-    needs: [build_stories]
-    with:
-      include_artifacts: true
+      output_path: docs
+      github_pages: true

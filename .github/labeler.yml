@@ -5,5 +5,4 @@
   - "pnpm-lock.yaml"
 "documentation":
   - "docs/**/*"
-  - "mkdocs.yml"
   - "README.md"
