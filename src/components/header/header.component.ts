@@ -1,6 +1,4 @@
-import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
-import "@shoelace-style/shoelace/dist/components/tab-group/tab-group.js";
-import "@shoelace-style/shoelace/dist/components/tab/tab.js";
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/tab-group/tab-group.js';
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { headerVariants, type sizes, styles } from './header.styles.js';
@@ -96,10 +94,11 @@ export class Header extends LitElement {
         <nav
           class="header--nav"
         >
-          <sl-tab-group class="header--tab-group">
+          <wa-tab-group class="header--tab-group">
             ${this.tabs.map(
               (item, index) => html`
-                <sl-tab
+                <wa-tab
+                panel={item.label}
                   class=${["header--tab", this.selectedTab === index ? "header--tab-active" : ""].join(" ")}
                   slot="nav"
                   @click=${(e: MouseEvent) => {
@@ -107,10 +106,10 @@ export class Header extends LitElement {
                   }}
                 >
                   ${item.label}
-                </sl-tab>
+                </wa-tab>
               `
             )}
-          </sl-tab-group>
+          </wa-tab-group>
         </nav>
 
         ${/* Stacked navigation drawer for mobile */ ""}
