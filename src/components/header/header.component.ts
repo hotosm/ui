@@ -119,7 +119,7 @@ export class Header extends LitElement {
         ></nav>
 
         <div id="right-section" class="header--right-section">
-          <sl-icon-button
+          <wa-icon-button
             name="person-fill"
             library="hot-icons"
             class="header--person-circle"
@@ -127,15 +127,15 @@ export class Header extends LitElement {
             @click=${(e: MouseEvent) => {
               this._handleLogin(e);
             }}
-          ></sl-icon-button>
+          ></wa-icon-button>
             ${this.drawer
               ? html`
-                  <sl-icon-button
+                  <wa-icon-button
                     library="hot-icons"
                     class="header--drawer"
                     name="list"
                     label="drawer-open"
-                  ></sl-icon-button>
+                  ></wa-icon-button>
                 `
               : null}
           </div>
