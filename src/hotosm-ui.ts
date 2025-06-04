@@ -1,6 +1,4 @@
 // HOT UI components
-// import { setBasePath } from 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/webawesome.js';
-
 import HotHeader from './components/header/header.component.js';
 import HotLogo from './components/logo/logo.component.js';
 import HotToolbar from './components/toolbar/toolbar.component.js';
@@ -19,7 +17,6 @@ declare global {
 
 export {
     // HOT UI
-    setBasePath,
     HotHeader as Header,
     HotLogo as Logo,
     HotToolbar as Toolbar,
