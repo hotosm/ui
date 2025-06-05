@@ -35,9 +35,7 @@
     },
     "./dist/hotosm-ui.js": "./dist/hotosm-ui.js",
     "./dist/components/*": "./dist/components/*",
-    "./dist/react": "./dist/react/index.js",
     "./dist/themes/*": "./dist/themes/*",
-    "./dist/react/*": "./dist/react/*",
     "./dist/style.css": "./dist/style.css"
   },
   "files": [
@@ -59,7 +57,6 @@
   },
   "dependencies": {
     "@shoelace-style/shoelace": "^2.17.1",
-    "@lit/react": "^1.0.0",
     "class-variance-authority": "^0.7.0",
     "lit": "^3.0.0"
   },
@@ -69,12 +66,9 @@
     "@storybook/addon-links": "^8.3.5",
     "@storybook/web-components": "^8.2.9",
     "@storybook/web-components-vite": "^8.2.9",
-    "@types/react": "^19.0.0",
     "globby": "^14.0.2",
     "del": "^7.1.0",
     "esbuild": "^0.19.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "storybook": "^8.2.9",
     "typescript": "^5.2.2",
     "user-agent-data-types": "^0.3.1"
