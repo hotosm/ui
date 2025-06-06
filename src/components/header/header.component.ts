@@ -1,6 +1,4 @@
-import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
-import "@shoelace-style/shoelace/dist/components/tab-group/tab-group.js";
-import "@shoelace-style/shoelace/dist/components/tab/tab.js";
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/tab-group/tab-group.js';
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { headerVariants, type sizes, styles } from './header.styles.js';
@@ -96,10 +94,11 @@ export class Header extends LitElement {
         <nav
           class="header--nav"
         >
-          <sl-tab-group class="header--tab-group">
+          <wa-tab-group class="header--tab-group">
             ${this.tabs.map(
               (item, index) => html`
-                <sl-tab
+                <wa-tab
+                panel={item.label}
                   class=${["header--tab", this.selectedTab === index ? "header--tab-active" : ""].join(" ")}
                   slot="nav"
                   @click=${(e: MouseEvent) => {
@@ -107,10 +106,10 @@ export class Header extends LitElement {
                   }}
                 >
                   ${item.label}
-                </sl-tab>
+                </wa-tab>
               `
             )}
-          </sl-tab-group>
+          </wa-tab-group>
         </nav>
 
         ${/* Stacked navigation drawer for mobile */ ""}
@@ -120,7 +119,7 @@ export class Header extends LitElement {
         ></nav>
 
         <div id="right-section" class="header--right-section">
-          <sl-icon-button
+          <wa-icon-button
             name="person-fill"
             library="hot-icons"
             class="header--person-circle"
@@ -128,15 +127,15 @@ export class Header extends LitElement {
             @click=${(e: MouseEvent) => {
               this._handleLogin(e);
             }}
-          ></sl-icon-button>
+          ></wa-icon-button>
             ${this.drawer
               ? html`
-                  <sl-icon-button
+                  <wa-icon-button
                     library="hot-icons"
                     class="header--drawer"
                     name="list"
                     label="drawer-open"
-                  ></sl-icon-button>
+                  ></wa-icon-button>
                 `
               : null}
           </div>
