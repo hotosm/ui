@@ -1,8 +1,11 @@
 import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/tab-group/tab-group.js';
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/dialog/dialog.js';
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/button/button.js';
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { headerVariants, type sizes, styles } from './header.styles.js';
 import type { CSSResultGroup } from 'lit';
+import osmLogo from '../../assets/logo/osm-logo.png'
 
 import registerBundledIcons from "../icons.js"
 registerBundledIcons();
@@ -10,6 +13,13 @@ registerBundledIcons();
 interface MenuItem {
   label: string;
   clickEvent: () => void;
+}
+
+interface LoginOption {
+  id: string;
+  name: string;
+  icon?: string;
+  image?: string;
 }
 
 export class Header extends LitElement {
@@ -46,10 +56,104 @@ export class Header extends LitElement {
   @property({ type: Number })
   accessor selectedTab: number = 0;
 
+  /** Show/hide login functionality. */
+  @property({ type: Boolean })
+  accessor showLogin: boolean = false;
+
+  /** Control the login modal state. */
+  @property({ type: Boolean })
+  accessor loginModalOpen: boolean = false;
+
+  /** OSM OAuth Base URL. */
+  @property({ type: String, attribute: "osm-oauth-url" })
+  accessor osmOauthUrl: string = "https://www.openstreetmap.org/oauth2/authorize";
+
+  /** OAuth Client ID. */
+  @property({ type: String, attribute: "oauth-client-id" })
+  accessor oauthClientId: string = "";
+
+  /** OAuth Redirect URI. */
+  @property({ type: String, attribute: "oauth-redirect-uri" })
+  accessor oauthRedirectUri: string = "";
+
+  /** Use popup window for OAuth instead of redirect (recommended for better UX and CSP compatibility) */
+  @property({ type: Boolean, attribute: "use-oauth-popup" })
+  accessor useOauthPopup: boolean = true;
+
+  private loginOptions: LoginOption[] = [
+    {
+      id: 'osm_account',
+      name: 'Personal OSM Account',
+      image: osmLogo
+    }
+  ];
+
   selectTab(index: number) {
     console.log(index);
     this.tabs = [...this.tabs];
     this.selectedTab = index;
+  }
+
+  private osmLoginRedirect() {
+    if (!this.oauthClientId || !this.oauthRedirectUri) {
+      console.error('OAuth client ID and redirect URI must be provided');
+      return;
+    }
+
+    const currentPath = window.location.pathname + window.location.search;
+    sessionStorage.setItem('requestedPath', currentPath);
+
+    const params = new URLSearchParams({
+      client_id: this.oauthClientId,
+      redirect_uri: this.oauthRedirectUri,
+      response_type: 'code',
+      scope: 'read_prefs'
+    });
+
+    const oauthUrl = `${this.osmOauthUrl}?${params.toString()}`;
+
+    // // Check if running in Storybook iframe to prevent CSP violations
+    // const isStorybook = window !== window.top || window.location.href.includes('storybook');
+    
+    // if (isStorybook) {
+    //   console.log('OAuth redirect prevented in Storybook environment. URL would be:', oauthUrl);
+    //   alert('Login functionality demonstrated. In a real application, this would redirect to OpenStreetMap OAuth.');
+    //   return;
+    // }
+
+    if (this.useOauthPopup) {
+      // Open OAuth in popup window to avoid CSP issues and provide better UX
+      const popup = window.open(
+        oauthUrl,
+        'osmOAuth',
+        'width=600,height=700,scrollbars=yes,resizable=yes'
+      );
+
+      if (!popup) {
+        console.error('Popup blocked. Falling back to redirect.');
+        window.location.href = oauthUrl;
+        return;
+      }
+
+      // Monitor the popup for completion
+      const checkClosed = setInterval(() => {
+        if (popup.closed) {
+          clearInterval(checkClosed);
+          // You can add logic here to check for successful authentication
+          console.log('OAuth popup closed');
+        }
+      }, 1000);
+    } else {
+      // Use redirect method
+      window.location.href = oauthUrl;
+    }
+  }
+
+  private handleSignIn(selectedOption: string) {
+    if (selectedOption === 'osm_account') {
+      this.osmLoginRedirect();
+    }
+    this.loginModalOpen = false;
   }
 
   protected render() {
@@ -90,56 +194,90 @@ export class Header extends LitElement {
             : null}
         </a>
 
-        ${/* Navigation bar for desktop, hide on mobile */ ""}
+        <!-- Navigation bar for desktop, hide on mobile -->
         <nav
           class="header--nav"
         >
           <wa-tab-group class="header--tab-group">
-            ${this.tabs.map(
-              (item, index) => html`
+            ${this.tabs.map((item, index) => {
+              const isActive = this.selectedTab === index;
+              const tabClass = isActive ? "header--tab header--tab-active" : "header--tab";
+              return html`
                 <wa-tab
-                panel={item.label}
-                  class=${["header--tab", this.selectedTab === index ? "header--tab-active" : ""].join(" ")}
+                  panel="${item.label}"
+                  class="${tabClass}"
                   slot="nav"
-                  @click=${(e: MouseEvent) => {
-                    this._tabClick(e, item.clickEvent, index);
-                  }}
+                  @click=${(e: MouseEvent) => this._tabClick(e, item.clickEvent, index)}
                 >
                   ${item.label}
                 </wa-tab>
-              `
-            )}
+              `;
+            })}
           </wa-tab-group>
         </nav>
 
-        ${/* Stacked navigation drawer for mobile */ ""}
-        ${/* NOTE this should probably be in a drawer instead */ ""}
+        <!-- Stacked navigation drawer for mobile -->
+        <!-- NOTE this should probably be in a drawer instead -->
         <nav
           class="header--nav-mobile"
         ></nav>
 
         <div id="right-section" class="header--right-section">
-          <wa-icon-button
-            name="person-fill"
-            library="hot-icons"
-            class="header--person-circle"
-            label="login"
-            @click=${(e: MouseEvent) => {
-              this._handleLogin(e);
-            }}
-          ></wa-icon-button>
-            ${this.drawer
-              ? html`
-                  <wa-icon-button
-                    library="hot-icons"
-                    class="header--drawer"
-                    name="list"
-                    label="drawer-open"
-                  ></wa-icon-button>
-                `
-              : null}
-          </div>
+          ${this.showLogin
+            ? html`
+                <wa-button
+                  variant="brand"
+                  class="header--login-button"
+                  @click=${() => this._handleLogin()}
+                >
+                  Login
+                </wa-button>
+              `
+            : null}
+          ${this.drawer
+            ? html`
+                <wa-icon-button
+                  library="hot-icons"
+                  class="header--drawer"
+                  name="list"
+                  label="drawer-open"
+                ></wa-icon-button>
+              `
+            : null}
         </div>
+
+                <!-- Login Modal -->
+        ${this.showLogin
+          ? html`
+              <wa-dialog 
+                class="login-modal"
+                ?open=${this.loginModalOpen}
+                @wa-hide=${() => this._handleModalClose()}
+                label="Sign In"
+              >
+                <div class="login-content">
+                  <div class="login-options">
+                    ${this.loginOptions.map((option) => html`
+                      <div
+                        class="login-option"
+                        @click=${() => this.handleSignIn(option.id)}
+                      >
+                        <div class="login-option-icon">
+                          ${option.image 
+                            ? html`<img src="${option.image}" alt="${option.name}" />` 
+                            : option.icon 
+                              ? html`<wa-icon name="${option.icon}"></wa-icon>`
+                              : null
+                          }
+                        </div>
+                        <div class="login-option-text">${option.name}</div>
+                      </div>
+                    `)}
+                  </div>
+                </div>
+              </wa-dialog>
+            `
+          : null}
       </header>
     `;
   }
@@ -149,8 +287,13 @@ export class Header extends LitElement {
     clickAction();
   }
 
-  private _handleLogin(_e: MouseEvent) {
+  private _handleLogin() {
+    this.loginModalOpen = true;
     this.dispatchEvent(new Event("login"));
+  }
+
+  private _handleModalClose() {
+    this.loginModalOpen = false;
   }
 
 }
