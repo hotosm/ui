@@ -82,7 +82,9 @@ export const styles = css`
   .header--nav-mobile {
   }
 
-
+  .header--person-circle {
+    font-size: var(--hot-font-size-x-large);
+  }
 
   .header--drawer {
     font-size: var(--hot-font-size-x-large)
