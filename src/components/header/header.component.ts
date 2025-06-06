@@ -76,7 +76,7 @@ export class Header extends LitElement {
   @property({ type: String, attribute: "oauth-redirect-uri" })
   accessor oauthRedirectUri: string = "";
 
-  /** Use popup window for OAuth instead of redirect (recommended for better UX and CSP compatibility) */
+  /** Use popup window for OAuth instead of redirect */
   @property({ type: Boolean, attribute: "use-oauth-popup" })
   accessor useOauthPopup: boolean = true;
 
@@ -194,7 +194,7 @@ export class Header extends LitElement {
             : null}
         </a>
 
-        <!-- Navigation bar for desktop, hide on mobile -->
+        ${/* Navigation bar for desktop, hide on mobile */ ""}
         <nav
           class="header--nav"
         >
@@ -216,8 +216,8 @@ export class Header extends LitElement {
           </wa-tab-group>
         </nav>
 
-        <!-- Stacked navigation drawer for mobile -->
-        <!-- NOTE this should probably be in a drawer instead -->
+        ${/* Stacked navigation drawer for mobile */ ""}
+        ${/* NOTE this should probably be in a drawer instead */ ""}
         <nav
           class="header--nav-mobile"
         ></nav>
