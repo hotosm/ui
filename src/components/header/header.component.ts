@@ -15,6 +15,19 @@ interface MenuItem {
   clickEvent: () => void;
 }
 
+interface LoginProvider {
+  icon?: string;
+  loginUrl: string;
+  redirectUrl: string;
+  clientId?: string;
+  name?: string; // Optional display name, defaults to provider key
+  scope?: string; // Optional OAuth scope
+}
+
+interface LoginProviders {
+  [key: string]: LoginProvider;
+}
+
 interface LoginOption {
   id: string;
   name: string;
@@ -64,25 +77,51 @@ export class Header extends LitElement {
   @property({ type: Boolean })
   accessor loginModalOpen: boolean = false;
 
-  /** OSM OAuth Base URL. */
+  /** Configuration object for login providers. */
+  @property({ type: Object, attribute: "login-providers" })
+  accessor loginProviders: LoginProviders = {};
+
+  /** Default fallback icon for providers without custom icons. */
+  @property({ type: String, attribute: "default-login-icon" })
+  accessor defaultLoginIcon: string = "user";
+
+  // Legacy support - these will be used to create a default OSM provider if loginProviders is empty
   @property({ type: String, attribute: "osm-oauth-url" })
   accessor osmOauthUrl: string = "https://www.openstreetmap.org/oauth2/authorize";
 
-  /** OSM OAuth Client ID. */
   @property({ type: String, attribute: "osm-oauth-client-id" })
   accessor OsmOauthClientId: string = "";
 
-  /**OSM OAuth Redirect URI. */
   @property({ type: String, attribute: "osm-oauth-redirect-uri" })
   accessor OsmOauthRedirectUri: string = "";
 
-  private loginOptions: LoginOption[] = [
-    {
-      id: 'osm_account',
-      name: 'Personal OSM Account',
-      image: osmLogo
+  private get loginOptions(): LoginOption[] {
+    // If no loginProviders configured, fall back to OSM configuration
+    if (Object.keys(this.loginProviders).length === 0 && this.OsmOauthClientId && this.OsmOauthRedirectUri) {
+      return [
+        {
+          id: 'osm',
+          name: 'Personal OSM Account',
+          image: osmLogo
+        }
+      ];
     }
-  ];
+
+    // Convert loginProviders config to loginOptions
+    return Object.entries(this.loginProviders).map(([key, provider]) => ({
+      id: key,
+      name: provider.name || this.formatProviderName(key),
+      icon: provider.icon ? undefined : this.defaultLoginIcon,
+      image: provider.icon
+    }));
+  }
+
+  private formatProviderName(key: string): string {
+    // Convert provider key to display name (e.g., "osm" -> "OSM", "google" -> "Google")
+    return key.split('_').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    ).join(' ');
+  }
 
   selectTab(index: number) {
     console.log(index);
@@ -90,7 +129,41 @@ export class Header extends LitElement {
     this.selectedTab = index;
   }
 
-  private osmLoginRedirect() {
+  private performLogin(providerId: string) {
+    const provider = this.loginProviders[providerId];
+    
+    if (!provider) {
+      // OSM OAuth support
+      if (providerId === 'osm') {
+        this.legacyOsmLoginRedirect();
+        return;
+      }
+      console.error(`Login provider '${providerId}' not found`);
+      return;
+    }
+
+    if (!provider.clientId) {
+      // If no clientId, assume backend handles OAuth and just redirect to loginUrl
+      window.location.href = provider.loginUrl;
+      return;
+    }
+
+    // Client-side OAuth flow
+    const currentPath = window.location.pathname + window.location.search;
+    sessionStorage.setItem('requestedPath', currentPath);
+
+    const params = new URLSearchParams({
+      client_id: provider.clientId,
+      redirect_uri: provider.redirectUrl,
+      response_type: 'code',
+      ...(provider.scope && { scope: provider.scope })
+    });
+
+    const authUrl = `${provider.loginUrl}?${params.toString()}`;
+    window.location.href = authUrl;
+  }
+
+  private legacyOsmLoginRedirect() {
     if (!this.OsmOauthClientId || !this.OsmOauthRedirectUri) {
       console.error('OSM OAuth client ID and redirect URI must be provided');
       return;
@@ -107,24 +180,11 @@ export class Header extends LitElement {
     });
 
     const OsmOauthUrl = `${this.osmOauthUrl}?${params.toString()}`;
-
-    // // Check if running in Storybook iframe to prevent CSP violations
-    // const isStorybook = window !== window.top || window.location.href.includes('storybook');
-    
-    // if (isStorybook) {
-    //   console.log('OSM OAuth redirect prevented in Storybook environment. URL would be:', oauthUrl);
-    //   alert('Login functionality demonstrated. In a real application, this would redirect to OpenStreetMap OAuth.');
-    //   return;
-    // }
-
-    // Always use redirect method to avoid popup blocker issues
     window.location.href = OsmOauthUrl;
   }
 
   private handleSignIn(selectedOption: string) {
-    if (selectedOption === 'osm_account') {
-      this.osmLoginRedirect();
-    }
+    this.performLogin(selectedOption);
     this.loginModalOpen = false;
   }
 
