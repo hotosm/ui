@@ -68,13 +68,13 @@ export class Header extends LitElement {
   @property({ type: String, attribute: "osm-oauth-url" })
   accessor osmOauthUrl: string = "https://www.openstreetmap.org/oauth2/authorize";
 
-  /** OAuth Client ID. */
-  @property({ type: String, attribute: "oauth-client-id" })
-  accessor oauthClientId: string = "";
+  /** OSM OAuth Client ID. */
+  @property({ type: String, attribute: "osm-oauth-client-id" })
+  accessor OsmOauthClientId: string = "";
 
-  /** OAuth Redirect URI. */
-  @property({ type: String, attribute: "oauth-redirect-uri" })
-  accessor oauthRedirectUri: string = "";
+  /**OSM OAuth Redirect URI. */
+  @property({ type: String, attribute: "osm-oauth-redirect-uri" })
+  accessor OsmOauthRedirectUri: string = "";
 
   private loginOptions: LoginOption[] = [
     {
@@ -91,8 +91,8 @@ export class Header extends LitElement {
   }
 
   private osmLoginRedirect() {
-    if (!this.oauthClientId || !this.oauthRedirectUri) {
-      console.error('OAuth client ID and redirect URI must be provided');
+    if (!this.OsmOauthClientId || !this.OsmOauthRedirectUri) {
+      console.error('OSM OAuth client ID and redirect URI must be provided');
       return;
     }
 
@@ -100,25 +100,25 @@ export class Header extends LitElement {
     sessionStorage.setItem('requestedPath', currentPath);
 
     const params = new URLSearchParams({
-      client_id: this.oauthClientId,
-      redirect_uri: this.oauthRedirectUri,
+      client_id: this.OsmOauthClientId,
+      redirect_uri: this.OsmOauthRedirectUri,
       response_type: 'code',
       scope: 'read_prefs'
     });
 
-    const oauthUrl = `${this.osmOauthUrl}?${params.toString()}`;
+    const OsmOauthUrl = `${this.osmOauthUrl}?${params.toString()}`;
 
     // // Check if running in Storybook iframe to prevent CSP violations
     // const isStorybook = window !== window.top || window.location.href.includes('storybook');
     
     // if (isStorybook) {
-    //   console.log('OAuth redirect prevented in Storybook environment. URL would be:', oauthUrl);
+    //   console.log('OSM OAuth redirect prevented in Storybook environment. URL would be:', oauthUrl);
     //   alert('Login functionality demonstrated. In a real application, this would redirect to OpenStreetMap OAuth.');
     //   return;
     // }
 
     // Always use redirect method to avoid popup blocker issues
-    window.location.href = oauthUrl;
+    window.location.href = OsmOauthUrl;
   }
 
   private handleSignIn(selectedOption: string) {
