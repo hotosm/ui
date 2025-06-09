@@ -76,10 +76,6 @@ export class Header extends LitElement {
   @property({ type: String, attribute: "oauth-redirect-uri" })
   accessor oauthRedirectUri: string = "";
 
-  /** Use popup window for OAuth instead of redirect */
-  @property({ type: Boolean, attribute: "use-oauth-popup" })
-  accessor useOauthPopup: boolean = true;
-
   private loginOptions: LoginOption[] = [
     {
       id: 'osm_account',
@@ -121,32 +117,8 @@ export class Header extends LitElement {
     //   return;
     // }
 
-    if (this.useOauthPopup) {
-      // Open OAuth in popup window to avoid CSP issues and provide better UX
-      const popup = window.open(
-        oauthUrl,
-        'osmOAuth',
-        'width=600,height=700,scrollbars=yes,resizable=yes'
-      );
-
-      if (!popup) {
-        console.error('Popup blocked. Falling back to redirect.');
-        window.location.href = oauthUrl;
-        return;
-      }
-
-      // Monitor the popup for completion
-      const checkClosed = setInterval(() => {
-        if (popup.closed) {
-          clearInterval(checkClosed);
-          // You can add logic here to check for successful authentication
-          console.log('OAuth popup closed');
-        }
-      }, 1000);
-    } else {
-      // Use redirect method
-      window.location.href = oauthUrl;
-    }
+    // Always use redirect method to avoid popup blocker issues
+    window.location.href = oauthUrl;
   }
 
   private handleSignIn(selectedOption: string) {

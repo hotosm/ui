@@ -18,8 +18,7 @@ const meta: Meta = {
     loginModalOpen: { control: 'boolean' },
     osmOauthUrl: { control: 'text' },
     oauthClientId: { control: 'text' },
-    oauthRedirectUri: { control: 'text' },
-    useOauthPopup: { control: 'boolean' }
+    oauthRedirectUri: { control: 'text' }
   }
 };
 
@@ -36,8 +35,7 @@ export const WithLogin: Story = {
     loginModalOpen: false,
     osmOauthUrl: "https://www.openstreetmap.org/oauth2/authorize",
     oauthClientId: "",
-    oauthRedirectUri: "",
-    useOauthPopup: true
+    oauthRedirectUri: ""
   },
   render: (args) => {
     return html`
@@ -47,7 +45,6 @@ export const WithLogin: Story = {
         ?borderBottom="${args.borderBottom}"
         ?drawer="${args.drawer}"
         ?showLogin="${args.showLogin}"
-        ?use-oauth-popup="${args.useOauthPopup}"
         osm-oauth-url="${args.osmOauthUrl}"
         oauth-client-id="${args.oauthClientId}"
         oauth-redirect-uri="${args.oauthRedirectUri}"
@@ -67,6 +64,7 @@ export const WithLogin: Story = {
           <li>Modal-based login UI</li>
           <li>Configurable OAuth parameters</li>
           <li>Session storage for redirect paths</li>
+          <li>Uses page redirect to avoid popup blocker issues</li>
         </ul>
       </div>
     `;
