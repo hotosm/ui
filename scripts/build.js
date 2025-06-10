@@ -14,7 +14,8 @@ const config = {
     entryPoints: [
         './src/hotosm-ui.ts',
         ...(await globby('./src/components/**/!(*.(style)).ts')),
-        ...(await globby('./src/react/**/*.ts'))
+        ...(await globby('./src/react/**/*.ts')),
+        ...(await globby('./src/react/**/*.js'))
     ],
     chunkNames: 'chunks/[name].[hash]',
     bundle: true,
@@ -24,7 +25,9 @@ const config = {
     tsconfig: 'tsconfig.json',
     loader: {
         '.svg': 'dataurl',
+        '.png': 'dataurl',
         '.ts': 'ts',
+        '.js': 'js',
     },
     packages: 'external',
     outdir
