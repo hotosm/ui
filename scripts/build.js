@@ -30,11 +30,16 @@ const config = {
         '.js': 'js',
     },
     packages: 'external',
+    resolveExtensions: ['.ts', '.js', '.tsx', '.jsx'],
     outdir
 };
 
 await Promise.all([...bundleDirectories.map(dir => deleteAsync(dir))]);
 await fs.mkdir(outdir, { recursive: true });
-execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`, { stdio: 'inherit' });
-esbuild.build(config).catch(() => process.exit(1));
+
+// First run esbuild
+await esbuild.build(config);
+
+// Then run TypeScript declaration generation
+await execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`);
 
