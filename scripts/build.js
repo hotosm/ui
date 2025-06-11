@@ -37,9 +37,6 @@ const config = {
 await Promise.all([...bundleDirectories.map(dir => deleteAsync(dir))]);
 await fs.mkdir(outdir, { recursive: true });
 
-// First run esbuild
-await esbuild.build(config);
-
-// Then run TypeScript declaration generation
-await execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`);
+execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`, { stdio: 'inherit' });
+esbuild.build(config).catch(() => process.exit(1));
 
