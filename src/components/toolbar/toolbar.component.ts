@@ -1,7 +1,7 @@
-import "@shoelace-style/shoelace/dist/components/button/button.js";
-import "@shoelace-style/shoelace/dist/components/button-group/button-group.js";
-import "@shoelace-style/shoelace/dist/components/icon/icon.js";
-import "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/button/button.js';
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/button-group/button-group.js';
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/icon/icon.js';
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/tooltip/tooltip.js';
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
@@ -19,62 +19,53 @@ export class Toolbar extends LitElement {
 
   /** Change the position of the tooltips relative to buttons. */
   @property({ type: String, attribute: "tooltip-position" })
-  accessor tooltipPosition =
-    "top";
+  accessor tooltipPosition = "top";
 
   protected render() {
     return html`
       <div class="toolbar">
         ${this.renderButtonGroup("History", [
           {
-            content: "Undo",
-            icon: "arrow-counterclockwise",
+            icon: "rotate-left",
             label: "Undo",
             action: this.undo,
           },
           {
-            content: "Redo",
-            icon: "arrow-clockwise",
+            icon: "rotate-right",
             label: "Redo",
             action: this.redo,
           },
         ])}
         ${this.renderButtonGroup("Formatting", [
           {
-            content: "Bold",
-            icon: "type-bold",
+            icon: "bold",
             label: "Bold",
             action: this.bold,
           },
           {
-            content: "Italic",
-            icon: "type-italic",
+            icon: "italic",
             label: "Italic",
             action: this.italic,
           },
           {
-            content: "Underline",
-            icon: "type-underline",
+            icon: "underline",
             label: "Underline",
             action: this.underline,
           },
         ])}
         ${this.renderButtonGroup("Alignment", [
           {
-            content: "Align Left",
-            icon: "justify-left",
+            icon: "align-left",
             label: "Align Left",
             action: this.alignLeft,
           },
           {
-            content: "Align Center",
-            icon: "justify",
+            icon: "align-center",
             label: "Align Center",
             action: this.alignCenter,
           },
           {
-            content: "Align Right",
-            icon: "justify-right",
+            icon: "align-right",
             label: "Align Right",
             action: this.alignRight,
           },
@@ -86,42 +77,40 @@ export class Toolbar extends LitElement {
   private renderButtonGroup(
     label: string,
     buttons: Array<{
-      content: string;
       icon: string;
       label: string;
       action?: (e: MouseEvent) => void;
     }>
   ) {
     return html`
-      <sl-button-group label=${label}>
+      <wa-button-group label=${label}>
         ${buttons.map((button) => this.renderButton(button))}
-      </sl-button-group>
+      </wa-button-group>
     `;
   }
 
   private renderButton({
-    content,
     icon,
     label,
     action,
   }: {
-    content: string;
     icon: string;
     label: string;
     action?: (e: MouseEvent) => void;
   }) {
     return html`
-      <sl-tooltip content=${content} placement="${this.tooltipPosition}">
-        <sl-button @click=${action ?? (() => {})}
-          ><sl-icon library="hot-icons" name=${icon} label=${label}></sl-icon
-        ></sl-button>
-      </sl-tooltip>
+      <wa-button @click=${action ?? (() => {})} aria-label=${label}>
+        <wa-icon 
+          family="classic" 
+          variant="solid" 
+          name=${icon} 
+          label=${label}
+        ></wa-icon>
+      </wa-button>
     `;
   }
 
   private readonly undo = (e: MouseEvent) => {
-    // As the original event is also named 'click'
-    // stop propagation of the original event
     e.stopPropagation();
     this.dispatchEvent(new Event("undo"));
   };
