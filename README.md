@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable -->
 <p align="center">
-  <img src="https://github.com/hotosm/ui/blob/main/theme/logo/hot-logo-png.png?raw=true" width="250" alt="HOT"></a>
+  <img src="https://github.com/hotosm/ui/blob/main/src/assets/logo/hot-logo-png.png?raw=true" width="250" alt="HOT"></a>
 </p>
 <p align="center">
   <em>Shared Web Components with theming for use across HOTOSM tools.</em>
