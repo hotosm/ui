@@ -34,7 +34,6 @@
 ### Refactor
 
 - remove demo button component, use sl-button directly
-- rename events on toolbar demo component
 - update refs styles.css --> style.css
 - replace custom button with standard shoelace button
 - remove config for using @ alias as breaking upstream es module use
@@ -77,7 +76,6 @@
 - do not import hot.css inside app templates
 - update all examples with latest syntax
 - do not run matomo tracking if domain does not match current host
-- fix react wrapper for demo toolbar
 - restructure components, fix storybook
 
 ### Refactor

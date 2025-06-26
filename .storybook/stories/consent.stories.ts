@@ -44,12 +44,12 @@ export const Consent: StoryObj = {
   },
   render: (args, { parameters }) => {
     return html`
-      <sl-button @click=${() => {
+      <wa-button @click=${() => {
         parameters.removeKeyLocalStorage(args.consentId)
-      }}>Re-Enable Banner</sl-button>
-      <sl-button @click=${() => {
+      }}>Re-Enable Banner</wa-button>
+      <wa-button @click=${() => {
         parameters.addKeyLocalStorage(args.consentId)
-      }}>Disable Banner</sl-button>
+      }}>Disable Banner</wa-button>
       <br /><br />
 
       <hot-consent
@@ -76,15 +76,7 @@ export const Consent: StoryObj = {
         >. By clicking "I Agree", you consent to the use of cookies.
       </hot-consent>
 
-      <sl-alert id="agree-toast" variant="success" duration="3000" closable>
-        <sl-icon slot="icon" name="check2-circle"></sl-icon>
-        You clicked agree.
-      </sl-alert>
-
-      <sl-alert id="disagree-toast" variant="danger" duration="3000" closable>
-        <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-        You clicked disagree.
-      </sl-alert>
+    
     `;
   },
 };

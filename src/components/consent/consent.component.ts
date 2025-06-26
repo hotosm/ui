@@ -32,8 +32,7 @@ export class Consent extends LitElement {
   accessor title: string = "About the information we collect";
 
   @property({ type: String })
-  accessor message = html`<p>We use cookies and similar technologies to \
-  recognize and analyze your visits, and measure traffic usage and activity.</p>`
+  accessor message: string = "We use cookies and similar technologies to recognize and analyze your visits, and measure traffic usage and activity.";
 
   @property({ type: String, attribute: "agree-label" })
   accessor agreeLabel: string = "I Agree";
@@ -44,23 +43,40 @@ export class Consent extends LitElement {
   protected render() {
     if (!this.isOpen) return null;
     return html`
-      <wa-callout variant="brand" appearance="outlined filled" size="large" style="margin: 2rem auto; max-width: 600px;">
-        <wa-icon slot="icon" family="classic" variant="solid" name="circle-info"></wa-icon>
-        <div style="padding: 1rem;">
-          <h2 id="consent-header" class="consent--header" style="margin: 0 0 0.5rem 0;">
-            ${this.title}
-          </h2>
-          <div class="consent--message" style="margin-bottom: 1.5rem;">
-            <slot part="label"></slot>
-          </div>
-          <wa-button size="small" variant="brand" @click=${(e: MouseEvent) => this._setAgree(e)}>
-            ${this.agreeLabel}
-          </wa-button>
-          <wa-button size="small" variant="neutral" style="margin-left: 0.75rem;" @click=${(e: MouseEvent) => this._setDisagree(e)}>
-            ${this.notAgreeLabel}
-          </wa-button>
+      <div class="consent-overlay">
+        <div class="consent-container">
+          <wa-callout variant="brand" appearance="outlined filled" size="large" class="consent-callout">
+            <wa-icon slot="icon" family="classic" variant="solid" name="shield-check" class="consent-icon"></wa-icon>
+            <div class="consent-content">
+              <h2 id="consent-header" class="consent-header">
+                ${this.title}
+              </h2>
+              <div class="consent-message">
+                <p>${this.message}</p>
+                <slot name="additional-info"></slot>
+              </div>
+              <div class="consent-actions">
+                <wa-button 
+                  size="medium" 
+                  variant="neutral" 
+                  class="consent-button decline-button"
+                  @click=${(e: MouseEvent) => this._setDisagree(e)}
+                >
+                  ${this.notAgreeLabel}
+                </wa-button>
+                <wa-button 
+                  size="medium" 
+                  variant="brand" 
+                  class="consent-button accept-button"
+                  @click=${(e: MouseEvent) => this._setAgree(e)}
+                >
+                  ${this.agreeLabel}
+                </wa-button>
+              </div>
+            </div>
+          </wa-callout>
         </div>
-      </wa-callout>
+      </div>
     `;
   }
 
