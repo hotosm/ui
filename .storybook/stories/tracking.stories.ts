@@ -58,24 +58,15 @@ export const Tracking: StoryObj = {
   },
   render: (args, { parameters }) => {
     return html`
-      <sl-button @click=${() => {
+      <wa-button @click=${() => {
         parameters.removeKeyLocalStorage(args.siteId)
-      }}>Re-Enable Banner</sl-button>
-      <sl-button @click=${() => {
+      }}>Re-Enable Banner</wa-button>
+      <wa-button @click=${() => {
         parameters.addKeyLocalStorage(args.siteId)
-      }}>Disable Banner</sl-button>
+      }}>Disable Banner</wa-button>
 
       <br /><br />
 
-      <hot-consent
-        consent-id="${args.siteId}"
-        @agree=${() => {
-          parameters.agree(args.siteId, args.domain)
-        }}
-        @disagree=${() => {
-          parameters.disagree()
-        }}
-      ></hot-consent>
 
       <hot-tracking
         id="hot-tracking"
@@ -84,15 +75,6 @@ export const Tracking: StoryObj = {
       >
       </hot-tracking>
 
-      <sl-alert id="agree-alert" variant="success" duration="3000" closable>
-        <sl-icon slot="icon" name="check2-circle"></sl-icon>
-        You clicked agree.
-      </sl-alert>
-
-      <sl-alert id="disagree-alert" variant="danger" duration="3000" closable>
-        <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-        You clicked disagree.
-      </sl-alert>
     `;
   },
 };
