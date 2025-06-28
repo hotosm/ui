@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSM OAuth Header</title>
+  <!-- Load @hotosm/ui from CDN for demo purposes -->
+  <script type="module" src="https://unpkg.com/@hotosm/ui/dist/hotosm-ui.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@hotosm/ui/dist/style.css">
+  <style>
+    body { margin: 0; font-family: sans-serif; background: #f8f9fa; }
+    main { padding: 2rem; }
+  </style>
+</head>
+<body>
+  <hot-header
+    title="OSM Auth Demo"
+    logo="https://upload.wikimedia.org/wikipedia/commons/6/6b/Openstreetmap_logo.svg"
+    showLogin
+    osm-oauth-client-id="9qmECyRwBNFyqNl9LszwHX1WOxKFKeBsA5ofAS1GJGY"
+    osm-oauth-redirect-uri="https://ui.hotosm.org/"
+  ></hot-header>
+  <main>
+    <h2>Welcome to the OSM OAuth Header Demo</h2>
+    <p>Click the Login button in the header to start the OSM OAuth flow.</p>
+    <p><b>Note:</b> Replace <code>YOUR_CLIENT_ID</code> and <code>YOUR_REDIRECT_URI</code> with your actual OSM OAuth credentials.</p>
+  </main>
+</body>
+</html> 
