@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import '@shoelace-style/shoelace/dist/components/alert/alert.js';
 import { html } from "lit";
 
 import "../../src/hotosm-ui";
