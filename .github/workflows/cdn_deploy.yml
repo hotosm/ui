@@ -25,26 +25,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: "pnpm"
-          cache-dependency-path: "pnpm-lock.yaml"
+          cache: "npm"
 
       - name: Install dependencies
         working-directory: .
-        run: CI=true pnpm install
+        run: npm ci
 
       - name: Build Dist
         working-directory: .
-        run: pnpm build
+        run: npm run build
 
       - name: Configure AWS Creds
         uses: aws-actions/configure-aws-credentials@v4
