@@ -14,24 +14,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: "pnpm"
-          cache-dependency-path: "pnpm-lock.yaml"
+          cache: "npm"
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         working-directory: .
-        run: CI=true pnpm install
+        run: npm ci
 
       - name: Publish
         working-directory: .
-        run: pnpm publish --access=public --no-git-checks
+        run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
