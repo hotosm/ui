@@ -1,44 +1,76 @@
-.idea
-node_modules
+# IDE and Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
+.pnp.cjs
 
 # Logs
 logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Dependency directory
-**/node_modules/**
-_node_modules
-.pnp.cjs
+# Build outputs (keeping dist/ for npm package)
+build/
+out/
 
-# Build output
-dist
+# Documentation builds
+docs/
+site/
 
-# Visual Studio Code configs
-.vscode/
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
 
-# JetBrains IDEs
-.idea/
+# TypeScript compiled files (but keep build scripts and dist)
+*.js
+*.js.map
+*.d.ts
+!scripts/build.js
+!dist/**/*.js
+!dist/**/*.d.ts
 
-# as we use pnpm
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Temporary files
+.tmp/
+.temp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Package manager files (keep pnpm-lock.yaml as it's used)
 package-lock.json
 yarn.lock
 
-# Docs build
-docs
-site
+# Storybook
+.storybook-out/
+storybook-static/
 
-.cache
-
-# TS compiled
-**/**/*.js
-**/**/*.js.map
-components/**/*.d.ts
-react/**/*.d.ts
-examples/**/*.d.ts
-
-# Common system files
-.DS_Store
-
-# Build scripts
-!scripts/build.js
+# Pre-commit hooks cache
+.pre-commit-cache/
