@@ -1,1 +1,0 @@
-import{b as t}from"./chunk.NZIJQUIE.js";import*as e from"react";import{createComponent as a}from"@lit/react";var o="hot-tracking",r=a({tagName:o,elementClass:t,react:e,events:{},displayName:"Tracking"}),p=r;export{p as a};
