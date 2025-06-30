@@ -1,1 +1,0 @@
-import{b as e}from"./chunk.GY32O3WU.js";import*as t from"react";import{createComponent as o}from"@lit/react";var a="hot-consent",n=o({tagName:a,elementClass:e,react:t,events:{},displayName:"Consent"}),p=n;export{p as a};

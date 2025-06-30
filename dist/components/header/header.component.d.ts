@@ -1,12 +1,23 @@
-import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
-import "@shoelace-style/shoelace/dist/components/tab-group/tab-group.js";
-import "@shoelace-style/shoelace/dist/components/tab/tab.js";
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/tab-group/tab-group.js';
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/dialog/dialog.js';
+import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/button/button.js';
 import { LitElement } from "lit";
 import { type sizes } from './header.styles.js';
 import type { CSSResultGroup } from 'lit';
 interface MenuItem {
     label: string;
     clickEvent: () => void;
+}
+interface LoginProvider {
+    icon?: string;
+    loginUrl: string;
+    redirectUrl: string;
+    clientId?: string;
+    name?: string;
+    scope?: string;
+}
+interface LoginProviders {
+    [key: string]: LoginProvider;
 }
 export declare class Header extends LitElement {
     static styles: CSSResultGroup;
@@ -25,9 +36,26 @@ export declare class Header extends LitElement {
     accessor borderBottom: boolean;
     /** Index of the selected tab. */
     accessor selectedTab: number;
+    /** Show/hide login functionality. */
+    accessor showLogin: boolean;
+    /** Control the login modal state. */
+    accessor loginModalOpen: boolean;
+    /** Configuration object for login providers. */
+    accessor loginProviders: LoginProviders;
+    /** Default fallback icon for providers without custom icons. */
+    accessor defaultLoginIcon: string;
+    accessor osmOauthUrl: string;
+    accessor OsmOauthClientId: string;
+    accessor OsmOauthRedirectUri: string;
+    private get loginOptions();
+    private formatProviderName;
     selectTab(index: number): void;
+    private performLogin;
+    private legacyOsmLoginRedirect;
+    private handleSignIn;
     protected render(): import("lit").TemplateResult<1>;
     private _tabClick;
     private _handleLogin;
+    private _handleModalClose;
 }
 export default Header;
