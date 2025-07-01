@@ -1,0 +1,1 @@
+import{a as l}from"./chunk.GRD7DOAE.js";import{a as e,b as t,e as f}from"./chunk.RGDK5VTE.js";var o=f(l(),1);var r=o.default.forwardRef((a,m)=>o.default.createElement("hot-logo",t(e({},a),{ref:m})));r.displayName="Logo";var c=r;export{c as a};

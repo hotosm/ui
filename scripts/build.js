@@ -20,7 +20,7 @@ const config = {
     chunkNames: 'chunks/[name].[hash]',
     bundle: true,
     splitting: true,
-    external: undefined,
+    external: [],
     minify: true,
     tsconfig: 'tsconfig.json',
     loader: {
@@ -29,7 +29,6 @@ const config = {
         '.ts': 'ts',
         '.js': 'js',
     },
-    packages: 'external',
     resolveExtensions: ['.ts', '.js', '.tsx', '.jsx'],
     outdir
 };
@@ -39,4 +38,23 @@ await fs.mkdir(outdir, { recursive: true });
 
 execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`, { stdio: 'inherit' });
 esbuild.build(config).catch(() => process.exit(1));
+
+// Cross-platform copy for themes and style.css
+async function copyDir(src, dest) {
+    await fs.mkdir(dest, { recursive: true });
+    const entries = await fs.readdir(src, { withFileTypes: true });
+    for (let entry of entries) {
+        const srcPath = `${src}/${entry.name}`;
+        const destPath = `${dest}/${entry.name}`;
+        if (entry.isDirectory()) {
+            await copyDir(srcPath, destPath);
+        } else {
+            await fs.copyFile(srcPath, destPath);
+        }
+    }
+}
+
+await copyDir('src/themes', `${outdir}/themes`).catch(() => {});
+await fs.copyFile('src/style.css', `${outdir}/style.css`).catch(() => {});
+await copyDir('src/assets', `${outdir}/assets`).catch(() => {});
 
