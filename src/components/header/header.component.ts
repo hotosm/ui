@@ -1,6 +1,6 @@
-import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/tab-group/tab-group.js';
-import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/dialog/dialog.js';
-import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/button/button.js';
+import '@awesome.me/webawesome/dist/components/tab-group/tab-group.js';
+import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
+import '@awesome.me/webawesome/dist/components/button/button.js';
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { headerVariants, type sizes, styles } from './header.styles.js';

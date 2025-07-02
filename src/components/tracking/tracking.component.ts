@@ -1,6 +1,6 @@
-import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/callout/callout.js';
-import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/button/button.js';
-import 'https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/components/icon/icon.js';
+import '@awesome.me/webawesome/dist/components/callout/callout.js';
+import '@awesome.me/webawesome/dist/components/button/button.js';
+import '@awesome.me/webawesome/dist/components/icon/icon.js';
 
 import { LitElement, html, css } from "lit";
 import { property, state } from "lit/decorators.js";
