@@ -8,6 +8,9 @@ async function registerWaComponents() {
   if (!customElements.get('wa-button')) {
     await import('@awesome.me/webawesome/dist/components/button/button.js');
   }
+  if (!customElements.get('wa-icon')) {
+    await import('@awesome.me/webawesome/dist/components/icon/icon.js');
+  }
 }
 
 import { LitElement, html } from "lit";
@@ -282,12 +285,10 @@ export class Header extends LitElement {
             : null}
           ${this.drawer
             ? html`
-                <wa-icon-button
-                  library="hot-icons"
-                  class="header--drawer"
-                  name="list"
-                  label="drawer-open"
-                ></wa-icon-button>
+                <wa-button>
+                  <wa-icon library="hot-icons" name="list" label="drawer-open" class="header--drawer">
+                  </wa-icon>
+                </wa-button>
               `
             : null}
         </div>
