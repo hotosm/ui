@@ -1,1 +1,0 @@
-import{a as s}from"./chunk.GRD7DOAE.js";import{a as t,b as o,e as m}from"./chunk.RGDK5VTE.js";var e=m(s(),1);var n=e.default.forwardRef((r,a)=>e.default.createElement("hot-consent",o(t({},r),{ref:a})));n.displayName="Consent";var f=n;export{f as a};

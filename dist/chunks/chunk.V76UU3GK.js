@@ -1,1 +1,0 @@
-import{a as s}from"./chunk.GRD7DOAE.js";import{a as t,b as e,e as i}from"./chunk.RGDK5VTE.js";var r=i(s(),1);var n=r.default.forwardRef((o,a)=>r.default.createElement("hot-tracking",e(t({},o),{ref:a})));n.displayName="Tracking";var g=n;export{g as a};

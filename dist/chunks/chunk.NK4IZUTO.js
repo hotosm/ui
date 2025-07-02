@@ -1,1 +1,0 @@
-import{a as n}from"./chunk.GRD7DOAE.js";import{a as r,b as t,e as m}from"./chunk.RGDK5VTE.js";var e=m(n(),1);var a=e.default.forwardRef((d,o)=>e.default.createElement("hot-header",t(r({},d),{ref:o})));a.displayName="Header";var p=a;export{p as a};
