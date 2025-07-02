@@ -1,6 +1,3 @@
-import '@awesome.me/webawesome/dist/components/callout/callout.js';
-import '@awesome.me/webawesome/dist/components/icon/icon.js';
-import '@awesome.me/webawesome/dist/components/button/button.js';
 import { LitElement } from "lit";
 import type { CSSResultGroup } from 'lit';
 export declare class Consent extends LitElement {

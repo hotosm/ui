@@ -1,4 +1,4 @@
-import{c as o,d as t,g as l,h as i}from"./chunk.PE4OKGWW.js";import{a as e,b as a}from"./chunk.6ZDEZIWM.js";import{e as n}from"./chunk.U4P7XQR4.js";var d=`:host {
+import{a as l,b as i}from"./chunk.TFICHQZE.js";import{a as o,b as t}from"./chunk.FIQQYKEP.js";import{a as e,b as a}from"./chunk.6ZDEZIWM.js";import{e as n}from"./chunk.U4P7XQR4.js";import"./chunk.NI7UJOOZ.js";var d=`:host {
   display: flex;
   position: relative;
   align-items: stretch;
@@ -66,4 +66,4 @@ import{c as o,d as t,g as l,h as i}from"./chunk.PE4OKGWW.js";import{a as e,b as 
       <div part="message">
         <slot></slot>
       </div>
-    `}};r.css=[d,i,l];o([a({reflect:!0})],r.prototype,"variant",2);o([a({reflect:!0})],r.prototype,"appearance",2);o([a({reflect:!0})],r.prototype,"size",2);r=o([e("wa-callout")],r);
+    `}};r.css=[d,i,l];o([a({reflect:!0})],r.prototype,"variant",2);o([a({reflect:!0})],r.prototype,"appearance",2);o([a({reflect:!0})],r.prototype,"size",2);r=o([e("wa-callout")],r);export{r as default};

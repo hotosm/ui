@@ -1,6 +1,14 @@
-import '@awesome.me/webawesome/dist/components/callout/callout.js';
-import '@awesome.me/webawesome/dist/components/button/button.js';
-import '@awesome.me/webawesome/dist/components/icon/icon.js';
+async function registerWaComponents() {
+  if (!customElements.get('wa-callout')) {
+    await import('@awesome.me/webawesome/dist/components/callout/callout.js');
+  }
+  if (!customElements.get('wa-icon')) {
+    await import('@awesome.me/webawesome/dist/components/icon/icon.js');
+  }
+  if (!customElements.get('wa-button')) {
+    await import('@awesome.me/webawesome/dist/components/button/button.js');
+  }
+}
 
 import { LitElement, html, css } from "lit";
 import { property, state } from "lit/decorators.js";
@@ -10,6 +18,11 @@ declare global {
     _paq: any[];
   }
 }
+
+// Workaround as es2017
+(async () => {
+  await registerWaComponents();
+})();
 
 export class MatomoTracking extends LitElement {
 

@@ -1,6 +1,3 @@
-import '@awesome.me/webawesome/dist/components/tab-group/tab-group.js';
-import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
-import '@awesome.me/webawesome/dist/components/button/button.js';
 import { LitElement } from "lit";
 import { type sizes } from './header.styles.js';
 import type { CSSResultGroup } from 'lit';

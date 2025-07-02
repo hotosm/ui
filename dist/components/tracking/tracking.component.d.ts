@@ -1,6 +1,3 @@
-import '@awesome.me/webawesome/dist/components/callout/callout.js';
-import '@awesome.me/webawesome/dist/components/button/button.js';
-import '@awesome.me/webawesome/dist/components/icon/icon.js';
 import { LitElement } from "lit";
 declare global {
     interface Window {
