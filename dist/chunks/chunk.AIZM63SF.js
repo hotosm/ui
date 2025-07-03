@@ -600,6 +600,7 @@ import{a as O,b as g,c as i,d as k,e as C,f as W}from"./chunk.2MK55PUE.js";impor
         <nav
           class="header--nav"
         >
+        ${this.tabs.length>0?r`
           <wa-tab-group class="header--tab-group">
             ${this.tabs.map((o,a)=>{let c=this.selectedTab===a?"header--tab header--tab-active":"header--tab";return r`
                 <wa-tab
@@ -612,6 +613,7 @@ import{a as O,b as g,c as i,d as k,e as C,f as W}from"./chunk.2MK55PUE.js";impor
                 </wa-tab>
               `})}
           </wa-tab-group>
+          `:null}
         </nav>
 
         ${""}
