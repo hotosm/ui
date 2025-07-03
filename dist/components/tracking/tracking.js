@@ -1,1 +1,1 @@
-import{a as o,b as a}from"../../chunks/chunk.NQHNA5TA.js";import"../../chunks/chunk.6ZDEZIWM.js";import"../../chunks/chunk.U4P7XQR4.js";import"../../chunks/chunk.NI7UJOOZ.js";var r=a;export{o as MatomoTracking,r as default};
+import{a as t,b as e}from"../../chunks/chunk.PDLGEB7T.js";import"../../chunks/chunk.3NBBS2A2.js";import"../../chunks/chunk.2MK55PUE.js";import"../../chunks/chunk.6ZDEZIWM.js";import"../../chunks/chunk.U4P7XQR4.js";import"../../chunks/chunk.NI7UJOOZ.js";var o=e;customElements.define("hot-tracking",e);export{t as MatomoTracking,o as default};

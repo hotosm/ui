@@ -1,1 +1,1 @@
-import{a as e,b as o}from"../../chunks/chunk.4YLAIDAG.js";import"../../chunks/chunk.UTSKEKTV.js";import"../../chunks/chunk.6ZDEZIWM.js";import"../../chunks/chunk.U4P7XQR4.js";import"../../chunks/chunk.NI7UJOOZ.js";var r=o;export{e as Logo,r as default};
+import{a as e,b as o}from"../../chunks/chunk.7RJ72M75.js";import"../../chunks/chunk.UTSKEKTV.js";import"../../chunks/chunk.6ZDEZIWM.js";import"../../chunks/chunk.U4P7XQR4.js";import"../../chunks/chunk.NI7UJOOZ.js";var l=o;customElements.define("hot-logo",o);export{e as Logo,l as default};
