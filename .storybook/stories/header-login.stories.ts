@@ -100,6 +100,9 @@ export const WithConfigurableProviders: Story = {
           <li>Backward compatibility with OSM properties</li>
         </ul>
       </div>
+
+      <h1>Test on a separate page</h1>
+      Test on a separate page <a href="/osm-auth-test/index.html" target="_blank">here</a>
     `;
   }
 };
