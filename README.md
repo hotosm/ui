@@ -69,8 +69,6 @@ of development and maintenance. It should include a minimal number of components
 - Sidebar with links to extra resources.
 - Footer with links.
 - File upload component (including dropzone).
-- Date picker component.
-- Workflow stepper component.
 
 ## Quick start
 
@@ -98,14 +96,18 @@ Import the library in your project and use the components.
 
 #### React
 
-```js
-import '@hotosm/ui/dist/style.css';
-import { Logo, Button } from '@hotosm/ui/dist/react';
-```
+Import in the same way as above.
 
 ```jsx
-<Logo />
-<Button variant="primary">Click me!</Button>
+<hot-button
+  size='small'
+  variant='text'
+  disabled={currentIndex <= 0}
+  onClick={() => {
+    console.log('do stuff');
+  }}
+>
+</hot-button>
 ```
 
 ### Components Bundle
