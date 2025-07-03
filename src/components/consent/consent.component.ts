@@ -1,14 +1,6 @@
-async function registerWaComponents() {
-  if (!customElements.get('wa-callout')) {
-    await import('@awesome.me/webawesome/dist/components/callout/callout.js');
-  }
-  if (!customElements.get('wa-icon')) {
-    await import('@awesome.me/webawesome/dist/components/icon/icon.js');
-  }
-  if (!customElements.get('wa-button')) {
-    await import('@awesome.me/webawesome/dist/components/button/button.js');
-  }
-}
+import '@awesome.me/webawesome/dist/components/callout/callout.js';
+import '@awesome.me/webawesome/dist/components/icon/icon.js';
+import '@awesome.me/webawesome/dist/components/button/button.js';
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
@@ -16,11 +8,6 @@ import styles from './consent.styles.js';
 import type { CSSResultGroup } from 'lit';
 
 import registerBundledIcons from "../icons.js";
-
-// Workaround as es2017
-(async () => {
-  await registerWaComponents();
-})();
 
 registerBundledIcons();
 

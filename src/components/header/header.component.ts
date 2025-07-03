@@ -1,28 +1,13 @@
-async function registerWaComponents() {
-  if (!customElements.get('wa-tab-group')) {
-    await import('@awesome.me/webawesome/dist/components/tab-group/tab-group.js');
-  }
-  if (!customElements.get('wa-dialog')) {
-    await import('@awesome.me/webawesome/dist/components/dialog/dialog.js');
-  }
-  if (!customElements.get('wa-button')) {
-    await import('@awesome.me/webawesome/dist/components/button/button.js');
-  }
-  if (!customElements.get('wa-icon')) {
-    await import('@awesome.me/webawesome/dist/components/icon/icon.js');
-  }
-}
+import '@awesome.me/webawesome/dist/components/tab-group/tab-group.js';
+import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
+import '@awesome.me/webawesome/dist/components/button/button.js';
+import '@awesome.me/webawesome/dist/components/icon/icon.js';
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { headerVariants, type sizes, styles } from './header.styles.js';
 import type { CSSResultGroup } from 'lit';
 import osmLogo from '../../assets/logo/osm-logo.png'
-
-// Workaround as es2017
-(async () => {
-  await registerWaComponents();
-})();
 
 import registerBundledIcons from "../icons.js"
 registerBundledIcons();
