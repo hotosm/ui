@@ -52,118 +52,131 @@
 
 ## Shared UI Components with HOT Theming
 
-This repository contains HOT themed UI components, with three goals:
+This repository contains advice on how to use the WebAwesome
+[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+library, references to the HOTOSM style guide, and a few 'wrapper'
+components to assist development:
 
 1. Reduced code duplication across HOT tools (we repeat a lot!)
 2. Simplified developer experience to create a HOT app.
 3. Reasonably consistent theming and style across tools.
 
-They are available as
-[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-and have first-class React support.
-
 The main goal of this project is not to re-invent the wheel, or add an extra burden
-of development and maintenance. It should include a minimal number of components:
+of development and maintenance. It should include a minimal number of
+components, such as:
 
 - Header, including auth flows (OSM, Google) and login info.
 - Sidebar with links to extra resources.
 - Footer with links.
-- File upload component (including dropzone).
 
 ## Quick start
 
-There are two options: NPM and Components Bundle.
+Current HOTOSM UI version used: `0.3.1-b5`
+Current WebAwesome version used: `3.0.0-beta.1`
 
-### NPM
+### Install WebAwesome
 
-Appropriate for applications that have installable dependencies
+```bash
+pnpm install "@awesome.me/webawesome@3.0.0-beta.1"
+```
 
-`npm install @hotosm/ui`
+> [!NOTE]
+> It's important to pin the version of web awesome used to the version in this
+> library, to avoid any conflicts and incompatibilities between components.
 
-Import the library in your project and use the components.
+### Install HOT Components
 
-```html
-<script>
+```bash
+pnpm install "@hotosm/ui"
+```
+
+### Configure The Styles
+
+In your `index.html` or equivalent frontend root, add the following classes
+to your `<html>` block:
+
+  ```html
+  <!DOCTYPE html>
+  <html class="wa-theme-default wa-palette-hotosm wa-brand-red wa-neutral-gray
+    wa-success-cyan wa-warning-yellow wa-danger-orange">
+    <head>
+      xxx
+    </head>
+    <body>
+      xxx
+    </body>
+  </html>
+  ```
+
+> [!IMPORTANT]
+> These classes determine the colour usage for different component variants,
+> and probably should not be changed!
+
+And import the required styles in your `main.ts` or equivalent (we import from package
+rather than CDN, to allow the bundler to work it's CSS tree-shaking magic).
+
+  ```js
   import '@hotosm/ui/dist/style.css';
-  import { Logo, Button } from '@hotosm/ui/dist/hotosm-ui';
-</script>
-```
+  ```
 
-```html
-<hot-logo><hot-logo>
-<hot-button variant="primary">Click me!</hot-button>
-```
+If you wish to use any of the variables in `hot.css` manually, you can reference
+them as variables like so:
+
+  ```css
+  /* In your CSS file */
+  some-param: var(--hot-some-param);
+  /* See all variables in the `theme/hot.css` file */
+  ```
+
+### Use The Components
+
+#### Via Bundler
+
+Import each component individually into your code:
+
+  ```html
+  <script>
+    import '@hotosm/ui/dist/components/header/header.js';
+  </script>
+
+  <hot-header
+    param1=""
+    param2=""
+  >
+  </hot-header>
+  ```
+
+#### Via CDN
+
+If you are working directly in HTML, or other ways without a configured
+bundler, you can import all the components as a bundle, as use them like so:
+
+  ```html
+  <script>
+    import '@hotosm/ui/dist/style.css';
+    import '@hotosm/ui/dist/hotosm-ui';
+  </script>
+
+  <hot-logo><hot-logo>
+  <hot-button variant="primary">Click me!</hot-button>
+  ```
 
 #### React
 
-Import in the same way as above.
+Import in the same way as the bundler example above, except events
+are bound to slightly differently:
 
-```jsx
-<hot-button
-  size='small'
-  variant='text'
-  disabled={currentIndex <= 0}
-  onClick={() => {
-    console.log('do stuff');
-  }}
->
-</hot-button>
-```
-
-### Components Bundle
-
-- This is the compiled JavaScript bundle generated from the TypeScript code.
-- The components require no additional dependencies and are minified.
-
-Appropriate for HTML / Markdown / HTMX.
-
-```html
-<link
-  rel="stylesheet"
-  href="https://s3.amazonaws.com/hotosm-ui/latest/dist/style.css"
-/>
-
-<script
-  type="module"
-  src="https://s3.amazonaws.com/hotosm-ui/latest/dist/ui.js"
-></script>
-
-<hot-logo></hot-logo>
-```  
-
-## Using Extra Shoelace Components
-
-The HOT UI library contains many composite components, such as headers, sidebars,
-tracking banners, etc, and does not re-invent the wheel for low-level components.
-
-Shoelace is an UI library that is exported directly from `@hotosm/ui`.
-
-To access the low-level components, such as buttons, dropdowns, modals, etc,
-simply import the component of the same name from the [Shoelace docs]
-(<https://shoelace.style>):
-
-```js
-import { Button } from '@hotosm/ui/dist/hotosm-ui';
-```
-
-```html
-<hot-button disabled variant="secondary">Can't Click Me</hot-button>
-```
-
-### React Shoelace Wrappers
-
-```js
-import { Button } from '@hotosm/ui/dist/react';
-```
-
-```html
-<Button disabled variant="secondary">Can't Click Me</Button>
-```
-
-### Examples
-
-You can found examples for HTML and also all common frameworks
-(React, Svelte, Vue) under `/examples`.
+  ```jsx
+  <hot-button
+    size='small'
+    variant='text'
+    disabled={currentIndex <= 0}
+    onClick={() => {
+      console.log('do stuff');
+    }}
+  >
+  </hot-button>
+  ```
 
 ### Development
 
