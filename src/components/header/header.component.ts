@@ -346,6 +346,3 @@ export class Header extends LitElement {
 }
 
 export default Header;
-
-// Define web component
-customElements.define("hot-header", Header);

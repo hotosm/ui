@@ -32,6 +32,3 @@ export class Logo extends LitElement {
 }
 
 export default Logo;
-
-// Define web component
-customElements.define("hot-logo", Logo);

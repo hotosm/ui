@@ -449,6 +449,3 @@ export class MatomoTracking extends LitElement {
 }
 
 export default MatomoTracking;
-
-// Define web component
-customElements.define("hot-tracking", MatomoTracking);

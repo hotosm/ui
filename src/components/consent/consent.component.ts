@@ -125,6 +125,3 @@ export class Consent extends LitElement {
 }
 
 export default Consent;
-
-// Define web component
-customElements.define("hot-consent", Consent);

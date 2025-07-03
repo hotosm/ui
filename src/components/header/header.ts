@@ -9,3 +9,5 @@ declare global {
   }
 }
 
+// Define web component
+customElements.define("hot-header", Header);
