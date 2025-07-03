@@ -232,6 +232,7 @@ export class Header extends LitElement {
         <nav
           class="header--nav"
         >
+        ${this.tabs.length > 0 ? html`
           <wa-tab-group class="header--tab-group">
             ${this.tabs.map((item, index) => {
               const isActive = this.selectedTab === index;
@@ -248,6 +249,7 @@ export class Header extends LitElement {
               `;
             })}
           </wa-tab-group>
+          ` : null}
         </nav>
 
         ${/* Stacked navigation drawer for mobile */ ""}
