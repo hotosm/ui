@@ -6,5 +6,5 @@
 
 function registerBundledIcons() {
 }
-
+console.log("test");
 export default registerBundledIcons;
