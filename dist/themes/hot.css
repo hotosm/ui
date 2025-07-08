@@ -94,6 +94,79 @@
    --hot-color-gray-100: #E1E0E1;
    --hot-color-gray-50: #F3F3F3;
 
+      /*
+   * Semantic Colors
+   * These map primitive colors to semantic meanings
+   */
+
+   /* Primary colors (HOT brand color - red) */
+   --hot-color-primary-950: var(--hot-color-red-950);
+   --hot-color-primary-900: var(--hot-color-red-900);
+   --hot-color-primary-800: var(--hot-color-red-800);
+   --hot-color-primary-700: var(--hot-color-red-700);
+   --hot-color-primary-600: var(--hot-color-red-600);
+   --hot-color-primary-500: var(--hot-color-red-500);
+   --hot-color-primary-400: var(--hot-color-red-400);
+   --hot-color-primary-300: var(--hot-color-red-300);
+   --hot-color-primary-200: var(--hot-color-red-200);
+   --hot-color-primary-100: var(--hot-color-red-100);
+   --hot-color-primary-50: var(--hot-color-red-50);
+
+   /* Danger colors (red) */
+   --hot-color-danger-950: var(--hot-color-red-950);
+   --hot-color-danger-900: var(--hot-color-red-900);
+   --hot-color-danger-800: var(--hot-color-red-800);
+   --hot-color-danger-700: var(--hot-color-red-700);
+   --hot-color-danger-600: var(--hot-color-red-600);
+   --hot-color-danger-500: var(--hot-color-red-500);
+   --hot-color-danger-400: var(--hot-color-red-400);
+   --hot-color-danger-300: var(--hot-color-red-300);
+   --hot-color-danger-200: var(--hot-color-red-200);
+   --hot-color-danger-100: var(--hot-color-red-100);
+   --hot-color-danger-50: var(--hot-color-red-50);
+
+   /* Warning colors (yellow) */
+   --hot-color-warning-950: var(--hot-color-yellow-950);
+   --hot-color-warning-900: var(--hot-color-yellow-900);
+   --hot-color-warning-800: var(--hot-color-yellow-800);
+   --hot-color-warning-700: var(--hot-color-yellow-700);
+   --hot-color-warning-600: var(--hot-color-yellow-600);
+   --hot-color-warning-500: var(--hot-color-yellow-500);
+   --hot-color-warning-400: var(--hot-color-yellow-400);
+   --hot-color-warning-300: var(--hot-color-yellow-300);
+   --hot-color-warning-200: var(--hot-color-yellow-200);
+   --hot-color-warning-100: var(--hot-color-yellow-100);
+   --hot-color-warning-50: var(--hot-color-yellow-50);
+
+   /* Success colors (green - using WebAwesome green values) */
+   --hot-color-success-950: #031608;
+   --hot-color-success-900: #052310;
+   --hot-color-success-800: #0a3a1d;
+   --hot-color-success-700: #0a5027;
+   --hot-color-success-600: #036730;
+   --hot-color-success-500: #00883c;
+   --hot-color-success-400: #00ac49;
+   --hot-color-success-300: #5dc36f;
+   --hot-color-success-200: #93da98;
+   --hot-color-success-100: #c2f2c1;
+   --hot-color-success-50: #e3f9e3;
+
+   /* Neutral colors (gray) */
+   --hot-color-neutral-1000: #ffffff;
+   --hot-color-neutral-950: var(--hot-color-gray-950);
+   --hot-color-neutral-900: var(--hot-color-gray-900);
+   --hot-color-neutral-800: var(--hot-color-gray-800);
+   --hot-color-neutral-700: var(--hot-color-gray-700);
+   --hot-color-neutral-600: var(--hot-color-gray-600);
+   --hot-color-neutral-500: var(--hot-color-gray-500);
+   --hot-color-neutral-400: var(--hot-color-gray-400);
+   --hot-color-neutral-300: var(--hot-color-gray-300);
+   --hot-color-neutral-200: var(--hot-color-gray-200);
+   --hot-color-neutral-100: var(--hot-color-gray-100);
+   --hot-color-neutral-50: var(--hot-color-gray-50);
+   --hot-color-neutral-0: #000000;
+
+
    /*
    * Typography
    */
