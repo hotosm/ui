@@ -97,8 +97,8 @@ export const styles = css`
   }
 
   .header--login-button {
-    --wa-color-brand-600: var(--hot-color-red-500);
-    --wa-color-brand-700: var(--hot-color-red-600);
+    color: var(--hot-color-red-500);
+    background-color: var(--hot-color-red-600);
   }
 
   .header--logo-img {
