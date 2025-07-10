@@ -50,6 +50,7 @@ export const Header: StoryObj = {
     drawer: true,
     tabs: twoTab,
     borderBottom: false,
+    showLogin: false,
   },
   argTypes: {
     size: {
@@ -89,16 +90,19 @@ export const Header: StoryObj = {
       },
     },
     tabs: {
-      options: {
-        '1 Tab': oneTab,
-        '2 Tabs': twoTab,
-        '3 Tabs': threeTab,
-        '4 Tabs': fourTab,
-        '5 Tabs': fiveTab,
-      },
+      options: [
+        { label: '1 Tab', value: oneTab },
+        { label: '2 Tabs', value: twoTab },
+        { label: '3 Tabs', value: threeTab },
+        { label: '4 Tabs', value: fourTab },
+        { label: '5 Tabs', value: fiveTab },
+      ],
       control: {
         type: "select",
       },
+    },
+    showLogin: {
+      control: { type: "boolean" },
     },
   },
   render: (args) => {
@@ -111,7 +115,135 @@ export const Header: StoryObj = {
         ?drawer=${args.drawer}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
-      ></hot-header>
+        ?showLogin=${args.showLogin}
+      >
+      </hot-header>
+    `;
+  },
+};
+
+// Header with different button combinations
+export const HeaderWithButtons: StoryObj = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  args: {
+    selectedTab: 0,
+    size: "medium",
+    title: "Tasking Manager",
+    logo: defaultLogo,
+    drawer: true,
+    tabs: threeTab,
+    borderBottom: true,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title=${args.title}
+        logo=${args.logo}
+        ?borderBottom=${args.borderBottom}
+        size=${args.size}
+        ?drawer=${args.drawer}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+      </hot-header>
+    `;
+  },
+};
+
+// Header with icon buttons only
+export const HeaderWithIconButtons: StoryObj = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  args: {
+    selectedTab: 0,
+    size: "large",
+    title: "FMTM",
+    logo: defaultLogo,
+    drawer: true,
+    tabs: fourTab,
+    borderBottom: true,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title=${args.title}
+        logo=${args.logo}
+        ?borderBottom=${args.borderBottom}
+        size=${args.size}
+        ?drawer=${args.drawer}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+      >
+      </hot-header>
+    `;
+  },
+};
+
+// Header with HOT color buttons
+export const HeaderWithHotColorButtons: StoryObj = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  args: {
+    selectedTab: 0,
+    size: "medium",
+    title: "Drone Tasking Manager",
+    logo: defaultLogo,
+    drawer: true,
+    tabs: twoTab,
+    borderBottom: true,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title=${args.title}
+        logo=${args.logo}
+        ?borderBottom=${args.borderBottom}
+        size=${args.size}
+        ?drawer=${args.drawer}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+      >
+      </hot-header>
+    `;
+  },
+};
+
+// Header with login button (showing hot-red color)
+export const HeaderWithLogin: StoryObj = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  args: {
+    selectedTab: 0,
+    size: "medium",
+    title: "Tasking Manager",
+    logo: defaultLogo,
+    drawer: true,
+    tabs: twoTab,
+    borderBottom: true,
+    showLogin: true,
+  },
+  argTypes: {
+    showLogin: {
+      control: { type: "boolean" },
+    },
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title=${args.title}
+        logo=${args.logo}
+        ?borderBottom=${args.borderBottom}
+        size=${args.size}
+        ?drawer=${args.drawer}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+        ?showLogin=${args.showLogin}
+      >
+      </hot-header>
     `;
   },
 };
