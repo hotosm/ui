@@ -96,10 +96,7 @@ export const styles = css`
     gap: var(--hot-spacing-small);
   }
 
-  .header--login-button {
-    color: var(--hot-color-red-500);
-    background-color: var(--hot-color-red-600);
-  }
+
 
   .header--logo-img {
   }

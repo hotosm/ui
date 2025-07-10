@@ -1,6 +1,5 @@
 import '@awesome.me/webawesome/dist/components/tab-group/tab-group.js';
 import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
-import '@awesome.me/webawesome/dist/components/button/button.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
 
 import { LitElement, html } from "lit";
@@ -259,15 +258,17 @@ export class Header extends LitElement {
         ></nav>
 
         <div id="right-section" class="header--right-section">
+          <slot name="right-section"></slot>
           ${this.showLogin
             ? html`
-                <wa-button
-                  variant="brand"
-                  class="header--login-button"
+                <hot-button
+                  variant="primary"
+                  hot-color="red"
+                  size="small"
                   @click=${() => this._handleLogin()}
                 >
                   Login
-                </wa-button>
+                </hot-button>
               `
             : null}
           ${this.drawer

@@ -1,0 +1,173 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Button" />
+
+# Button Component
+
+The `hot-button` component is a customizable button built on top of WebAwesome's button component with HOT theming.
+
+## Features
+
+- Multiple variants (primary, secondary, outline, success, warning, danger)
+- Different sizes (small, medium, large)
+- Icon support with configurable positioning
+- Loading and disabled states
+- Custom HOT-themed variants
+- Full WebAwesome integration
+
+## Basic Usage
+
+```html
+<hot-button variant="primary">Click me!</hot-button>
+```
+
+<hot-button variant="primary">Click me!</hot-button>
+
+## Variants
+
+The button component supports multiple variants to match different use cases:
+
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+  <hot-button variant="primary">Primary</hot-button>
+  <hot-button variant="secondary">Secondary</hot-button>
+  <hot-button variant="outline">Outline</hot-button>
+  <hot-button variant="success">Success</hot-button>
+  <hot-button variant="warning">Warning</hot-button>
+  <hot-button variant="danger">Danger</hot-button>
+</div>
+
+## Sizes
+
+Three different sizes are available:
+
+<div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
+  <hot-button variant="primary" size="small">Small</hot-button>
+  <hot-button variant="primary" size="medium">Medium</hot-button>
+  <hot-button variant="primary" size="large">Large</hot-button>
+</div>
+
+## Icons
+
+Buttons can include icons from the WebAwesome icon library:
+
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+  <hot-button variant="primary" icon="user" icon-position="start">
+    User Profile
+  </hot-button>
+  <hot-button variant="secondary" icon="settings" icon-position="start">
+    Settings
+  </hot-button>
+  <hot-button variant="outline" icon="download" icon-position="end">
+    Download
+  </hot-button>
+</div>
+
+## Icon Buttons
+
+For icon-only buttons, use the `appearance="icon"` property:
+
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+  <hot-button appearance="icon" variant="primary">
+    <wa-icon name="user" slot="icon"></wa-icon>
+  </hot-button>
+  <hot-button appearance="icon" variant="secondary">
+    <wa-icon name="settings" slot="icon"></wa-icon>
+  </hot-button>
+  <hot-button appearance="icon" variant="outline">
+    <wa-icon name="download" slot="icon"></wa-icon>
+  </hot-button>
+</div>
+
+## States
+
+Buttons support different states:
+
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+  <hot-button variant="primary">Normal</hot-button>
+  <hot-button variant="primary" disabled>Disabled</hot-button>
+  <hot-button variant="primary" loading>Loading</hot-button>
+</div>
+
+## Custom HOT Variants
+
+Special HOT-themed button variants are available:
+
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+  <hot-button variant="primary" class="hot-gradient">
+    <wa-icon name="star" slot="icon"></wa-icon>
+    HOT Gradient
+  </hot-button>
+  <hot-button variant="primary" class="hot-outline">
+    <wa-icon name="heart" slot="icon"></wa-icon>
+    HOT Outline
+  </hot-button>
+  <hot-button variant="primary" class="hot-ghost">
+    <wa-icon name="map" slot="icon"></wa-icon>
+    HOT Ghost
+  </hot-button>
+</div>
+
+## HOT Color Variants
+
+Use specific HOT brand colors with the `hot-color` attribute:
+
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+  <hot-button hot-color="red">
+    <wa-icon name="heart" slot="icon"></wa-icon>
+    HOT Red
+  </hot-button>
+  <hot-button hot-color="yellow">
+    <wa-icon name="star" slot="icon"></wa-icon>
+    HOT Yellow
+  </hot-button>
+  <hot-button hot-color="blue">
+    <wa-icon name="map" slot="icon"></wa-icon>
+    HOT Blue
+  </hot-button>
+  <hot-button hot-color="cyan">
+    <wa-icon name="droplet" slot="icon"></wa-icon>
+    HOT Cyan
+  </hot-button>
+  <hot-button hot-color="rose">
+    <wa-icon name="flower" slot="icon"></wa-icon>
+    HOT Rose
+  </hot-button>
+  <hot-button hot-color="gray">
+    <wa-icon name="settings" slot="icon"></wa-icon>
+    HOT Gray
+  </hot-button>
+</div>
+
+Available HOT colors: `red`, `yellow`, `blue`, `cyan`, `rose`, `gray`
+
+## API Reference
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'success' \| 'warning' \| 'danger'` | `'primary'` | The button variant to use |
+| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | The button size |
+| `appearance` | `'default' \| 'icon'` | `'default'` | The button appearance |
+| `disabled` | `boolean` | `false` | Whether the button is disabled |
+| `loading` | `boolean` | `false` | Whether the button is in loading state |
+| `icon` | `string` | `''` | The icon name to display |
+| `iconPosition` | `'start' \| 'end'` | `'start'` | The icon position relative to the text |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | The button type |
+| `hotColor` | `'red' \| 'yellow' \| 'blue' \| 'cyan' \| 'rose' \| 'gray' \| ''` | `''` | The HOT color variant to use |
+
+## React Usage
+
+For React applications, use the `WaHotButton` wrapper:
+
+```jsx
+import { WaHotButton } from '@hotosm/ui';
+
+function MyComponent() {
+  return (
+    <WaHotButton variant="primary" size="medium" onClick={() => console.log('clicked')}>
+      Click me!
+    </WaHotButton>
+  );
+}
+``` 
