@@ -5,56 +5,19 @@ import '@awesome.me/webawesome/dist/components/icon/icon.js';
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import type { CSSResultGroup } from 'lit';
+// @ts-ignore (hanko doesn't like being wrapped...)
 import { register as registerHanko } from '@teamhanko/hanko-elements';
 
 import { headerVariants, type sizes, styles } from './header.styles.js';
-import osmLogo from '../../assets/logo/osm-logo.png'
 import registerBundledIcons from "../icons.js"
+import osmLogoRaw from '../../assets/logo/osm-logo.svg?raw';
+const osmLogoDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(osmLogoRaw)}`;
 
 registerBundledIcons();
-await registerHanko('https://login.hotosm.org', {
-  // shadow: true, // Set to false if you do not want the web component to be attached to the shadow DOM.
-  // injectStyles: true, // Set to false if you do not want to inject any default styles.
-  // enablePasskeys: false, // Set to false if you do not want to display passkey-related content.
-  // hidePasskeyButtonOnLogin: true, // Hides the button to sign in with a passkey on the login page.
-  // // translations: undefined, // Additional translations can be added here. English is used when the option is not
-  // // // present or set to `null`, whereas setting an empty object `{}` prevents the elements
-  // // // from displaying any translations.
-  // // translationsLocation: '/i18n', // The URL or path where the translation files are located.
-  // // fallbackLanguage: 'en', // The fallback language to be used if a translation is not available.
-  // storageKey: 'hanko', // The name of the cookie the session token is stored in and the prefix / name of local storage keys
-  // cookieDomain: undefined, // The domain where the cookie set from the SDK is available. When undefined,
-  // // defaults to the domain of the page where the cookie was created.
-  // cookieSameSite: 'lax', // Specify whether/when cookies are sent with cross-site requests.
-  sessionCheckInterval: 30000, // Interval for session validity checks in milliseconds. Must be greater than 3000 (3s).
-  // sessionTokenLocation: 'cookie' // Specify where the session token should be stored. Either `cookie` or `sessionStorage`.
-}).catch((_error) => {
-  // handle error
-});
 
 interface MenuItem {
   label: string;
   clickEvent: () => void;
-}
-
-interface LoginProvider {
-  icon?: string;
-  loginUrl: string;
-  redirectUrl: string;
-  clientId?: string;
-  name?: string; // Optional display name, defaults to provider key
-  scope?: string; // Optional OAuth scope
-}
-
-interface LoginProviders {
-  [key: string]: LoginProvider;
-}
-
-interface LoginOption {
-  id: string;
-  name: string;
-  icon?: string;
-  image?: string;
 }
 
 export class Header extends LitElement {
@@ -99,115 +62,38 @@ export class Header extends LitElement {
   @property({ type: Boolean })
   accessor loginModalOpen: boolean = false;
 
-  /** Configuration object for login providers. */
-  @property({ type: Object, attribute: "login-providers" })
-  accessor loginProviders: LoginProviders = {};
-
   /** Default fallback icon for providers without custom icons. */
   @property({ type: String, attribute: "default-login-icon" })
   accessor defaultLoginIcon: string = "user";
 
-  // Legacy support - these will be used to create a default OSM provider if loginProviders is empty
-  @property({ type: String, attribute: "osm-oauth-url" })
-  accessor osmOauthUrl: string = "https://www.openstreetmap.org/oauth2/authorize";
+  async connectedCallback() {
+    super.connectedCallback();
 
-  @property({ type: String, attribute: "osm-oauth-client-id" })
-  accessor OsmOauthClientId: string = "";
-
-  @property({ type: String, attribute: "osm-oauth-redirect-uri" })
-  accessor OsmOauthRedirectUri: string = "";
-
-  private get loginOptions(): LoginOption[] {
-    // If no loginProviders configured, fall back to OSM configuration
-    if (Object.keys(this.loginProviders).length === 0 && this.OsmOauthClientId && this.OsmOauthRedirectUri) {
-      return [
-        {
-          id: 'osm',
-          name: 'Personal OSM Account',
-          image: osmLogo
-        }
-      ];
-    }
-
-    // Convert loginProviders config to loginOptions
-    return Object.entries(this.loginProviders).map(([key, provider]) => ({
-      id: key,
-      name: provider.name || this.formatProviderName(key),
-      icon: provider.icon ? undefined : this.defaultLoginIcon,
-      image: provider.icon
-    }));
-  }
-
-  private formatProviderName(key: string): string {
-    // Convert provider key to display name (e.g., "osm" -> "OSM", "google" -> "Google")
-    return key.split('_').map(word => 
-      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    ).join(' ');
+    await registerHanko('https://dev.login.hotosm.org', {
+      shadow: false, // We can't use shadow dom, as the OSM custom element part is not exposed
+      // injectStyles: false, // Set to false if you do not want to inject any default styles.
+      // enablePasskeys: false, // Set to false if you do not want to display passkey-related content.
+      // hidePasskeyButtonOnLogin: true, // Hides the button to sign in with a passkey on the login page.
+      // // translations: undefined, // Additional translations can be added here. English is used when the option is not
+      // // // present or set to `null`, whereas setting an empty object `{}` prevents the elements
+      // // // from displaying any translations.
+      // // translationsLocation: '/i18n', // The URL or path where the translation files are located.
+      // // fallbackLanguage: 'en', // The fallback language to be used if a translation is not available.
+      // storageKey: 'hanko', // The name of the cookie the session token is stored in and the prefix / name of local storage keys
+      // cookieDomain: undefined, // The domain where the cookie set from the SDK is available. When undefined,
+      // // defaults to the domain of the page where the cookie was created.
+      // cookieSameSite: 'lax', // Specify whether/when cookies are sent with cross-site requests.
+      sessionCheckInterval: 30000, // Interval for session validity checks in milliseconds. Must be greater than 3000 (3s).
+      // sessionTokenLocation: 'cookie' // Specify where the session token should be stored. Either `cookie` or `sessionStorage`.
+    }).catch((_error: Error) => {
+      // handle error
+    });
   }
 
   selectTab(index: number) {
     console.log(index);
     this.tabs = [...this.tabs];
     this.selectedTab = index;
-  }
-
-  private performLogin(providerId: string) {
-    const provider = this.loginProviders[providerId];
-    
-    if (!provider) {
-      // OSM OAuth support
-      if (providerId === 'osm') {
-        this.legacyOsmLoginRedirect();
-        return;
-      }
-      console.error(`Login provider '${providerId}' not found`);
-      return;
-    }
-
-    if (!provider.clientId) {
-      // If no clientId, assume backend handles OAuth and just redirect to loginUrl
-      window.location.href = provider.loginUrl;
-      return;
-    }
-
-    // Client-side OAuth flow
-    const currentPath = window.location.pathname + window.location.search;
-    sessionStorage.setItem('requestedPath', currentPath);
-
-    const params = new URLSearchParams({
-      client_id: provider.clientId,
-      redirect_uri: provider.redirectUrl,
-      response_type: 'code',
-      ...(provider.scope && { scope: provider.scope })
-    });
-
-    const authUrl = `${provider.loginUrl}?${params.toString()}`;
-    window.location.href = authUrl;
-  }
-
-  private legacyOsmLoginRedirect() {
-    if (!this.OsmOauthClientId || !this.OsmOauthRedirectUri) {
-      console.error('OSM OAuth client ID and redirect URI must be provided');
-      return;
-    }
-
-    const currentPath = window.location.pathname + window.location.search;
-    sessionStorage.setItem('requestedPath', currentPath);
-
-    const params = new URLSearchParams({
-      client_id: this.OsmOauthClientId,
-      redirect_uri: this.OsmOauthRedirectUri,
-      response_type: 'code',
-      scope: 'read_prefs'
-    });
-
-    const OsmOauthUrl = `${this.osmOauthUrl}?${params.toString()}`;
-    window.location.href = OsmOauthUrl;
-  }
-
-  private handleSignIn(selectedOption: string) {
-    this.performLogin(selectedOption);
-    this.loginModalOpen = false;
   }
 
   protected render() {
@@ -321,6 +207,29 @@ export class Header extends LitElement {
             `
           : null}
       </header>
+
+      <!-- Here we must directly include the hanko style overrides, as it includes a SVG -->
+      <!-- Note we can't remove the existing svg, so need to hide and override it -->
+      <!-- THIS ISN'T WORKING WELL. We can either try and fix the styling or perhaps manipulate the DOM via Javascript instead?? -->
+      <style>
+        .hanko_form #icon-custom-provider {
+          display: none;
+        }
+      
+        .hanko_form .hanko_loadingSpinnerWrapperIcon:has(#icon-custom-provider) {
+          background: url("${osmLogoDataUrl}") no-repeat center center;
+          background-size: contain;
+          display: inline-flex;
+          align-items: center;
+          height: 100%;
+          margin: 0 5px;
+          justify-content: inherit;
+          flex-wrap: inherit;
+          width: 100%;
+          column-gap: 10px;
+          margin-left: 10px;
+        }
+      </style>
     `;
   }
 

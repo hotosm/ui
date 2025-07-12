@@ -53,21 +53,19 @@
   "engines": {
     "node": ">=14.17.0"
   },
-  "dependencies": {
-    "@awesome.me/webawesome": "3.0.0-beta.1",
-    "@teamhanko/hanko-elements": "^2.1.0",
-    "class-variance-authority": "^0.7.0",
-    "lit": "^3.0.0"
-  },
   "devDependencies": {
+    "@awesome.me/webawesome": "3.0.0-beta.1",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-links": "^8.3.5",
     "@storybook/blocks": "^8.3.5",
     "@storybook/web-components": "^8.2.9",
     "@storybook/web-components-vite": "^8.2.9",
+    "@teamhanko/hanko-elements": "^2.1.0",
+    "class-variance-authority": "^0.7.0",
     "del": "^7.1.0",
     "esbuild": "^0.19.4",
     "globby": "^14.0.2",
+    "lit": "^3.0.0",
     "storybook": "^8.2.9",
     "typescript": "^5.2.2",
     "user-agent-data-types": "^0.3.1"

@@ -2,22 +2,11 @@ import '@awesome.me/webawesome/dist/components/tab-group/tab-group.js';
 import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
 import { LitElement } from "lit";
-import { type sizes } from './header.styles.js';
 import type { CSSResultGroup } from 'lit';
+import { type sizes } from './header.styles.js';
 interface MenuItem {
     label: string;
     clickEvent: () => void;
-}
-interface LoginProvider {
-    icon?: string;
-    loginUrl: string;
-    redirectUrl: string;
-    clientId?: string;
-    name?: string;
-    scope?: string;
-}
-interface LoginProviders {
-    [key: string]: LoginProvider;
 }
 export declare class Header extends LitElement {
     static styles: CSSResultGroup;
@@ -40,19 +29,10 @@ export declare class Header extends LitElement {
     accessor showLogin: boolean;
     /** Control the login modal state. */
     accessor loginModalOpen: boolean;
-    /** Configuration object for login providers. */
-    accessor loginProviders: LoginProviders;
     /** Default fallback icon for providers without custom icons. */
     accessor defaultLoginIcon: string;
-    accessor osmOauthUrl: string;
-    accessor OsmOauthClientId: string;
-    accessor OsmOauthRedirectUri: string;
-    private get loginOptions();
-    private formatProviderName;
+    connectedCallback(): Promise<void>;
     selectTab(index: number): void;
-    private performLogin;
-    private legacyOsmLoginRedirect;
-    private handleSignIn;
     protected render(): import("lit").TemplateResult<1>;
     private _tabClick;
     private _handleLogin;
