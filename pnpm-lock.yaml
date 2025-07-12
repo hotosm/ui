@@ -7,20 +7,10 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@awesome.me/webawesome':
         specifier: 3.0.0-beta.1
         version: 3.0.0-beta.1(@floating-ui/utils@0.2.10)
-      '@teamhanko/hanko-elements':
-        specifier: ^2.1.0
-        version: 2.1.0
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.1
-      lit:
-        specifier: ^3.0.0
-        version: 3.3.0
-    devDependencies:
       '@storybook/addon-essentials':
         specifier: ^8.3.5
         version: 8.6.14(@types/react@19.1.8)(storybook@8.6.14)
@@ -36,6 +26,12 @@ importers:
       '@storybook/web-components-vite':
         specifier: ^8.2.9
         version: 8.6.14(lit@3.3.0)(storybook@8.6.14)(vite@6.3.5)
+      '@teamhanko/hanko-elements':
+        specifier: ^2.1.0
+        version: 2.1.0
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.1
       del:
         specifier: ^7.1.0
         version: 7.1.0
@@ -45,6 +41,9 @@ importers:
       globby:
         specifier: ^14.0.2
         version: 14.1.0
+      lit:
+        specifier: ^3.0.0
+        version: 3.3.0
       storybook:
         specifier: ^8.2.9
         version: 8.6.14
