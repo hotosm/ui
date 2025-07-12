@@ -4,12 +4,33 @@ import '@awesome.me/webawesome/dist/components/icon/icon.js';
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
-import { headerVariants, type sizes, styles } from './header.styles.js';
 import type { CSSResultGroup } from 'lit';
-import osmLogo from '../../assets/logo/osm-logo.png'
+import { register as registerHanko } from '@teamhanko/hanko-elements';
 
+import { headerVariants, type sizes, styles } from './header.styles.js';
+import osmLogo from '../../assets/logo/osm-logo.png'
 import registerBundledIcons from "../icons.js"
+
 registerBundledIcons();
+await registerHanko('https://login.hotosm.org', {
+  // shadow: true, // Set to false if you do not want the web component to be attached to the shadow DOM.
+  // injectStyles: true, // Set to false if you do not want to inject any default styles.
+  // enablePasskeys: false, // Set to false if you do not want to display passkey-related content.
+  // hidePasskeyButtonOnLogin: true, // Hides the button to sign in with a passkey on the login page.
+  // // translations: undefined, // Additional translations can be added here. English is used when the option is not
+  // // // present or set to `null`, whereas setting an empty object `{}` prevents the elements
+  // // // from displaying any translations.
+  // // translationsLocation: '/i18n', // The URL or path where the translation files are located.
+  // // fallbackLanguage: 'en', // The fallback language to be used if a translation is not available.
+  // storageKey: 'hanko', // The name of the cookie the session token is stored in and the prefix / name of local storage keys
+  // cookieDomain: undefined, // The domain where the cookie set from the SDK is available. When undefined,
+  // // defaults to the domain of the page where the cookie was created.
+  // cookieSameSite: 'lax', // Specify whether/when cookies are sent with cross-site requests.
+  sessionCheckInterval: 30000, // Interval for session validity checks in milliseconds. Must be greater than 3000 (3s).
+  // sessionTokenLocation: 'cookie' // Specify where the session token should be stored. Either `cookie` or `sessionStorage`.
+}).catch((_error) => {
+  // handle error
+});
 
 interface MenuItem {
   label: string;
@@ -281,35 +302,21 @@ export class Header extends LitElement {
             : null}
         </div>
 
-                <!-- Login Modal -->
+        <!-- Login Modal -->
         ${this.showLogin
           ? html`
               <wa-dialog 
                 class="login-modal"
                 ?open=${this.loginModalOpen}
                 @wa-hide=${() => this._handleModalClose()}
-                label="Sign In"
               >
-                <div class="login-content">
-                  <div class="login-options">
-                    ${this.loginOptions.map((option) => html`
-                      <div
-                        class="login-option"
-                        @click=${() => this.handleSignIn(option.id)}
-                      >
-                        <div class="login-option-icon">
-                          ${option.image 
-                            ? html`<img src="${option.image}" alt="${option.name}" />` 
-                            : option.icon 
-                              ? html`<wa-icon name="${option.icon}"></wa-icon>`
-                              : null
-                          }
-                        </div>
-                        <div class="login-option-text">${option.name}</div>
-                      </div>
-                    `)}
-                  </div>
-                </div>
+                <wa-button @click=${() => this._handleModalClose()}>
+                  <wa-icon library="hot-icons" name="close" label="cross">
+                    Close
+                  </wa-icon>
+                </wa-button>
+
+                <hanko-auth></hanko-auth>
               </wa-dialog>
             `
           : null}
