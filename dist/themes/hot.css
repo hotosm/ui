@@ -1,5 +1,4 @@
 /* HOT theme */
-
 /* :root makes them available globally */
 :root,
 /* :host is for Web Components and shadow DOM scopes */
@@ -17,7 +16,7 @@
    --hot-color-red-800: #B83032;
    --hot-color-red-700: #C53639;
    --hot-color-red-600: #D73F3F;
-   --hot-color-red-500: #F34D47;
+   --hot-color-red-500: green;
    --hot-color-red-400: #ED5C5E;
    --hot-color-red-300: #E27A7D;
    --hot-color-red-200: #EC9EA1;
@@ -258,3 +257,33 @@
    --hot-border-radius-circle: 50%;
    --hot-border-radius-pill: 9999px;
 }
+
+.gradient-button::part(base) {
+   background: linear-gradient(217deg, var(--wa-color-indigo-50), var(--wa-color-purple-50), var(--wa-color-red-50));
+   border: solid 1px var(--wa-color-purple-50);
+   transition: transform 100ms, box-shadow 100ms;
+ }
+
+ .gradient-button::part(base):hover {
+   box-shadow: var(--wa-shadow-m);
+   transform: translateY(-3px);
+ }
+
+ .gradient-button::part(base):active {
+   box-shadow: inset var(--wa-shadow-s);
+   transform: translateY(0);
+ }
+
+ .gradient-button::part(label) {
+   color: white;
+   text-shadow: rgb(0 0 0 / 0.3) 0 -1px;
+ }
+
+
+ wa-button.login-button {
+   background-color: #1a73e8;
+   color: white;
+   font-weight: 600;
+   padding: 0.6rem 1.2rem;
+   border-radius: 8px;
+ }
