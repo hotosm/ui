@@ -1,4 +1,4 @@
-import{b as o}from"./chunk.U4P7XQR4.js";var r=o`
+import{b as o}from"./chunk.TNLBUOUK.js";var r=o`
   .hot-button {
     /* Use HOT theme variables for consistent styling */
     font-family: var(--hot-font-sans);

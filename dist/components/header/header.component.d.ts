@@ -33,7 +33,7 @@ export declare class Header extends LitElement {
     accessor defaultLoginIcon: string;
     connectedCallback(): Promise<void>;
     selectTab(index: number): void;
-    protected render(): import("lit").TemplateResult<1>;
+    protected render(): import("lit-html").TemplateResult<1>;
     private _tabClick;
     private _handleLogin;
     private _handleModalClose;

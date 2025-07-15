@@ -23,6 +23,6 @@ export declare class Button extends LitElement {
     accessor type: 'button' | 'submit' | 'reset';
     /** The HOT color variant to use. */
     accessor hotColor: 'red' | 'yellow' | 'blue' | 'cyan' | 'rose' | 'gray' | '';
-    protected render(): import("lit").TemplateResult<1>;
+    protected render(): import("lit-html").TemplateResult<1>;
 }
 export default Button;

@@ -1,8 +1,8 @@
 /* The default WebAwesome CSS */
-@import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css');
 /* The WebAwesome theme we use (options: awesome, brutalist, glossy, etc) */
 @import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/themes/default.css');
 /* Import our custom HOTOSM CSS variables - should be imported first */
 @import 'themes/hot.css';
 /* Import our WebAwesome palette / colour & font override */
 @import 'themes/hot-wa-override.css';
+@import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css');

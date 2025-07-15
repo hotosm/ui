@@ -165,17 +165,15 @@ export class Header extends LitElement {
         ></nav>
 
         <div id="right-section" class="header--right-section">
-          <slot name="right-section"></slot>
-          ${this.showLogin
+           ${this.showLogin
             ? html`
-                <hot-button
-                  variant="primary"
-                  hot-color="red"
-                  size="small"
+                <wa-button
+                  variant="brand"
+                  class="login-button"
                   @click=${() => this._handleLogin()}
                 >
                   Login
-                </hot-button>
+                </wa-button>
               `
             : null}
           ${this.drawer

@@ -15,7 +15,7 @@ export declare class Consent extends LitElement {
     accessor message: string;
     accessor agreeLabel: string;
     accessor notAgreeLabel: string;
-    protected render(): import("lit").TemplateResult<1> | null;
+    protected render(): import("lit-html").TemplateResult<1> | null;
     private _setAgree;
     private _setDisagree;
     connectedCallback(): void;
