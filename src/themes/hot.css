@@ -1,4 +1,5 @@
 /* HOT theme */
+
 /* :root makes them available globally */
 :root,
 /* :host is for Web Components and shadow DOM scopes */
@@ -16,7 +17,7 @@
    --hot-color-red-800: #B83032;
    --hot-color-red-700: #C53639;
    --hot-color-red-600: #D73F3F;
-   --hot-color-red-500: green;
+   --hot-color-red-500: #F34D47;
    --hot-color-red-400: #ED5C5E;
    --hot-color-red-300: #E27A7D;
    --hot-color-red-200: #EC9EA1;
