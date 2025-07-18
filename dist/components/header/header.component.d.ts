@@ -10,6 +10,8 @@ interface MenuItem {
 }
 export declare class Header extends LitElement {
     static styles: CSSResultGroup;
+    static shadowRootOptions: ShadowRootInit;
+    createRenderRoot(): DocumentFragment | HTMLElement;
     name: string;
     /** Use a text-based title in the header. */
     accessor title: string;
@@ -31,7 +33,21 @@ export declare class Header extends LitElement {
     accessor loginModalOpen: boolean;
     /** Default fallback icon for providers without custom icons. */
     accessor defaultLoginIcon: string;
+    private mutationObserver?;
     connectedCallback(): Promise<void>;
+    disconnectedCallback(): void;
+    /**
+     * Injects HOT theme CSS into the shadow DOM of wa-button components
+     */
+    private injectCSSIntoShadowDOM;
+    /**
+     * Sets up mutation observer to automatically inject CSS into new wa-button components
+     */
+    private setupMutationObserver;
+    /**
+     * Override updated() to inject CSS when new wa-button elements are added
+     */
+    updated(changedProperties: Map<string, unknown>): void;
     selectTab(index: number): void;
     protected render(): import("lit-html").TemplateResult<1>;
     private _tabClick;
