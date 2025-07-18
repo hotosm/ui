@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOT UI - Shadow DOM CSS Injection Demo</title>
+    
+    <!-- Import WebAwesome -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@latest/dist/components/button/button.js"></script>
+    
+    <!-- Import HOT UI components -->
+    <script type="module" src="../src/hotosm-ui.js"></script>
+    
+    <!-- Import HOT theme -->
+    <link rel="stylesheet" href="../src/themes/hot.css">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background-color: #f5f5f5;
+        }
+        
+        .demo-section {
+            background: white;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>HOT UI - Shadow DOM CSS Injection Demo</h1>
+    
+    <div class="demo-section">
+        <h2>CSS Injection Test</h2>
+        <p>This demo shows how CSS variables from the HOT theme are injected into the shadow DOM of wa-button components.</p>
+        
+        <div class="button-group">
+            <wa-button variant="primary">Primary Button</wa-button>
+            <wa-button variant="secondary">Secondary Button</wa-button>
+            <wa-button variant="outline">Outline Button</wa-button>
+            <wa-button variant="success">Success Button</wa-button>
+            <wa-button variant="warning">Warning Button</wa-button>
+            <wa-button variant="danger">Danger Button</wa-button>
+        </div>
+        
+        <div class="button-group">
+            <wa-button class="login-button">Login Button (Custom Style)</wa-button>
+            <wa-button class="gradient-button">Gradient Button</wa-button>
+        </div>
+        
+        <div class="button-group">
+            <wa-button size="small">Small Button</wa-button>
+            <wa-button size="large">Large Button</wa-button>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>Header Component Test</h2>
+        <p>Testing the header component with CSS injection:</p>
+        
+        <hot-header 
+            title="Demo Header"
+            showLogin="true"
+            size="medium">
+        </hot-header>
+    </div>
+    
+    <div class="demo-section">
+        <h2>How It Works</h2>
+        <p>The CSS injection utility:</p>
+        <ul>
+            <li>Finds all <code>wa-button</code> elements in the DOM</li>
+            <li>Injects HOT theme CSS variables into their shadow DOM</li>
+            <li>Applies custom styles for specific button classes (like <code>login-button</code>)</li>
+            <li>Uses a MutationObserver to handle dynamically added buttons</li>
+        </ul>
+        
+        <div class="code-block">
+// Example usage in a component:
+import { setupAutoInjection } from '../src/utils/shadow-dom-css.js';
+
+// In connectedCallback():
+setupAutoInjection();
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>Dynamic Button Test</h2>
+        <p>Click the button below to add a new wa-button dynamically:</p>
+        
+        <button onclick="addDynamicButton()">Add Dynamic Button</button>
+        
+        <div id="dynamic-buttons" class="button-group">
+            <!-- Dynamic buttons will be added here -->
+        </div>
+    </div>
+    
+    <script>
+        function addDynamicButton() {
+            const container = document.getElementById('dynamic-buttons');
+            const button = document.createElement('wa-button');
+            button.textContent = 'Dynamic Button ' + (container.children.length + 1);
+            button.variant = 'primary';
+            container.appendChild(button);
+        }
+        
+        // Test the CSS injection manually
+        document.addEventListener('DOMContentLoaded', function() {
+            // The setupAutoInjection() should be called automatically by the header component
+            // But we can also test it manually here
+            setTimeout(() => {
+                console.log('Checking for wa-button elements...');
+                const buttons = document.querySelectorAll('wa-button');
+                console.log('Found', buttons.length, 'wa-button elements');
+                
+                buttons.forEach((button, index) => {
+                    if (button.shadowRoot) {
+                        const styles = button.shadowRoot.querySelectorAll('style');
+                        console.log(`Button ${index + 1} has ${styles.length} style elements in shadow DOM`);
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

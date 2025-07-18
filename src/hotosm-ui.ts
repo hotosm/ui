@@ -4,6 +4,13 @@ import HotTracking from './components/tracking/tracking.js';
 import HotConsent from './components/consent/consent.js';
 import HotButton from './components/button/button.js';
 
+// Export CSS injection utilities
+export { 
+    setupAutoInjection, 
+    injectHOTThemeIntoButtons, 
+    injectCSSIntoShadowDOM 
+} from './utils/shadow-dom-css.js';
+
 export {
     HotHeader as Header,
     HotLogo as Logo,
