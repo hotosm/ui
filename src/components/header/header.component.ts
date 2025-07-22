@@ -1,6 +1,7 @@
 import '@awesome.me/webawesome/dist/components/tab-group/tab-group.js';
 import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
+import '@awesome.me/webawesome/dist/components/drawer/drawer.js';
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
@@ -42,6 +43,10 @@ export class Header extends LitElement {
   /** Array of menu items to include as navigation tabs. */
   @property({ type: Array })
   accessor tabs: MenuItem[] = [];
+
+  /** Array of links to include in the drawer. */
+  @property({ type: Array })
+  accessor drawerLinks: Array<{ label: string; href: string }> = [];
 
   /** Size of toolbar vertically. */
   @property({ type: String })
@@ -95,9 +100,24 @@ export class Header extends LitElement {
   }
 
   selectTab(index: number) {
-    console.log(index);
-    this.tabs = [...this.tabs];
-    this.selectedTab = index;
+    console.log('Selecting tab:', index);
+    if (index !== this.selectedTab && index >= 0 && index < this.tabs.length) {
+      const previousTab = this.selectedTab;
+      this.selectedTab = index;
+      
+      // Dispatch a custom event for tab change
+      this.dispatchEvent(new CustomEvent('tab-change', {
+        detail: { 
+          selectedIndex: index, 
+          previousIndex: previousTab,
+          tab: this.tabs[index]
+        },
+        bubbles: true
+      }));
+      
+      // Trigger a re-render to update the active state
+      this.requestUpdate();
+    }
   }
 
   protected render() {
@@ -143,15 +163,19 @@ export class Header extends LitElement {
           class="header--nav"
         >
         ${this.tabs.length > 0 ? html`
-          <wa-tab-group class="header--tab-group">
+          <wa-tab-group 
+            class="header--tab-group"
+            @wa-tab-show=${(e: CustomEvent) => this._handleTabShow(e)}
+          >
             ${this.tabs.map((item, index) => {
               const isActive = this.selectedTab === index;
-              const tabClass = isActive ? "header--tab header--tab-active" : "header--tab";
               return html`
                 <wa-tab
-                  panel="${item.label}"
-                  class="${tabClass}"
+                  panel="${item.label}-${index}"
+                  class="header--tab"
                   slot="nav"
+                  ?active=${isActive}
+                  data-index="${index}"
                   @click=${(e: MouseEvent) => this._tabClick(e, item.clickEvent, index)}
                 >
                   ${item.label}
@@ -162,11 +186,7 @@ export class Header extends LitElement {
           ` : null}
         </nav>
 
-        ${/* Stacked navigation drawer for mobile */ ""}
-        ${/* NOTE this should probably be in a drawer instead */ ""}
-        <nav
-          class="header--nav-mobile"
-        ></nav>
+        
 
         <div id="right-section" class="header--right-section">
            ${this.showLogin
@@ -182,9 +202,19 @@ export class Header extends LitElement {
             : null}
           ${this.drawer
             ? html`
-                <wa-button>
-                  <wa-icon library="hot-icons" name="list" label="drawer-open" class="header--drawer">
-                  </wa-icon>
+                <wa-drawer label="Drawer" id="drawer-overview">
+                  <ul style="list-style: none; padding: 0; margin: 0;">
+                    ${this.drawerLinks.map(
+                      (link) => html`
+                        <li style="margin: 1.5rem 0;">
+                          <a href="${link.href}" style="color: inherit; text-decoration: none; font-size: 1.2rem;">${link.label}</a>
+                        </li>
+                      `
+                    )}
+                  </ul>
+                </wa-drawer>
+                <wa-button appearance="outlined" @click=${() => this._handleDrawerOpen()}>
+                    <wa-icon name="bars"></wa-icon>
                 </wa-button>
               `
             : null}
@@ -198,10 +228,8 @@ export class Header extends LitElement {
                 ?open=${this.loginModalOpen}
                 @wa-hide=${() => this._handleModalClose()}
               >
-                <wa-button @click=${() => this._handleModalClose()}>
-                  <wa-icon library="hot-icons" name="close" label="cross">
-                    Close
-                  </wa-icon>
+                <wa-button appearance="outlined" @click=${() => this._handleModalClose()}>
+                    <wa-icon  name="xmark"></wa-icon>
                 </wa-button>
 
                 <hanko-auth></hanko-auth>
@@ -235,9 +263,58 @@ export class Header extends LitElement {
     `;
   }
 
-  private _tabClick(_e: MouseEvent, clickAction: () => void, index: number) {
-    this.selectTab(index);
-    clickAction();
+  private async _tabClick(e: MouseEvent, clickAction: () => void, index: number) {
+    // Prevent default behavior to avoid potential conflicts
+    e.preventDefault();
+    e.stopPropagation();
+    
+    try {
+      // Update the selected tab state first
+      this.selectTab(index);
+      
+      // Use setTimeout to ensure DOM updates are complete before navigation
+      // This is more reliable than requestAnimationFrame for navigation
+      setTimeout(async () => {
+        try {
+          if (typeof clickAction === 'function') {
+            await clickAction();
+          }
+        } catch (navigationError) {
+          console.error('Error during navigation:', navigationError);
+          // Try synchronous fallback
+          if (typeof clickAction === 'function') {
+            clickAction();
+          }
+        }
+      }, 0);
+      
+    } catch (error) {
+      console.error('Error handling tab click:', error);
+      // Fallback: try the action synchronously
+      try {
+        if (typeof clickAction === 'function') {
+          clickAction();
+        }
+      } catch (fallbackError) {
+        console.error('Fallback navigation also failed:', fallbackError);
+      }
+    }
+  }
+
+  private _handleTabShow(e: CustomEvent) {
+    // Alternative handler for WebAwesome tab-show events
+    try {
+      const tab = e.target as HTMLElement;
+      const index = parseInt(tab.getAttribute('data-index') || '0', 10);
+      if (!isNaN(index) && index < this.tabs.length) {
+        const clickEvent = this.tabs[index].clickEvent;
+        if (typeof clickEvent === 'function') {
+          clickEvent();
+        }
+      }
+    } catch (error) {
+      console.error('Error handling tab show event:', error);
+    }
   }
 
   private _handleLogin() {
@@ -247,6 +324,11 @@ export class Header extends LitElement {
 
   private _handleModalClose() {
     this.loginModalOpen = false;
+  }
+
+  private _handleDrawerOpen() {
+    const drawer = this.renderRoot?.querySelector('#drawer-overview');
+    if (drawer) (drawer as any).open = true;
   }
 
 }

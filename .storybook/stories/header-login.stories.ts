@@ -65,6 +65,12 @@ export const WithConfigurableProviders: Story = {
         @login=${() => {
           console.log('Login event dispatched');
         }}
+        .drawerLinks=${[
+          { label: "Learn", href: "/learn" },
+          { label: "About", href: "/about" },
+          { label: "Support", href: "/support" },
+          { label: "Download Custom ODK Collect", href: "/download" }
+        ]}
       ></hot-header>
 
       <div style="padding: 20px;">
