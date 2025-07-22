@@ -17,7 +17,7 @@ declare global {
 function registerBundledIcons() {
   const tryRegister = () => {
     if (window.WebAwesome && window.WebAwesome.iconRegistry) {
-      window.WebAwesome.iconRegistry.addIcon('hot-icons', 'list', hamburgerIcon);
+    //   window.WebAwesome.iconRegistry.addIcon('hot-icons', 'list', hamburgerIcon);
     } else {
       setTimeout(tryRegister, 100);
     }
