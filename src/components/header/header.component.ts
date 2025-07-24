@@ -12,7 +12,7 @@ import { register as registerHanko } from '@teamhanko/hanko-elements';
 import { headerVariants, type sizes, styles } from './header.styles.js';
 import registerBundledIcons from "../icons.js"
 import osmLogoRaw from '../../assets/logo/osm-logo.svg?raw';
-import { setupAutoInjection } from '../../utils/shadow-dom-css.js';
+import { setupAutoInjection, injectHOTThemeIntoAllComponents } from '../../utils/shadow-dom-css.js';
 const osmLogoDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(osmLogoRaw)}`;
 
 registerBundledIcons();
@@ -96,6 +96,20 @@ export class Header extends LitElement {
       // sessionTokenLocation: 'cookie' // Specify where the session token should be stored. Either `cookie` or `sessionStorage`.
     }).catch((_error: Error) => {
       // handle error
+    });
+  }
+
+  protected firstUpdated() {
+    // Ensure CSS injection happens after the component is fully rendered
+    setTimeout(() => {
+      injectHOTThemeIntoAllComponents();
+    }, 100);
+  }
+
+  protected updated() {
+    // Re-inject CSS after any update to catch new WebAwesome elements
+    requestAnimationFrame(() => {
+      injectHOTThemeIntoAllComponents();
     });
   }
 
