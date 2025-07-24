@@ -24,7 +24,11 @@ export declare function injectCSSIntoShadowDOM(options: CSSInjectionOptions): vo
  */
 export declare function injectHOTThemeIntoButtons(): void;
 /**
- * Sets up a mutation observer to automatically inject CSS into new wa-button elements
- * This ensures that dynamically added buttons also get the HOT theme
+ * Injects CSS into all WebAwesome components that need HOT theme styling
+ */
+export declare function injectHOTThemeIntoAllComponents(): void;
+/**
+ * Sets up a mutation observer to automatically inject CSS into new WebAwesome elements
+ * This ensures that dynamically added components also get the HOT theme
  */
 export declare function setupAutoInjection(): void;

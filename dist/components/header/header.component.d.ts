@@ -38,6 +38,8 @@ export declare class Header extends LitElement {
     /** Default fallback icon for providers without custom icons. */
     accessor defaultLoginIcon: string;
     connectedCallback(): Promise<void>;
+    protected firstUpdated(): void;
+    protected updated(): void;
     selectTab(index: number): void;
     protected render(): import("lit-html").TemplateResult<1>;
     private _tabClick;

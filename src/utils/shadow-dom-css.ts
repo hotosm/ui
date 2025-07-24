@@ -49,6 +49,57 @@ export function injectCSSIntoShadowDOM(options: CSSInjectionOptions): void {
 export function injectHOTThemeIntoButtons(): void {
   const hotThemeCSS = `
     :host {
+      /* Map WebAwesome variables to HOT theme colors */
+      --wa-color-brand-50: #FEECEF;
+      --wa-color-brand-100: #FDD0D6;
+      --wa-color-brand-200: #EC9EA1;
+      --wa-color-brand-300: #E27A7D;
+      --wa-color-brand-400: #ED5C5E;
+      --wa-color-brand-500: #F34D47;
+      --wa-color-brand-600: #D73F3F;
+      --wa-color-brand-700: #C53639;
+      --wa-color-brand-800: #B83032;
+      --wa-color-brand-900: #B9302D;
+      --wa-color-brand-950: #A52A28;
+
+      --wa-color-primary-50: #FEECEF;
+      --wa-color-primary-100: #FDD0D6;
+      --wa-color-primary-200: #EC9EA1;
+      --wa-color-primary-300: #E27A7D;
+      --wa-color-primary-400: #ED5C5E;
+      --wa-color-primary-500: #F34D47;
+      --wa-color-primary-600: #D73F3F;
+      --wa-color-primary-700: #C53639;
+      --wa-color-primary-800: #B83032;
+      --wa-color-primary-900: #B9302D;
+      --wa-color-primary-950: #A52A28;
+
+      --wa-color-red-50: #FEECEF;
+      --wa-color-red-100: #FDD0D6;
+      --wa-color-red-200: #EC9EA1;
+      --wa-color-red-300: #E27A7D;
+      --wa-color-red-400: #ED5C5E;
+      --wa-color-red-500: #F34D47;
+      --wa-color-red-600: #D73F3F;
+      --wa-color-red-700: #C53639;
+      --wa-color-red-800: #B83032;
+      --wa-color-red-900: #B9302D;
+      --wa-color-red-950: #A52A28;
+
+      --wa-color-purple-50: #FFE6DE;
+      --wa-color-indigo-50: #E6E9EE;
+
+      /* WebAwesome shadow variables */
+      --wa-shadow-x-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --wa-shadow-small: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --wa-shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --wa-shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --wa-shadow-x-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+      --wa-shadow-s: var(--wa-shadow-small);
+      --wa-shadow-m: var(--wa-shadow-medium);
+      --wa-shadow-l: var(--wa-shadow-large);
+
       /* HOT Color Primitives */
       --hot-color-red-950: #A52A28;
       --hot-color-red-900: #B9302D;
@@ -242,7 +293,7 @@ export function injectHOTThemeIntoButtons(): void {
 
     /* Custom button styles for login button */
     :host(.login-button)::part(base) {
-      background-color: var(--hot-color-primary-500);
+      background-color: var(--wa-color-brand-500);
       color: white;
       font-weight: var(--hot-font-weight-semibold);
       padding: 0.6rem 1.2rem;
@@ -252,27 +303,41 @@ export function injectHOTThemeIntoButtons(): void {
     }
 
     :host(.login-button)::part(base):hover {
-      background-color: var(--hot-color-primary-600);
+      background-color: var(--wa-color-brand-600);
     }
 
     :host(.login-button)::part(base):active {
-      background-color: var(--hot-color-primary-700);
+      background-color: var(--wa-color-brand-700);
+    }
+
+    /* Brand variant button styling */
+    :host([variant="brand"])::part(base) {
+      background-color: var(--wa-color-brand-500);
+      color: white;
+    }
+
+    :host([variant="brand"])::part(base):hover {
+      background-color: var(--wa-color-brand-600);
+    }
+
+    :host([variant="brand"])::part(base):active {
+      background-color: var(--wa-color-brand-700);
     }
 
     /* Gradient button styles */
     :host(.gradient-button)::part(base) {
-      background: linear-gradient(217deg, var(--hot-color-primary-50), var(--hot-color-rose-50), var(--hot-color-red-50));
-      border: solid 1px var(--hot-color-rose-50);
+      background: linear-gradient(217deg, var(--wa-color-indigo-50), var(--wa-color-purple-50), var(--wa-color-red-50));
+      border: solid 1px var(--wa-color-purple-50);
       transition: transform 100ms, box-shadow 100ms;
     }
 
     :host(.gradient-button)::part(base):hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--wa-shadow-m, 0 4px 8px rgba(0, 0, 0, 0.1));
       transform: translateY(-3px);
     }
 
     :host(.gradient-button)::part(base):active {
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: inset var(--wa-shadow-s, inset 0 2px 4px rgba(0, 0, 0, 0.1));
       transform: translateY(0);
     }
 
@@ -291,12 +356,37 @@ export function injectHOTThemeIntoButtons(): void {
 }
 
 /**
- * Sets up a mutation observer to automatically inject CSS into new wa-button elements
- * This ensures that dynamically added buttons also get the HOT theme
+ * Injects CSS into all WebAwesome components that need HOT theme styling
+ */
+export function injectHOTThemeIntoAllComponents(): void {
+  // Inject into buttons
+  injectHOTThemeIntoButtons();
+  
+  const componentSelectors = ['wa-tab-group', 'wa-dialog', 'wa-drawer', 'wa-icon'];
+  
+  componentSelectors.forEach(selector => {
+    injectCSSIntoShadowDOM({
+      css: `
+        :host {
+          --wa-color-brand-500: #F34D47;
+          --wa-color-brand-600: #D73F3F;
+          --wa-color-brand-700: #C53639;
+        }
+      `,
+      selector,
+      all: true,
+      styleId: 'hot-theme-base-variables'
+    });
+  });
+}
+
+/**
+ * Sets up a mutation observer to automatically inject CSS into new WebAwesome elements
+ * This ensures that dynamically added components also get the HOT theme
  */
 export function setupAutoInjection(): void {
   // Initial injection for existing elements
-  injectHOTThemeIntoButtons();
+  injectHOTThemeIntoAllComponents();
 
   // Set up observer for dynamically added elements
   const observer = new MutationObserver((mutations) => {
@@ -305,15 +395,15 @@ export function setupAutoInjection(): void {
         if (node.nodeType === Node.ELEMENT_NODE) {
           const element = node as Element;
           
-          // Check if the added element is a wa-button
-          if (element.tagName.toLowerCase() === 'wa-button') {
-            injectHOTThemeIntoButtons();
+          // Check if the added element is a WebAwesome component
+          if (element.tagName.toLowerCase().startsWith('wa-')) {
+            setTimeout(() => injectHOTThemeIntoAllComponents(), 10);
           }
           
-          // Check for wa-button elements within the added element
-          const buttons = element.querySelectorAll('wa-button');
-          if (buttons.length > 0) {
-            injectHOTThemeIntoButtons();
+          // Check for WebAwesome components within the added element
+          const waComponents = element.querySelectorAll('[tag-name^="wa-"], wa-button, wa-tab-group, wa-dialog, wa-drawer, wa-icon');
+          if (waComponents.length > 0) {
+            setTimeout(() => injectHOTThemeIntoAllComponents(), 10);
           }
         }
       });
