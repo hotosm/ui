@@ -157,8 +157,7 @@ bundler, you can import all the components as a bundle, as use them like so:
     import '@hotosm/ui/dist/hotosm-ui';
   </script>
 
-  <hot-logo><hot-logo>
-  <hot-button variant="primary">Click me!</hot-button>
+  <hot-header title="Test App" size="small" showLogin="false"></hot-header>
   ```
 
 #### React
@@ -167,15 +166,14 @@ Import in the same way as the bundler example above, except events
 are bound to slightly differently:
 
   ```jsx
-  <hot-button
-    size='small'
-    variant='text'
-    disabled={currentIndex <= 0}
-    onClick={() => {
-      console.log('do stuff');
+  <hot-header
+    title="Test App"
+    size="small"
+    showLogin="false"
+    onLogin={() => {
+      console.log('handler');
     }}
-  >
-  </hot-button>
+  ></hot-header>
   ```
 
 ### How to contribute
