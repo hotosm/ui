@@ -178,20 +178,6 @@ are bound to slightly differently:
   </hot-button>
   ```
 
-### Development
-
-HOT UI is developed in TypeScript, using Lit and @lit/react.
-
-Primarily we want to have:
-
-- Low level components exported from the Shoelace web component
-  library, simply re-exported with our default styling / CSS overrides.
-- A few composite components (header, sidebar, etc):
-  - Consistent styling across most of our tools where it counts.
-  - Reduction in duplicated logic, such as user management, OAuth login, etc.
-- Improved developer experience, reduced development time for new tools, while
-  maintaining consistency in look and feel of applications.
-
 ### How to contribute
 
 - Clone the project `git clone git@github.com:hotosm/ui.git`
@@ -201,8 +187,8 @@ Primarily we want to have:
 
 For **styling**, check `/theme`:
 
-- `hot.css` has a HOT theme, used across HOT components
-- `hot-sl.css` has a Shoelace theme, re-defining styles variables
+- `hot.css` has a HOT theme, used across HOT components.
+- `hot-wa-override.css` has a WebAwesome theme, re-defining style variables.
 
 ### License
 

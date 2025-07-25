@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" class="wa-theme-default wa-palette-default wa-brand-blue wa-neutral-gray wa-success-cyan wa-warning-yellow wa-danger-orange">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSM OAuth Header</title>
+  <script type="module" src="../../dist/hotosm-ui.js"></script>
+  <link rel="stylesheet" href="../../dist/style.css">
+
+  <script type="module" src="https://early.webawesome.com/webawesome@3.0.0-beta.2/dist/webawesome.loader.js"></script>
+
+  <style>
+    body { margin: 0; font-family: sans-serif; background: #f8f9fa; }
+    main { padding: 2rem; }
+    .card-basic {
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <hot-header showLogin></hot-header>
+
+    <div>
+        single button
+        <wa-button>hello</wa-button>
+    </div>
+
+    <div>
+        nested button
+        <wa-card class="card-basic">
+            This is just a basic card. No media, no header, and no footer. Just your content.
+        </wa-card>
+    </div>
+  </main>
+</body>
+</html>
