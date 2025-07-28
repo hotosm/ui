@@ -7,7 +7,7 @@
   :where(:root),
   .wa-palette-hotosm {
     /* NOTE: for some reason WA decided to swap the ordering 05 --> 95 to be dark to light... */
-    /* Material design and Shoelace convention is the inverse, so we map to that */
+    /* Material design and WebAwesome convention is the inverse, so we map to that */
     --wa-color-red-95: var(--hot-color-red-50);
     --wa-color-red-90: var(--hot-color-red-100);
     --wa-color-red-80: var(--hot-color-red-200);

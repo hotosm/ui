@@ -1,28 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { hrefTo } from '@storybook/addon-links';
 import { html } from "lit";
 
 import "../../src/hotosm-ui";
-
-const defaultLogo = "";
-
-const meta: Meta = {
-  title: "Header",
-  component: "hot-header",
-};
-export default meta;
 
 const oneTab = [
   { label: 'ONE TAB ONLY', clickEvent: () => {} }
 ];
 const twoTab = [
   {
-    label: 'GO TO HEADER PAGE',
-    clickEvent: async () => {}
+    label: 'Projects',
+    clickEvent: async () => {alert('Going to projects page')}
   },
   {
-    label: 'GO TO TRACKING PAGE',
-    clickEvent: async () => {}
+    label: 'Organisations',
+    clickEvent: async () => {alert('Going to organisations page')}
   }
 ];
 const threeTab = Array.from({ length: 3 }, (_, index) => ({
@@ -38,51 +29,21 @@ const fiveTab = Array.from({ length: 5 }, (_, index) => ({
   clickEvent: () => {}
 }));
 
-export const Header: StoryObj = {
-  parameters: {
-    layout: 'fullscreen',
-  },
-  args: {
-    selectedTab: 0,
-    size: "small",
-    title: "",
-    logo: defaultLogo,
-    drawer: true,
-    tabs: twoTab,
-    borderBottom: false,
-    showLogin: false,
-  },
+const meta: Meta = {
+  title: "Header",
+  component: "hot-header",
   argTypes: {
+    title: { control: 'text' },
     size: {
-      options: ["large", "medium", "small"],
-      control: {
-        type: "select",
-      },
+      control: { type: 'select' },
+      options: ['small', 'medium', 'large']
     },
-    title: {
-      options: ["", "Tasking Manager", "FMTM", "Drone Tasking Manager"],
-      control: {
-        type: "select",
-      },
-    },
-    logo: {
-      options: [defaultLogo, "data:image/png;base64,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"],
-      control: {
-        type: "select",
-      },
-    },
-    drawer: {
-      options: [true, false],
-      control: {
-        type: "radio",
-      },
-    },
-    borderBottom: {
-      options: [true, false],
-      control: {
-        type: "radio",
-      },
-    },
+    borderBottom: { control: 'boolean' },
+    drawer: { control: 'boolean' },
+    showLogin: { control: 'boolean' },
+    loginModalOpen: { control: 'boolean' },
+    loginProviders: { control: 'object' },
+    defaultLoginIcon: { control: 'text' },
     selectedTab: {
       options: [0,1,2,3,4,5],
       control: {
@@ -90,35 +51,171 @@ export const Header: StoryObj = {
       },
     },
     tabs: {
-      options: [
-        { label: '1 Tab', value: oneTab },
-        { label: '2 Tabs', value: twoTab },
-        { label: '3 Tabs', value: threeTab },
-        { label: '4 Tabs', value: fourTab },
-        { label: '5 Tabs', value: fiveTab },
-      ],
+      options: ['1 Tab', '2 Tabs', '3 Tabs', '4 Tabs', '5 Tabs'],
+      mapping: {
+        '1 Tab': oneTab,
+        '2 Tabs': twoTab,
+        '3 Tabs': threeTab,
+        '4 Tabs': fourTab,
+        '5 Tabs': fiveTab,
+      },
       control: {
-        type: "select",
+        type: 'radio',
       },
     },
-    showLogin: {
-      control: { type: "boolean" },
+  },
+};
+
+export default meta;
+type Story = StoryObj;
+
+export const WithConfigurableProviders: Story = {
+  args: {
+    title: "HOTOSM Tools",
+    size: "small",
+    borderBottom: true,
+    drawer: true,
+    showLogin: true,
+    loginModalOpen: false,
+    loginProviders: {
+      "osm": {
+        "icon": "https://www.openstreetmap.org/assets/osm_logo-4b074077c29e100f40ee64f5177886e36b570d4cc3ab10c7b263003d09642e3f.svg",
+        "loginUrl": "https://www.openstreetmap.org/oauth2/authorize",
+        "redirectUrl": "https://ui.hotosm.com/auth/callback",
+        "name": "OpenStreetMap"
+      },
+      "google": {
+        "icon": "https://developers.google.com/identity/images/g-logo.png",
+        "loginUrl": "https://accounts.google.com/o/oauth2/auth",
+        "redirectUrl": "https://ui.hotosm.com/auth/callback", 
+        "name": "Google"
+      }
     },
+    defaultLoginIcon: "user"
   },
   render: (args) => {
     return html`
       <hot-header
-        title=${args.title}
-        logo=${args.logo}
-        ?borderBottom=${args.borderBottom}
-        size=${args.size}
-        ?drawer=${args.drawer}
-        .tabs=${args.tabs}
-        selectedTab=${args.selectedTab}
-        ?showLogin=${args.showLogin}
-      >
-      </hot-header>
+        title="${args.title}"
+        size="${args.size}"
+        ?borderBottom="${args.borderBottom}"
+        ?drawer="${args.drawer}"
+        ?showLogin="${args.showLogin}"
+        .loginProviders="${args.loginProviders}"
+        default-login-icon="${args.defaultLoginIcon}"
+        @login=${() => {
+          console.log('Login event dispatched');
+        }}
+        .drawerLinks=${[
+          { label: "Learn", href: "/learn" },
+          { label: "About", href: "/about" },
+          { label: "Support", href: "/support" },
+          { label: "Download Custom ODK Collect", href: "/download" }
+        ]}
+      ></hot-header>
+
+      <div style="padding: 20px;">
+        <h2>Header with Configurable Login Providers</h2>
+        <p>This example demonstrates the new configurable login providers functionality.</p>
+        <p>Click the "Login" button to see multiple login options configured via the <code>loginProviders</code> property.</p>
+        
+        <h3>Configuration:</h3>
+        <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>{
+  "loginProviders": {
+    "osm": {
+      "icon": "https://www.openstreetmap.org/assets/osm_logo.svg",
+      "loginUrl": "https://openstreetmap.org/auth/osm",
+      "redirectUrl": "https://app.example.com/auth/callback",
+      "name": "OpenStreetMap"
+    },
+    "google": {
+      "icon": "https://developers.google.com/identity/images/g-logo.png",
+      "loginUrl": "https://accounts.google.com/o/oauth2/auth",
+      "redirectUrl": "https://app.example.com/auth/callback", 
+      "name": "Google"
+    }
+  }
+}</code></pre>
+
+        <h3>Features:</h3>
+        <ul>
+          <li>Configurable multiple login providers</li>
+          <li>Custom icons for each provider</li>
+          <li>Fallback to default icon when none specified</li>
+          <li>Backend-handled OAuth (no clientId needed)</li>
+          <li>Support for client-side OAuth (with clientId)</li>
+          <li>Backward compatibility with OSM properties</li>
+        </ul>
+      </div>
+
+      <h1>Test on a separate page</h1>
+      Test on a separate page <a href="/osm-auth-test/index.html" target="_blank">here</a>
     `;
-  },
+  }
 };
 
+export const WithoutLogin: Story = {
+  args: {
+    title: "HOTOSM Tools",
+    size: "small",
+    borderBottom: true,
+    drawer: true,
+    showLogin: false,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        id="hot-header-component"
+        title="${args.title}"
+        size="${args.size}"
+        ?borderBottom="${args.borderBottom}"
+        ?drawer="${args.drawer}"
+        ?showLogin="${args.showLogin}"
+      ></hot-header>
+
+      <div style="padding: 20px;">
+        <h2>Header without Login</h2>
+        <p>This header component is displayed without login functionality.</p>
+        <p>Notice that the login button is not visible when <code>showLogin</code> is set to <code>false</code>.</p>
+        
+        <h3>Use Cases:</h3>
+        <ul>
+          <li>Public information pages</li>
+          <li>Landing pages</li>
+          <li>Documentation sites</li>
+          <li>Any context where authentication is not required</li>
+        </ul>
+      </div>
+    `;
+  }
+};
+
+export const WithNav: Story = {
+  args: {
+    title: "OpenAerialMap",
+    size: "small",
+    borderBottom: true,
+    drawer: true,
+    showLogin: false,
+    tabs: twoTab,
+    selectedTab: 0,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title="${args.title}"
+        size="${args.size}"
+        ?borderBottom="${args.borderBottom}"
+        ?drawer="${args.drawer}"
+        ?showLogin="${args.showLogin}"
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+      ></hot-header>
+
+      <div style="padding: 20px;">
+        <h2>Header with navigation tabs</h2>
+        <p>Navigation tabs link to different pages on the site.</p>
+      </div>
+    `;
+  }
+};

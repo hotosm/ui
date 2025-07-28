@@ -157,8 +157,7 @@ bundler, you can import all the components as a bundle, as use them like so:
     import '@hotosm/ui/dist/hotosm-ui';
   </script>
 
-  <hot-logo><hot-logo>
-  <hot-button variant="primary">Click me!</hot-button>
+  <hot-header title="Test App" size="small" showLogin="false"></hot-header>
   ```
 
 #### React
@@ -167,30 +166,15 @@ Import in the same way as the bundler example above, except events
 are bound to slightly differently:
 
   ```jsx
-  <hot-button
-    size='small'
-    variant='text'
-    disabled={currentIndex <= 0}
-    onClick={() => {
-      console.log('do stuff');
+  <hot-header
+    title="Test App"
+    size="small"
+    showLogin="false"
+    onLogin={() => {
+      console.log('handler');
     }}
-  >
-  </hot-button>
+  ></hot-header>
   ```
-
-### Development
-
-HOT UI is developed in TypeScript, using Lit and @lit/react.
-
-Primarily we want to have:
-
-- Low level components exported from the Shoelace web component
-  library, simply re-exported with our default styling / CSS overrides.
-- A few composite components (header, sidebar, etc):
-  - Consistent styling across most of our tools where it counts.
-  - Reduction in duplicated logic, such as user management, OAuth login, etc.
-- Improved developer experience, reduced development time for new tools, while
-  maintaining consistency in look and feel of applications.
 
 ### How to contribute
 
@@ -201,8 +185,8 @@ Primarily we want to have:
 
 For **styling**, check `/theme`:
 
-- `hot.css` has a HOT theme, used across HOT components
-- `hot-sl.css` has a Shoelace theme, re-defining styles variables
+- `hot.css` has a HOT theme, used across HOT components.
+- `hot-wa-override.css` has a WebAwesome theme, re-defining style variables.
 
 ### License
 

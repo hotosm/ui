@@ -34,7 +34,7 @@ export declare class MatomoTracking extends LitElement {
     private showErrorCallout;
     private showSuccessCallout;
     private showInfoCallout;
-    protected render(): import("lit-html").TemplateResult<1>;
+    protected render(): import("lit").TemplateResult<1>;
     connectedCallback(): void;
 }
 export default MatomoTracking;

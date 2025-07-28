@@ -8,14 +8,12 @@ export declare class Consent extends LitElement {
     name: string;
     /** The site id for consent. */
     accessor consentId: string;
-    /** Force display the banner. */
-    accessor force: boolean;
     accessor isOpen: boolean;
     accessor title: string;
     accessor message: string;
     accessor agreeLabel: string;
     accessor notAgreeLabel: string;
-    protected render(): import("lit-html").TemplateResult<1> | null;
+    protected render(): import("lit").TemplateResult<1> | null;
     private _setAgree;
     private _setDisagree;
     connectedCallback(): void;

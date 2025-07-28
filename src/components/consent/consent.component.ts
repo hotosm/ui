@@ -21,10 +21,6 @@ export class Consent extends LitElement {
   @property({ type: String, attribute: "consent-id" })
   accessor consentId: string = "";
 
-  /** Force display the banner. */
-  @property({ type: Boolean })
-  accessor force: boolean = false;
-
   @property({ type: Boolean })
   accessor isOpen: boolean = true;
 

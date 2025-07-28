@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/web-components";
+import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import { html } from "lit";
 
 import "../../src/hotosm-ui";
@@ -12,6 +12,7 @@ export default meta;
 export const Consent: StoryObj = {
   args: {
     consentId: "1",
+    isOpen: true,
   },
   argTypes: {
     consentId: {
@@ -63,6 +64,7 @@ export const Consent: StoryObj = {
         @disagree=${() => {
           parameters.showDisagreeToast()
         }}
+        isOpen=${args.isOpen}
       >
         We use cookies and similar technologies to recognize and analyze your
         visits, and measure traffic usage and activity. You can learn about how
