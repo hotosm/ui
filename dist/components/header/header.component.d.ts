@@ -41,7 +41,7 @@ export declare class Header extends LitElement {
     protected firstUpdated(): void;
     protected updated(): void;
     selectTab(index: number): void;
-    protected render(): import("lit").TemplateResult<1>;
+    protected render(): import("lit-html").TemplateResult<1>;
     private _tabClick;
     private _handleTabShow;
     private _handleLogin;
