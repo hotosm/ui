@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="wa-theme-default wa-palette-hotosm wa-brand-red wa-neutral-gray wa-success-cyan wa-warning-yellow wa-danger-orange">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOT UI - Shadow DOM Color Injection Demo</title>
+    
+    <!-- Import WebAwesome CSS -->
+    <link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css">
+    
+    <!-- Import HOT UI Styles -->
+    <link rel="stylesheet" href="../dist/themes/hot.css">
+    <link rel="stylesheet" href="../dist/themes/hot-wa-override.css">
+    <link rel="stylesheet" href="../dist/style.css">
+    
+    <style>
+        body {
+            font-family: var(--hot-font-sans);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--hot-color-neutral-50);
+        }
+        
+        .demo-section {
+            background: white;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-radius: var(--hot-border-radius-large);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .code-block {
+            background: var(--hot-color-neutral-100);
+            padding: 1rem;
+            border-radius: var(--hot-border-radius-medium);
+            font-family: var(--hot-font-mono);
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .color-preview {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--hot-border-radius-medium);
+            border: 2px solid var(--hot-color-neutral-200);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0.25rem;
+            font-size: 0.7rem;
+            color: white;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: var(--hot-color-primary-600);">🎨 HOT UI Shadow DOM Color Injection Demo</h1>
+    
+    <p>This demo shows how HOT color variables are automatically injected into WebAwesome component shadow DOM elements.</p>
+    
+    <div class="demo-section">
+        <h2>🔧 How It Works</h2>
+        <p>The HOT UI library automatically injects CSS variables into shadow DOM elements so they can access HOT colors:</p>
+        
+        <div class="code-block">
+// Automatic injection when components are added to DOM
+import { setupAutoInjection, injectHOTThemeIntoAllComponents } from '@hotosm/ui';
+
+// Set up auto-injection for new components
+setupAutoInjection();
+
+// Manual injection for existing components
+injectHOTThemeIntoAllComponents();
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>🎯 Brand Colors (Primary)</h2>
+        <p>These buttons use <code>--wa-color-brand-*</code> variables that map to <code>--hot-color-primary-*</code>:</p>
+        
+        <div class="color-preview">
+            <div class="color-swatch" style="background: var(--hot-color-primary-950);">950</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-900);">900</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-800);">800</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-700);">700</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-600);">600</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-500);">500</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-400);">400</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-300);">300</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-200);">200</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-100);">100</div>
+            <div class="color-swatch" style="background: var(--hot-color-primary-50); color: black;">50</div>
+        </div>
+        
+        <div class="button-grid">
+            <wa-button variant="primary">Primary Button</wa-button>
+            <wa-button variant="primary" size="large">Large Primary</wa-button>
+            <wa-button variant="outline">Outline Button</wa-button>
+            <wa-button variant="secondary">Secondary Button</wa-button>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>🚦 Semantic Colors</h2>
+        <p>Success, warning, and danger variants use mapped HOT colors:</p>
+        
+        <div class="button-grid">
+            <wa-button variant="success">Success Button</wa-button>
+            <wa-button variant="warning">Warning Button</wa-button>
+            <wa-button variant="danger">Danger Button</wa-button>
+            <wa-button variant="neutral">Neutral Button</wa-button>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>🎨 Custom HOT Styled Buttons</h2>
+        <p>Buttons with custom HOT-specific styling classes:</p>
+        
+        <div class="button-grid">
+            <wa-button class="gradient-button">HOT Gradient</wa-button>
+            <wa-button class="login-button">Login Style</wa-button>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>🔍 Inspecting Shadow DOM</h2>
+        <p>Open your browser's developer tools and inspect a button element. You'll see:</p>
+        
+        <div class="code-block">
+&lt;wa-button&gt;
+  #shadow-root (open)
+    &lt;style id="hot-theme-variables"&gt;
+      :host {
+        --wa-color-brand-95: var(--hot-color-primary-50);
+        --wa-color-brand-90: var(--hot-color-primary-100);
+        /* ... more HOT color mappings ... */
+      }
+    &lt;/style&gt;
+    &lt;button part="base"&gt;...&lt;/button&gt;
+&lt;/wa-button&gt;
+        </div>
+        
+        <p><strong>Try it:</strong> Right-click the button below and select "Inspect Element"</p>
+        <wa-button variant="primary" size="large">🔍 Inspect This Button</wa-button>
+    </div>
+    
+    <div class="demo-section">
+        <h2>📋 Available CSS Variables</h2>
+        <p>The following CSS variables are automatically available inside wa-button shadow DOM:</p>
+        
+        <div class="code-block">
+/* Brand Colors (mapped to HOT primary) */
+--wa-color-brand-95 through --wa-color-brand-05
+--wa-color-brand (default: --wa-color-brand-50)
+
+/* Neutral Colors (mapped to HOT gray) */
+--wa-color-neutral-95 through --wa-color-neutral-05
+--wa-color-neutral (default: --wa-color-neutral-40)
+
+/* Semantic Colors */
+--wa-color-success-95 through --wa-color-success-05
+--wa-color-warning-95 through --wa-color-warning-05
+--wa-color-danger-95 through --wa-color-danger-05
+
+/* Direct HOT Color Variables */
+--hot-color-primary-950 through --hot-color-primary-50
+--hot-color-success-950 through --hot-color-success-50
+--hot-color-warning-950 through --hot-color-warning-50
+--hot-color-danger-950 through --hot-color-danger-50
+--hot-color-neutral-950 through --hot-color-neutral-50
+
+/* HOT Typography */
+--hot-font-sans, --hot-font-sans-variant, --hot-font-mono
+--hot-font-size-*, --hot-font-weight-*
+--hot-spacing-*, --hot-border-radius-*
+        </div>
+    </div>
+
+    <!-- Import HOT UI JavaScript after DOM content -->
+    <script type="module">
+        import { setupAutoInjection, injectHOTThemeIntoAllComponents } from '../dist/hotosm-ui.js';
+        
+        // Set up automatic injection for new components
+        setupAutoInjection();
+        
+        // Apply to existing components
+        setTimeout(() => {
+            injectHOTThemeIntoAllComponents();
+        }, 100);
+        
+        // Add some interactive demos
+        document.addEventListener('DOMContentLoaded', () => {
+            // Demonstrate dynamic button creation
+            const addButton = document.createElement('wa-button');
+            addButton.textContent = '✨ Dynamically Added Button';
+            addButton.setAttribute('variant', 'primary');
+            
+            const lastSection = document.querySelector('.demo-section:last-child');
+            lastSection.appendChild(document.createElement('hr'));
+            lastSection.appendChild(document.createElement('p')).innerHTML = '<strong>Dynamic Example:</strong> This button was added via JavaScript and automatically receives HOT colors:';
+            lastSection.appendChild(addButton);
+        });
+    </script>
+</body>
+</html> 

@@ -28,17 +28,30 @@ export function injectCSSIntoShadowDOM(options: CSSInjectionOptions): void {
     : [document.querySelector(selector)].filter(Boolean);
 
   elements.forEach((element) => {
-    if (!element || !element.shadowRoot) return;
+    if (!element) return;
 
-    // Check if we've already injected this style
-    const existingStyle = element.shadowRoot.getElementById(styleId);
-    if (existingStyle) return;
+    // Wait for shadow root to be available
+    const injectWhenReady = () => {
+      if (!element.shadowRoot) {
+        // Try again after a short delay
+        setTimeout(injectWhenReady, 10);
+        return;
+      }
 
-    // Create and inject the style element
-    const styleElement = document.createElement('style');
-    styleElement.id = styleId;
-    styleElement.textContent = css;
-    element.shadowRoot.appendChild(styleElement);
+      // Check if we've already injected this style
+      const existingStyle = element.shadowRoot.getElementById(styleId);
+      if (existingStyle) return;
+
+      // Create and inject the style element
+      const styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      styleElement.textContent = css;
+      element.shadowRoot.appendChild(styleElement);
+      
+      console.log(`✅ Injected HOT theme into ${selector}`, element);
+    };
+
+    injectWhenReady();
   });
 }
 
@@ -49,45 +62,98 @@ export function injectCSSIntoShadowDOM(options: CSSInjectionOptions): void {
 export function injectHOTThemeIntoButtons(): void {
   const hotThemeCSS = `
     :host {
-      /* Map WebAwesome variables to HOT theme colors */
-      --wa-color-brand-50: #FEECEF;
-      --wa-color-brand-100: #FDD0D6;
-      --wa-color-brand-200: #EC9EA1;
-      --wa-color-brand-300: #E27A7D;
-      --wa-color-brand-400: #ED5C5E;
-      --wa-color-brand-500: #F34D47;
-      --wa-color-brand-600: #D73F3F;
-      --wa-color-brand-700: #C53639;
-      --wa-color-brand-800: #B83032;
-      --wa-color-brand-900: #B9302D;
-      --wa-color-brand-950: #A52A28;
+      /* Brand colors - Map to HOT primary colors (red) */
+      --wa-color-brand-95: var(--hot-color-primary-50);
+      --wa-color-brand-90: var(--hot-color-primary-100);
+      --wa-color-brand-80: var(--hot-color-primary-200);
+      --wa-color-brand-70: var(--hot-color-primary-300);
+      --wa-color-brand-60: var(--hot-color-primary-400);
+      --wa-color-brand-50: var(--hot-color-primary-500);
+      --wa-color-brand-40: var(--hot-color-primary-600);
+      --wa-color-brand-30: var(--hot-color-primary-700);
+      --wa-color-brand-20: var(--hot-color-primary-800);
+      --wa-color-brand-10: var(--hot-color-primary-900);
+      --wa-color-brand-05: var(--hot-color-primary-950);
+      --wa-color-brand: var(--wa-color-brand-50);
+      --wa-color-brand-key: 50;
 
-      --wa-color-primary-50: #FEECEF;
-      --wa-color-primary-100: #FDD0D6;
-      --wa-color-primary-200: #EC9EA1;
-      --wa-color-primary-300: #E27A7D;
-      --wa-color-primary-400: #ED5C5E;
-      --wa-color-primary-500: #F34D47;
-      --wa-color-primary-600: #D73F3F;
-      --wa-color-primary-700: #C53639;
-      --wa-color-primary-800: #B83032;
-      --wa-color-primary-900: #B9302D;
-      --wa-color-primary-950: #A52A28;
+      /* Neutral colors - Map to HOT neutral colors (gray) */
+      --wa-color-neutral-95: var(--hot-color-neutral-50);
+      --wa-color-neutral-90: var(--hot-color-neutral-100);
+      --wa-color-neutral-80: var(--hot-color-neutral-200);
+      --wa-color-neutral-70: var(--hot-color-neutral-300);
+      --wa-color-neutral-60: var(--hot-color-neutral-400);
+      --wa-color-neutral-50: var(--hot-color-neutral-500);
+      --wa-color-neutral-40: var(--hot-color-neutral-600);
+      --wa-color-neutral-30: var(--hot-color-neutral-700);
+      --wa-color-neutral-20: var(--hot-color-neutral-800);
+      --wa-color-neutral-10: var(--hot-color-neutral-900);
+      --wa-color-neutral-05: var(--hot-color-neutral-950);
+      --wa-color-neutral: var(--wa-color-neutral-40);
+      --wa-color-neutral-key: 40;
 
-      --wa-color-red-50: #FEECEF;
-      --wa-color-red-100: #FDD0D6;
-      --wa-color-red-200: #EC9EA1;
-      --wa-color-red-300: #E27A7D;
-      --wa-color-red-400: #ED5C5E;
-      --wa-color-red-500: #F34D47;
-      --wa-color-red-600: #D73F3F;
-      --wa-color-red-700: #C53639;
-      --wa-color-red-800: #B83032;
-      --wa-color-red-900: #B9302D;
-      --wa-color-red-950: #A52A28;
+      /* Success colors - Map to HOT success colors */
+      --wa-color-success-95: var(--hot-color-success-50);
+      --wa-color-success-90: var(--hot-color-success-100);
+      --wa-color-success-80: var(--hot-color-success-200);
+      --wa-color-success-70: var(--hot-color-success-300);
+      --wa-color-success-60: var(--hot-color-success-400);
+      --wa-color-success-50: var(--hot-color-success-500);
+      --wa-color-success-40: var(--hot-color-success-600);
+      --wa-color-success-30: var(--hot-color-success-700);
+      --wa-color-success-20: var(--hot-color-success-800);
+      --wa-color-success-10: var(--hot-color-success-900);
+      --wa-color-success-05: var(--hot-color-success-950);
+      --wa-color-success: var(--wa-color-success-60);
+      --wa-color-success-key: 60;
 
-      --wa-color-purple-50: #FFE6DE;
-      --wa-color-indigo-50: #E6E9EE;
+      /* Warning colors - Map to HOT warning colors */
+      --wa-color-warning-95: var(--hot-color-warning-50);
+      --wa-color-warning-90: var(--hot-color-warning-100);
+      --wa-color-warning-80: var(--hot-color-warning-200);
+      --wa-color-warning-70: var(--hot-color-warning-300);
+      --wa-color-warning-60: var(--hot-color-warning-400);
+      --wa-color-warning-50: var(--hot-color-warning-500);
+      --wa-color-warning-40: var(--hot-color-warning-600);
+      --wa-color-warning-30: var(--hot-color-warning-700);
+      --wa-color-warning-20: var(--hot-color-warning-800);
+      --wa-color-warning-10: var(--hot-color-warning-900);
+      --wa-color-warning-05: var(--hot-color-warning-950);
+      --wa-color-warning: var(--wa-color-warning-80);
+      --wa-color-warning-key: 80;
+
+      /* Danger colors - Map to HOT danger colors */
+      --wa-color-danger-95: var(--hot-color-danger-50);
+      --wa-color-danger-90: var(--hot-color-danger-100);
+      --wa-color-danger-80: var(--hot-color-danger-200);
+      --wa-color-danger-70: var(--hot-color-danger-300);
+      --wa-color-danger-60: var(--hot-color-danger-400);
+      --wa-color-danger-50: var(--hot-color-danger-500);
+      --wa-color-danger-40: var(--hot-color-danger-600);
+      --wa-color-danger-30: var(--hot-color-danger-700);
+      --wa-color-danger-20: var(--hot-color-danger-800);
+      --wa-color-danger-10: var(--hot-color-danger-900);
+      --wa-color-danger-05: var(--hot-color-danger-950);
+      --wa-color-danger: var(--wa-color-danger-50);
+      --wa-color-danger-key: 50;
+
+      /* Direct color mappings for compatibility */
+      --wa-color-red-95: var(--hot-color-red-50);
+      --wa-color-red-90: var(--hot-color-red-100);
+      --wa-color-red-80: var(--hot-color-red-200);
+      --wa-color-red-70: var(--hot-color-red-300);
+      --wa-color-red-60: var(--hot-color-red-400);
+      --wa-color-red-50: var(--hot-color-red-500);
+      --wa-color-red-40: var(--hot-color-red-600);
+      --wa-color-red-30: var(--hot-color-red-700);
+      --wa-color-red-20: var(--hot-color-red-800);
+      --wa-color-red-10: var(--hot-color-red-900);
+      --wa-color-red-05: var(--hot-color-red-950);
+      --wa-color-red: var(--wa-color-red-50);
+      --wa-color-red-key: 50;
+
+      --wa-color-purple-50: var(--hot-color-rose-50);
+      --wa-color-indigo-50: var(--hot-color-blue-50);
 
       /* WebAwesome shadow variables */
       --wa-shadow-x-small: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -359,23 +425,79 @@ export function injectHOTThemeIntoButtons(): void {
  * Injects CSS into all WebAwesome components that need HOT theme styling
  */
 export function injectHOTThemeIntoAllComponents(): void {
-  // Inject into buttons
+  // Inject into buttons with full color palette
   injectHOTThemeIntoButtons();
   
-  const componentSelectors = ['wa-tab-group', 'wa-dialog', 'wa-drawer', 'wa-icon'];
+  // Inject essential colors into other WebAwesome components
+  const componentSelectors = [
+    'wa-tab-group', 'wa-dialog', 'wa-drawer', 'wa-icon', 
+    'wa-callout', 'wa-card', 'wa-input', 'wa-select', 
+    'wa-checkbox', 'wa-radio', 'wa-switch', 'wa-slider'
+  ];
+  
+  const essentialHOTColors = `
+    :host {
+      /* Brand colors - Primary semantic colors */
+      --wa-color-brand-95: var(--hot-color-primary-50);
+      --wa-color-brand-90: var(--hot-color-primary-100);
+      --wa-color-brand-80: var(--hot-color-primary-200);
+      --wa-color-brand-70: var(--hot-color-primary-300);
+      --wa-color-brand-60: var(--hot-color-primary-400);
+      --wa-color-brand-50: var(--hot-color-primary-500);
+      --wa-color-brand-40: var(--hot-color-primary-600);
+      --wa-color-brand-30: var(--hot-color-primary-700);
+      --wa-color-brand-20: var(--hot-color-primary-800);
+      --wa-color-brand-10: var(--hot-color-primary-900);
+      --wa-color-brand-05: var(--hot-color-primary-950);
+      --wa-color-brand: var(--wa-color-brand-50);
+
+      /* Neutral colors - For text, borders, backgrounds */
+      --wa-color-neutral-95: var(--hot-color-neutral-50);
+      --wa-color-neutral-90: var(--hot-color-neutral-100);
+      --wa-color-neutral-80: var(--hot-color-neutral-200);
+      --wa-color-neutral-70: var(--hot-color-neutral-300);
+      --wa-color-neutral-60: var(--hot-color-neutral-400);
+      --wa-color-neutral-50: var(--hot-color-neutral-500);
+      --wa-color-neutral-40: var(--hot-color-neutral-600);
+      --wa-color-neutral-30: var(--hot-color-neutral-700);
+      --wa-color-neutral-20: var(--hot-color-neutral-800);
+      --wa-color-neutral-10: var(--hot-color-neutral-900);
+      --wa-color-neutral-05: var(--hot-color-neutral-950);
+      --wa-color-neutral: var(--wa-color-neutral-40);
+
+      /* Success colors */
+      --wa-color-success-95: var(--hot-color-success-50);
+      --wa-color-success-90: var(--hot-color-success-100);
+      --wa-color-success-50: var(--hot-color-success-500);
+      --wa-color-success-40: var(--hot-color-success-600);
+      --wa-color-success: var(--wa-color-success-60);
+
+      /* Warning colors */
+      --wa-color-warning-95: var(--hot-color-warning-50);
+      --wa-color-warning-90: var(--hot-color-warning-100);
+      --wa-color-warning-50: var(--hot-color-warning-500);
+      --wa-color-warning-40: var(--hot-color-warning-600);
+      --wa-color-warning: var(--wa-color-warning-80);
+
+      /* Danger colors */
+      --wa-color-danger-95: var(--hot-color-danger-50);
+      --wa-color-danger-90: var(--hot-color-danger-100);
+      --wa-color-danger-50: var(--hot-color-danger-500);
+      --wa-color-danger-40: var(--hot-color-danger-600);
+      --wa-color-danger: var(--wa-color-danger-50);
+
+      /* HOT Typography for components */
+      --wa-font-family-body: var(--hot-font-sans);
+      --wa-font-family-heading: var(--hot-font-sans-variant);
+    }
+  `;
   
   componentSelectors.forEach(selector => {
     injectCSSIntoShadowDOM({
-      css: `
-        :host {
-          --wa-color-brand-500: #F34D47;
-          --wa-color-brand-600: #D73F3F;
-          --wa-color-brand-700: #C53639;
-        }
-      `,
+      css: essentialHOTColors,
       selector,
       all: true,
-      styleId: 'hot-theme-base-variables'
+      styleId: 'hot-theme-essential-variables'
     });
   });
 }

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="wa-theme-default wa-palette-hotosm wa-brand-red wa-neutral-gray">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Shadow DOM Test</title>
+    
+    <!-- WebAwesome CSS -->
+    <link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css">
+    
+    <!-- HOT Styles -->
+    <link rel="stylesheet" href="../dist/style.css">
+    
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 2rem; 
+            background: #f5f5f5;
+        }
+        .test { 
+            margin: 1rem 0; 
+            padding: 1rem; 
+            background: white; 
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Simple Shadow DOM Test</h1>
+    
+    <div class="test">
+        <h3>Original WebAwesome Button</h3>
+        <wa-button id="test1" variant="primary">Primary Button</wa-button>
+        <wa-button id="test2" variant="success">Success Button</wa-button>
+    </div>
+    
+    <div class="test">
+        <h3>Debug Info</h3>
+        <div id="status">Loading...</div>
+        <button onclick="checkButtons()">Check Buttons</button>
+    </div>
+
+    <!-- Import WebAwesome components -->
+    <script type="module" src="https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/components/button/button.js"></script>
+    
+    <script type="module">
+        // Import our injection functions
+        import { injectCSSIntoShadowDOM } from '../dist/hotosm-ui.js';
+        
+        let statusDiv = document.getElementById('status');
+        
+        function updateStatus(message) {
+            statusDiv.innerHTML += '<br>' + new Date().toLocaleTimeString() + ': ' + message;
+            console.log(message);
+        }
+        
+        window.checkButtons = function() {
+            statusDiv.innerHTML = 'Checking buttons...';
+            
+            const buttons = document.querySelectorAll('wa-button');
+            updateStatus(`Found ${buttons.length} buttons`);
+            
+            buttons.forEach((btn, i) => {
+                const id = btn.id || `btn-${i}`;
+                updateStatus(`${id}: shadowRoot = ${btn.shadowRoot ? 'YES' : 'NO'}`);
+                
+                if (btn.shadowRoot) {
+                    const styles = btn.shadowRoot.querySelectorAll('style');
+                    updateStatus(`  └─ ${styles.length} style tags found`);
+                    
+                    styles.forEach((style, j) => {
+                        if (style.id) {
+                            updateStatus(`     ${j}: ID="${style.id}"`);
+                        }
+                    });
+                }
+            });
+        };
+        
+        // Test injection after components load
+        function testInjection() {
+            updateStatus('🚀 Starting injection test...');
+            
+            // Simple test injection
+            injectCSSIntoShadowDOM({
+                css: `
+                    :host {
+                        --wa-color-brand-50: #FF0000;
+                        --test-injected: success;
+                    }
+                    ::part(base) {
+                        border: 2px solid lime !important;
+                    }
+                `,
+                selector: 'wa-button',
+                styleId: 'simple-test-injection'
+            });
+            
+            updateStatus('✅ Injection attempted');
+            
+            setTimeout(() => {
+                checkButtons();
+            }, 100);
+        }
+        
+        // Wait for components to be ready
+        updateStatus('⏳ Waiting for WebAwesome to load...');
+        
+        // Try multiple approaches to detect when components are ready
+        setTimeout(() => {
+            updateStatus('🔄 Checking if buttons are ready...');
+            
+            const button = document.querySelector('wa-button');
+            if (button && button.shadowRoot) {
+                updateStatus('✅ Buttons have shadow DOM - starting test');
+                testInjection();
+            } else {
+                updateStatus('⏳ Buttons not ready, waiting longer...');
+                
+                setTimeout(() => {
+                    testInjection();
+                }, 1000);
+            }
+        }, 500);
+        
+        // Also test when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStatus('📄 DOM Content Loaded');
+        });
+        
+        window.addEventListener('load', () => {
+            updateStatus('🏁 Window Load Complete');
+            setTimeout(testInjection, 100);
+        });
+        
+        // Custom element ready detection
+        if (window.customElements) {
+            window.customElements.whenDefined('wa-button').then(() => {
+                updateStatus('🎯 wa-button defined');
+                setTimeout(testInjection, 100);
+            });
+        }
+    </script>
+</body>
+</html> 

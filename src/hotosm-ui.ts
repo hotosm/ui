@@ -7,6 +7,7 @@ import HotConsent from './components/consent/consent.js';
 export { 
     setupAutoInjection, 
     injectHOTThemeIntoButtons, 
+    injectHOTThemeIntoAllComponents,
     injectCSSIntoShadowDOM 
 } from './utils/shadow-dom-css.js';
 
