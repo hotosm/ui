@@ -8,6 +8,7 @@ import HotButton from './components/button/button.js';
 export { 
     setupAutoInjection, 
     injectHOTThemeIntoButtons, 
+    injectHOTThemeIntoAllComponents,
     injectCSSIntoShadowDOM 
 } from './utils/shadow-dom-css.js';
 

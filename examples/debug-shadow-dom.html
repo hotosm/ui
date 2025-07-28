@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="wa-theme-default wa-palette-hotosm wa-brand-red wa-neutral-gray wa-success-cyan wa-warning-yellow wa-danger-orange">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Shadow DOM Injection</title>
+    
+    <!-- Import WebAwesome CSS -->
+    <link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css">
+    
+    <!-- Import HOT UI Styles -->
+    <link rel="stylesheet" href="../dist/themes/hot.css">
+    <link rel="stylesheet" href="../dist/themes/hot-wa-override.css">
+    <link rel="stylesheet" href="../dist/style.css">
+    
+    <style>
+        body {
+            font-family: var(--hot-font-sans);
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .debug-section {
+            background: var(--hot-color-neutral-50);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: var(--hot-border-radius-medium);
+            border: 2px solid var(--hot-color-neutral-200);
+        }
+        
+        .test-button {
+            margin: 0.5rem;
+        }
+        
+        .status {
+            font-family: var(--hot-font-mono);
+            background: var(--hot-color-neutral-100);
+            padding: 0.5rem;
+            border-radius: var(--hot-border-radius-small);
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+        
+        .success { background: var(--hot-color-success-50); color: var(--hot-color-success-800); }
+        .error { background: var(--hot-color-danger-50); color: var(--hot-color-danger-800); }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Shadow DOM Injection</h1>
+    
+    <div class="debug-section">
+        <h3>Test Buttons</h3>
+        <wa-button id="test-button-1" variant="primary" class="test-button">Test Button 1</wa-button>
+        <wa-button id="test-button-2" variant="success" class="test-button">Test Button 2</wa-button>
+        <wa-button id="test-button-3" variant="danger" class="test-button">Test Button 3</wa-button>
+    </div>
+    
+    <div class="debug-section">
+        <h3>Debug Info</h3>
+        <div id="debug-output"></div>
+        <button onclick="debugShadowDOM()">🔍 Check Shadow DOM</button>
+        <button onclick="forceInject()">💉 Force Inject</button>
+        <button onclick="listAllButtons()">📋 List All Buttons</button>
+    </div>
+    
+    <div class="debug-section">
+        <h3>Manual Injection Test</h3>
+        <button onclick="addNewButton()">➕ Add New Button</button>
+        <div id="new-buttons"></div>
+    </div>
+
+    <script type="module">
+        import { setupAutoInjection, injectHOTThemeIntoAllComponents, injectCSSIntoShadowDOM } from '../dist/hotosm-ui.js';
+        
+        let debugOutput = document.getElementById('debug-output');
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = new Date().toLocaleTimeString() + ': ' + message;
+            debugOutput.appendChild(div);
+            console.log(message);
+        }
+        
+        // Make functions global for onclick handlers
+        window.debugShadowDOM = function() {
+            debugOutput.innerHTML = '';
+            
+            const buttons = document.querySelectorAll('wa-button');
+            log(`Found ${buttons.length} wa-button elements`);
+            
+            buttons.forEach((button, index) => {
+                const id = button.id || `button-${index}`;
+                log(`Button ${id}: shadowRoot = ${button.shadowRoot ? 'EXISTS' : 'NULL'}`);
+                
+                if (button.shadowRoot) {
+                    const hotStyle = button.shadowRoot.getElementById('hot-theme-variables');
+                    const essentialStyle = button.shadowRoot.getElementById('hot-theme-essential-variables');
+                    
+                    log(`  - hot-theme-variables: ${hotStyle ? 'EXISTS' : 'MISSING'}`, hotStyle ? 'success' : 'error');
+                    log(`  - hot-theme-essential-variables: ${essentialStyle ? 'EXISTS' : 'MISSING'}`, essentialStyle ? 'success' : 'error');
+                    
+                    if (hotStyle) {
+                        const cssText = hotStyle.textContent;
+                        const brandColorMatch = cssText.includes('--wa-color-brand-50');
+                        log(`  - Contains brand colors: ${brandColorMatch}`, brandColorMatch ? 'success' : 'error');
+                    }
+                } else {
+                    log(`  - No shadow root available yet`, 'error');
+                }
+            });
+        };
+        
+        window.forceInject = function() {
+            log('🚀 Force injecting...');
+            injectHOTThemeIntoAllComponents();
+            
+            setTimeout(() => {
+                log('✅ Force injection complete');
+                debugShadowDOM();
+            }, 100);
+        };
+        
+        window.listAllButtons = function() {
+            debugOutput.innerHTML = '';
+            
+            const allElements = document.querySelectorAll('*');
+            let waElements = [];
+            
+            allElements.forEach(el => {
+                if (el.tagName.toLowerCase().startsWith('wa-')) {
+                    waElements.push(el);
+                }
+            });
+            
+            log(`Found ${waElements.length} WebAwesome elements:`);
+            waElements.forEach(el => {
+                log(`  - ${el.tagName.toLowerCase()}: shadowRoot = ${el.shadowRoot ? 'YES' : 'NO'}`);
+            });
+        };
+        
+        window.addNewButton = function() {
+            const container = document.getElementById('new-buttons');
+            const newButton = document.createElement('wa-button');
+            newButton.textContent = `Dynamic Button ${container.children.length + 1}`;
+            newButton.setAttribute('variant', 'primary');
+            newButton.className = 'test-button';
+            
+            container.appendChild(newButton);
+            log(`Added new button: ${newButton.textContent}`);
+            
+            // Auto-inject after a delay
+            setTimeout(() => {
+                log('Auto-injecting into new button...');
+                injectHOTThemeIntoAllComponents();
+            }, 50);
+        };
+        
+        // Initial setup
+        log('🚀 Starting debug session...');
+        
+        // Wait for WebAwesome to load
+        setTimeout(() => {
+            log('⏱️  Setting up auto injection...');
+            setupAutoInjection();
+            
+            setTimeout(() => {
+                log('🎨 Initial injection...');
+                injectHOTThemeIntoAllComponents();
+                
+                setTimeout(() => {
+                    log('✅ Ready for testing!');
+                    debugShadowDOM();
+                }, 200);
+            }, 100);
+        }, 500);
+        
+        // Test direct injection
+        window.testDirectInjection = function() {
+            log('🧪 Testing direct injection...');
+            
+            injectCSSIntoShadowDOM({
+                css: `
+                    :host {
+                        --test-color: red;
+                        --wa-color-brand-50: #FF0000 !important;
+                    }
+                    ::part(base) {
+                        border: 2px solid red !important;
+                    }
+                `,
+                selector: 'wa-button',
+                styleId: 'debug-test-injection'
+            });
+            
+            setTimeout(debugShadowDOM, 100);
+        };
+    </script>
+    
+    <div class="debug-section">
+        <h3>Advanced Tests</h3>
+        <button onclick="testDirectInjection()">🧪 Test Direct Injection</button>
+    </div>
+</body>
+</html> 
