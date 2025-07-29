@@ -1,7 +1,7 @@
 
 /* HOT colour palette for WebAwesome */
 
-@import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/color/palettes/base.css');
+@import url('https://early.webawesome.com/webawesome@3.0.0-beta.3/dist/styles/color/palettes/base.css');
 
 @layer wa-color-palette {
   :where(:root),
