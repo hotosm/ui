@@ -376,18 +376,123 @@ export function injectHOTThemeIntoButtons(): void {
       background-color: var(--wa-color-brand-700);
     }
 
-    /* Brand variant button styling */
-    :host([variant="brand"])::part(base) {
-      background-color: var(--wa-color-brand-500);
+    /* Enhanced primary button styling with CSS parts */
+    :host([variant="primary"])::part(base) {
+      background: linear-gradient(135deg, var(--hot-color-red-500), var(--hot-color-red-600));
+      border: 1px solid var(--hot-color-red-600);
       color: white;
+      box-shadow: 0 2px 4px rgba(211, 63, 63, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    :host([variant="primary"])::part(base):hover {
+      background: linear-gradient(135deg, var(--hot-color-red-600), var(--hot-color-red-700));
+      border-color: var(--hot-color-red-700);
+      box-shadow: 0 4px 8px rgba(211, 63, 63, 0.4);
+      transform: translateY(-1px);
+    }
+
+    :host([variant="primary"])::part(base):active {
+      background: linear-gradient(135deg, var(--hot-color-red-700), var(--hot-color-red-800));
+      border-color: var(--hot-color-red-800);
+      box-shadow: 0 1px 3px rgba(211, 63, 63, 0.3);
+      transform: translateY(0);
+    }
+
+    :host([variant="primary"])::part(base):focus-visible {
+      outline: 2px solid var(--hot-color-red-400);
+      outline-offset: 2px;
+    }
+
+    /* Brand variant button styling (alternative to primary) */
+    :host([variant="brand"])::part(base) {
+      background: linear-gradient(135deg, var(--hot-color-red-500), var(--hot-color-red-600));
+      border: 1px solid var(--hot-color-red-600);
+      color: white;
+      box-shadow: 0 2px 4px rgba(211, 63, 63, 0.3);
+      transition: all 0.2s ease;
     }
 
     :host([variant="brand"])::part(base):hover {
-      background-color: var(--wa-color-brand-600);
+      background: linear-gradient(135deg, var(--hot-color-red-600), var(--hot-color-red-700));
+      border-color: var(--hot-color-red-700);
+      box-shadow: 0 4px 8px rgba(211, 63, 63, 0.4);
+      transform: translateY(-1px);
     }
 
     :host([variant="brand"])::part(base):active {
-      background-color: var(--wa-color-brand-700);
+      background: linear-gradient(135deg, var(--hot-color-red-700), var(--hot-color-red-800));
+      border-color: var(--hot-color-red-800);
+      box-shadow: 0 1px 3px rgba(211, 63, 63, 0.3);
+      transform: translateY(0);
+    }
+
+    /* Outline variant with hot-red-color */
+    :host([variant="outline"])::part(base) {
+      background: transparent;
+      border: 2px solid var(--hot-color-red-500);
+      color: var(--hot-color-red-500);
+      transition: all 0.2s ease;
+    }
+
+    :host([variant="outline"])::part(base):hover {
+      background: var(--hot-color-red-50);
+      border-color: var(--hot-color-red-600);
+      color: var(--hot-color-red-600);
+      box-shadow: 0 2px 4px rgba(211, 63, 63, 0.2);
+    }
+
+    :host([variant="outline"])::part(base):active {
+      background: var(--hot-color-red-100);
+      border-color: var(--hot-color-red-700);
+      color: var(--hot-color-red-700);
+    }
+
+    /* Text variant with hot-red-color */
+    :host([variant="text"])::part(base) {
+      background: transparent;
+      border: none;
+      color: var(--hot-color-red-500);
+      transition: all 0.2s ease;
+    }
+
+    :host([variant="text"])::part(base):hover {
+      background: var(--hot-color-red-50);
+      color: var(--hot-color-red-600);
+    }
+
+    :host([variant="text"])::part(base):active {
+      background: var(--hot-color-red-100);
+      color: var(--hot-color-red-700);
+    }
+
+    /* Enhanced button label styling */
+    :host::part(label) {
+      font-family: var(--hot-font-sans);
+      font-weight: 500;
+      letter-spacing: 0.025em;
+    }
+
+    /* Button states */
+    :host:state(disabled)::part(base) {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+      background: var(--hot-color-gray-200);
+      border-color: var(--hot-color-gray-300);
+      color: var(--hot-color-gray-500);
+    }
+
+    :host:state(loading)::part(base) {
+      cursor: wait;
+      position: relative;
+    }
+
+    /* Focus styles for accessibility */
+    :host::part(base):focus-visible {
+      outline: 2px solid var(--hot-color-red-400);
+      outline-offset: 2px;
     }
 
     /* Gradient button styles */
