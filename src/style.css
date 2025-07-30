@@ -1,8 +1,11 @@
-/* The default WebAwesome CSS */
-/* The WebAwesome theme we use (options: awesome, brutalist, glossy, etc) */
-/* @import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/themes/default.css'); */
-/* Import our custom HOTOSM CSS variables - should be imported first */
+/* First import WebAwesome base styles */
+@import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css');
+
+/* Then import our HOT theme variables */
 @import 'themes/hot.css';
-/* Import our WebAwesome palette / colour & font override */
+
+/* Then our WebAwesome overrides */
 @import 'themes/hot-wa-override.css';
-@import url('https://early.webawesome.com/webawesome@3.0.0-beta.3/dist/styles/webawesome.css');
+
+/* Finally our specific button component override */
+@import 'themes/hot-button-override.css';

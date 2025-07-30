@@ -1,0 +1,246 @@
+/* HOT Button Component Override using CSS Parts */
+/* This file specifically targets wa-button components to ensure hot-red-color is used as primary */
+
+/* Import the HOT theme variables */
+@import 'hot.css';
+
+/* CSS Parts override for wa-button component */
+wa-button {
+  /* Ensure the component uses HOT theme variables */
+  --wa-color-brand-95: var(--hot-color-red-50);
+  --wa-color-brand-90: var(--hot-color-red-100);
+  --wa-color-brand-80: var(--hot-color-red-200);
+  --wa-color-brand-70: var(--hot-color-red-300);
+  --wa-color-brand-60: var(--hot-color-red-400);
+  --wa-color-brand-50: var(--hot-color-red-500);
+  --wa-color-brand-40: var(--hot-color-red-600);
+  --wa-color-brand-30: var(--hot-color-red-700);
+  --wa-color-brand-20: var(--hot-color-red-800);
+  --wa-color-brand-10: var(--hot-color-red-900);
+  --wa-color-brand-05: var(--hot-color-red-950);
+  --wa-color-brand: var(--hot-color-red-500);
+  --wa-color-brand-key: 50;
+}
+
+/* Primary button variant using CSS parts */
+wa-button[variant="primary"]::part(base) {
+  background: linear-gradient(135deg, var(--hot-color-red-500), var(--hot-color-red-600));
+  border: 1px solid var(--hot-color-red-600);
+  color: white;
+  box-shadow: 0 2px 4px rgba(211, 63, 63, 0.3);
+  transition: all 0.2s ease;
+}
+
+wa-button[variant="primary"]::part(base):hover {
+  background: linear-gradient(135deg, var(--hot-color-red-600), var(--hot-color-red-700));
+  border-color: var(--hot-color-red-700);
+  box-shadow: 0 4px 8px rgba(211, 63, 63, 0.4);
+  transform: translateY(-1px);
+}
+
+wa-button[variant="primary"]::part(base):active {
+  background: linear-gradient(135deg, var(--hot-color-red-700), var(--hot-color-red-800));
+  border-color: var(--hot-color-red-800);
+  box-shadow: 0 1px 3px rgba(211, 63, 63, 0.3);
+  transform: translateY(0);
+}
+
+wa-button[variant="primary"]::part(base):focus-visible {
+  outline: 2px solid var(--hot-color-red-400);
+  outline-offset: 2px;
+}
+
+/* Brand variant (alternative to primary) */
+wa-button[variant="brand"]::part(base) {
+  background: linear-gradient(135deg, var(--hot-color-red-500), var(--hot-color-red-600));
+  border: 1px solid var(--hot-color-red-600);
+  color: white;
+  box-shadow: 0 2px 4px rgba(211, 63, 63, 0.3);
+  transition: all 0.2s ease;
+}
+
+wa-button[variant="brand"]::part(base):hover {
+  background: linear-gradient(135deg, var(--hot-color-red-600), var(--hot-color-red-700));
+  border-color: var(--hot-color-red-700);
+  box-shadow: 0 4px 8px rgba(211, 63, 63, 0.4);
+  transform: translateY(-1px);
+}
+
+wa-button[variant="brand"]::part(base):active {
+  background: linear-gradient(135deg, var(--hot-color-red-700), var(--hot-color-red-800));
+  border-color: var(--hot-color-red-800);
+  box-shadow: 0 1px 3px rgba(211, 63, 63, 0.3);
+  transform: translateY(0);
+}
+
+/* Outline variant with hot-red-color */
+wa-button[variant="outline"]::part(base) {
+  background: transparent;
+  border: 2px solid var(--hot-color-red-500);
+  color: var(--hot-color-red-500);
+  transition: all 0.2s ease;
+}
+
+wa-button[variant="outline"]::part(base):hover {
+  background: var(--hot-color-red-50);
+  border-color: var(--hot-color-red-600);
+  color: var(--hot-color-red-600);
+  box-shadow: 0 2px 4px rgba(211, 63, 63, 0.2);
+}
+
+wa-button[variant="outline"]::part(base):active {
+  background: var(--hot-color-red-100);
+  border-color: var(--hot-color-red-700);
+  color: var(--hot-color-red-700);
+}
+
+/* Text variant with hot-red-color */
+wa-button[variant="text"]::part(base) {
+  background: transparent;
+  border: none;
+  color: var(--hot-color-red-500);
+  transition: all 0.2s ease;
+}
+
+wa-button[variant="text"]::part(base):hover {
+  background: var(--hot-color-red-50);
+  color: var(--hot-color-red-600);
+}
+
+wa-button[variant="text"]::part(base):active {
+  background: var(--hot-color-red-100);
+  color: var(--hot-color-red-700);
+}
+
+/* Custom HOT red button class */
+wa-button.hot-red::part(base) {
+  background: linear-gradient(135deg, var(--hot-color-red-500), var(--hot-color-red-600));
+  border: 1px solid var(--hot-color-red-600);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(211, 63, 63, 0.3);
+  transition: all 0.2s ease;
+}
+
+wa-button.hot-red::part(base):hover {
+  background: linear-gradient(135deg, var(--hot-color-red-600), var(--hot-color-red-700));
+  border-color: var(--hot-color-red-700);
+  box-shadow: 0 4px 12px rgba(211, 63, 63, 0.4);
+  transform: translateY(-2px);
+}
+
+wa-button.hot-red::part(base):active {
+  background: linear-gradient(135deg, var(--hot-color-red-700), var(--hot-color-red-800));
+  border-color: var(--hot-color-red-800);
+  box-shadow: 0 1px 3px rgba(211, 63, 63, 0.3);
+  transform: translateY(0);
+}
+
+/* Enhanced button label styling */
+wa-button::part(label) {
+  font-family: var(--hot-font-sans);
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+/* Button states */
+wa-button:state(disabled)::part(base) {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  background: var(--hot-color-gray-200);
+  border-color: var(--hot-color-gray-300);
+  color: var(--hot-color-gray-500);
+}
+
+wa-button:state(loading)::part(base) {
+  cursor: wait;
+  position: relative;
+}
+
+/* Size variants with hot-red-color */
+wa-button[size="small"]::part(base) {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+wa-button[size="large"]::part(base) {
+  padding: 0.875rem 1.75rem;
+  font-size: 1.125rem;
+  border-radius: 0.5rem;
+}
+
+/* Icon button with hot-red-color */
+wa-button[appearance="icon"]::part(base) {
+  border-radius: 50%;
+  padding: 0.75rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+wa-button[appearance="icon"][variant="primary"]::part(base) {
+  background: var(--hot-color-red-500);
+  border-color: var(--hot-color-red-600);
+  color: white;
+}
+
+wa-button[appearance="icon"][variant="primary"]::part(base):hover {
+  background: var(--hot-color-red-600);
+  border-color: var(--hot-color-red-700);
+}
+
+/* Focus styles for accessibility */
+wa-button::part(base):focus-visible {
+  outline: 2px solid var(--hot-color-red-400);
+  outline-offset: 2px;
+}
+
+/* Custom animation for hot-red buttons */
+@keyframes hot-red-pulse {
+  0% {
+    box-shadow: 0 2px 4px rgba(211, 63, 63, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 8px rgba(211, 63, 63, 0.5);
+  }
+  100% {
+    box-shadow: 0 2px 4px rgba(211, 63, 63, 0.3);
+  }
+}
+
+wa-button.hot-red-pulse::part(base) {
+  animation: hot-red-pulse 2s infinite;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  wa-button[variant="primary"]::part(base) {
+    border: 2px solid var(--hot-color-red-900);
+    background: var(--hot-color-red-700);
+  }
+  
+  wa-button[variant="outline"]::part(base) {
+    border: 2px solid var(--hot-color-red-700);
+    color: var(--hot-color-red-700);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  wa-button::part(base) {
+    transition: none;
+  }
+  
+  wa-button::part(base):hover {
+    transform: none;
+  }
+  
+  wa-button.hot-red-pulse::part(base) {
+    animation: none;
+  }
+} 
