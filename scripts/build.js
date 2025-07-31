@@ -14,8 +14,6 @@ const config = {
     entryPoints: [
         './src/hotosm-ui.ts',
         ...(await globby('./src/components/**/!(*.(style)).ts')),
-        ...(await globby('./src/react/**/*.ts')),
-        ...(await globby('./src/react/**/*.js'))
     ],
     chunkNames: 'chunks/[name].[hash]',
     bundle: true,
