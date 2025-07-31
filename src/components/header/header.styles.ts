@@ -65,21 +65,27 @@ export const styles = css`
     font-weight: var(--hot-font-weight-normal);
     color: var(--hot-color-neutral-950);
     padding: var(--hot-spacing-small) var(--hot-spacing-small);
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-weight: var(--hot-font-weight-bold);
+    letter-spacing: 0.5px;
   }
 
   .header--tab[active]::part(base) {
-    border-bottom-color: var(--hot-color-neutral-1000);
-    font-weight: var(--hot-font-weight-semibold);
+    border-bottom-color: var(--hot-color-red-500);
+    font-weight: var(--hot-font-weight-bold);
+    color: var(--hot-color-neutral-950);
   }
 
   .header--tab:hover::part(base) {
     color: var(--hot-color-neutral-700);
+    border-bottom-color: var(--hot-color-red-300);
   }
 
   .header--tab[active]:hover::part(base) {
     color: var(--hot-color-neutral-950);
+    border-bottom-color: var(--hot-color-red-600);
   }
 
   .header--tab-group::part(base) {

@@ -59,6 +59,9 @@ export class Header extends LitElement {
   /** Index of the selected tab. */
   @property({ type: Number })
   accessor selectedTab: number = 0;
+  /** Index of the active tab (0-based). Use this to control which tab is active for any number of tabs. */
+  @property({ type: Number })
+  accessor activeTabIndex: number = 0;
 
   /** Show/hide login functionality. */
   @property({ type: Boolean })
@@ -118,6 +121,8 @@ export class Header extends LitElement {
     if (index !== this.selectedTab && index >= 0 && index < this.tabs.length) {
       const previousTab = this.selectedTab;
       this.selectedTab = index;
+      // Update the active tab index
+      this.activeTabIndex = index;
       
       // Dispatch a custom event for tab change
       this.dispatchEvent(new CustomEvent('tab-change', {
@@ -182,7 +187,7 @@ export class Header extends LitElement {
             @wa-tab-show=${(e: CustomEvent) => this._handleTabShow(e)}
           >
             ${this.tabs.map((item, index) => {
-              const isActive = this.selectedTab === index;
+              const isActive = this.activeTabIndex === index;
               return html`
                 <wa-tab
                   panel="${item.label}-${index}"
@@ -216,7 +221,7 @@ export class Header extends LitElement {
             : null}
           ${this.drawer
             ? html`
-                <wa-drawer label="Drawer" id="drawer-overview">
+                <wa-drawer label=" " id="drawer-overview">
                   <ul style="list-style: none; padding: 0; margin: 0;">
                     ${this.drawerLinks.map(
                       (link) => html`

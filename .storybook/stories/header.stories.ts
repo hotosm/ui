@@ -14,6 +14,10 @@ const twoTab = [
   {
     label: 'Organisations',
     clickEvent: async () => {alert('Going to organisations page')}
+  },
+  {
+    label: 'Test',
+    clickEvent: async () => {alert('Going to test page')}
   }
 ];
 const threeTab = Array.from({ length: 3 }, (_, index) => ({
