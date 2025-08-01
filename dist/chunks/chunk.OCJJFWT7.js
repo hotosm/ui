@@ -1,4 +1,4 @@
-import{b as o}from"./chunk.TNLBUOUK.js";var t=o`
+import{b as o}from"./chunk.C6I42VVF.js";var t=o`
   :host {
     display: block;
   }
