@@ -5,6 +5,6 @@ export declare class Logo extends LitElement {
     name: string;
     accessor iconOnly: boolean;
     accessor textOnly: boolean;
-    protected render(): import("lit-html").TemplateResult<1>;
+    protected render(): import("lit").TemplateResult<1>;
 }
 export default Logo;

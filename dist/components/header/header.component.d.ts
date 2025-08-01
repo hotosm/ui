@@ -31,6 +31,8 @@ export declare class Header extends LitElement {
     accessor borderBottom: boolean;
     /** Index of the selected tab. */
     accessor selectedTab: number;
+    /** Index of the active tab (0-based). Use this to control which tab is active for any number of tabs. */
+    accessor activeTabIndex: number;
     /** Show/hide login functionality. */
     accessor showLogin: boolean;
     /** Control the login modal state. */
@@ -41,7 +43,7 @@ export declare class Header extends LitElement {
     protected firstUpdated(): void;
     protected updated(): void;
     selectTab(index: number): void;
-    protected render(): import("lit-html").TemplateResult<1>;
+    protected render(): import("lit").TemplateResult<1>;
     private _tabClick;
     private _handleTabShow;
     private _handleLogin;
