@@ -11,9 +11,8 @@ on:
 
 jobs:
   build:
-    uses: hotosm/gh-workflows/.github/workflows/pnpm_build.yml@2.0.3
+    uses: hotosm/gh-workflows/.github/workflows/pnpm_build.yml@main
     with:
       command: build:docs
       output_path: docs
       github_pages: true
-      node_version: 20
