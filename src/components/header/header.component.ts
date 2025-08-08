@@ -81,7 +81,7 @@ export class Header extends LitElement {
     // Set up CSS injection for wa-button shadow DOM
     setupAutoInjection();
 
-    await registerHanko('https://login.hotosm.org', {
+    await registerHanko('https://dev.login.hotosm.org', {
       shadow: false, // We can't use shadow dom, as the OSM custom element part is not exposed
       // injectStyles: false, // Set to false if you do not want to inject any default styles.
       // enablePasskeys: false, // Set to false if you do not want to display passkey-related content.
