@@ -16,3 +16,4 @@ jobs:
       command: build:docs
       output_path: docs
       github_pages: true
+      node_version: 20
