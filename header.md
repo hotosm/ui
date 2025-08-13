@@ -33,6 +33,7 @@ import '@hotosm/ui/dist/style.css';
 ```
 
 This CSS bundles:
+
 - WebAwesome base styles
 - HOT theme variables (`hot.css`)
 - WebAwesome overrides (`hot-wa-override.css`)
