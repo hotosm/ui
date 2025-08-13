@@ -30,6 +30,7 @@ import '@hotosm/ui/dist/style.css';
 ```
 
 This CSS bundles:
+
 - WebAwesome base styles
 - HOT theme variables (`hot.css`)
 - WebAwesome overrides (`hot-wa-override.css`)
@@ -279,6 +280,7 @@ declare global {
 - showLogin: boolean — Shows a “Login” button and modal
 
 Notes:
+
 - In plain HTML, the presence of a boolean attribute is treated as true. Set false by assigning the property from JS (e.g., `el.borderBottom = false`).
 - Arrays and functions must be assigned as properties from JS (attributes are strings).
 
@@ -335,6 +337,7 @@ hot-header {
 ```
 
 Notes:
+
 - Internal classes (e.g., `.header--tab::part(base)`) are inside Shadow DOM; prefer variable overrides.
 - WebAwesome parts are styled inside the component; use tokens/variables instead of trying to pierce Shadow DOM from outside.
 
@@ -348,4 +351,3 @@ Notes:
 - I see “true” when I pass booleans as attributes: assign booleans via JS properties (`el.showLogin = true/false`).
 - Tabs don’t navigate: `tabs` need `clickEvent` functions. Ensure you assign the array as a property, not as an attribute string.
 - Styles not taking effect: confirm you imported `@hotosm/ui/dist/style.css` and have the required WebAwesome classes on `<html>`.
-
