@@ -308,6 +308,7 @@ declare global {
 - showLogin: boolean — Shows a "Login" button and modal
 
 Notes:
+
 - In plain HTML, the presence of a boolean attribute is treated as true.
   Set false by assigning the property from JS (e.g., `el.borderBottom = false`).
 - Arrays and functions must be assigned as properties from JS (attributes are
@@ -367,6 +368,7 @@ hot-header {
 ```
 
 Notes:
+
 - Internal classes (e.g., `.header--tab::part(base)`) are inside Shadow DOM;
   prefer variable overrides.
 - WebAwesome parts are styled inside the component; use tokens/variables
@@ -388,4 +390,3 @@ Notes:
   the array as a property, not as an attribute string.
 - Styles not taking effect: confirm you imported `@hotosm/ui/dist/style.css`
   and have the required WebAwesome classes on `<html>`.
-
