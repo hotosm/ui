@@ -176,6 +176,10 @@ are bound to slightly differently:
   ></hot-header>
   ```
 
+### Component Guides
+
+- Header: see [`/header.md`](/header.md) for detailed integration, styling, and framework examples.
+
 ### How to contribute
 
 - Clone the project `git clone git@github.com:hotosm/ui.git`
