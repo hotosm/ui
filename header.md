@@ -87,15 +87,18 @@ import '@hotosm/ui/dist/components/header/header.js';
     hdr.tabs = [
       { 
         label: 'Learn', 
-        clickEvent: () => (location.href = 'https://hotosm.github.io/fmtm') 
+        clickEvent: () => (location.href = 
+          'https://hotosm.github.io/fmtm') 
       },
       { 
         label: 'About', 
-        clickEvent: () => (location.href = 'https://docs.fmtm.dev/about/about/') 
+        clickEvent: () => (location.href = 
+          'https://docs.fmtm.dev/about/about/') 
       },
       { 
         label: 'Support', 
-        clickEvent: () => (location.href = 'https://github.com/hotosm/fmtm/issues/') 
+        clickEvent: () => (location.href = 
+          'https://github.com/hotosm/fmtm/issues/') 
       }
     ];
     hdr.activeTabIndex = 0;
@@ -107,7 +110,8 @@ import '@hotosm/ui/dist/components/header/header.js';
       { label: "Support", href: "https://github.com/hotosm/fmtm/issues/" },
       { 
         label: "Download Custom ODK Collect", 
-        href: "https://github.com/hotosm/odkcollect/releases/download/v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk" 
+        href: "https://github.com/hotosm/odkcollect/releases/download/" +
+          "v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk" 
       }
     ];
 
@@ -153,15 +157,18 @@ import '@hotosm/ui/dist/components/header/header.js';
     hdr.tabs = [
       { 
         label: 'Learn', 
-        clickEvent: () => (location.href = 'https://hotosm.github.io/fmtm') 
+        clickEvent: () => (location.href = 
+          'https://hotosm.github.io/fmtm') 
       },
       { 
         label: 'About', 
-        clickEvent: () => (location.href = 'https://docs.fmtm.dev/about/about/') 
+        clickEvent: () => (location.href = 
+          'https://docs.fmtm.dev/about/about/') 
       },
       { 
         label: 'Support', 
-        clickEvent: () => (location.href = 'https://github.com/hotosm/fmtm/issues/') 
+        clickEvent: () => (location.href = 
+          'https://github.com/hotosm/fmtm/issues/') 
       }
     ];
     hdr.activeTabIndex = 0;
@@ -173,7 +180,8 @@ import '@hotosm/ui/dist/components/header/header.js';
       { label: "Support", href: "https://github.com/hotosm/fmtm/issues/" },
       { 
         label: "Download Custom ODK Collect", 
-        href: "https://github.com/hotosm/odkcollect/releases/download/v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk" 
+        href: "https://github.com/hotosm/odkcollect/releases/download/" +
+          "v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk" 
       }
     ];
 
@@ -239,7 +247,10 @@ TypeScript note: add an intrinsic element type if needed:
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'hot-header': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+      'hot-header': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>, 
+        HTMLElement
+      > & {
         title?: string;
         size?: 'small' | 'medium' | 'large';
         showLogin?: boolean | string;
@@ -308,6 +319,7 @@ declare global {
 - showLogin: boolean — Shows a "Login" button and modal
 
 Notes:
+
 - In plain HTML, the presence of a boolean attribute is treated as true.
   Set false by assigning the property from JS (e.g., `el.borderBottom = false`).
 - Arrays and functions must be assigned as properties from JS (attributes are
@@ -316,7 +328,8 @@ Notes:
 ### Events
 
 - tab-change — Fired when a tab is selected
-  - detail: `{ selectedIndex: number, previousIndex: number, tab: { label, clickEvent } }`
+  - detail: `{ selectedIndex: number, previousIndex: number,
+    tab: { label, clickEvent } }`
 - login — Fired when the "Login" button is clicked
 
 ## Styling
@@ -367,6 +380,7 @@ hot-header {
 ```
 
 Notes:
+
 - Internal classes (e.g., `.header--tab::part(base)`) are inside Shadow DOM;
   prefer variable overrides.
 - WebAwesome parts are styled inside the component; use tokens/variables
@@ -388,4 +402,3 @@ Notes:
   the array as a property, not as an attribute string.
 - Styles not taking effect: confirm you imported `@hotosm/ui/dist/style.css`
   and have the required WebAwesome classes on `<html>`.
-
