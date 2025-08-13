@@ -1,6 +1,8 @@
 # HOTOSM UI — Header Component (`hot-header`)
 
-Shared web component providing a branded HOT header with optional navigation tabs, a drawer, and login modal. It is built with Lit and uses WebAwesome primitives.
+Shared web component providing a branded HOT header with optional navigation
+tabs, a drawer, and login modal. It is built with Lit and uses WebAwesome
+primitives.
 
 - Tag: `hot-header`
 - Module: `@hotosm/ui`
@@ -12,17 +14,18 @@ Shared web component providing a branded HOT header with optional navigation tab
 pnpm add @hotosm/ui @awesome.me/webawesome@3.0.0-beta.1
 ```
 
-> Important: Pin WebAwesome to the version used by this package to avoid incompatibilities.
+> Important: Pin WebAwesome to the version used by this package to avoid
+> incompatibilities.
 
 ## Global setup (theming + CSS)
 
-1) Add WebAwesome theme classes to your root HTML element:
+1. Add WebAwesome theme classes to your root HTML element:
 
 ```html
 <html class="hot-theme-light wa-theme-default wa-palette-hotosm">
 ```
 
-2) Import the HOT UI CSS once in your app (preferred: bundle CSS):
+2. Import the HOT UI CSS once in your app (preferred: bundle CSS):
 
 ```js
 // main.ts / main.js
@@ -35,7 +38,8 @@ This CSS bundles:
 - WebAwesome overrides (`hot-wa-override.css`)
 - Button overrides (`hot-button-override.css`)
 
-The header automatically injects HOT variables into WebAwesome components inside its Shadow DOM. No extra setup is required for styling.
+The header automatically injects HOT variables into WebAwesome components
+inside its Shadow DOM. No extra setup is required for styling.
 
 ## Usage
 
@@ -276,21 +280,24 @@ declare global {
 - tabs: Array<{ label: string; clickEvent: () => void }>
 - activeTabIndex: number — Controls which tab is active
 - borderBottom: boolean (default true) — Show bottom border
-- showLogin: boolean — Shows a “Login” button and modal
+- showLogin: boolean — Shows a "Login" button and modal
 
 Notes:
-- In plain HTML, the presence of a boolean attribute is treated as true. Set false by assigning the property from JS (e.g., `el.borderBottom = false`).
-- Arrays and functions must be assigned as properties from JS (attributes are strings).
+- In plain HTML, the presence of a boolean attribute is treated as true.
+  Set false by assigning the property from JS (e.g., `el.borderBottom = false`).
+- Arrays and functions must be assigned as properties from JS (attributes are
+  strings).
 
 ### Events
 
 - tab-change — Fired when a tab is selected
   - detail: `{ selectedIndex: number, previousIndex: number, tab: { label, clickEvent } }`
-- login — Fired when the “Login” button is clicked
+- login — Fired when the "Login" button is clicked
 
 ## Styling
 
-The header is styled with Shadow DOM CSS using the HOT design variables. Override styles primarily via CSS variables.
+The header is styled with Shadow DOM CSS using the HOT design variables.
+Override styles primarily via CSS variables.
 
 ### Per-instance overrides
 
@@ -335,17 +342,25 @@ hot-header {
 ```
 
 Notes:
-- Internal classes (e.g., `.header--tab::part(base)`) are inside Shadow DOM; prefer variable overrides.
-- WebAwesome parts are styled inside the component; use tokens/variables instead of trying to pierce Shadow DOM from outside.
+- Internal classes (e.g., `.header--tab::part(base)`) are inside Shadow DOM;
+  prefer variable overrides.
+- WebAwesome parts are styled inside the component; use tokens/variables
+  instead of trying to pierce Shadow DOM from outside.
 
 ## How styling works (behind the scenes)
 
-- `@hotosm/ui/dist/style.css` defines HOT tokens/variables and maps them to WebAwesome variables.
-- The header imports WebAwesome elements (tabs, button, drawer, dialog) and automatically injects HOT variables into their Shadow DOM, so variants like `variant="brand"` use HOT colors.
+- `@hotosm/ui/dist/style.css` defines HOT tokens/variables and maps them to
+  WebAwesome variables.
+- The header imports WebAwesome elements (tabs, button, drawer, dialog) and
+  automatically injects HOT variables into their Shadow DOM, so variants like
+  `variant="brand"` use HOT colors.
 
 ## Troubleshooting
 
-- I see “true” when I pass booleans as attributes: assign booleans via JS properties (`el.showLogin = true/false`).
-- Tabs don’t navigate: `tabs` need `clickEvent` functions. Ensure you assign the array as a property, not as an attribute string.
-- Styles not taking effect: confirm you imported `@hotosm/ui/dist/style.css` and have the required WebAwesome classes on `<html>`.
+- I see "true" when I pass booleans as attributes: assign booleans via JS
+  properties (`el.showLogin = true/false`).
+- Tabs don't navigate: `tabs` need `clickEvent` functions. Ensure you assign
+  the array as a property, not as an attribute string.
+- Styles not taking effect: confirm you imported `@hotosm/ui/dist/style.css`
+  and have the required WebAwesome classes on `<html>`.
 
