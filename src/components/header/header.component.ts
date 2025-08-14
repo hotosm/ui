@@ -251,7 +251,7 @@ export class Header extends LitElement {
                     <wa-icon  name="xmark"></wa-icon>
                 </wa-button>
 
-                <hanko-auth></hanko-auth>
+                <hanko-auth redirect-to="${location.origin}"></hanko-auth>
               </wa-dialog>
             `
           : null}

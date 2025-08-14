@@ -112,8 +112,9 @@ to your `<html>` block:
 > These classes determine the colour usage for different component variants,
 > and probably should not be changed!
 
-And import the required styles in your `main.ts` or equivalent (we import from package
-rather than CDN, to allow the bundler to work it's CSS tree-shaking magic).
+And import the required styles in your `main.ts` or equivalent (we import from
+package rather than CDN, to allow the bundler to work its CSS tree-shaking
+magic).
 
   ```js
   import '@hotosm/ui/dist/style.css';
@@ -175,6 +176,11 @@ are bound to slightly differently:
     }}
   ></hot-header>
   ```
+
+### Component Guides
+
+- Header: see [`/header.md`](/header.md) for detailed integration, styling, and
+  framework examples.
 
 ### How to contribute
 
