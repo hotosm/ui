@@ -2,13 +2,14 @@ import HotHeader from './components/header/header.js';
 import HotLogo from './components/logo/logo.js';
 import HotTracking from './components/tracking/tracking.js';
 import HotConsent from './components/consent/consent.js';
+import HotDropzone from './components/dropzone/dropzone.js';
 
 // Export CSS injection utilities
-export { 
-    setupAutoInjection, 
-    injectHOTThemeIntoButtons, 
+export {
+    setupAutoInjection,
+    injectHOTThemeIntoButtons,
     injectHOTThemeIntoAllComponents,
-    injectCSSIntoShadowDOM 
+    injectCSSIntoShadowDOM
 } from './utils/shadow-dom-css.js';
 
 export {
@@ -16,4 +17,5 @@ export {
     HotLogo as Logo,
     HotConsent as Consent,
     HotTracking as Tracking,
+    HotDropzone as Dropzone
 }
