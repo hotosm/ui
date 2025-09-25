@@ -131,11 +131,13 @@ export const styles = css`
   @media (max-width: 768px) {
     .header {
       align-items: stretch;
+      width: 100%;
       padding: var(--hot-spacing-small);
       height: auto;
     }
     .header--link {
       justify-content: flex-start;
+      padding-right: var(--hot-spacing-2x-small);
       gap: var(--hot-spacing-x-small);
     }
     .header--title {
@@ -151,7 +153,6 @@ export const styles = css`
     }
     .header--right-section {
       justify-content: flex-end;
-      width: 100%;
       margin-top: var(--hot-spacing-small);
       gap: var(--hot-spacing-x-small);
     }
