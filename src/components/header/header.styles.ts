@@ -1,5 +1,5 @@
 import { css } from 'lit';
-import { cva } from "class-variance-authority";
+import { cva } from 'class-variance-authority';
 
 export const headerVariants = cva(
   // Defaults to include in all variants
@@ -9,18 +9,18 @@ export const headerVariants = cva(
   {
     variants: {
       size: {
-          small: "header--size-small",
-          medium: "header--size-medium",
-          large: "header--size-large",
+        small: 'header--size-small',
+        medium: 'header--size-medium',
+        large: 'header--size-large',
       },
       borderBottom: {
-          true: "border-bottom",
-      }
+        true: 'border-bottom',
+      },
     },
   }
 );
 
-export type sizes = "small" | "medium" | "large";
+export type sizes = 'small' | 'medium' | 'large';
 
 export const styles = css`
   .header {
@@ -108,7 +108,7 @@ export const styles = css`
   }
 
   .header--drawer {
-    font-size: var(--hot-font-size-x-large)
+    font-size: var(--hot-font-size-x-large);
   }
 
   .header--right-section {
@@ -117,12 +117,8 @@ export const styles = css`
     gap: var(--hot-spacing-small);
   }
 
-
-
   .header--logo-img {
   }
-
-
 
   /* Login Modal Styles */
   .login-modal {
@@ -134,7 +130,6 @@ export const styles = css`
   /* --- Responsive styles for mobile --- */
   @media (max-width: 768px) {
     .header {
-      flex-direction: column;
       align-items: stretch;
       padding: var(--hot-spacing-small);
       height: auto;
@@ -164,11 +159,11 @@ export const styles = css`
       max-height: 2.5rem;
       width: auto;
     }
-    wa-button[appearance="outlined"] {
+    wa-button[appearance='outlined'] {
       /* Make drawer button larger for touch */
       min-width: 2.5rem;
       min-height: 2.5rem;
       padding: 0.5rem;
     }
   }
-`
+`;
