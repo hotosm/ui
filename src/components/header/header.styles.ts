@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 import { cva } from "class-variance-authority";
 
 export const headerVariants = cva(
@@ -9,13 +9,13 @@ export const headerVariants = cva(
   {
     variants: {
       size: {
-          small: "header--size-small",
-          medium: "header--size-medium",
-          large: "header--size-large",
+        small: "header--size-small",
+        medium: "header--size-medium",
+        large: "header--size-large",
       },
       borderBottom: {
-          true: "border-bottom",
-      }
+        true: "border-bottom",
+      },
     },
   }
 );
@@ -108,7 +108,7 @@ export const styles = css`
   }
 
   .header--drawer {
-    font-size: var(--hot-font-size-x-large)
+    font-size: var(--hot-font-size-x-large);
   }
 
   .header--right-section {
@@ -117,12 +117,8 @@ export const styles = css`
     gap: var(--hot-spacing-small);
   }
 
-
-
   .header--logo-img {
   }
-
-
 
   /* Login Modal Styles */
   .login-modal {
@@ -134,13 +130,14 @@ export const styles = css`
   /* --- Responsive styles for mobile --- */
   @media (max-width: 768px) {
     .header {
-      flex-direction: column;
       align-items: stretch;
+      width: 100%;
       padding: var(--hot-spacing-small);
       height: auto;
     }
     .header--link {
       justify-content: flex-start;
+      padding-right: var(--hot-spacing-2x-small);
       gap: var(--hot-spacing-x-small);
     }
     .header--title {
@@ -156,7 +153,6 @@ export const styles = css`
     }
     .header--right-section {
       justify-content: flex-end;
-      width: 100%;
       margin-top: var(--hot-spacing-small);
       gap: var(--hot-spacing-x-small);
     }
@@ -171,4 +167,4 @@ export const styles = css`
       padding: 0.5rem;
     }
   }
-`
+`;
