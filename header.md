@@ -55,6 +55,8 @@ import '@hotosm/ui/dist/hotosm-ui.js';
 - Or only the header:
 
 ```js
+// Logo required as default in header, unless override
+import '@hotosm/ui/dist/components/logo/logo.js';
 import '@hotosm/ui/dist/components/header/header.js';
 ```
 
@@ -66,6 +68,7 @@ import '@hotosm/ui/dist/components/header/header.js';
   <head>
     <script type="module">
       import '@hotosm/ui/dist/style.css';
+      import '@hotosm/ui/dist/components/logo/logo.js';
       import '@hotosm/ui/dist/components/header/header.js';
     </script>
   </head>
