@@ -28,7 +28,7 @@ export const styles = css`
     align-items: stretch;
     justify-content: space-between;
     height: auto;
-    padding: var(--hot-spacing-small);
+    padding: 0 var(--hot-spacing-small);
   }
 
   .header.border-bottom {
@@ -143,7 +143,6 @@ export const styles = css`
   @media (min-width: 769px) {
     .header {
       align-items: center;
-      padding: 0 var(--hot-spacing-small);
       height: auto;
     }
 
