@@ -36,6 +36,9 @@ const fiveTab = Array.from({ length: 5 }, (_, index) => ({
 const meta: Meta = {
   title: "Header",
   component: "hot-header",
+  parameters: {
+    layout: "fullscreen",
+  },
   argTypes: {
     title: { control: 'text' },
     size: {

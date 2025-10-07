@@ -25,8 +25,9 @@ export type sizes = "small" | "medium" | "large";
 export const styles = css`
   .header {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
+    height: auto;
     padding: 0 var(--hot-spacing-small);
   }
 
@@ -50,14 +51,15 @@ export const styles = css`
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--hot-spacing-small);
+    justify-content: flex-start;
+    padding-right: var(--hot-spacing-2x-small);
+    gap: var(--hot-spacing-x-small);
   }
 
   .header--title {
     color: var(--hot-color-neutral-950);
     font-family: var(--hot-font-sans);
-    font-size: var(--hot-font-size-x-large);
+    font-size: var(--hot-font-size-large);
   }
 
   .header--tab::part(base) {
@@ -94,13 +96,13 @@ export const styles = css`
   }
 
   .header--nav {
-    justify-content: space-between;
-    justify-items: center;
-    gap: var(--hot-spacing-medium);
-    font-weight: var(--hot-font-weight-semibold);
+    display: none;
   }
 
   .header--nav-mobile {
+    display: block;
+    width: 100%;
+    margin-top: var(--hot-spacing-small);
   }
 
   .header--person-circle {
@@ -114,10 +116,20 @@ export const styles = css`
   .header--right-section {
     display: flex;
     align-items: center;
-    gap: var(--hot-spacing-small);
+    justify-content: flex-end;
+    gap: var(--hot-spacing-x-small);
   }
 
   .header--logo-img {
+    max-height: 2.5rem;
+    width: auto;
+  }
+
+  wa-button[appearance="outlined"] {
+    /* Make drawer button larger for touch */
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    padding: 0.5rem;
   }
 
   /* Login Modal Styles */
@@ -127,44 +139,50 @@ export const styles = css`
     --background-color: white;
   }
 
-  /* --- Responsive styles for mobile --- */
-  @media (max-width: 768px) {
+  /* --- Responsive styles for tablet and desktop --- */
+  @media (min-width: 769px) {
     .header {
-      align-items: stretch;
-      width: 100%;
-      padding: var(--hot-spacing-small);
+      align-items: center;
       height: auto;
     }
+
     .header--link {
-      justify-content: flex-start;
-      padding-right: var(--hot-spacing-2x-small);
-      gap: var(--hot-spacing-x-small);
+      justify-content: space-between;
+      padding-right: 0;
+      gap: var(--hot-spacing-small);
     }
+
     .header--title {
-      font-size: var(--hot-font-size-large);
+      font-size: var(--hot-font-size-x-large);
     }
+
     .header--nav {
+      display: flex;
+      justify-content: space-between;
+      justify-items: center;
+      gap: var(--hot-spacing-medium);
+      font-weight: var(--hot-font-weight-semibold);
+    }
+
+    .header--nav-mobile {
       display: none;
     }
-    .header--nav-mobile {
-      display: block;
-      width: 100%;
-      margin-top: var(--hot-spacing-small);
-    }
+
     .header--right-section {
-      justify-content: flex-end;
-      margin-top: var(--hot-spacing-small);
-      gap: var(--hot-spacing-x-small);
+      justify-content: center;
+      margin-top: 0;
+      gap: var(--hot-spacing-small);
     }
+
     .header--logo-img {
-      max-height: 2.5rem;
+      max-height: none;
       width: auto;
     }
+
     wa-button[appearance="outlined"] {
-      /* Make drawer button larger for touch */
-      min-width: 2.5rem;
-      min-height: 2.5rem;
-      padding: 0.5rem;
+      min-width: auto;
+      min-height: auto;
+      padding: initial;
     }
   }
 `;
