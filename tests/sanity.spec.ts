@@ -1,5 +1,6 @@
 // tests/sanity.spec.ts
 /// <reference types="vitest" />
+import { describe, it, expect, } from 'vitest';
 
 describe('vitest setup', () => {
   it('can manipulate the DOM', () => {

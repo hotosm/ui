@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>VR: hot-header</title>
+
+    <!-- IMPORTANT: this path must match your build output! -->
+   <script type="module" src="/dist/components/header/header.js"></script>
+
+
+
+   <style>
+  html, body { margin:0; padding:24px; background:#f6f7f9; }
+  * { animation: none !important; transition: none !important; }
+</style>
+
+
+    <script>
+      // Minimal stubs to avoid runtime errors from 3rd-party elements
+      for (const tag of ['wa-tab', 'wa-tab-group', 'wa-button', 'wa-dialog']) {
+        if (!customElements.get(tag)) customElements.define(tag, class extends HTMLElement {});
+      }
+      for (const tag of ['hanko-auth', 'hanko-profile']) {
+        if (!customElements.get(tag)) customElements.define(tag, class extends HTMLElement {});
+      }
+      window.WebAwesome = window.WebAwesome || { iconRegistry: { addIcon(){} } };
+    </script>
+  </head>
+  <body>
+    <hot-header id="hdr"></hot-header>
+    <script type="module">
+      const p = new URL(location.href).searchParams;
+      const el = document.getElementById('hdr');
+
+      el.title = p.get('title') ?? 'Test App';
+      el.size = p.get('size') ?? 'small';
+      el.borderBottom = p.get('borderBottom') !== 'false';
+      el.showLogin = p.get('showLogin') === 'true';
+
+      el.tabs = [
+        { label: 'Overview', clickEvent: () => {} },
+        { label: 'Data', clickEvent: () => {} },
+        { label: 'Settings', clickEvent: () => {} },
+      ];
+    </script>
+  </body>
+</html>

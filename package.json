@@ -51,13 +51,17 @@
     "build": "node scripts/build.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "preview:vr": "http-server -p 4173 .",
+    "e2e": "playwright test",
+    "e2e:update": "playwright test --update-snapshots"
   },
   "engines": {
     "node": ">=14.17.0"
   },
   "devDependencies": {
     "@awesome.me/webawesome": "3.0.0-beta.1",
+    "@playwright/test": "^1.56.0",
     "@storybook/addon-docs": "^9.0.18",
     "@storybook/addon-links": "^9.0.18",
     "@storybook/web-components-vite": "^9.0.18",
@@ -72,6 +76,7 @@
     "del": "^8.0.0",
     "esbuild": "^0.25.8",
     "globby": "^14.1.0",
+    "http-server": "^14.1.1",
     "jsdom": "^27.0.0",
     "lit": "^3.3.1",
     "storybook": "^9.0.18",

@@ -11,7 +11,6 @@ export default defineConfig({
   
   test: {
     environment: 'jsdom',       // so DOM APIs exist in tests
-    globals: true,              // enables global expect/test/etc.
     setupFiles: ['./tests/setupTests.ts'],
     include: ['tests/**/*.spec.*', 'tests/**/*.test.*', 'src/**/*.{spec,test}.*'],
     coverage: {

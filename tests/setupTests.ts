@@ -1,9 +1,5 @@
 // tests/setupTests.ts
 
-import './polyfills'  // our polyfills/mocks; must be first
-import './mocks'      // our module mocks
-
-
 
 // ----- Stub WebAwesome custom elements in tests -----
 const realDefine = customElements.define.bind(customElements);
@@ -26,18 +22,10 @@ customElements.define = ((name: string, ctor: CustomElementConstructor, options?
 // ----- end stubs -----
 
 
-
-
-
-
-
-
-
-
-
-
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/vitest';
 import { configure } from '@testing-library/dom'
+
+
 
 // Slightly shorter async timeout for faster failures
 configure({ asyncUtilTimeout: 2000 })

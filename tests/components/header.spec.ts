@@ -1,16 +1,21 @@
 /// <reference types="vitest" />
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterEach,vi } from 'vitest'
 import { within } from '@testing-library/dom'
 
 
 import '../../src/components/header/header.ts'
-
+import { Header } from '../../src/components/header/header.component.ts';
 
 describe('<hot-header>', () => {
-  it('is registered as a custom element', () => {
-    const ctor = customElements.get('hot-header')
-    expect(ctor).toBeTruthy()
-  })
+
+afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+it("is registered as a custom element with correct constructor", () => {
+  const ctor = customElements.get("hot-header");
+  expect(ctor).toBe(Header);
+});
 
   it('applies size="small" by adding the correct class on <header>', async () => {
     const el = document.createElement('hot-header') as HTMLElement & { shadowRoot: ShadowRoot, updateComplete?: Promise<unknown> }
@@ -108,8 +113,6 @@ it('opens the login dialog and emits "login" on click', async () => {
   const isOpen = (dialog?.open === true) || dialog?.hasAttribute('open');
   expect(isOpen).toBe(true);
 });
-
-
 
 
 

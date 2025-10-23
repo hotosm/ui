@@ -13,6 +13,7 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "rootDir": ".",
+     "allowImportingTsExtensions": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "strictFunctionTypes": false,
