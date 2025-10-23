@@ -8,11 +8,12 @@
     "lib": [
       "dom",
       "dom.Iterable",
-      "es2020"
+      "es2020" , "ES2022", "DOM"
     ],
     "emitDeclarationOnly": true,
     "declaration": true,
     "rootDir": ".",
+     "allowImportingTsExtensions": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "strictFunctionTypes": false,
@@ -31,10 +32,10 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "types": [
-      "user-agent-data-types"
+      "user-agent-data-types" , "vitest/globals", "@testing-library/jest-dom", "node"
     ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*", "tests", "vitest.config.ts"  
   ]
 }
