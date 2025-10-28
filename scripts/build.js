@@ -18,7 +18,12 @@ const config = {
     chunkNames: 'chunks/[name].[hash]',
     bundle: true,
     splitting: true,
-    external: [],
+  external: [
+    '@awesome.me/webawesome',
+    '@awesome.me/webawesome/*',
+    'lit',
+    'lit/*',
+  ],
     minify: true,
     tsconfig: 'tsconfig.json',
     loader: {

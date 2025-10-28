@@ -1,5 +1,5 @@
-import{b as c,c as r}from"./chunk.OHYOXYF2.js";import{b,e as l,k as u}from"./chunk.C6I42VVF.js";import{d as a,e as n,f as s,g as i}from"./chunk.N2W26RCT.js";var w,m,f,x,v,t=class extends u{constructor(){super(...arguments);this.name="hot-tracking";s(this,w,"");s(this,m,"");s(this,f,"https://matomo.hotosm.org");s(this,x,!0);s(this,v,"We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience. By clicking 'Accept', you consent to our use of cookies and tracking technologies.");this.consentGiven=!1;this.consentShown=!1;this.errorMessage="";this.showError=!1;this.successMessage="";this.showSuccess=!1;this.infoMessage="";this.showInfo=!1}get siteId(){return n(this,w)}set siteId(e){i(this,w,e)}get domain(){return n(this,m)}set domain(e){i(this,m,e)}get matomoURL(){return n(this,f)}set matomoURL(e){i(this,f,e)}get showConsent(){return n(this,x)}set showConsent(e){i(this,x,e)}get consentMessage(){return n(this,v)}set consentMessage(e){i(this,v,e)}agree(){this.consentGiven=!0,this.consentShown=!1;let e=window._paq=window._paq||[];e.length!==0&&(e.push(["rememberConsentGiven"]),e.push(["trackPageView"]),this.showSuccessCallout("Tracking consent granted. Thank you!"))}disagree(){this.consentGiven=!1,this.consentShown=!1;let e=window._paq=window._paq||[];e.length!==0&&(e.push(["forgetConsentGiven"]),this.showInfoCallout("Tracking disabled. You can change this preference later."))}showConsentBanner(){this.showConsent&&!this.consentGiven&&!this.consentShown&&(this.consentShown=!0)}showErrorCallout(e){this.errorMessage=e,this.showError=!0,setTimeout(()=>{this.showError=!1},1e4)}showSuccessCallout(e){this.successMessage=e,this.showSuccess=!0,setTimeout(()=>{this.showSuccess=!1},5e3)}showInfoCallout(e){this.infoMessage=e,this.showInfo=!0,setTimeout(()=>{this.showInfo=!1},5e3)}render(){return l`
-      ${this.showError?l`
+import{c as a,d as n,e as s,f as i}from"./chunk.ZYCXU3RQ.js";import"@awesome.me/webawesome/dist/components/callout/callout.js";import"@awesome.me/webawesome/dist/components/icon/icon.js";import"@awesome.me/webawesome/dist/components/button/button.js";import{LitElement as x,html as c,css as v}from"lit";import{property as d,state as r}from"lit/decorators.js";var b,u,w,m,f,t=class extends x{constructor(){super(...arguments);this.name="hot-tracking";s(this,b,"");s(this,u,"");s(this,w,"https://matomo.hotosm.org");s(this,m,!0);s(this,f,"We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience. By clicking 'Accept', you consent to our use of cookies and tracking technologies.");this.consentGiven=!1;this.consentShown=!1;this.errorMessage="";this.showError=!1;this.successMessage="";this.showSuccess=!1;this.infoMessage="";this.showInfo=!1}get siteId(){return n(this,b)}set siteId(e){i(this,b,e)}get domain(){return n(this,u)}set domain(e){i(this,u,e)}get matomoURL(){return n(this,w)}set matomoURL(e){i(this,w,e)}get showConsent(){return n(this,m)}set showConsent(e){i(this,m,e)}get consentMessage(){return n(this,f)}set consentMessage(e){i(this,f,e)}agree(){this.consentGiven=!0,this.consentShown=!1;let e=window._paq=window._paq||[];e.length!==0&&(e.push(["rememberConsentGiven"]),e.push(["trackPageView"]),this.showSuccessCallout("Tracking consent granted. Thank you!"))}disagree(){this.consentGiven=!1,this.consentShown=!1;let e=window._paq=window._paq||[];e.length!==0&&(e.push(["forgetConsentGiven"]),this.showInfoCallout("Tracking disabled. You can change this preference later."))}showConsentBanner(){this.showConsent&&!this.consentGiven&&!this.consentShown&&(this.consentShown=!0)}showErrorCallout(e){this.errorMessage=e,this.showError=!0,setTimeout(()=>{this.showError=!1},1e4)}showSuccessCallout(e){this.successMessage=e,this.showSuccess=!0,setTimeout(()=>{this.showSuccess=!1},5e3)}showInfoCallout(e){this.infoMessage=e,this.showInfo=!0,setTimeout(()=>{this.showInfo=!1},5e3)}render(){return c`
+      ${this.showError?c`
         <div class="error-banner">
           <wa-callout style="padding: 1rem;" variant="danger" appearance="outlined filled" size="large">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-exclamation"></wa-icon>
@@ -11,7 +11,7 @@ import{b as c,c as r}from"./chunk.OHYOXYF2.js";import{b,e as l,k as u}from"./chu
         </div>
       `:""}
       
-      ${this.showSuccess?l`
+      ${this.showSuccess?c`
         <div class="toast-banner">
           <wa-callout style="padding: 1rem;" variant="success" appearance="outlined accent" size="medium">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-check"></wa-icon>
@@ -23,7 +23,7 @@ import{b as c,c as r}from"./chunk.OHYOXYF2.js";import{b,e as l,k as u}from"./chu
         </div>
       `:""}
       
-      ${this.showInfo?l`
+      ${this.showInfo?c`
         <div class="toast-banner">
           <wa-callout style="padding: 1rem;" variant="brand" appearance="outlined filled" size="medium">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-info"></wa-icon>
@@ -35,7 +35,7 @@ import{b as c,c as r}from"./chunk.OHYOXYF2.js";import{b,e as l,k as u}from"./chu
         </div>
       `:""}
       
-      ${this.consentShown?l`
+      ${this.consentShown?c`
         <div class="consent-banner">
           <wa-callout  variant="brand" appearance="outlined filled" size="large">
             <wa-icon slot="icon" family="classic" variant="solid" name="shield-check"></wa-icon>
@@ -54,7 +54,7 @@ import{b as c,c as r}from"./chunk.OHYOXYF2.js";import{b,e as l,k as u}from"./chu
           </wa-callout>
         </div>
       `:""}
-    `}connectedCallback(){if(super.connectedCallback(),window.location.hostname!==this.domain){this.showErrorCallout(`Matomo tracking is not configured for this domain. Current domain: ${window.location.hostname}, Expected: ${this.domain}`);return}let e=this.siteId;if(e.length===0||this.domain.length===0){this.showErrorCallout("Matomo tracking is not properly configured. Please provide both site-id and domain attributes.");return}console.log(`Setting Matomo tracking for site=${e} domain=${this.domain}`);let o=window._paq=window._paq||[];o.push(["requireConsent"]),o.push(["setDomains",[this.domain]]),o.push(["enableLinkTracking"]),o.push(["trackVisibleContentImpressions"]),function(h){o.push(["setTrackerUrl",`${h}/matomo.php`]),o.push(["setSiteId",e]);let g=document,p=g.createElement("script"),d=g.getElementsByTagName("script")[0];(d==null?void 0:d.parentNode)!=null?(p.async=!0,p.src=`${h}/matomo.js`,d.parentNode.insertBefore(p,d)):console.warn("Script insertion failed. Parent node is null.")}(this.matomoURL),setTimeout(()=>{this.showConsentBanner()},1e3)}};w=new WeakMap,m=new WeakMap,f=new WeakMap,x=new WeakMap,v=new WeakMap,t.styles=b`
+    `}connectedCallback(){if(super.connectedCallback(),window.location.hostname!==this.domain){this.showErrorCallout(`Matomo tracking is not configured for this domain. Current domain: ${window.location.hostname}, Expected: ${this.domain}`);return}let e=this.siteId;if(e.length===0||this.domain.length===0){this.showErrorCallout("Matomo tracking is not properly configured. Please provide both site-id and domain attributes.");return}console.log(`Setting Matomo tracking for site=${e} domain=${this.domain}`);let o=window._paq=window._paq||[];o.push(["requireConsent"]),o.push(["setDomains",[this.domain]]),o.push(["enableLinkTracking"]),o.push(["trackVisibleContentImpressions"]),(function(h){o.push(["setTrackerUrl",`${h}/matomo.php`]),o.push(["setSiteId",e]);let g=document,p=g.createElement("script"),l=g.getElementsByTagName("script")[0];(l==null?void 0:l.parentNode)!=null?(p.async=!0,p.src=`${h}/matomo.js`,l.parentNode.insertBefore(p,l)):console.warn("Script insertion failed. Parent node is null.")})(this.matomoURL),setTimeout(()=>{this.showConsentBanner()},1e3)}};b=new WeakMap,u=new WeakMap,w=new WeakMap,m=new WeakMap,f=new WeakMap,t.styles=v`
     :host {
       display: block;
       font-family: var(--wa-font-sans);
@@ -236,4 +236,4 @@ import{b as c,c as r}from"./chunk.OHYOXYF2.js";import{b,e as l,k as u}from"./chu
         width: 100%;
       }
     }
-  `,a([c({type:String,attribute:"site-id"})],t.prototype,"siteId",1),a([c({type:String})],t.prototype,"domain",1),a([c({type:String})],t.prototype,"matomoURL",1),a([c({type:Boolean,attribute:"show-consent"})],t.prototype,"showConsent",1),a([c({type:String,attribute:"consent-message"})],t.prototype,"consentMessage",1),a([r()],t.prototype,"consentGiven",2),a([r()],t.prototype,"consentShown",2),a([r()],t.prototype,"errorMessage",2),a([r()],t.prototype,"showError",2),a([r()],t.prototype,"successMessage",2),a([r()],t.prototype,"showSuccess",2),a([r()],t.prototype,"infoMessage",2),a([r()],t.prototype,"showInfo",2);var q=t;export{t as a,q as b};
+  `,a([d({type:String,attribute:"site-id"})],t.prototype,"siteId",1),a([d({type:String})],t.prototype,"domain",1),a([d({type:String})],t.prototype,"matomoURL",1),a([d({type:Boolean,attribute:"show-consent"})],t.prototype,"showConsent",1),a([d({type:String,attribute:"consent-message"})],t.prototype,"consentMessage",1),a([r()],t.prototype,"consentGiven",2),a([r()],t.prototype,"consentShown",2),a([r()],t.prototype,"errorMessage",2),a([r()],t.prototype,"showError",2),a([r()],t.prototype,"successMessage",2),a([r()],t.prototype,"showSuccess",2),a([r()],t.prototype,"infoMessage",2),a([r()],t.prototype,"showInfo",2);var q=t;export{t as a,q as b};
