@@ -1,4 +1,4 @@
-import{b as o}from"./chunk.C6I42VVF.js";var t=o`
+import{a as o}from"./chunk.WSMXFTSE.js";var t=o`
   :host {
     display: block;
   }
@@ -15,7 +15,7 @@ import{b as o}from"./chunk.C6I42VVF.js";var t=o`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.25rem;
     animation: fadeIn 0.3s ease-out;
   }
 
@@ -30,7 +30,7 @@ import{b as o}from"./chunk.C6I42VVF.js";var t=o`
 
   .consent-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 100%;
     animation: slideUp 0.4s ease-out;
   }
 
@@ -73,12 +73,12 @@ import{b as o}from"./chunk.C6I42VVF.js";var t=o`
   }
 
   .consent-content {
-    padding: 1.5rem;
+    padding: 0.75rem;
   }
 
   .consent-header {
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     line-height: 1.3;
     margin: 0 0 1rem 0;
     color: #1f2937;
@@ -92,7 +92,7 @@ import{b as o}from"./chunk.C6I42VVF.js";var t=o`
 
   .consent-message p {
     margin: 0 0 1rem 0;
-    font-size: 1rem;
+    font-size: 0.875rem;
     line-height: 1.6;
     color: #4b5563;
   }
@@ -103,13 +103,15 @@ import{b as o}from"./chunk.C6I42VVF.js";var t=o`
 
   .consent-actions {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
     justify-content: center;
     flex-wrap: wrap;
   }
 
   .consent-button {
-    min-width: 120px;
+    width: 100%;
+    min-width: auto;
     font-weight: 500;
     transition: all 0.2s ease;
     border-radius: 8px;
@@ -142,53 +144,6 @@ import{b as o}from"./chunk.C6I42VVF.js";var t=o`
     border-color: var(--hot-color-red-700);
   }
 
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .consent-overlay {
-      padding: 0.5rem;
-    }
-
-    .consent-container {
-      max-width: 100%;
-    }
-
-    .consent-content {
-      padding: 1rem;
-    }
-
-    .consent-header {
-      font-size: 1.25rem;
-    }
-
-    .consent-actions {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .consent-button {
-      width: 100%;
-      min-width: auto;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .consent-overlay {
-      padding: 0.25rem;
-    }
-
-    .consent-content {
-      padding: 0.75rem;
-    }
-
-    .consent-header {
-      font-size: 1.125rem;
-    }
-
-    .consent-message p {
-      font-size: 0.875rem;
-    }
-  }
-
   /* Focus styles for accessibility */
   .consent-button:focus {
     outline: 2px solid var(--hot-color-red-500);
@@ -213,6 +168,56 @@ import{b as o}from"./chunk.C6I42VVF.js";var t=o`
     .consent-button {
       animation: none;
       transition: none;
+    }
+  }
+
+  /* Responsive design for larger screens */
+  @media (min-width: 481px) {
+    .consent-overlay {
+      padding: 0.5rem;
+    }
+
+    .consent-content {
+      padding: 1rem;
+    }
+
+    .consent-header {
+      font-size: 1.25rem;
+    }
+
+    .consent-message p {
+      font-size: 1rem;
+    }
+
+    .consent-actions {
+      gap: 1rem;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .consent-overlay {
+      padding: 1rem;
+    }
+
+    .consent-container {
+      max-width: 600px;
+    }
+
+    .consent-content {
+      padding: 1.5rem;
+    }
+
+    .consent-header {
+      font-size: 1.5rem;
+    }
+
+    .consent-actions {
+      flex-direction: row;
+    }
+
+    .consent-button {
+      width: auto;
+      min-width: 120px;
     }
   }
 `;export{t as a};
