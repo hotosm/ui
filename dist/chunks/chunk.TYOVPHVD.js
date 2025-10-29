@@ -1,4 +1,4 @@
-import{css as o}from"lit";var t=o`
+import{a as o}from"./chunk.WSMXFTSE.js";var t=o`
   :host {
     display: block;
   }

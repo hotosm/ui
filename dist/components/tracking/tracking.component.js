@@ -1,1 +1,1 @@
-import{a,b}from"../../chunks/chunk.ZBHB2PSV.js";import"../../chunks/chunk.ZYCXU3RQ.js";export{a as MatomoTracking,b as default};
+import{a,b}from"../../chunks/chunk.SLQC3DLQ.js";import"../../chunks/chunk.FT6RSQVB.js";import"../../chunks/chunk.WSMXFTSE.js";import"../../chunks/chunk.N2W26RCT.js";export{a as MatomoTracking,b as default};

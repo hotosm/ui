@@ -1,4 +1,4 @@
-import{css as e}from"lit";var t=e`
+import{a as e}from"./chunk.WSMXFTSE.js";var t=e`
   .logo {
     line-height: 0;
     height: var(--hot-spacing-3x-large)
