@@ -1,5 +1,6 @@
 import { LitElement } from 'lit';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
+import '@awesome.me/webawesome/dist/components/divider/divider.js';
 export interface FileWithPreview {
     file: File;
     id: string;
@@ -16,6 +17,7 @@ export declare class FileInputDropzone extends LitElement {
     private accessor isDragging;
     private accessor selectedFiles;
     private accessor errorMessage;
+    private accessor imageUrls;
     private accessor fileInput;
     private _generateId;
     private _handleDragOver;
@@ -24,6 +26,7 @@ export declare class FileInputDropzone extends LitElement {
     private _handleClick;
     private _handleFileInputChange;
     private _processFiles;
+    private _generateThumbnail;
     private _removeFile;
     private _getFileIcon;
     private _formatFileSize;

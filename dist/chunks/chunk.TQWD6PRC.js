@@ -1,6 +1,4 @@
-import { css } from 'lit';
-
-export default css`
+import{a as o}from"./chunk.64GCJQA3.js";var e=o`
   :host {
     display: block;
     font-family: var(--hot-font-sans-variant-condensed);
@@ -346,4 +344,4 @@ export default css`
       font-size: 24px;
     }
   }
-`;
+`;export{e as a};

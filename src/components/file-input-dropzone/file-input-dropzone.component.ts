@@ -2,6 +2,8 @@ import { LitElement, html } from 'lit';
 import { property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
+import '@awesome.me/webawesome/dist/components/divider/divider.js';
+
 import styles from './file-input-dropzone.styles.js';
 
 export interface FileWithPreview {
@@ -29,7 +31,7 @@ export class FileInputDropzone extends LitElement {
   accessor disabled = false;
 
   @property({ type: String })
-  accessor label = 'Drop files here or click to browse';
+  accessor label = '';
 
   @state()
   private accessor isDragging = false;
@@ -39,6 +41,9 @@ export class FileInputDropzone extends LitElement {
 
   @state()
   private accessor errorMessage = '';
+
+  @state()
+  private accessor imageUrls: Map<string, string> = new Map();
 
   @query('input[type="file"]')
   private accessor fileInput!: HTMLInputElement;
@@ -132,10 +137,16 @@ export class FileInputDropzone extends LitElement {
     }));
 
     if (this.multiple) {
-      this.selectedFiles = [...this.selectedFiles, ...filesWithPreview];
+      this.selectedFiles = [...filesWithPreview, ...this.selectedFiles];
     } else {
       this.selectedFiles = filesWithPreview;
     }
+
+    filesWithPreview.forEach((fileItem) => {
+      if (fileItem.file.type.startsWith('image/')) {
+        this._generateThumbnail(fileItem.file, fileItem.id);
+      }
+    });
 
     this.dispatchEvent(
       new CustomEvent('hot-file-change', {
@@ -159,8 +170,29 @@ export class FileInputDropzone extends LitElement {
     );
   }
 
+  private _generateThumbnail(file: File, id: string) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = (e) => {
+      if (e.target?.result) {
+        this.imageUrls = new Map(this.imageUrls).set(
+          id,
+          e.target.result as string
+        );
+        this.requestUpdate();
+      }
+    };
+  }
+
   private _removeFile(id: string) {
     this.selectedFiles = this.selectedFiles.filter((f) => f.id !== id);
+
+    if (this.imageUrls.has(id)) {
+      const newImageUrls = new Map(this.imageUrls);
+      newImageUrls.delete(id);
+      this.imageUrls = newImageUrls;
+    }
 
     if (this.fileInput) {
       this.fileInput.value = '';
@@ -206,6 +238,7 @@ export class FileInputDropzone extends LitElement {
   public clearFiles() {
     this.selectedFiles = [];
     this.errorMessage = '';
+    this.imageUrls = new Map();
     if (this.fileInput) {
       this.fileInput.value = '';
     }
@@ -223,9 +256,17 @@ export class FileInputDropzone extends LitElement {
       'dropzone--has-files': this.selectedFiles.length > 0,
     };
 
+    const imageFiles = this.selectedFiles.filter((f) =>
+      f.file.type.startsWith('image/')
+    );
+    const documentFiles = this.selectedFiles.filter(
+      (f) => !f.file.type.startsWith('image/')
+    );
+
     return html`
       <div class="file-input-dropzone">
         ${this.label ? html`<label class="label">${this.label}</label>` : ''}
+        <wa-divider></wa-divider>
 
         <div
           class=${classMap(dropzoneClasses)}
@@ -236,6 +277,7 @@ export class FileInputDropzone extends LitElement {
         >
           <input
             type="file"
+            class="file-uploader"
             ?multiple=${this.multiple}
             accept=${this.accept}
             ?disabled=${this.disabled}
@@ -247,9 +289,12 @@ export class FileInputDropzone extends LitElement {
             <wa-icon name="cloud-arrow-up" class="dropzone-icon"></wa-icon>
             <div class="dropzone-text">
               ${this.isDragging
-                ? html`<strong>Drop files here</strong>`
+                ? html`<div>Drop files here</div>`
                 : html`
-                    <div>Drop your file(s) or<strong> browse</strong></div>
+                    <div class="dropzone-cta">
+                      <div>Drop file(s) here or&nbsp;</div>
+                      <div class="browse">browse</div>
+                    </div>
                     ${this.accept
                       ? html`<div class="dropzone-accept">
                           ${this.accept} only
@@ -273,10 +318,66 @@ export class FileInputDropzone extends LitElement {
               </div>
             `
           : ''}
-        ${this.showPreview && this.selectedFiles.length > 0
+        ${this.showPreview && imageFiles.length > 0
+          ? html`
+              <div class="image-grid-container">
+                <div class="image-preview-header">
+                  <button
+                    type="button"
+                    class="header-action-btn header-action-btn--cancel"
+                    @click=${this.clearFiles}
+                  >
+                    Cancel
+                  </button>
+                  <div class="file-count">
+                    ${imageFiles.length}
+                    ${imageFiles.length === 1 ? 'file' : 'files'} selected
+                  </div>
+                  <button
+                    type="button"
+                    class="header-action-btn header-action-btn--add"
+                    @click=${this._handleClick}
+                  >
+                    + Add more
+                  </button>
+                </div>
+                <div class="image-grid">
+                  ${imageFiles.map(
+                    ({ file, id }) => html`
+                      <div class="image-thumbnail">
+                        <div
+                          class="thumbnail-image"
+                          style="background-image: url(${this.imageUrls.get(
+                            id
+                          ) || ''})"
+                        ></div>
+                        <button
+                          type="button"
+                          class="thumbnail-remove"
+                          @click=${() => this._removeFile(id)}
+                          aria-label="Remove ${file.name}"
+                        >
+                          <wa-icon name="xmark"></wa-icon>
+                        </button>
+                        <div class="thumbnail-info">
+                          <div class="thumbnail-name">${file.name}</div>
+                          <div class="thumbnail-size">
+                            ${this._formatFileSize(file.size)}
+                          </div>
+                        </div>
+                      </div>
+                    `
+                  )}
+                </div>
+              </div>
+            `
+          : ''}
+        ${this.showPreview && documentFiles.length > 0
           ? html`
               <div class="file-list">
-                ${this.selectedFiles.map(
+                <div class="file-list-header">Documents</div>
+                <wa-divider></wa-divider>
+                ${documentFiles.map(
                   ({ file, id }) => html`
                     <div class="file-item">
                       <wa-icon
@@ -285,17 +386,14 @@ export class FileInputDropzone extends LitElement {
                       ></wa-icon>
                       <div class="file-info">
                         <div class="file-name">${file.name}</div>
-                        <div class="file-size">
-                          ${this._formatFileSize(file.size)}
-                        </div>
                       </div>
                       <button
                         type="button"
-                        class="file-remove"
+                        class="thumbnail-remove"
                         @click=${() => this._removeFile(id)}
                         aria-label="Remove ${file.name}"
                       >
-                        <wa-icon name="trash"></wa-icon>
+                        <wa-icon name="xmark"></wa-icon>
                       </button>
                     </div>
                   `

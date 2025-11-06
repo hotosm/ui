@@ -94,8 +94,8 @@ export const MultipleFiles: Story = {
 export const ImagesOnly: Story = {
   args: {
     multiple: true,
-    accept: '.jpg, .png',
-    label: 'Upload images',
+    accept: 'image/*',
+    label: 'Image Upload',
     showPreview: true,
   },
   render: (args) => html`
