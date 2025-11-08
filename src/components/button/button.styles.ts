@@ -51,6 +51,18 @@ export default css`
     font-size: var(--hot-font-size-medium);
   }
 
+  .button--icon-only.button--small {
+    padding: var(--hot-spacing-2x-small);
+  }
+
+  .button--icon-only.button--medium {
+    padding: var(--hot-spacing-x-small);
+  }
+
+  .button--icon-only.button--large {
+    padding: var(--hot-spacing-small);
+  }
+
   .button--small {
     padding: var(--hot-spacing-2x-small) var(--hot-spacing-small);
     font-size: var(--hot-font-size-x-small);

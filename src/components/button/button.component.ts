@@ -31,6 +31,9 @@ export class Button extends LitElement {
   accessor type: 'button' | 'submit' | 'reset';
 
   @property({ type: String })
+  accessor icon = '';
+
+  @property({ type: String })
   accessor iconLeft = '';
 
   @property({ type: String })
@@ -42,6 +45,13 @@ export class Button extends LitElement {
       e.stopPropagation();
       return;
     }
+
+    this.dispatchEvent(
+      new CustomEvent('hot-click', {
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   protected render() {
@@ -51,6 +61,7 @@ export class Button extends LitElement {
       [`button--${this.color}`]: true,
       [`button--${this.size}`]: true,
       'button--full-width': this.fullWidth,
+      'button--icon-only': this.icon && !this.iconLeft && !this.iconRight,
     };
 
     return html`
@@ -60,6 +71,12 @@ export class Button extends LitElement {
         ?disabled=${this.disabled}
         @click=${this._handleClick}
       >
+        ${this.icon && !this.iconLeft && !this.iconRight
+          ? html`<wa-icon
+              name=${this.icon}
+              class="button__icon"
+            ></wa-icon>`
+          : ''}
         ${this.iconLeft
           ? html`<wa-icon
               name=${this.iconLeft}
