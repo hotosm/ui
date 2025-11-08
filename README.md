@@ -192,7 +192,7 @@ are bound to slightly differently:
 For **styling**, check `/theme`:
 
 - `hot.css` has a HOT theme, used across HOT components.
-- `hot-wa-override.css` has a WebAwesome theme, re-defining style variables.
+- `hot-wa.css` has a WebAwesome theme, re-defining style variables.
 
 ### License
 

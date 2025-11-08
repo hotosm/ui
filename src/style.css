@@ -5,7 +5,5 @@
 @import 'themes/hot.css';
 
 /* Then our WebAwesome overrides */
-@import 'themes/hot-wa-override.css';
+@import 'themes/hot-wa.css';
 
-/* Finally our specific button component override */
-@import 'themes/hot-button-override.css';

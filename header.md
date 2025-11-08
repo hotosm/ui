@@ -36,8 +36,7 @@ This CSS bundles:
 
 - WebAwesome base styles
 - HOT theme variables (`hot.css`)
-- WebAwesome overrides (`hot-wa-override.css`)
-- Button overrides (`hot-button-override.css`)
+- WebAwesome overrides (`hot-wa.css`)
 
 The header automatically injects HOT variables into WebAwesome components
 inside its Shadow DOM. No extra setup is required for styling.

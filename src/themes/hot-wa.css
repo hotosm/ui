@@ -1,7 +1,15 @@
+/* HOT theme for WebAwesome
 
-/* HOT colour palette for WebAwesome */
+1. First import WebAwesome base styles
+@import url("https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css");
 
-@import url('https://early.webawesome.com/webawesome@3.0.0-beta.3/dist/styles/color/palettes/base.css');
+2. Then import our HOT theme variables
+@import "./hot.css";
+@import "./hot-font-face.css";
+
+3. Then HOT WebAwesome overrides
+@import "./hot-wa.css";
+*/
 
 @layer wa-color-palette {
   :where(:root),
@@ -230,7 +238,13 @@
     * WebAwesome Theme Override
     * This defines all the semantic color variants used by WebAwesome components
     */
-    :where(:root), .wa-theme-default, .wa-light, .wa-dark .wa-invert, .wa-light .wa-theme-default, .wa-dark .wa-theme-default.wa-invert, .wa-dark .wa-theme-default .wa-invert {
+    :where(:root),
+    .wa-theme-default,
+    .wa-light,
+    .wa-dark .wa-invert,
+    .wa-light .wa-theme-default,
+    .wa-dark .wa-theme-default.wa-invert,
+    .wa-dark .wa-theme-default .wa-invert {
       color-scheme: light;
       color: var(--wa-color-text-normal);
       --wa-color-surface-raised: white;
@@ -240,12 +254,21 @@
       --wa-color-text-normal: var(--wa-color-neutral-10);
       --wa-color-text-quiet: var(--wa-color-neutral-40);
       --wa-color-text-link: var(--wa-color-brand-40);
-      --wa-color-overlay-modal: 
-        color-mix(in oklab, var(--wa-color-neutral-05) 50%, transparent);
-      --wa-color-overlay-inline: 
-        color-mix(in oklab, var(--wa-color-neutral-80) 25%, transparent);
-      --wa-color-shadow: 
-        color-mix(in oklab, var(--wa-color-neutral-05) calc(var(--wa-shadow-blur-scale) * 4% + 8%), transparent);
+      --wa-color-overlay-modal: color-mix(
+        in oklab,
+        var(--wa-color-neutral-05) 50%,
+        transparent
+      );
+      --wa-color-overlay-inline: color-mix(
+        in oklab,
+        var(--wa-color-neutral-80) 25%,
+        transparent
+      );
+      --wa-color-shadow: color-mix(
+        in oklab,
+        var(--wa-color-neutral-05) calc(var(--wa-shadow-blur-scale) * 4% + 8%),
+        transparent
+      );
       --wa-color-focus: var(--wa-color-brand-60);
       --wa-color-mix-hover: black 10%;
       --wa-color-mix-active: black 20%;
@@ -311,11 +334,11 @@
 
     /* Font sizes */
     --wa-font-size-2xs: var(--hot-font-size-2x-small); /* 10px */
-    --wa-font-size-xs: var(--hot-font-size-x-small);   /* 12px */
-    --wa-font-size-s: var(--hot-font-size-small);      /* 14px */
-    --wa-font-size-m: var(--hot-font-size-medium);     /* 16px */
-    --wa-font-size-l: var(--hot-font-size-large);      /* 20px */
-    --wa-font-size-xl: var(--hot-font-size-x-large);   /* 24px */
+    --wa-font-size-xs: var(--hot-font-size-x-small); /* 12px */
+    --wa-font-size-s: var(--hot-font-size-small); /* 14px */
+    --wa-font-size-m: var(--hot-font-size-medium); /* 16px */
+    --wa-font-size-l: var(--hot-font-size-large); /* 20px */
+    --wa-font-size-xl: var(--hot-font-size-x-large); /* 24px */
     --wa-font-size-2xl: var(--hot-font-size-2x-large); /* 36px */
     --wa-font-size-3xl: var(--hot-font-size-3x-large); /* 48px */
     --wa-font-size-4xl: var(--hot-font-size-4x-large); /* 72px */
@@ -347,246 +370,21 @@
     */
     /*  */
 
-    --wa-space-3xs: var(--hot-spacing-3x-small);  /* 2px */
-    --wa-space-2xs: var(--hot-spacing-2x-small);  /* 4px */
-    --wa-space-xs: var(--hot-spacing-x-small);    /* 8px */
-    --wa-space-s: var(--hot-spacing-small);       /* 12px */
-    --wa-space-m: var(--hot-spacing-medium);      /* 16px */
-    --wa-space-l: var(--hot-spacing-large);       /* 20px */
-    --wa-space-xl: var(--hot-spacing-x-large);    /* 28px */
-    --wa-space-2xl: var(--hot-spacing-2x-large);  /* 36px */
-    --wa-space-3xl: var(--hot-spacing-3x-large);  /* 48px */
-    --wa-space-4xl: var(--hot-spacing-4x-large);  /* 72px */
+    --wa-space-3xs: var(--hot-spacing-3x-small); /* 2px */
+    --wa-space-2xs: var(--hot-spacing-2x-small); /* 4px */
+    --wa-space-xs: var(--hot-spacing-x-small); /* 8px */
+    --wa-space-s: var(--hot-spacing-small); /* 12px */
+    --wa-space-m: var(--hot-spacing-medium); /* 16px */
+    --wa-space-l: var(--hot-spacing-large); /* 20px */
+    --wa-space-xl: var(--hot-spacing-x-large); /* 28px */
+    --wa-space-2xl: var(--hot-spacing-2x-large); /* 36px */
+    --wa-space-3xl: var(--hot-spacing-3x-large); /* 48px */
+    --wa-space-4xl: var(--hot-spacing-4x-large); /* 72px */
 
-    --wa-border-radius-s: var(--hot-border-radius-small);        /* 3px */
-    --wa-border-radius-m: var(--hot-border-radius-medium);       /* 4px */
-    --wa-border-radius-l: var(--hot-border-radius-large);        /* 8px */
-    --wa-border-radius-pill: var(--hot-border-radius-pill);      /* 9999px */
-    --wa-border-radius-circle: var(--hot-border-radius-circle);  /* 50% */
+    --wa-border-radius-s: var(--hot-border-radius-small); /* 3px */
+    --wa-border-radius-m: var(--hot-border-radius-medium); /* 4px */
+    --wa-border-radius-l: var(--hot-border-radius-large); /* 8px */
+    --wa-border-radius-pill: var(--hot-border-radius-pill); /* 9999px */
+    --wa-border-radius-circle: var(--hot-border-radius-circle); /* 50% */
   }
-}
-
-/*
-* Button Customizations
-* Based on WebAwesome documentation: https://webawesome.com/docs/customizing/
-*/
-
-/* Custom Properties for Button Components */
-wa-button {
-  /* Button sizing */
-  --size: var(--wa-space-l); /* 20px - default button height */
-  --padding-x: var(--wa-space-m); /* 16px horizontal padding */
-  --padding-y: var(--wa-space-s); /* 12px vertical padding */
-  
-  /* Button appearance */
-  --border-radius: var(--wa-border-radius-m); /* 4px border radius */
-  --border-width: 1px;
-  --font-size: var(--wa-font-size-s); /* 14px font size */
-  --font-weight: var(--wa-font-weight-action); /* semibold */
-  
-  /* Button states */
-  --transition-duration: 150ms;
-  --transition-timing: ease-out;
-}
-
-/* Button size variants */
-wa-button[size="small"] {
-  --size: var(--wa-space-m); /* 16px */
-  --padding-x: var(--wa-space-s); /* 12px */
-  --padding-y: var(--wa-space-xs); /* 8px */
-  --font-size: var(--wa-font-size-xs); /* 12px */
-}
-
-wa-button[size="large"] {
-  --size: var(--wa-space-xl); /* 28px */
-  --padding-x: var(--wa-space-l); /* 20px */
-  --padding-y: var(--wa-space-m); /* 16px */
-  --font-size: var(--wa-font-size-m); /* 16px */
-}
-
-/* CSS Parts for advanced button styling */
-wa-button::part(base) {
-  /* Base button styling */
-  border-radius: var(--border-radius);
-  border-width: var(--border-width);
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
-  padding: var(--padding-y) var(--padding-x);
-  min-height: var(--size);
-  transition: all var(--transition-duration) var(--transition-timing);
-  
-  /* HOT-specific styling */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-wa-button::part(base):hover {
-  /* Hover state */
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-wa-button::part(base):active {
-  /* Active state */
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-wa-button::part(base):focus-visible {
-  /* Focus state */
-  outline: 2px solid var(--wa-color-focus);
-  outline-offset: 2px;
-}
-
-wa-button::part(label) {
-  /* Button text styling */
-  font-family: var(--wa-font-family-body);
-  letter-spacing: 0.025em;
-}
-
-/* Button variant-specific styling */
-wa-button[variant="primary"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-brand-fill-loud), var(--wa-color-brand-fill-normal));
-  border-color: var(--wa-color-brand-border-loud);
-  color: var(--wa-color-brand-on-loud);
-}
-
-wa-button[variant="primary"]::part(base):hover {
-  background: linear-gradient(135deg, var(--wa-color-brand-fill-normal), var(--wa-color-brand-fill-quiet));
-  border-color: var(--wa-color-brand-border-normal);
-}
-
-wa-button[variant="secondary"]::part(base) {
-  background: var(--wa-color-neutral-fill-quiet);
-  border-color: var(--wa-color-neutral-border-normal);
-  color: var(--wa-color-neutral-on-quiet);
-}
-
-wa-button[variant="secondary"]::part(base):hover {
-  background: var(--wa-color-neutral-fill-normal);
-  border-color: var(--wa-color-neutral-border-loud);
-  color: var(--wa-color-neutral-on-normal);
-}
-
-wa-button[variant="outline"]::part(base) {
-  background: transparent;
-  border-color: var(--wa-color-brand-border-normal);
-  color: var(--wa-color-brand-on-normal);
-}
-
-wa-button[variant="outline"]::part(base):hover {
-  background: var(--wa-color-brand-fill-quiet);
-  border-color: var(--wa-color-brand-border-loud);
-  color: var(--wa-color-brand-on-quiet);
-}
-
-/* Success, warning, danger variants */
-wa-button[variant="success"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-success-fill-loud), var(--wa-color-success-fill-normal));
-  border-color: var(--wa-color-success-border-loud);
-  color: var(--wa-color-success-on-loud);
-}
-
-wa-button[variant="warning"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-warning-fill-loud), var(--wa-color-warning-fill-normal));
-  border-color: var(--wa-color-warning-border-loud);
-  color: var(--wa-color-warning-on-loud);
-}
-
-wa-button[variant="danger"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-danger-fill-loud), var(--wa-color-danger-fill-normal));
-  border-color: var(--wa-color-danger-border-loud);
-  color: var(--wa-color-danger-on-loud);
-}
-
-/* Custom states using :state() selector */
-wa-button:state(disabled)::part(base) {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-wa-button:state(loading)::part(base) {
-  cursor: wait;
-}
-
-/* Custom button classes for specific use cases */
-wa-button.hot-gradient::part(base) {
-  background: linear-gradient(217deg, var(--wa-color-red-50), var(--wa-color-orange-50), var(--wa-color-yellow-50));
-  border: solid 1px var(--wa-color-orange-50);
-  color: white;
-  text-shadow: rgba(0, 0, 0, 0.3) 0 -1px;
-}
-
-wa-button.hot-gradient::part(base):hover {
-  box-shadow: var(--wa-shadow-m);
-  transform: translateY(-3px);
-}
-
-wa-button.hot-gradient::part(base):active {
-  box-shadow: inset var(--wa-shadow-s);
-  transform: translateY(0);
-}
-
-/* Icon button styling */
-wa-button[appearance="icon"] {
-  --padding-x: var(--wa-space-xs);
-  --padding-y: var(--wa-space-xs);
-  --size: var(--wa-space-xl);
-}
-
-wa-button[appearance="icon"]::part(base) {
-  border-radius: var(--wa-border-radius-circle);
-  padding: var(--padding-y);
-  min-width: var(--size);
-  min-height: var(--size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Native button element support */
-button {
-  /* Apply same custom properties to native buttons */
-  --size: var(--wa-space-l);
-  --padding-x: var(--wa-space-m);
-  --padding-y: var(--wa-space-s);
-  --border-radius: var(--wa-border-radius-m);
-  --border-width: 1px;
-  --font-size: var(--wa-font-size-s);
-  --font-weight: var(--wa-font-weight-action);
-  --transition-duration: 150ms;
-  --transition-timing: ease-out;
-  
-  border-radius: var(--border-radius);
-  border-width: var(--border-width);
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
-  padding: var(--padding-y) var(--padding-x);
-  min-height: var(--size);
-  transition: all var(--transition-duration) var(--transition-timing);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-button:focus-visible {
-  outline: 2px solid var(--wa-color-focus);
-  outline-offset: 2px;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
