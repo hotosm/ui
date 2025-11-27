@@ -1,9 +1,9 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
     display: block;
-    font-family: var(--hot-font-sans-variant-condensed);
+    font-family: var(--hot-font-sans);
   }
 
   .list-item {
@@ -42,7 +42,15 @@ export default css`
     margin-top: var(--hot-spacing-3x-small);
   }
 
-  .list-remove {
+  .remove-icon {
+    font-size: var(--hot-font-size-large);
+    color: var(--hot-color-neutral-500);
+    cursor: pointer;
     flex-shrink: 0;
+    transition: color 0.2s ease;
+  }
+
+  .remove-icon:hover {
+    color: var(--hot-color-red-600);
   }
 `;

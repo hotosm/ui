@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
-import '../button/button.js';
 import styles from './list-card.styles.js';
 
 export class ListCard extends LitElement {
@@ -52,16 +51,14 @@ export class ListCard extends LitElement {
         </div>
         ${this.showRemove
           ? html`
-              <hot-button
-                variant="ghost"
-                color="neutral"
-                size="small"
-                icon="xmark"
-                class="list-remove"
-                @hot-click=${this._handleRemove}
+              <wa-icon
+                name="xmark"
+                class="remove-icon"
+                @click=${this._handleRemove}
+                role="button"
+                tabindex="0"
                 aria-label="Remove ${this.title}"
-              >
-              </hot-button>
+              ></wa-icon>
             `
           : ''}
       </div>

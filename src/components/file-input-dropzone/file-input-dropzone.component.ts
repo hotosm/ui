@@ -3,6 +3,7 @@ import { property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
 import '@awesome.me/webawesome/dist/components/divider/divider.js';
+import '../list-card/list-card.js';
 
 import styles from './file-input-dropzone.styles.js';
 
@@ -32,6 +33,9 @@ export class FileInputDropzone extends LitElement {
 
   @property({ type: String })
   accessor label = '';
+
+  @property({ type: String })
+  accessor variant: 'traditional' | 'compact' = 'traditional';
 
   @state()
   private accessor isDragging = false;
@@ -209,9 +213,17 @@ export class FileInputDropzone extends LitElement {
     );
   }
 
-  private _getFileIcon(file: File): string {
-    const type = file.type;
+  private _formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
 
+    const k = 1000;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  }
+
+  private _getFileIcon(type: string): string {
     if (type.startsWith('image/')) return 'file-image';
     if (type.startsWith('video/')) return 'file-video';
     if (type.startsWith('audio/')) return 'file-audio';
@@ -223,16 +235,6 @@ export class FileInputDropzone extends LitElement {
     if (type.includes('text')) return 'file-text';
 
     return 'file';
-  }
-
-  private _formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
   }
 
   public clearFiles() {
@@ -254,19 +256,15 @@ export class FileInputDropzone extends LitElement {
       'dropzone--dragging': this.isDragging,
       'dropzone--disabled': this.disabled,
       'dropzone--has-files': this.selectedFiles.length > 0,
+      'dropzone--compact': this.variant === 'compact',
     };
 
-    const imageFiles = this.selectedFiles.filter((f) =>
-      f.file.type.startsWith('image/')
-    );
-    const documentFiles = this.selectedFiles.filter(
-      (f) => !f.file.type.startsWith('image/')
-    );
+    const isCompact = this.variant === 'compact';
 
     return html`
       <div class="file-input-dropzone">
-        ${this.label ? html`<label class="label">${this.label}</label>` : ''}
-        <wa-divider></wa-divider>
+        ${this.label && this.variant === 'traditional' ? html`<label class="label">${this.label}</label>` : ''}
+        ${this.variant === 'traditional' ? html`<wa-divider></wa-divider>` : ''}
 
         <div
           class=${classMap(dropzoneClasses)}
@@ -286,18 +284,22 @@ export class FileInputDropzone extends LitElement {
           />
 
           <div class="dropzone-content">
-            <wa-icon name="cloud-arrow-up" class="dropzone-icon"></wa-icon>
+            <wa-icon name="${isCompact ? 'arrow-up-from-bracket' : 'cloud-arrow-up'}" class="dropzone-icon"></wa-icon>
             <div class="dropzone-text">
-              ${this.isDragging
-                ? html`<div>Drop files here</div>`
+              ${isCompact
+                ? html`<div class="compact-text">${this.label}</div>`
+                : this.isDragging
+                ? html`<div>Drop ${this.multiple ? 'files' : 'file'} here</div>`
                 : html`
                     <div class="dropzone-cta">
-                      <div>Drop file(s) here or&nbsp;</div>
+                      <div>
+                        Drop ${this.multiple ? 'files' : 'file'} here or&nbsp;
+                      </div>
                       <div class="browse">browse</div>
                     </div>
                     ${this.accept
                       ? html`<div class="dropzone-accept">
-                          ${this.accept} only
+                          ${this.accept.split(',').join(', ')} only
                         </div>`
                       : ''}
                     ${this.maxSize
@@ -309,7 +311,6 @@ export class FileInputDropzone extends LitElement {
             </div>
           </div>
         </div>
-
         ${this.errorMessage
           ? html`
               <div class="error-message" role="alert">
@@ -318,84 +319,18 @@ export class FileInputDropzone extends LitElement {
               </div>
             `
           : ''}
-        ${this.showPreview && imageFiles.length > 0
+        ${this.showPreview && this.selectedFiles.length > 0
           ? html`
-              <div class="image-grid-container">
-                <div class="image-preview-header">
-                  <button
-                    type="button"
-                    class="header-action-btn header-action-btn--cancel"
-                    @click=${this.clearFiles}
-                  >
-                    Cancel
-                  </button>
-                  <div class="file-count">
-                    ${imageFiles.length}
-                    ${imageFiles.length === 1 ? 'file' : 'files'} selected
-                  </div>
-                  <button
-                    type="button"
-                    class="header-action-btn header-action-btn--add"
-                    @click=${this._handleClick}
-                  >
-                    + Add more
-                  </button>
-                </div>
-                <div class="image-grid">
-                  ${imageFiles.map(
-                    ({ file, id }) => html`
-                      <div class="image-thumbnail">
-                        <div
-                          class="thumbnail-image"
-                          style="background-image: url(${this.imageUrls.get(
-                            id
-                          ) || ''})"
-                        ></div>
-                        <button
-                          type="button"
-                          class="thumbnail-remove"
-                          @click=${() => this._removeFile(id)}
-                          aria-label="Remove ${file.name}"
-                        >
-                          <wa-icon name="xmark"></wa-icon>
-                        </button>
-                        <div class="thumbnail-info">
-                          <div class="thumbnail-name">${file.name}</div>
-                          <div class="thumbnail-size">
-                            ${this._formatFileSize(file.size)}
-                          </div>
-                        </div>
-                      </div>
-                    `
-                  )}
-                </div>
-              </div>
-            `
-          : ''}
-        ${this.showPreview && documentFiles.length > 0
-          ? html`
-              <div class="file-list">
-                <div class="file-list-header">Documents</div>
-                <wa-divider></wa-divider>
-                ${documentFiles.map(
+              <div class="file-preview-list">
+                ${this.selectedFiles.map(
                   ({ file, id }) => html`
-                    <div class="file-item">
-                      <wa-icon
-                        name=${this._getFileIcon(file)}
-                        class="file-icon"
-                      ></wa-icon>
-                      <div class="file-info">
-                        <div class="file-name">${file.name}</div>
-                      </div>
-                      <button
-                        type="button"
-                        class="thumbnail-remove"
-                        @click=${() => this._removeFile(id)}
-                        aria-label="Remove ${file.name}"
-                      >
-                        <wa-icon name="xmark"></wa-icon>
-                      </button>
-                    </div>
+                    <hot-list-card
+                      title=${file.name}
+                      subtitle=${this._formatFileSize(file.size)}
+                      icon=${this._getFileIcon(file.type)}
+                      itemId=${id}
+                      @hot-remove=${() => this._removeFile(id)}
+                    ></hot-list-card>
                   `
                 )}
               </div>

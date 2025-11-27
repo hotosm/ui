@@ -9,27 +9,25 @@ const meta: Meta = {
   argTypes: {
     multiple: {
       control: 'boolean',
-      description: 'Allow multiple file selection',
     },
     accept: {
       control: 'text',
-      description: "File type filter (e.g., 'image/*', '.pdf,.docx')",
     },
     maxSize: {
       control: 'number',
-      description: 'Maximum file size in bytes (0 = no limit)',
     },
     showPreview: {
       control: 'boolean',
-      description: 'Show file preview list with icons',
     },
     disabled: {
       control: 'boolean',
-      description: 'Disable the file input',
     },
     label: {
       control: 'text',
-      description: 'Label text displayed above the dropzone',
+    },
+    variant: {
+      control: 'select',
+      options: ['traditional', 'compact'],
     },
   },
 };
@@ -111,7 +109,8 @@ export const ImagesOnly: Story = {
 export const DocumentsOnly: Story = {
   args: {
     multiple: true,
-    accept: '.PDF',
+    accept:
+      '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.odt,.ods,.odp,.rtf',
     label: 'Upload documents',
     showPreview: true,
   },
@@ -135,7 +134,7 @@ export const WithSizeLimit: Story = {
   render: (args) => html`
     <hot-file-input-dropzone
       ?multiple=${args.multiple}
-      max-size=${args.maxSize}
+      .maxSize=${args.maxSize}
       label=${args.label}
       .showPreview=${args.showPreview}
     ></hot-file-input-dropzone>
@@ -164,86 +163,155 @@ export const NoPreview: Story = {
     label: 'Upload without preview',
   },
 
-  render: (args) => html`
-    <hot-file-input-dropzone
-      ?multiple=${args.multiple}
-      .showPreview=${args.showPreview}
-      label=${args.label}
-    ></hot-file-input-dropzone>
-  `,
-};
-
-export const ProgrammaticControl: Story = {
-  args: {
-    multiple: true,
-    label: 'Upload files',
-    showPreview: true,
-  },
   render: (args) => {
-    const handleGetFiles = () => {
-      const dropzone = document.querySelector('#programmatic-dropzone') as any;
-      const files = dropzone?.getFiles() || [];
-
-      if (files.length === 0) {
-        alert('No files selected');
-      } else {
+    const handleFileChange = (e: CustomEvent) => {
+      const files = e.detail.files as File[];
+      if (files.length > 0) {
         const fileList = files
           .map((f: File) => `${f.name} (${(f.size / 1024).toFixed(2)}KB)`)
           .join('\n');
-        alert(`Selected files:\n\n${fileList}`);
+        alert(`Files selected:\n\n${fileList}`);
       }
-    };
-
-    const handleClearFiles = () => {
-      const dropzone = document.querySelector('#programmatic-dropzone') as any;
-      dropzone?.clearFiles();
     };
 
     return html`
       <hot-file-input-dropzone
-        id="programmatic-dropzone"
         ?multiple=${args.multiple}
-        label=${args.label}
         .showPreview=${args.showPreview}
+        label=${args.label}
+        @hot-file-change=${handleFileChange}
       ></hot-file-input-dropzone>
+    `;
+  },
+};
 
-      <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-        <wa-button variant="primary" @click=${handleGetFiles}>
-          Get Selected Files
-        </wa-button>
-        <wa-button variant="default" @click=${handleClearFiles}>
-          Clear All Files
-        </wa-button>
+export const ErrorStates: Story = {
+  render: () => html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <h3 style="margin-bottom: 1rem;">File Size Limit Error</h3>
+        <p style="margin-bottom: 0.5rem; color: #666;">
+          Try uploading any image file to see the size limit error (max 10KB -
+          intentionally very small to trigger error).
+        </p>
+        <hot-file-input-dropzone
+          accept="image/*"
+          .maxSize=${10240}
+          label="Upload images (max 10KB)"
+          showPreview=${true}
+          ?multiple=${true}
+        ></hot-file-input-dropzone>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom: 1rem;">Drag and Drop File Type Error</h3>
+        <p style="margin-bottom: 0.5rem; color: #666;">
+          Drag and drop a non image file to trigger the error state. The native
+          file picker filters by type but drag and drop doesn't.
+        </p>
+        <hot-file-input-dropzone
+          accept="image/*"
+          label="Images only"
+          showPreview=${true}
+        ></hot-file-input-dropzone>
+      </div>
+    </div>
+  `,
+};
+
+export const ProgrammaticAPI: Story = {
+  render: () => {
+    const handleUpload = () => {
+      const dropzone = document.querySelector('#upload-dropzone') as any;
+      const files = dropzone?.getFiles() || [];
+
+      if (files.length === 0) {
+        alert('Please select files to upload');
+        return;
+      }
+
+      const fileList = files
+        .map((f: File) => `${f.name} (${(f.size / 1024).toFixed(2)}KB)`)
+        .join('\n');
+      alert(
+        `Ready to upload ${files.length} file(s):\n\n${fileList}\n\nUse getFiles() method to access File objects for uploading.`
+      );
+    };
+
+    const handleClear = () => {
+      const dropzone = document.querySelector('#upload-dropzone') as any;
+      dropzone?.clearFiles();
+    };
+
+    return html`
+      <div>
+        <h3 style="margin-bottom: 0.5rem;">Programmatic File Access</h3>
+        <p style="margin-bottom: 1rem; color: #666;">
+          Use <code>getFiles()</code> to retrieve selected files for server
+          upload. Use <code>clearFiles()</code> to reset the component.
+        </p>
+
+        <hot-file-input-dropzone
+          id="upload-dropzone"
+          ?multiple=${true}
+          label="Select files to upload"
+          showPreview=${true}
+        ></hot-file-input-dropzone>
+
+        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+          <wa-button variant="primary" @click=${handleUpload}>
+            <wa-icon name="cloud-arrow-up" slot="prefix"></wa-icon>
+            Upload to Server
+          </wa-button>
+          <wa-button variant="outline" @click=${handleClear}>
+            <wa-icon name="xmark" slot="prefix"></wa-icon>
+            Clear All
+          </wa-button>
+        </div>
       </div>
     `;
   },
 };
 
-export const ComplexExample: Story = {
+export const CompactVariant: Story = {
   args: {
-    multiple: true,
-    accept: 'image/*,.pdf',
-    maxSize: 10485760,
-    label: 'Upload project files',
+    variant: 'compact',
+    accept: '.zip',
+    label: 'Upload your .zip file here',
     showPreview: true,
   },
   render: (args) => html`
     <hot-file-input-dropzone
-      ?multiple=${args.multiple}
+      variant=${args.variant}
       accept=${args.accept}
-      max-size=${args.maxSize}
       label=${args.label}
       .showPreview=${args.showPreview}
     ></hot-file-input-dropzone>
+  `,
+};
 
-    <div style="margin-top: 1rem;">
-      <strong>Configuration:</strong>
-      <ul style="margin: 0.5rem 0 0 0; padding-left: 1.25rem;">
-        <li>Multiple files allowed</li>
-        <li>Accepted: Images and PDF files</li>
-        <li>Maximum size: 10MB per file</li>
-        <li>Preview enabled</li>
-      </ul>
+export const VariantComparison: Story = {
+  render: () => html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <h3 style="margin-bottom: 1rem;">Compact - Button-like Style</h3>
+        <hot-file-input-dropzone
+          variant="compact"
+          accept=".zip"
+          label="Upload your .zip file here"
+          showPreview=${true}
+        ></hot-file-input-dropzone>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom: 1rem;">Traditional - Full Dropzone (Default)</h3>
+        <hot-file-input-dropzone
+          variant="traditional"
+          accept=".zip"
+          label="Upload files"
+          showPreview=${true}
+        ></hot-file-input-dropzone>
+      </div>
     </div>
   `,
 };
