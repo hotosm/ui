@@ -120,7 +120,7 @@ export const DocumentsOnly: Story = {
 export const WithSizeLimit: Story = {
   args: {
     multiple: true,
-    maxSize: 5242880,
+    maxSize: 5 * 1000 * 1000,
     label: 'Upload files (max 5MB each)',
     showPreview: true,
   },
@@ -175,7 +175,7 @@ export const ErrorStates: Story = {
         </p>
         <hot-file-input-dropzone
           accept="image/*"
-          .maxSize=${10240}
+          .maxSize=${10 * 1000}
           label="Upload images (max 10KB)"
           showPreview=${true}
           ?multiple=${true}
@@ -198,10 +198,10 @@ export const ErrorStates: Story = {
   `,
 };
 
-export const ProgrammaticAPI: Story = {
+export const RealUpload: Story = {
   render: () => {
-    const handleUpload = () => {
-      const dropzone = document.querySelector('#upload-dropzone') as any;
+    const handleRealUpload = async () => {
+      const dropzone = document.querySelector('#real-upload-dropzone') as any;
       const files = dropzone?.getFiles() || [];
 
       if (files.length === 0) {
@@ -209,44 +209,178 @@ export const ProgrammaticAPI: Story = {
         return;
       }
 
-      const fileList = files
-        .map((f: File) => `${f.name} (${(f.size / 1024).toFixed(2)}KB)`)
-        .join('\n');
-      alert(
-        `Ready to upload ${files.length} file(s):\n\n${fileList}\n\nUse getFiles() method to access File objects for uploading.`
-      );
+      const statusEl = document.querySelector('#real-upload-status');
+      const uploadBtn = document.querySelector('#real-upload-btn') as any;
+      const resultsEl = document.querySelector('#real-upload-results');
+
+      uploadBtn.disabled = true;
+      if (statusEl) statusEl.innerHTML = 'Uploading...';
+      if (resultsEl) resultsEl.innerHTML = '';
+
+      try {
+        const uploadPromises = files.map(async (file: File) => {
+          const formData = new FormData();
+          formData.append('file', file);
+
+          const response = await fetch('https://tmpfiles.org/api/v1/upload', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error(`Upload failed for ${file.name}`);
+          }
+
+          const result = await response.json();
+          const uploadUrl = result.data?.url || '';
+          const downloadUrl = uploadUrl.replace(
+            'tmpfiles.org/',
+            'tmpfiles.org/dl/'
+          );
+
+          return {
+            name: file.name,
+            url: downloadUrl,
+            success: result.status === 'success',
+          };
+        });
+
+        const results = await Promise.all(uploadPromises);
+
+        if (statusEl) {
+          statusEl.innerHTML = `Successfully uploaded ${files.length} file(s).`;
+        }
+
+        if (resultsEl) {
+          const resultsList = results
+            .map(
+              (r) => `
+            <div style="padding: 0.75rem; border: 1px solid; border-radius: 4px; margin-bottom: 0.5rem;">
+              <div style="font-weight: 600; margin-bottom: 0.5rem;">
+                ${r.name}
+              </div>
+              <div style="font-size: 1rem;">
+                <strong>Download URL:</strong><br/>
+                <a href="${r.url}" target="_blank" style="underline; word-break: break-all;">
+                  ${r.url}
+                </a>
+              </div>
+              <div style="font-size: 0.75rem; color: #6b7280; margin-top: 0.5rem;">
+               All uploaded files are automatically deleted after 60 minutes.
+              </div>
+            </div>
+          `
+            )
+            .join('');
+
+          resultsEl.innerHTML = resultsList;
+        }
+
+        setTimeout(() => {
+          dropzone?.clearFiles();
+        }, 1000);
+      } catch (error: any) {
+        if (statusEl) {
+          statusEl.innerHTML = `Upload failed: ${error.message}`;
+        }
+      } finally {
+        uploadBtn.disabled = false;
+      }
     };
 
     const handleClear = () => {
-      const dropzone = document.querySelector('#upload-dropzone') as any;
+      const dropzone = document.querySelector('#real-upload-dropzone') as any;
       dropzone?.clearFiles();
+      const statusEl = document.querySelector('#real-upload-status');
+      const resultsEl = document.querySelector('#real-upload-results');
+      if (statusEl) statusEl.innerHTML = '';
+      if (resultsEl) resultsEl.innerHTML = '';
     };
 
     return html`
       <div>
-        <h3 style="margin-bottom: 0.5rem;">Programmatic File Access</h3>
-        <p style="margin-bottom: 1rem;  ">
-          Use <code>getFiles()</code> to retrieve selected files for server
-          upload. Use <code>clearFiles()</code> to reset the component.
+        <h3 style="margin-bottom: 0.5rem;">Upload Example (Real Server)</h3>
+        <p style="margin-bottom: 1rem;">
+          This demonstrates how to use <code>getFiles()</code> to upload files
+          to a server. This example uploads to
+          <a href="https://tmpfiles.org" target="_blank">tmpfiles.org</a>
+          (free service, no account needed) and returns real download links.
         </p>
 
+        <div
+          style="padding: 0.75rem; background: #fef3c7; border: 1px solid #fbbf24; border-radius: 4px; margin-bottom: 1rem;"
+        >
+          <strong>Note:</strong> Uploaded files are publicly accessible and
+          automatically expire.
+        </div>
+
         <hot-file-input-dropzone
-          id="upload-dropzone"
+          id="real-upload-dropzone"
           ?multiple=${true}
-          label="Select files to upload"
+          label="Select files to upload (max 100MB each)"
           showPreview=${true}
+          .maxSize=${100 * 1000 * 1000}
         ></hot-file-input-dropzone>
 
-        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-          <wa-button variant="primary" @click=${handleUpload}>
+        <div
+          style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;"
+        >
+          <wa-button
+            id="real-upload-btn"
+            variant="primary"
+            @click=${handleRealUpload}
+          >
             <wa-icon name="cloud-arrow-up" slot="prefix"></wa-icon>
-            Upload to Server
+            Upload Files
           </wa-button>
           <wa-button variant="outline" @click=${handleClear}>
             <wa-icon name="xmark" slot="prefix"></wa-icon>
             Clear All
           </wa-button>
         </div>
+
+        <div
+          id="real-upload-status"
+          style="margin-top: 1rem; font-weight: 500;"
+        ></div>
+
+        <div id="real-upload-results" style="margin-top: 1rem;"></div>
+
+        <details style="margin-top: 1.5rem;">
+          <summary style="cursor: pointer; font-weight: 500;">
+            View Upload Code
+          </summary>
+          <pre
+            style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; margin-top: 0.5rem;"
+          >
+<code>
+// Get files from component
+const dropzone = document.querySelector('#dropzone');
+const files = dropzone.getFiles();
+
+// Upload file
+const uploadPromises = files.map(async (file) => {
+const formData = new FormData();
+formData.append('file', file);
+
+const response = await fetch('https://tmpfiles.org/api/v1/upload', {
+  method: 'POST',
+  body: formData,
+});
+
+const result = await response.json();
+const downloadUrl = result.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+
+return {
+  name: file.name,
+  url: downloadUrl
+};
+});
+
+const results = await Promise.all(uploadPromises);
+</code>
+            </pre>
+        </details>
       </div>
     `;
   },
