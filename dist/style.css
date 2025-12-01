@@ -1,3 +1,6 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&display=swap');
+
 /* First import WebAwesome base styles */
 @import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css');
 
