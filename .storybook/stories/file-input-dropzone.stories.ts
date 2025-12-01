@@ -40,23 +40,16 @@ export const Default: Story = {
     label: 'Upload files',
     showPreview: true,
   },
-  render: (args) => {
-    const handleFileChange = (e: CustomEvent) => {
-      console.log('Files changed:', e.detail.files);
-    };
-
-    return html`
-      <hot-file-input-dropzone
-        ?multiple=${args.multiple}
-        accept=${args.accept || ''}
-        max-size=${args.maxSize || 0}
-        .showPreview=${args.showPreview}
-        ?disabled=${args.disabled}
-        label=${args.label || ''}
-        @hot-file-change=${handleFileChange}
-      ></hot-file-input-dropzone>
-    `;
-  },
+  render: (args) => html`
+    <hot-file-input-dropzone
+      ?multiple=${args.multiple}
+      accept=${args.accept || ''}
+      max-size=${args.maxSize || 0}
+      .showPreview=${args.showPreview}
+      ?disabled=${args.disabled}
+      label=${args.label || ''}
+    ></hot-file-input-dropzone>
+  `,
 };
 
 export const SingleFile: Story = {
@@ -162,27 +155,13 @@ export const NoPreview: Story = {
     showPreview: false,
     label: 'Upload without preview',
   },
-
-  render: (args) => {
-    const handleFileChange = (e: CustomEvent) => {
-      const files = e.detail.files as File[];
-      if (files.length > 0) {
-        const fileList = files
-          .map((f: File) => `${f.name} (${(f.size / 1024).toFixed(2)}KB)`)
-          .join('\n');
-        alert(`Files selected:\n\n${fileList}`);
-      }
-    };
-
-    return html`
-      <hot-file-input-dropzone
-        ?multiple=${args.multiple}
-        .showPreview=${args.showPreview}
-        label=${args.label}
-        @hot-file-change=${handleFileChange}
-      ></hot-file-input-dropzone>
-    `;
-  },
+  render: (args) => html`
+    <hot-file-input-dropzone
+      ?multiple=${args.multiple}
+      .showPreview=${args.showPreview}
+      label=${args.label}
+    ></hot-file-input-dropzone>
+  `,
 };
 
 export const ErrorStates: Story = {
@@ -190,7 +169,7 @@ export const ErrorStates: Story = {
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div>
         <h3 style="margin-bottom: 1rem;">File Size Limit Error</h3>
-        <p style="margin-bottom: 0.5rem; color: #666;">
+        <p style="margin-bottom: 0.5rem;">
           Try uploading any image file to see the size limit error (max 10KB -
           intentionally very small to trigger error).
         </p>
@@ -205,7 +184,7 @@ export const ErrorStates: Story = {
 
       <div>
         <h3 style="margin-bottom: 1rem;">Drag and Drop File Type Error</h3>
-        <p style="margin-bottom: 0.5rem; color: #666;">
+        <p style="margin-bottom: 0.5rem;">
           Drag and drop a non image file to trigger the error state. The native
           file picker filters by type but drag and drop doesn't.
         </p>
@@ -246,7 +225,7 @@ export const ProgrammaticAPI: Story = {
     return html`
       <div>
         <h3 style="margin-bottom: 0.5rem;">Programmatic File Access</h3>
-        <p style="margin-bottom: 1rem; color: #666;">
+        <p style="margin-bottom: 1rem;  ">
           Use <code>getFiles()</code> to retrieve selected files for server
           upload. Use <code>clearFiles()</code> to reset the component.
         </p>
@@ -294,7 +273,7 @@ export const VariantComparison: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div>
-        <h3 style="margin-bottom: 1rem;">Compact - Button-like Style</h3>
+        <h3 style="margin-bottom: 1rem;">Compact</h3>
         <hot-file-input-dropzone
           variant="compact"
           accept=".zip"
@@ -304,7 +283,7 @@ export const VariantComparison: Story = {
       </div>
 
       <div>
-        <h3 style="margin-bottom: 1rem;">Traditional - Full Dropzone (Default)</h3>
+        <h3 style="margin-bottom: 1rem;">Traditional (Default)</h3>
         <hot-file-input-dropzone
           variant="traditional"
           accept=".zip"

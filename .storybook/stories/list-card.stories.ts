@@ -33,66 +33,61 @@ type Story = StoryObj;
 
 export const Default: Story = {
   args: {
-    title: 'Title',
-    subtitle: 'Subtitle',
+    title: 'document.pdf',
+    subtitle: '2.4 MB',
     icon: 'file',
     itemId: 'item-1',
     showRemove: true,
     showIcon: true,
   },
-  render: (args) => {
-    const handleRemove = (e: CustomEvent) => {
-      console.log('Remove clicked:', e.detail);
-    };
-
-    return html`
-      <div>
-        <p style="margin-bottom: 1rem; color: #666;">List card.</p>
-        <hot-list-card
-          title=${args.title}
-          subtitle=${args.subtitle}
-          icon=${args.icon}
-          itemId=${args.itemId}
-          ?showRemove=${args.showRemove}
-          ?showIcon=${args.showIcon}
-          @hot-remove=${handleRemove}
-        ></hot-list-card>
-      </div>
-    `;
-  },
+  render: (args) => html`
+    <hot-list-card
+      title=${args.title}
+      subtitle=${args.subtitle}
+      icon=${args.icon}
+      itemId=${args.itemId}
+      ?showRemove=${args.showRemove}
+      ?showIcon=${args.showIcon}
+    ></hot-list-card>
+  `,
 };
 
-export const FileExamples: Story = {
+export const FileTypes: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
-      <p style="margin-bottom: 0.5rem; color: #666;">List card examples.</p>
-
       <hot-list-card
-        title="test.pdf"
+        title="report.pdf"
         subtitle="3.5 MB"
         icon="file-pdf"
         itemId="file-1"
       ></hot-list-card>
 
       <hot-list-card
-        title="test.xlsx"
+        title="data.xlsx"
         subtitle="1.2 MB"
         icon="file-excel"
         itemId="file-2"
       ></hot-list-card>
 
       <hot-list-card
-        title="test.docx"
+        title="proposal.docx"
         subtitle="850 KB"
         icon="file-word"
         itemId="file-3"
       ></hot-list-card>
 
       <hot-list-card
-        title="test.zip"
+        title="archive.zip"
         subtitle="5.5 MB"
         icon="file-archive"
         itemId="file-4"
+      ></hot-list-card>
+
+      <hot-list-card
+        title="photo.jpg"
+        subtitle="2.1 MB"
+        icon="file-image"
+        itemId="file-5"
       ></hot-list-card>
     </div>
   `,
