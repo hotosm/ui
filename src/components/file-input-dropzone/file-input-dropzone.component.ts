@@ -49,11 +49,14 @@ export class FileInputDropzone extends LitElement {
   @state()
   private accessor imageUrls: Map<string, string> = new Map();
 
+  @state()
+  private accessor statusMessage = '';
+
   @query('input[type="file"]')
   private accessor fileInput!: HTMLInputElement;
 
   private _generateId(): string {
-    return `file-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    return `file-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
   }
 
   private _handleDragOver(e: DragEvent) {
@@ -83,6 +86,13 @@ export class FileInputDropzone extends LitElement {
 
   private _handleClick() {
     if (!this.disabled) {
+      this.fileInput.click();
+    }
+  }
+
+  private _handleKeyDown(e: KeyboardEvent) {
+    if (!this.disabled && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
       this.fileInput.click();
     }
   }
@@ -127,10 +137,9 @@ export class FileInputDropzone extends LitElement {
     if (this.maxSize > 0) {
       const oversizedFiles = files.filter((file) => file.size > this.maxSize);
       if (oversizedFiles.length > 0) {
-        const maxSizeMB = (this.maxSize / (1024 * 1024)).toFixed(2);
-        this.errorMessage = `File(s) exceed maximum size of ${maxSizeMB}MB: ${oversizedFiles
-          .map((f) => f.name)
-          .join(', ')}`;
+        this.errorMessage = `File(s) exceed maximum size of ${this._formatFileSize(
+          this.maxSize
+        )}: ${oversizedFiles.map((f) => f.name).join(', ')}`;
         return;
       }
     }
@@ -172,6 +181,11 @@ export class FileInputDropzone extends LitElement {
         composed: true,
       })
     );
+
+    const fileCount = filesWithPreview.length;
+    this.statusMessage = `${fileCount} ${
+      fileCount === 1 ? 'file' : 'files'
+    } selected: ${filesWithPreview.map((f) => f.file.name).join(', ')}`;
   }
 
   private _generateThumbnail(file: File, id: string) {
@@ -190,6 +204,7 @@ export class FileInputDropzone extends LitElement {
   }
 
   private _removeFile(id: string) {
+    const removedFile = this.selectedFiles.find((f) => f.id === id);
     this.selectedFiles = this.selectedFiles.filter((f) => f.id !== id);
 
     if (this.imageUrls.has(id)) {
@@ -211,16 +226,25 @@ export class FileInputDropzone extends LitElement {
         composed: true,
       })
     );
+
+    if (removedFile) {
+      this.statusMessage = `File removed: ${removedFile.file.name}. ${
+        this.selectedFiles.length
+      } ${this.selectedFiles.length === 1 ? 'file' : 'files'} remaining.`;
+    }
   }
 
   private _formatFileSize(bytes: number): string {
     if (bytes === 0) return '0 Bytes';
 
-    const k = 1000;
+    const kilobyte = 1000;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const i = Math.floor(Math.log(bytes) / Math.log(kilobyte));
+    const value = bytes / Math.pow(kilobyte, i);
 
-    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+    const formattedSize = Math.round(value * 10) / 10;
+
+    return `${formattedSize} ${sizes[i]}`;
   }
 
   private _getFileIcon(type: string): string {
@@ -263,15 +287,25 @@ export class FileInputDropzone extends LitElement {
 
     return html`
       <div class="file-input-dropzone">
-        ${this.label && this.variant === 'traditional' ? html`<label class="label">${this.label}</label>` : ''}
+        ${this.label && this.variant === 'traditional'
+          ? html`<label class="label" id="dropzone-label">${this.label}</label>`
+          : ''}
         ${this.variant === 'traditional' ? html`<wa-divider></wa-divider>` : ''}
 
         <div
           class=${classMap(dropzoneClasses)}
+          role="button"
+          tabindex=${this.disabled ? '-1' : '0'}
+          aria-disabled=${this.disabled}
+          aria-label=${this.label || 'File upload'}
+          aria-describedby="dropzone-description${this.accept || this.maxSize
+            ? ' dropzone-hints'
+            : ''}"
           @dragover=${this._handleDragOver}
           @dragleave=${this._handleDragLeave}
           @drop=${this._handleDrop}
           @click=${this._handleClick}
+          @keydown=${this._handleKeyDown}
         >
           <input
             type="file"
@@ -280,31 +314,44 @@ export class FileInputDropzone extends LitElement {
             accept=${this.accept}
             ?disabled=${this.disabled}
             @change=${this._handleFileInputChange}
-            aria-label=${this.label}
+            aria-hidden="true"
+            tabindex="-1"
           />
 
           <div class="dropzone-content">
-            <wa-icon name="${isCompact ? 'arrow-up-from-bracket' : 'cloud-arrow-up'}" class="dropzone-icon"></wa-icon>
+            <wa-icon
+              name="${isCompact ? 'arrow-up-from-bracket' : 'cloud-arrow-up'}"
+              class="dropzone-icon"
+              aria-hidden="true"
+            ></wa-icon>
             <div class="dropzone-text">
               ${isCompact
-                ? html`<div class="compact-text">${this.label}</div>`
+                ? html`<div class="compact-text" id="dropzone-description">
+                    ${this.label}
+                  </div>`
                 : this.isDragging
-                ? html`<div>Drop ${this.multiple ? 'files' : 'file'} here</div>`
+                ? html`<div id="dropzone-description">
+                    Drop ${this.multiple ? 'files' : 'file'} here
+                  </div>`
                 : html`
-                    <div class="dropzone-cta">
+                    <div class="dropzone-cta" id="dropzone-description">
                       <div>
                         Drop ${this.multiple ? 'files' : 'file'} here or&nbsp;
                       </div>
                       <div class="browse">browse</div>
                     </div>
-                    ${this.accept
-                      ? html`<div class="dropzone-accept">
-                          ${this.accept.split(',').join(', ')} only
-                        </div>`
-                      : ''}
-                    ${this.maxSize
-                      ? html`<div class="dropzone-maxsize">
-                          Max size: ${this._formatFileSize(this.maxSize)}
+                    ${this.accept || this.maxSize
+                      ? html`<div id="dropzone-hints">
+                          ${this.accept
+                            ? html`<div class="dropzone-accept">
+                                ${this.accept.split(',').join(', ')} only
+                              </div>`
+                            : ''}
+                          ${this.maxSize
+                            ? html`<div class="dropzone-maxsize">
+                                Max size: ${this._formatFileSize(this.maxSize)}
+                              </div>`
+                            : ''}
                         </div>`
                       : ''}
                   `}
@@ -336,6 +383,15 @@ export class FileInputDropzone extends LitElement {
               </div>
             `
           : ''}
+
+        <div
+          class="sr-only"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          ${this.statusMessage}
+        </div>
       </div>
     `;
   }

@@ -10,6 +10,18 @@ export default css`
     width: 100%;
   }
 
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .label {
     display: block;
     font-size: var(--hot-font-size-medium);
@@ -22,7 +34,7 @@ export default css`
     position: relative;
     border: 1px dashed var(--hot-color-neutral-300);
     border-radius: var(--hot-border-radius-large);
-    border-width: 4x;
+    border-width: 4px;
     padding: var(--hot-spacing-2x-large);
     transition: all 0.2s ease;
     cursor: pointer;
@@ -32,6 +44,20 @@ export default css`
   .dropzone:hover:not(.dropzone--disabled) {
     border-color: var(--hot-color-neutral-100);
     background-color: var(--hot-color-neutral-50);
+  }
+
+  .dropzone:focus {
+    outline: 2px solid var(--hot-color-red-600);
+    outline-offset: 2px;
+  }
+
+  .dropzone:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .dropzone:focus-visible {
+    outline: 2px solid var(--hot-color-red-600);
+    outline-offset: 2px;
   }
 
   .dropzone--dragging {

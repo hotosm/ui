@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -42,15 +42,32 @@ export default css`
     margin-top: var(--hot-spacing-3x-small);
   }
 
-  .remove-icon {
-    font-size: var(--hot-font-size-large);
-    color: var(--hot-color-neutral-500);
+  .remove-button {
+    background: none;
+    border: none;
+    padding: var(--hot-spacing-2x-small);
     cursor: pointer;
     flex-shrink: 0;
-    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--hot-border-radius-small);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    color: var(--hot-color-neutral-500);
   }
 
-  .remove-icon:hover {
+  .remove-button:hover {
+    background-color: var(--hot-color-red-50);
     color: var(--hot-color-red-600);
+  }
+
+  .remove-button:focus-visible {
+    outline: 2px solid var(--hot-color-red-600);
+    outline-offset: 2px;
+  }
+
+  .remove-icon {
+    font-size: var(--hot-font-size-large);
+    pointer-events: none;
   }
 `;

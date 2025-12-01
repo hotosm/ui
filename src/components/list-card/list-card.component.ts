@@ -35,30 +35,38 @@ export class ListCard extends LitElement {
     );
   }
 
+  private _handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      this._handleRemove();
+    }
+  }
+
   protected render() {
     const showIconElement = this.showIcon && this.icon;
 
     return html`
-      <div class="list-item">
+      <div class="list-item" role="listitem">
         ${showIconElement
-          ? html`<wa-icon name=${this.icon} class="list-icon"></wa-icon>`
+          ? html`<wa-icon name=${this.icon} class="list-icon" aria-hidden="true"></wa-icon>`
           : ''}
         <div class="list-info">
-          <div class="list-title">${this.title}</div>
+          <div class="list-title" id="title-${this.itemId}">${this.title}</div>
           ${this.subtitle
             ? html`<div class="list-subtitle">${this.subtitle}</div>`
             : ''}
         </div>
         ${this.showRemove
           ? html`
-              <wa-icon
-                name="xmark"
-                class="remove-icon"
+              <button
+                type="button"
+                class="remove-button"
                 @click=${this._handleRemove}
-                role="button"
-                tabindex="0"
+                @keydown=${this._handleKeyDown}
                 aria-label="Remove ${this.title}"
-              ></wa-icon>
+              >
+                <wa-icon name="xmark" class="remove-icon" aria-hidden="true"></wa-icon>
+              </button>
             `
           : ''}
       </div>

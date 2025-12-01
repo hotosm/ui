@@ -330,11 +330,9 @@ export const RealUpload: Story = {
             variant="primary"
             @click=${handleRealUpload}
           >
-            <wa-icon name="cloud-arrow-up" slot="prefix"></wa-icon>
             Upload Files
           </wa-button>
           <wa-button variant="outline" @click=${handleClear}>
-            <wa-icon name="xmark" slot="prefix"></wa-icon>
             Clear All
           </wa-button>
         </div>
