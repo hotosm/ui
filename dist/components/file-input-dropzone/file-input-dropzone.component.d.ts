@@ -1,6 +1,7 @@
 import { LitElement } from 'lit';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
 import '@awesome.me/webawesome/dist/components/divider/divider.js';
+import '../list-card/list-card.js';
 export interface FileWithPreview {
     file: File;
     id: string;
@@ -14,22 +15,25 @@ export declare class FileInputDropzone extends LitElement {
     accessor showPreview: boolean;
     accessor disabled: boolean;
     accessor label: string;
+    accessor variant: 'traditional' | 'compact';
     private accessor isDragging;
     private accessor selectedFiles;
     private accessor errorMessage;
     private accessor imageUrls;
+    private accessor statusMessage;
     private accessor fileInput;
     private _generateId;
     private _handleDragOver;
     private _handleDragLeave;
     private _handleDrop;
     private _handleClick;
+    private _handleKeyDown;
     private _handleFileInputChange;
     private _processFiles;
     private _generateThumbnail;
     private _removeFile;
-    private _getFileIcon;
     private _formatFileSize;
+    private _getFileIcon;
     clearFiles(): void;
     getFiles(): File[];
     protected render(): import("lit").TemplateResult<1>;
