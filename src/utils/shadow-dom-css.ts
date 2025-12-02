@@ -15,6 +15,24 @@ export interface CSSInjectionOptions {
   styleId?: string;
 }
 
+function querySelectorAllDeep(
+  selector: string,
+  root: Document | Element | ShadowRoot = document
+): Element[] {
+  const elements: Element[] = [];
+
+  const matches = root.querySelectorAll(selector);
+  elements.push(...Array.from(matches));
+
+  const allElements = root.querySelectorAll('*');
+  allElements.forEach((element) => {
+    if (element.shadowRoot) {
+      elements.push(...querySelectorAllDeep(selector, element.shadowRoot));
+    }
+  });
+
+  return elements;
+}
 /**
  * Injects CSS into the shadow DOM of WebAwesome components
  * @param options Configuration options for CSS injection
@@ -22,10 +40,10 @@ export interface CSSInjectionOptions {
 export function injectCSSIntoShadowDOM(options: CSSInjectionOptions): void {
   const { css, selector = 'wa-button', all = true, styleId = 'hot-theme-injection' } = options;
 
-  // Find all matching elements
+  // Find all matching elements, including those in nested shadow DOMs
   const elements = all 
-    ? document.querySelectorAll(selector) 
-    : [document.querySelector(selector)].filter(Boolean);
+    ? querySelectorAllDeep(selector)
+    : [querySelectorAllDeep(selector)[0]].filter(Boolean);
 
   elements.forEach((element) => {
     if (!element) return;
