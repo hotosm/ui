@@ -47,9 +47,6 @@ export class FileInputDropzone extends LitElement {
   private accessor errorMessage = '';
 
   @state()
-  private accessor imageUrls: Map<string, string> = new Map();
-
-  @state()
   private accessor statusMessage = '';
 
   @query('input[type="file"]')
@@ -112,17 +109,31 @@ export class FileInputDropzone extends LitElement {
     }
 
     if (this.accept) {
-      const acceptedTypes = this.accept.split(',').map((t) => t.trim());
+      const acceptedTypes = this.accept
+        .split(',')
+        .map((t) => t.trim().toLowerCase());
       const invalidFiles = files.filter((file) => {
+        const fileName = file.name.toLowerCase();
+        const fileType = file.type.toLowerCase();
+
         return !acceptedTypes.some((type) => {
           if (type.startsWith('.')) {
-            return file.name.toLowerCase().endsWith(type.toLowerCase());
+            return fileName.endsWith(type);
           }
+
           if (type.endsWith('/*')) {
             const category = type.split('/')[0];
-            return file.type.startsWith(category);
+            if (fileType) {
+              return fileType.startsWith(category + '/');
+            }
+            const ext = fileName.substring(fileName.lastIndexOf('.'));
+            return this._getFileIcon(ext).includes(category);
           }
-          return file.type === type;
+
+          if (fileType) {
+            return fileType === type;
+          }
+          return false;
         });
       });
 
@@ -155,12 +166,6 @@ export class FileInputDropzone extends LitElement {
       this.selectedFiles = filesWithPreview;
     }
 
-    filesWithPreview.forEach((fileItem) => {
-      if (fileItem.file.type.startsWith('image/')) {
-        this._generateThumbnail(fileItem.file, fileItem.id);
-      }
-    });
-
     this.dispatchEvent(
       new CustomEvent('hot-file-change', {
         detail: {
@@ -188,30 +193,9 @@ export class FileInputDropzone extends LitElement {
     } selected: ${filesWithPreview.map((f) => f.file.name).join(', ')}`;
   }
 
-  private _generateThumbnail(file: File, id: string) {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-
-    fileReader.onload = (e) => {
-      if (e.target?.result) {
-        this.imageUrls = new Map(this.imageUrls).set(
-          id,
-          e.target.result as string
-        );
-        this.requestUpdate();
-      }
-    };
-  }
-
   private _removeFile(id: string) {
     const removedFile = this.selectedFiles.find((f) => f.id === id);
     this.selectedFiles = this.selectedFiles.filter((f) => f.id !== id);
-
-    if (this.imageUrls.has(id)) {
-      const newImageUrls = new Map(this.imageUrls);
-      newImageUrls.delete(id);
-      this.imageUrls = newImageUrls;
-    }
 
     if (this.fileInput) {
       this.fileInput.value = '';
@@ -264,7 +248,6 @@ export class FileInputDropzone extends LitElement {
   public clearFiles() {
     this.selectedFiles = [];
     this.errorMessage = '';
-    this.imageUrls = new Map();
     if (this.fileInput) {
       this.fileInput.value = '';
     }
