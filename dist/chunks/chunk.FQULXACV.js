@@ -1,4 +1,4 @@
-import{a as e}from"./chunk.WSMXFTSE.js";var t=e`
+import{a as e}from"./chunk.64GCJQA3.js";var t=e`
   .logo {
     line-height: 0;
     height: var(--hot-spacing-3x-large)
