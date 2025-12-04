@@ -12,7 +12,6 @@ import { register as registerHanko } from '@teamhanko/hanko-elements';
 import { headerVariants, type sizes, styles } from './header.styles.js';
 import registerBundledIcons from "../icons.js"
 import osmLogoRaw from '../../assets/logo/osm-logo.svg?raw';
-import { setupAutoInjection, injectHOTThemeIntoAllComponents } from '../../utils/shadow-dom-css.js';
 const osmLogoDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(osmLogoRaw)}`;
 
 registerBundledIcons();
@@ -78,9 +77,6 @@ export class Header extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
 
-    // Set up CSS injection for wa-button shadow DOM
-    setupAutoInjection();
-
     await registerHanko('https://dev.login.hotosm.org', {
       shadow: false, // We can't use shadow dom, as the OSM custom element part is not exposed
       // injectStyles: false, // Set to false if you do not want to inject any default styles.
@@ -102,19 +98,6 @@ export class Header extends LitElement {
     });
   }
 
-  protected firstUpdated() {
-    // Ensure CSS injection happens after the component is fully rendered
-    setTimeout(() => {
-      injectHOTThemeIntoAllComponents();
-    }, 100);
-  }
-
-  protected updated() {
-    // Re-inject CSS after any update to catch new WebAwesome elements
-    requestAnimationFrame(() => {
-      injectHOTThemeIntoAllComponents();
-    });
-  }
 
   selectTab(index: number) {
     console.log('Selecting tab:', index);
