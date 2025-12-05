@@ -1,1 +1,0 @@
-import{a,b}from"../../chunks/chunk.ZXNQUTAB.js";import"../../chunks/chunk.N3EVDV7A.js";import"../../chunks/chunk.64GCJQA3.js";import"../../chunks/chunk.N2W26RCT.js";export{a as MatomoTracking,b as default};

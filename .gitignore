@@ -18,9 +18,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Build outputs (keeping dist/ for npm package)
+# Build outputs
 build/
 out/
+dist/
 
 # Documentation builds
 docs/
@@ -32,13 +33,11 @@ site/
 .eslintcache
 .stylelintcache
 
-# TypeScript compiled files (but keep build scripts and dist)
+# TypeScript compiled files (but keep build scripts)
 *.js
 *.js.map
 *.d.ts
 !scripts/build.js
-!dist/**/*.js
-!dist/**/*.d.ts
 
 # Environment files
 .env
