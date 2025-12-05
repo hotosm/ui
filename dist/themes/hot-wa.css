@@ -1,7 +1,15 @@
+/* HOT theme for WebAwesome
 
-/* HOT colour palette for WebAwesome */
+1. First import WebAwesome base styles
+@import url("https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css");
 
-@import url('https://early.webawesome.com/webawesome@3.0.0-beta.3/dist/styles/color/palettes/base.css');
+2. Then import our HOT theme variables
+@import "./hot.css";
+@import "./hot-font-face.css";
+
+3. Then HOT WebAwesome overrides
+@import "./hot-wa.css";
+*/
 
 @layer wa-color-palette {
   :where(:root),
@@ -226,83 +234,6 @@
     --wa-color-pink: var(--wa-color-pink-50);
     --wa-color-pink-key: 50;
 
-    /*
-    * WebAwesome Theme Override
-    * This defines all the semantic color variants used by WebAwesome components
-    */
-    :where(:root), .wa-theme-default, .wa-light, .wa-dark .wa-invert, .wa-light .wa-theme-default, .wa-dark .wa-theme-default.wa-invert, .wa-dark .wa-theme-default .wa-invert {
-      color-scheme: light;
-      color: var(--wa-color-text-normal);
-      --wa-color-surface-raised: white;
-      --wa-color-surface-default: white;
-      --wa-color-surface-lowered: var(--wa-color-neutral-95);
-      --wa-color-surface-border: var(--wa-color-neutral-90);
-      --wa-color-text-normal: var(--wa-color-neutral-10);
-      --wa-color-text-quiet: var(--wa-color-neutral-40);
-      --wa-color-text-link: var(--wa-color-brand-40);
-      --wa-color-overlay-modal: 
-        color-mix(in oklab, var(--wa-color-neutral-05) 50%, transparent);
-      --wa-color-overlay-inline: 
-        color-mix(in oklab, var(--wa-color-neutral-80) 25%, transparent);
-      --wa-color-shadow: 
-        color-mix(in oklab, var(--wa-color-neutral-05) calc(var(--wa-shadow-blur-scale) * 4% + 8%), transparent);
-      --wa-color-focus: var(--wa-color-brand-60);
-      --wa-color-mix-hover: black 10%;
-      --wa-color-mix-active: black 20%;
-      --wa-color-brand-fill-quiet: var(--wa-color-brand-95);
-      --wa-color-brand-fill-normal: var(--wa-color-brand-90);
-      --wa-color-brand-fill-loud: var(--wa-color-brand-50);
-      --wa-color-brand-border-quiet: var(--wa-color-brand-90);
-      --wa-color-brand-border-normal: var(--wa-color-brand-80);
-      --wa-color-brand-border-loud: var(--wa-color-brand-60);
-      --wa-color-brand-on-quiet: var(--wa-color-brand-40);
-      --wa-color-brand-on-normal: var(--wa-color-brand-30);
-      --wa-color-brand-on-loud: white;
-      --wa-color-success-fill-quiet: var(--wa-color-success-95);
-      --wa-color-success-fill-normal: var(--wa-color-success-90);
-      --wa-color-success-fill-loud: var(--wa-color-success-50);
-      --wa-color-success-border-quiet: var(--wa-color-success-90);
-      --wa-color-success-border-normal: var(--wa-color-success-80);
-      --wa-color-success-border-loud: var(--wa-color-success-60);
-      --wa-color-success-on-quiet: var(--wa-color-success-40);
-      --wa-color-success-on-normal: var(--wa-color-success-30);
-      --wa-color-success-on-loud: white;
-      --wa-color-warning-fill-quiet: var(--wa-color-warning-95);
-      --wa-color-warning-fill-normal: var(--wa-color-warning-90);
-      --wa-color-warning-fill-loud: var(--wa-color-warning-50);
-      --wa-color-warning-border-quiet: var(--wa-color-warning-90);
-      --wa-color-warning-border-normal: var(--wa-color-warning-80);
-      --wa-color-warning-border-loud: var(--wa-color-warning-60);
-      --wa-color-warning-on-quiet: var(--wa-color-warning-40);
-      --wa-color-warning-on-normal: var(--wa-color-warning-30);
-      --wa-color-warning-on-loud: white;
-      --wa-color-danger-fill-quiet: var(--wa-color-danger-95);
-      --wa-color-danger-fill-normal: var(--wa-color-danger-90);
-      --wa-color-danger-fill-loud: var(--wa-color-danger-50);
-      --wa-color-danger-border-quiet: var(--wa-color-danger-90);
-      --wa-color-danger-border-normal: var(--wa-color-danger-80);
-      --wa-color-danger-border-loud: var(--wa-color-danger-60);
-      --wa-color-danger-on-quiet: var(--wa-color-danger-40);
-      --wa-color-danger-on-normal: var(--wa-color-danger-30);
-      --wa-color-danger-on-loud: white;
-      --wa-color-neutral-fill-quiet: var(--wa-color-neutral-95);
-      --wa-color-neutral-fill-normal: var(--wa-color-neutral-90);
-      --wa-color-neutral-fill-loud: var(--wa-color-neutral-20);
-      --wa-color-neutral-border-quiet: var(--wa-color-neutral-90);
-      --wa-color-neutral-border-normal: var(--wa-color-neutral-80);
-      --wa-color-neutral-border-loud: var(--wa-color-neutral-60);
-      --wa-color-neutral-on-quiet: var(--wa-color-neutral-40);
-      --wa-color-neutral-on-normal: var(--wa-color-neutral-30);
-      --wa-color-neutral-on-loud: white;
-    }
-
-    /*
-    * Typography
-    *
-    * See https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/themes/default.css for all options
-    */
-    /*  */
-
     /* Fonts */
     --wa-font-family-body: var(--hot-font-sans);
     --wa-font-family-heading: var(--hot-font-sans-variant);
@@ -311,11 +242,11 @@
 
     /* Font sizes */
     --wa-font-size-2xs: var(--hot-font-size-2x-small); /* 10px */
-    --wa-font-size-xs: var(--hot-font-size-x-small);   /* 12px */
-    --wa-font-size-s: var(--hot-font-size-small);      /* 14px */
-    --wa-font-size-m: var(--hot-font-size-medium);     /* 16px */
-    --wa-font-size-l: var(--hot-font-size-large);      /* 20px */
-    --wa-font-size-xl: var(--hot-font-size-x-large);   /* 24px */
+    --wa-font-size-xs: var(--hot-font-size-x-small); /* 12px */
+    --wa-font-size-s: var(--hot-font-size-small); /* 14px */
+    --wa-font-size-m: var(--hot-font-size-medium); /* 16px */
+    --wa-font-size-l: var(--hot-font-size-large); /* 20px */
+    --wa-font-size-xl: var(--hot-font-size-x-large); /* 24px */
     --wa-font-size-2xl: var(--hot-font-size-2x-large); /* 36px */
     --wa-font-size-3xl: var(--hot-font-size-3x-large); /* 48px */
     --wa-font-size-4xl: var(--hot-font-size-4x-large); /* 72px */
@@ -347,246 +278,114 @@
     */
     /*  */
 
-    --wa-space-3xs: var(--hot-spacing-3x-small);  /* 2px */
-    --wa-space-2xs: var(--hot-spacing-2x-small);  /* 4px */
-    --wa-space-xs: var(--hot-spacing-x-small);    /* 8px */
-    --wa-space-s: var(--hot-spacing-small);       /* 12px */
-    --wa-space-m: var(--hot-spacing-medium);      /* 16px */
-    --wa-space-l: var(--hot-spacing-large);       /* 20px */
-    --wa-space-xl: var(--hot-spacing-x-large);    /* 28px */
-    --wa-space-2xl: var(--hot-spacing-2x-large);  /* 36px */
-    --wa-space-3xl: var(--hot-spacing-3x-large);  /* 48px */
-    --wa-space-4xl: var(--hot-spacing-4x-large);  /* 72px */
+    --wa-space-3xs: var(--hot-spacing-3x-small); /* 2px */
+    --wa-space-2xs: var(--hot-spacing-2x-small); /* 4px */
+    --wa-space-xs: var(--hot-spacing-x-small); /* 8px */
+    --wa-space-s: var(--hot-spacing-small); /* 12px */
+    --wa-space-m: var(--hot-spacing-medium); /* 16px */
+    --wa-space-l: var(--hot-spacing-large); /* 20px */
+    --wa-space-xl: var(--hot-spacing-x-large); /* 28px */
+    --wa-space-2xl: var(--hot-spacing-2x-large); /* 36px */
+    --wa-space-3xl: var(--hot-spacing-3x-large); /* 48px */
+    --wa-space-4xl: var(--hot-spacing-4x-large); /* 72px */
 
-    --wa-border-radius-s: var(--hot-border-radius-small);        /* 3px */
-    --wa-border-radius-m: var(--hot-border-radius-medium);       /* 4px */
-    --wa-border-radius-l: var(--hot-border-radius-large);        /* 8px */
-    --wa-border-radius-pill: var(--hot-border-radius-pill);      /* 9999px */
-    --wa-border-radius-circle: var(--hot-border-radius-circle);  /* 50% */
+    --wa-border-radius-s: var(--hot-border-radius-small); /* 3px */
+    --wa-border-radius-m: var(--hot-border-radius-medium); /* 4px */
+    --wa-border-radius-l: var(--hot-border-radius-large); /* 8px */
+    --wa-border-radius-pill: var(--hot-border-radius-pill); /* 9999px */
+    --wa-border-radius-circle: var(--hot-border-radius-circle); /* 50% */
   }
 }
 
-/*
-* Button Customizations
-* Based on WebAwesome documentation: https://webawesome.com/docs/customizing/
-*/
+/* Theme layer - semantic color mappings (must be in wa-theme layer, not wa-color-palette) */
+@layer wa-theme {
+  :where(:root),
+  .wa-theme-default,
+  .wa-light,
+  .wa-dark .wa-invert,
+  .wa-light .wa-theme-default,
+  .wa-dark .wa-theme-default.wa-invert,
+  .wa-dark .wa-theme-default .wa-invert {
+    color-scheme: light;
+    color: var(--wa-color-text-normal);
 
-/* Custom Properties for Button Components */
-wa-button {
-  /* Button sizing */
-  --size: var(--wa-space-l); /* 20px - default button height */
-  --padding-x: var(--wa-space-m); /* 16px horizontal padding */
-  --padding-y: var(--wa-space-s); /* 12px vertical padding */
-  
-  /* Button appearance */
-  --border-radius: var(--wa-border-radius-m); /* 4px border radius */
-  --border-width: 1px;
-  --font-size: var(--wa-font-size-s); /* 14px font size */
-  --font-weight: var(--wa-font-weight-action); /* semibold */
-  
-  /* Button states */
-  --transition-duration: 150ms;
-  --transition-timing: ease-out;
-}
+    --wa-color-surface-raised: white;
+    --wa-color-surface-default: white;
+    --wa-color-surface-lowered: var(--hot-color-neutral-50);
+    --wa-color-surface-border: var(--hot-color-neutral-100);
 
-/* Button size variants */
-wa-button[size="small"] {
-  --size: var(--wa-space-m); /* 16px */
-  --padding-x: var(--wa-space-s); /* 12px */
-  --padding-y: var(--wa-space-xs); /* 8px */
-  --font-size: var(--wa-font-size-xs); /* 12px */
-}
+    --wa-color-text-normal: var(--hot-color-neutral-900);
+    --wa-color-text-quiet: var(--hot-color-neutral-600);
+    --wa-color-text-link: var(--hot-color-primary-600);
 
-wa-button[size="large"] {
-  --size: var(--wa-space-xl); /* 28px */
-  --padding-x: var(--wa-space-l); /* 20px */
-  --padding-y: var(--wa-space-m); /* 16px */
-  --font-size: var(--wa-font-size-m); /* 16px */
-}
+    --wa-color-overlay-modal: color-mix(
+      in oklab,
+      var(--hot-color-neutral-950) 50%,
+      transparent
+    );
+    --wa-color-overlay-inline: color-mix(
+      in oklab,
+      var(--hot-color-neutral-200) 25%,
+      transparent
+    );
 
-/* CSS Parts for advanced button styling */
-wa-button::part(base) {
-  /* Base button styling */
-  border-radius: var(--border-radius);
-  border-width: var(--border-width);
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
-  padding: var(--padding-y) var(--padding-x);
-  min-height: var(--size);
-  transition: all var(--transition-duration) var(--transition-timing);
-  
-  /* HOT-specific styling */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+    --wa-color-shadow: color-mix(
+      in oklab,
+      var(--hot-color-neutral-950) calc(var(--wa-shadow-blur-scale) * 4% + 8%),
+      transparent
+    );
+    --wa-color-focus: var(--hot-color-primary-400);
+    --wa-color-mix-hover: black 10%;
+    --wa-color-mix-active: black 20%;
 
-wa-button::part(base):hover {
-  /* Hover state */
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
+    --wa-color-brand-fill-quiet: var(--hot-color-blue-50);
+    --wa-color-brand-fill-normal: var(--hot-color-blue-50);
+    --wa-color-brand-fill-loud: var(--hot-color-blue-600);
+    --wa-color-brand-border-quiet: var(--hot-color-blue-100);
+    --wa-color-brand-border-normal: var(--hot-color-blue-100);
+    --wa-color-brand-border-loud: var(--hot-color-blue-400);
+    --wa-color-brand-on-quiet: var(--hot-color-blue-700);
+    --wa-color-brand-on-normal: var(--hot-color-blue-700);
+    --wa-color-brand-on-loud: white;
 
-wa-button::part(base):active {
-  /* Active state */
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    --wa-color-success-fill-quiet: var(--hot-color-success-50);
+    --wa-color-success-fill-normal: var(--hot-color-success-100);
+    --wa-color-success-fill-loud: var(--hot-color-success-700);
+    --wa-color-success-border-quiet: var(--hot-color-success-100);
+    --wa-color-success-border-normal: var(--hot-color-success-800);
+    --wa-color-success-border-loud: var(--hot-color-success-700);
+    --wa-color-success-on-quiet: var(--hot-color-success-800);
+    --wa-color-success-on-normal: var(--hot-color-success-800);
+    --wa-color-success-on-loud: white;
 
-wa-button::part(base):focus-visible {
-  /* Focus state */
-  outline: 2px solid var(--wa-color-focus);
-  outline-offset: 2px;
-}
+    --wa-color-warning-fill-quiet: var(--hot-color-warning-50);
+    --wa-color-warning-fill-normal: var(--hot-color-warning-100);
+    --wa-color-warning-fill-loud: var(--hot-color-warning-950);
+    --wa-color-warning-border-quiet: var(--hot-color-warning-100);
+    --wa-color-warning-border-normal: var(--hot-color-warning-950);
+    --wa-color-warning-border-loud: var(--hot-color-warning-950);
+    --wa-color-warning-on-quiet: var(--hot-color-warning-950);
+    --wa-color-warning-on-normal: var(--hot-color-warning-950);
+    --wa-color-warning-on-loud: white;
 
-wa-button::part(label) {
-  /* Button text styling */
-  font-family: var(--wa-font-family-body);
-  letter-spacing: 0.025em;
-}
+    --wa-color-danger-fill-quiet: var(--hot-color-danger-50);
+    --wa-color-danger-fill-normal: var(--hot-color-danger-100);
+    --wa-color-danger-fill-loud: var(--hot-color-danger-500);
+    --wa-color-danger-border-quiet: var(--hot-color-danger-100);
+    --wa-color-danger-border-normal: var(--hot-color-danger-950);
+    --wa-color-danger-border-loud: var(--hot-color-danger-500);
+    --wa-color-danger-on-quiet: var(--hot-color-danger-950);
+    --wa-color-danger-on-normal: var(--hot-color-danger-950);
+    --wa-color-danger-on-loud: white;
 
-/* Button variant-specific styling */
-wa-button[variant="primary"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-brand-fill-loud), var(--wa-color-brand-fill-normal));
-  border-color: var(--wa-color-brand-border-loud);
-  color: var(--wa-color-brand-on-loud);
-}
-
-wa-button[variant="primary"]::part(base):hover {
-  background: linear-gradient(135deg, var(--wa-color-brand-fill-normal), var(--wa-color-brand-fill-quiet));
-  border-color: var(--wa-color-brand-border-normal);
-}
-
-wa-button[variant="secondary"]::part(base) {
-  background: var(--wa-color-neutral-fill-quiet);
-  border-color: var(--wa-color-neutral-border-normal);
-  color: var(--wa-color-neutral-on-quiet);
-}
-
-wa-button[variant="secondary"]::part(base):hover {
-  background: var(--wa-color-neutral-fill-normal);
-  border-color: var(--wa-color-neutral-border-loud);
-  color: var(--wa-color-neutral-on-normal);
-}
-
-wa-button[variant="outline"]::part(base) {
-  background: transparent;
-  border-color: var(--wa-color-brand-border-normal);
-  color: var(--wa-color-brand-on-normal);
-}
-
-wa-button[variant="outline"]::part(base):hover {
-  background: var(--wa-color-brand-fill-quiet);
-  border-color: var(--wa-color-brand-border-loud);
-  color: var(--wa-color-brand-on-quiet);
-}
-
-/* Success, warning, danger variants */
-wa-button[variant="success"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-success-fill-loud), var(--wa-color-success-fill-normal));
-  border-color: var(--wa-color-success-border-loud);
-  color: var(--wa-color-success-on-loud);
-}
-
-wa-button[variant="warning"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-warning-fill-loud), var(--wa-color-warning-fill-normal));
-  border-color: var(--wa-color-warning-border-loud);
-  color: var(--wa-color-warning-on-loud);
-}
-
-wa-button[variant="danger"]::part(base) {
-  background: linear-gradient(135deg, var(--wa-color-danger-fill-loud), var(--wa-color-danger-fill-normal));
-  border-color: var(--wa-color-danger-border-loud);
-  color: var(--wa-color-danger-on-loud);
-}
-
-/* Custom states using :state() selector */
-wa-button:state(disabled)::part(base) {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-wa-button:state(loading)::part(base) {
-  cursor: wait;
-}
-
-/* Custom button classes for specific use cases */
-wa-button.hot-gradient::part(base) {
-  background: linear-gradient(217deg, var(--wa-color-red-50), var(--wa-color-orange-50), var(--wa-color-yellow-50));
-  border: solid 1px var(--wa-color-orange-50);
-  color: white;
-  text-shadow: rgba(0, 0, 0, 0.3) 0 -1px;
-}
-
-wa-button.hot-gradient::part(base):hover {
-  box-shadow: var(--wa-shadow-m);
-  transform: translateY(-3px);
-}
-
-wa-button.hot-gradient::part(base):active {
-  box-shadow: inset var(--wa-shadow-s);
-  transform: translateY(0);
-}
-
-/* Icon button styling */
-wa-button[appearance="icon"] {
-  --padding-x: var(--wa-space-xs);
-  --padding-y: var(--wa-space-xs);
-  --size: var(--wa-space-xl);
-}
-
-wa-button[appearance="icon"]::part(base) {
-  border-radius: var(--wa-border-radius-circle);
-  padding: var(--padding-y);
-  min-width: var(--size);
-  min-height: var(--size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Native button element support */
-button {
-  /* Apply same custom properties to native buttons */
-  --size: var(--wa-space-l);
-  --padding-x: var(--wa-space-m);
-  --padding-y: var(--wa-space-s);
-  --border-radius: var(--wa-border-radius-m);
-  --border-width: 1px;
-  --font-size: var(--wa-font-size-s);
-  --font-weight: var(--wa-font-weight-action);
-  --transition-duration: 150ms;
-  --transition-timing: ease-out;
-  
-  border-radius: var(--border-radius);
-  border-width: var(--border-width);
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
-  padding: var(--padding-y) var(--padding-x);
-  min-height: var(--size);
-  transition: all var(--transition-duration) var(--transition-timing);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-button:focus-visible {
-  outline: 2px solid var(--wa-color-focus);
-  outline-offset: 2px;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+    --wa-color-neutral-fill-quiet: var(--hot-color-neutral-50);
+    --wa-color-neutral-fill-normal: var(--hot-color-neutral-100);
+    --wa-color-neutral-fill-loud: var(--hot-color-neutral-950);
+    --wa-color-neutral-border-quiet: var(--hot-color-neutral-950);
+    --wa-color-neutral-border-normal: var(--hot-color-neutral-200);
+    --wa-color-neutral-border-loud: var(--hot-color-neutral-400);
+    --wa-color-neutral-on-quiet: var(--hot-color-neutral-950);
+    --wa-color-neutral-on-normal: var(--hot-color-neutral-950);
+    --wa-color-neutral-on-loud: white;
+  }
 }

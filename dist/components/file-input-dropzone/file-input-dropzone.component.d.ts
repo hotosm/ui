@@ -19,7 +19,6 @@ export declare class FileInputDropzone extends LitElement {
     private accessor isDragging;
     private accessor selectedFiles;
     private accessor errorMessage;
-    private accessor imageUrls;
     private accessor statusMessage;
     private accessor fileInput;
     private _generateId;
@@ -30,7 +29,6 @@ export declare class FileInputDropzone extends LitElement {
     private _handleKeyDown;
     private _handleFileInputChange;
     private _processFiles;
-    private _generateThumbnail;
     private _removeFile;
     private _formatFileSize;
     private _getFileIcon;
