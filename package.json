@@ -48,7 +48,8 @@
   "scripts": {
     "dev": "storybook dev -p 3001 --no-open",
     "build:docs": "storybook build --output-dir docs",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "prepublishOnly": "npm run build"
   },
   "engines": {
     "node": ">=14.17.0"
