@@ -73,6 +73,7 @@ export class Header extends LitElement {
   /** Default fallback icon for providers without custom icons. */
   @property({ type: String, attribute: "default-login-icon" })
   accessor defaultLoginIcon: string = "user";
+ 
 
   async connectedCallback() {
     super.connectedCallback();
