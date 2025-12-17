@@ -17,11 +17,11 @@
    --hot-color-red-800: #B83032;
    --hot-color-red-700: #C53639;
    --hot-color-red-600: #D73F3F;
-   --hot-color-red-500: #F34D47;
+   --hot-color-red-500: #D43F3F;
    --hot-color-red-400: #ED5C5E;
    --hot-color-red-300: #E27A7D;
    --hot-color-red-200: #EC9EA1;
-   --hot-color-red-100: #FDD0D6;
+  --hot-color-red-100: #FED1D7;
    --hot-color-red-50: #FEECEF;
 
    /* rose - persian plum */
@@ -49,7 +49,7 @@
    --hot-color-yellow-400: #FAE62E;
    --hot-color-yellow-300: #FDEB51;
    --hot-color-yellow-200: #FFF072;
-   --hot-color-yellow-100: #FFF59B;
+  --hot-color-yellow-100: #FFEBCF;
    --hot-color-yellow-50: #FFF9C3;
 
    /* blue - space cadet */
@@ -138,18 +138,18 @@
    --hot-color-warning-100: var(--hot-color-yellow-100);
    --hot-color-warning-50: var(--hot-color-yellow-50);
 
-   /* Success colors (green - using WebAwesome green values) */
-   --hot-color-success-950: #031608;
-   --hot-color-success-900: #052310;
-   --hot-color-success-800: #0a3a1d;
-   --hot-color-success-700: #0a5027;
-   --hot-color-success-600: #036730;
-   --hot-color-success-500: #00883c;
-   --hot-color-success-400: #00ac49;
-   --hot-color-success-300: #5dc36f;
-   --hot-color-success-200: #93da98;
-   --hot-color-success-100: #c2f2c1;
-   --hot-color-success-50: #e3f9e3;
+  /* Success colors (green) */
+  --hot-color-success-950: #2B514F;
+  --hot-color-success-900: #366361;
+  --hot-color-success-800: #408789;
+  --hot-color-success-700: #459BA0;
+  --hot-color-success-600: #4BB1B9;
+  --hot-color-success-500: #50C1CB;
+  --hot-color-success-400: #58CBD1;
+  --hot-color-success-300: #6AD4D9;
+  --hot-color-success-200: #8FE1E3;
+  --hot-color-success-100: #B9EDED;
+  --hot-color-success-50: #E3F8F8;
 
    /* Neutral colors (gray) */
    --hot-color-neutral-1000: #ffffff;
