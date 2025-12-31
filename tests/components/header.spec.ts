@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import { describe, it, expect, afterEach, vi } from 'vitest';
 
 import '../../src/components/header/header.ts';
