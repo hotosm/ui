@@ -153,12 +153,39 @@ If you are working directly in HTML, or other ways without a configured
 bundler, you can import all the components as a bundle, as use them like so:
 
   ```html
-  <script>
-    import '@hotosm/ui/dist/style.css';
-    import '@hotosm/ui/dist/hotosm-ui';
-  </script>
+  <!-- For now this is the only approach that works -->
+  <!-- We are working on improving this -->
+  <!-- https://github.com/hotosm/ui/issues/166 -->
+  <head>
+    <link rel="stylesheet" href="https://ga.jspm.io/npm:@hotosm/ui@0.4.0/dist/style.css" />
+    <script type="importmap">
+        {
+            "imports": {
+            "@hotosm/ui": "https://ga.jspm.io/npm:@hotosm/ui@0.4.0/dist/hotosm-ui.js"
+            },
+            "scopes": {
+            "https://ga.jspm.io/": {
+                "@awesome.me/webawesome/dist/components/": "https://ga.jspm.io/npm:@awesome.me/webawesome@3.0.0/dist/components/",
+                "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@2.1.2/development/reactive-element.js",
+                "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@2.1.2/development/decorators/",
+                "@shoelace-style/localize": "https://ga.jspm.io/npm:@shoelace-style/localize@3.2.1/dist/index.js",
+                "lit": "https://ga.jspm.io/npm:lit@3.3.2/index.js",
+                "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@4.2.2/development/lit-element.js",
+                "lit-html": "https://ga.jspm.io/npm:lit-html@3.3.2/development/lit-html.js",
+                "lit-html/": "https://ga.jspm.io/npm:lit-html@3.3.2/development/",
+                "lit/": "https://ga.jspm.io/npm:lit@3.3.2/"
+            }
+            }
+        }
+    </script>
+  </head>
 
-  <hot-header title="Test App" size="small" showLogin="false"></hot-header>
+  <body>
+    <script type="module">
+        import * as Ui from "@hotosm/ui";
+    </script>
+    <hot-header title="Test App" size="small" show-login="false"></hot-header>
+  </body>
   ```
 
 #### React
