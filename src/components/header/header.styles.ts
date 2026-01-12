@@ -75,19 +75,19 @@ export const styles = css`
   }
 
   .header--tab[active]::part(base) {
-    border-bottom-color: var(--hot-color-red-500);
+    border-bottom-color: var(--hot-color-primary-500);
     font-weight: var(--hot-font-weight-bold);
     color: var(--hot-color-neutral-950);
   }
 
   .header--tab:hover::part(base) {
     color: var(--hot-color-neutral-700);
-    border-bottom-color: var(--hot-color-red-300);
+    border-bottom-color: var(--hot-color-primary-300);
   }
 
   .header--tab[active]:hover::part(base) {
     color: var(--hot-color-neutral-950);
-    border-bottom-color: var(--hot-color-red-600);
+    border-bottom-color: var(--hot-color-primary-600);
   }
 
   .header--tab-group::part(base) {

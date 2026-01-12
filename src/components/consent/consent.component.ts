@@ -54,7 +54,7 @@ export class Consent extends LitElement {
               <div class="consent-actions">
                 <wa-button 
                   size="medium" 
-                  variant="neutral" 
+                  variant="brand" appearance="outlined" 
                   class="consent-button decline-button"
                   @click=${(e: MouseEvent) => this._setDisagree(e)}
                 >

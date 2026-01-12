@@ -117,7 +117,7 @@ export class MatomoTracking extends LitElement {
     wa-callout {
       --wa-callout-spacing: 1.5rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-      border-radius: 12px;
+      border-radius: var(--hot-border-radius-medium);
       border: 1px solid rgba(0, 0, 0, 0.08);
       backdrop-filter: blur(8px);
     }
@@ -125,19 +125,11 @@ export class MatomoTracking extends LitElement {
     wa-button {
       min-width: 80px;
       font-weight: 500;
-      transition: all 0.2s ease;
     }
-    
-    wa-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    
+        
     .error-banner wa-callout {
-      border-radius: 16px;
-      box-shadow: 0 16px 48px rgba(243, 77, 71, 0.2);
-      border: 1px solid rgba(243, 77, 71, 0.2);
-      background: linear-gradient(135deg, rgba(254, 236, 239, 0.95), rgba(253, 208, 214, 0.95));
+      border-radius: var(--hot-border-radius-medium);
+      border: 1px solid var(--hot-color-danger-700);
     }
     
     .error-banner wa-callout::before {
@@ -147,12 +139,13 @@ export class MatomoTracking extends LitElement {
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--hot-color-red-500), var(--hot-color-red-600), var(--hot-color-red-700));
-      border-radius: 16px 16px 0 0;
+      background: var(--hot-color-primary-1000);
+      border-radius: var(--hot-border-radius-medium) var(--hot-border-radius-medium) 0 0;
     }
     
     .toast-banner wa-callout {
-      border-radius: 14px;
+      color: var(--hot-color-neutral-1000);
+      border-radius: var(--hot-border-radius-medium);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
       border: 1px solid rgba(0, 0, 0, 0.06);
       background: rgba(255, 255, 255, 0.98);
@@ -160,8 +153,8 @@ export class MatomoTracking extends LitElement {
     }
     
     .toast-banner wa-callout[variant="success"] {
-      box-shadow: 0 12px 40px rgba(34, 197, 94, 0.15);
-      border: 1px solid rgba(34, 197, 94, 0.2);
+      box-shadow: 0 12px 40px color-mix(in srgb, var(--hot-color-success-700), transparent 80%);
+      border: 1px solid color-mix(in srgb, var(--hot-color-success-700), transparent 80%);
       background: linear-gradient(135deg, rgba(240, 253, 244, 0.95), rgba(220, 252, 231, 0.95));
     }
     
@@ -172,29 +165,28 @@ export class MatomoTracking extends LitElement {
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, #22c55e, #16a34a);
-      border-radius: 14px 14px 0 0;
+      background: var(--hot-color-success-700);
+      border-radius: var(--hot-border-radius-medium) var(--hot-border-radius-medium) 0 0;
+    }
+
+    .toast-banner wa-callout[variant="danger"] {
+      box-shadow: 0 12px 40px color-mix(in srgb, var(--hot-color-danger-700), transparent 80%);
+      border: 1px solid color-mix(in srgb, var(--hot-color-danger-700), transparent 80%);
     }
     
-    .toast-banner wa-callout[variant="brand"] {
-      box-shadow: 0 12px 40px rgba(243, 77, 71, 0.15);
-      border: 1px solid rgba(243, 77, 71, 0.2);
-      background: linear-gradient(135deg, rgba(254, 236, 239, 0.95), rgba(253, 208, 214, 0.95));
-    }
-    
-    .toast-banner wa-callout[variant="brand"]::before {
+    .toast-banner wa-callout[variant="danger"]::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--hot-color-red-500), var(--hot-color-red-600));
-      border-radius: 14px 14px 0 0;
+      background: var(--hot-color-danger-700);
+      border-radius: var(--hot-border-radius-medium) var(--hot-border-radius-medium) 0 0;
     }
-    
+
     .consent-banner wa-callout {
-      border-radius: 16px;
+      border-radius: var(--hot-border-radius-medium);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
       border: 1px solid rgba(0, 0, 0, 0.08);
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(249, 250, 251, 0.98));
@@ -208,8 +200,8 @@ export class MatomoTracking extends LitElement {
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--hot-color-red-500), var(--hot-color-red-600), var(--hot-color-red-700));
-      border-radius: 16px 16px 0 0;
+      background: var(--hot-color-primary-1000);
+      border-radius: var(--hot-border-radius-medium) var(--hot-border-radius-medium) 0 0;
     }
     
     wa-icon {
@@ -311,7 +303,7 @@ export class MatomoTracking extends LitElement {
     return html`
       ${this.showError ? html`
         <div class="error-banner">
-          <wa-callout style="padding: 1rem;" variant="danger" appearance="outlined filled" size="large">
+          <wa-callout style="padding: 1rem;" variant="danger" appearance="outlined accent" size="large">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-exclamation"></wa-icon>
             <div style="padding: 0 1rem;">
               <strong>Tracking Configuration Error</strong><br />
@@ -353,7 +345,7 @@ export class MatomoTracking extends LitElement {
               <strong>Privacy & Tracking</strong><br />
               ${this.consentMessage}
               <div class="consent-actions">
-                <wa-button size="small" variant="neutral" @click=${(e: Event) => {
+                <wa-button size="small" variant="brand" appearance="outlined"  @click=${(e: Event) => {
                   e.preventDefault();
                   e.stopPropagation();
                   this.disagree();

@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      hotosm-ui-design:
+        specifier: ^1.3.0
+        version: 1.3.0
     devDependencies:
       '@awesome.me/webawesome':
         specifier: 3.0.0-beta.1
@@ -31,7 +35,7 @@ importers:
         version: 6.9.1
       '@vitest/browser':
         specifier: ^4.0.10
-        version: 4.0.10(vite@7.2.2)(vitest@4.0.10)
+        version: 4.0.10(vite@7.2.2)(vitest@4.0.10(@vitest/browser-playwright@4.0.10)(jsdom@24.1.3))
       '@vitest/browser-playwright':
         specifier: ^4.0.10
         version: 4.0.10(playwright@1.56.1)(vite@7.2.2)(vitest@4.0.10)
@@ -870,6 +874,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  hotosm-ui-design@1.3.0:
+    resolution: {integrity: sha512-JuBqMoA1TG4EgChgAXRy0XbUEKvU8Zt4hLUeT+5wv1fYXwS6JZGG4rLD6npEF1552NqV37M3fIkDDkP2fZq0Rg==}
 
   html-encoding-sniffer@4.0.0:
     resolution: {integrity: sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ==}
@@ -1751,7 +1758,7 @@ snapshots:
 
   '@vitest/browser-playwright@4.0.10(playwright@1.56.1)(vite@7.2.2)(vitest@4.0.10)':
     dependencies:
-      '@vitest/browser': 4.0.10(vite@7.2.2)(vitest@4.0.10)
+      '@vitest/browser': 4.0.10(vite@7.2.2)(vitest@4.0.10(@vitest/browser-playwright@4.0.10)(jsdom@24.1.3))
       '@vitest/mocker': 4.0.10(vite@7.2.2)
       playwright: 1.56.1
       tinyrainbow: 3.0.3
@@ -1762,7 +1769,7 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser@4.0.10(vite@7.2.2)(vitest@4.0.10)':
+  '@vitest/browser@4.0.10(vite@7.2.2)(vitest@4.0.10(@vitest/browser-playwright@4.0.10)(jsdom@24.1.3))':
     dependencies:
       '@vitest/mocker': 4.0.10(vite@7.2.2)
       '@vitest/utils': 4.0.10
@@ -2104,6 +2111,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  hotosm-ui-design@1.3.0: {}
 
   html-encoding-sniffer@4.0.0:
     dependencies:

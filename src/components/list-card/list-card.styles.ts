@@ -13,7 +13,7 @@ export default css`
     padding: var(--hot-spacing-small);
     border: 1px solid var(--hot-color-neutral-200);
     border-radius: var(--hot-border-radius-medium);
-    background-color: var(--hot-color-neutral-1000);
+    background-color: var(--hot-color-neutral-0);
   }
 
   .list-icon {

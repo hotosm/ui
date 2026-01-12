@@ -32,9 +32,9 @@ export default css`
 
   .dropzone {
     position: relative;
-    border: 1px dashed var(--hot-color-neutral-300);
+    border: 1px dashed var(--hot-color-primary-1000);
     border-radius: var(--hot-border-radius-large);
-    border-width: 4px;
+    border-width: 2px;
     padding: var(--hot-spacing-2x-large);
     transition: all 0.2s ease;
     cursor: pointer;
@@ -42,12 +42,12 @@ export default css`
   }
 
   .dropzone:hover:not(.dropzone--disabled) {
-    border-color: var(--hot-color-neutral-100);
-    background-color: var(--hot-color-neutral-50);
+    border-color: var(--hot-color-grey-100);
+    background-color: var(--hot-color-grey-50);
   }
 
   .dropzone:focus {
-    outline: 2px solid var(--hot-color-red-600);
+    outline: 2px solid var(--hot-color-primary-600);
     outline-offset: 2px;
   }
 
@@ -56,20 +56,20 @@ export default css`
   }
 
   .dropzone:focus-visible {
-    outline: 2px solid var(--hot-color-red-600);
+    outline: 2px solid var(--hot-color-primary-600);
     outline-offset: 2px;
   }
 
   .dropzone--dragging {
-    border-color: var(--hot-color-red-500);
-    background-color: var(--hot-color-red-100);
+    border-color: var(--hot-color-primary-500);
+    background-color: var(--hot-color-primary-100);
     border-width: 3px;
   }
 
   .dropzone--disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background-color: var(--hot-color-neutral-100);
+    background-color: var(--hot-color-grey-100);
   }
 
   .dropzone input[type='file'] {
@@ -93,16 +93,16 @@ export default css`
 
   .dropzone-icon {
     font-size: 48px;
-    color: var(--hot-color-neutral-400);
+    color: var(--hot-color-primary-1000);
     transition: color 0.2s ease;
   }
 
   .dropzone:hover:not(.dropzone--disabled) .dropzone-icon {
-    color: var(--hot-color-red-500);
+    color: var(--hot-color-primary-1000);
   }
 
   .dropzone--dragging .dropzone-icon {
-    color: var(--hot-color-red-600);
+    color: var(--hot-color-primary-1000);
   }
 
   .dropzone-cta {
@@ -113,7 +113,7 @@ export default css`
   .dropzone-text {
     font-size: var(--hot-font-size-small);
     font-weight: 500;
-    color: var(--hot-color-neutral-700);
+    color: var(--hot-color-grey-700);
     text-align: center;
   }
 
@@ -125,7 +125,7 @@ export default css`
   .dropzone-maxsize {
     font-size: var(--hot-font-size-x-small);
     font-weight: var(--hot-font-weight-light);
-    color: var(--hot-color-neutral-500);
+    color: var(--hot-color-grey-500);
     text-align: center;
   }
 
@@ -145,7 +145,7 @@ export default css`
 
   .dropzone--compact .compact-text {
     font-size: var(--hot-font-size-large);
-    color: var(--hot-color-neutral-600);
+    color: var(--hot-color-grey-600);
   }
 
   .error-message {
@@ -154,15 +154,15 @@ export default css`
     gap: var(--hot-spacing-x-small);
     margin-top: var(--hot-spacing-small);
     padding: var(--hot-spacing-small);
-    background-color: var(--hot-color-red-50);
-    border: 1px solid var(--hot-color-red-200);
+    background-color: var(--hot-color-danger-50);
+    border: 1px solid var(--hot-color-danger-200);
     border-radius: var(--hot-border-radius-small);
-    color: var(--hot-color-red-700);
+    color: var(--hot-color-danger-700);
     font-size: var(--hot-font-size-small);
   }
 
   .error-message wa-icon {
-    color: var(--hot-color-red-600);
+    color: var(--hot-color-danger-600);
     font-size: var(--hot-font-size-medium);
   }
 
