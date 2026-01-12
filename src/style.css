@@ -4,5 +4,7 @@
 /* First import WebAwesome base styles */
 @import url('https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css');
 
+/* HOT styling */ 
+
 @import 'hotosm-ui-design/dist/hot.css';
 @import 'hotosm-ui-design/dist/hot-wa.css';
