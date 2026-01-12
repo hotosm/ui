@@ -4,6 +4,7 @@ import HotTracking from './components/tracking/tracking.js';
 import HotConsent from './components/consent/consent.js';
 import HotFileInputDropzone from './components/file-input-dropzone/file-input-dropzone.js';
 import HotListCard from './components/list-card/list-card.js';
+import './components/shared-menu/shared-menu.component.js';
 
 export { injectCSSIntoShadowDOM } from './utils/shadow-dom-css.js';
 
