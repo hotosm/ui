@@ -47,12 +47,8 @@ export const styles = css`
     cursor: pointer;
   }
 
-  wa-icon[name="grip"] {
-    font-size: var(--hot-font-size-large);
-  }
-
   .menu-icon {
-    color: #333333;
+    color: var(--hot-color-gray-800);
   }
 
   /* Dropdown positioning - FIXED SELECTOR */
