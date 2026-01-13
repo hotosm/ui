@@ -1,7 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/web-components";
+import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import { html } from "lit";
 
 import "../../src/hotosm-ui";
+
+// Prevent layout shift when dropdown opens by keeping scrollbar visible
+// When wa-dropdown opens, it adds a "scroll" class to <html> and sets overflow:hidden,
+// which removes the scrollbar and causes content to shift. This style prevents that.
+const style = document.createElement("style");
+style.textContent = `
+  html.scroll {
+    overflow-y: scroll !important;
+  }
+`;
+document.head.appendChild(style);
 
 const meta: Meta = {
   title: "SharedMenu",
@@ -10,7 +21,7 @@ const meta: Meta = {
     layout: "centered",
   },
   argTypes: {
-    showLogos: { control: 'boolean' },
+    showLogos: { control: "boolean" },
   },
 };
 
@@ -26,24 +37,43 @@ export const Default: Story = {
       <hotosm-shared-menu
         ?show-logos="${args.showLogos}"
         @product-selected=${(e: CustomEvent) => {
-          console.log('Product selected:', e.detail.product);
+          console.log("Product selected:", e.detail.product);
         }}
       ></hotosm-shared-menu>
 
       <div style="margin-top: 20px; max-width: 500px;">
         <h2>Shared Menu Component</h2>
-        <p>A dropdown menu that provides access to all HOT products organized by category.</p>
-        
+        <p>
+          A dropdown menu that provides access to all HOT products organized by
+          category.
+        </p>
+
         <h3>Features:</h3>
         <ul>
-          <li>Products organized by sections: Imagery, Mapping, Field, and Data</li>
+          <li>
+            Products organized by sections: Imagery, Mapping, Field, and Data
+          </li>
           <li>Optional product logos display</li>
           <li>Opens product pages in new tabs</li>
           <li>Dispatches custom "product-selected" event</li>
         </ul>
+
+        <h3>Known Issues:</h3>
+        <p>
+          When the dropdown opens, the page content may shift slightly. This
+          happens because the dropdown adds a "scroll" class to the &lt;html&gt;
+          element with <code>overflow: hidden</code>, which removes the
+          scrollbar.
+        </p>
+        <p>To prevent this in your application, add the following CSS:</p>
+        <pre
+          style="background: #f5f5f5; padding: 10px; border-radius: 5px;"
+        ><code>html.scroll {
+  overflow-y: scroll !important;
+}</code></pre>
       </div>
     `;
-  }
+  },
 };
 
 export const WithLogos: Story = {
@@ -55,14 +85,31 @@ export const WithLogos: Story = {
       <hotosm-shared-menu
         ?show-logos="${args.showLogos}"
         @product-selected=${(e: CustomEvent) => {
-          console.log('Product selected:', e.detail.product);
+          console.log("Product selected:", e.detail.product);
         }}
       ></hotosm-shared-menu>
 
       <div style="margin-top: 20px; max-width: 500px;">
         <h2>Shared Menu with Logos</h2>
-        <p>When <code>show-logos</code> is enabled, product icons are displayed next to each item.</p>
+        <p>
+          When <code>show-logos</code> is enabled, product icons are displayed
+          next to each item.
+        </p>
+
+        <h3>Known Issues:</h3>
+        <p>
+          When the dropdown opens, the page content may shift slightly. This
+          happens because the dropdown adds a "scroll" class to the &lt;html&gt;
+          element with <code>overflow: hidden</code>, which removes the
+          scrollbar.
+        </p>
+        <p>To prevent this in your application, add the following CSS:</p>
+        <pre
+          style="background: #f5f5f5; padding: 10px; border-radius: 5px;"
+        ><code>html.scroll {
+  overflow-y: scroll !important;
+}</code></pre>
       </div>
     `;
-  }
+  },
 };
