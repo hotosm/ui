@@ -1,28 +1,20 @@
 import "@awesome.me/webawesome/dist/components/dropdown/dropdown";
 import "@awesome.me/webawesome/dist/components/button/button";
 import "@awesome.me/webawesome/dist/components/icon/icon";
-
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { registerIconLibrary } from "@awesome.me/webawesome/dist/webawesome.js";
 import { styles } from "./shared-menu.styles.js";
-
-// Register Bootstrap Icons library
-registerIconLibrary("bootstrap", {
-  resolver: (name) => {
-    return `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/${name}.svg`;
-  },
-});
-
-// Import product icons. These icons will be changed in the future, and are not being showed at the moment.
-import droneIcon from "./assets/icon-drone.png";
-import oamIcon from "./assets/icon-oam.png";
-import tmIcon from "./assets/icon-tm.png";
-import fairIcon from "./assets/icon-fair.png";
-import fieldIcon from "./assets/icon-field.png";
-import chatmapIcon from "./assets/icon-chatmap.png";
-import exportIcon from "./assets/icon-export.png";
-import umapIcon from "./assets/icon-umap.png";
+import gridIcon from "./assets/grid-icon.svg";
+// Import product icons. These icons will be added in the near future, and are not being showed as default.
+import droneIcon from "./assets/icon-drone.svg";
+import oamIcon from "./assets/icon-oam.svg";
+import tmIcon from "./assets/icon-tm.svg";
+import fairIcon from "./assets/icon-fair.svg";
+import fieldIcon from "./assets/icon-field.svg";
+import chatmapIcon from "./assets/icon-chatmap.svg";
+import exportIcon from "./assets/icon-export.svg";
+import umapIcon from "./assets/icon-umap.svg";
 
 interface Product {
   id: string;
@@ -145,8 +137,7 @@ export class SharedMenu extends LitElement {
           aria-label="Open products menu"
         >
           <wa-icon
-            library="bootstrap"
-            name="grid-3x3-gap-fill"
+            src="${gridIcon}"
             class="menu-icon"
           ></wa-icon>
         </wa-button>
@@ -180,9 +171,6 @@ export class SharedMenu extends LitElement {
             </div>
           `;
         })}
-                </wa-dropdown-item>
-          
-       
       </wa-dropdown>
     `;
   }
