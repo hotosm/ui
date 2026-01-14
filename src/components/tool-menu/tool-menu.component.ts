@@ -95,7 +95,7 @@ const TOOLS_DATA: Tool[] = [
   },
 ];
 
-export default class HotToolMenu extends LitElement {
+export class HotToolMenu extends LitElement {
   static styles = styles;
 
   @property({ type: Boolean, attribute: "show-logos", reflect: false })
@@ -170,3 +170,5 @@ export default class HotToolMenu extends LitElement {
     `;
   }
 }
+
+export default HotToolMenu;
