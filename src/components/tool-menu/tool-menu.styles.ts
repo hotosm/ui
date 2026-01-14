@@ -16,7 +16,7 @@ export const styles = css`
     background-color: var(--hot-color-neutral-50);
   }
 
-  .product-content {
+  .tool-content {
     display: flex;
     flex-direction: column;
     gap: var(--hot-spacing-2x-small);
@@ -35,7 +35,7 @@ export const styles = css`
       var(--hot-spacing-2x-small) var(--hot-spacing-medium);
   }
 
-  .product-title {
+  .tool-title {
     font-weight: var(--hot-font-weight-light);
     font-size: var(--hot-font-size-small);
     color: var(--hot-color-neutral-950);

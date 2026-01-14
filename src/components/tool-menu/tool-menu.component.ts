@@ -2,11 +2,10 @@ import "@awesome.me/webawesome/dist/components/dropdown/dropdown";
 import "@awesome.me/webawesome/dist/components/button/button";
 import "@awesome.me/webawesome/dist/components/icon/icon";
 import { LitElement, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { registerIconLibrary } from "@awesome.me/webawesome/dist/webawesome.js";
-import { styles } from "./shared-menu.styles.js";
+import { property } from "lit/decorators.js";
+import { styles } from "./tool-menu.styles.js";
 import gridIcon from "./assets/grid-icon.svg";
-// Import product icons. These icons will be added in the near future, and are not being showed as default.
+// Import tools icons. These icons will be added in the near future, and are not being showed as default.
 import droneIcon from "./assets/icon-drone.svg";
 import oamIcon from "./assets/icon-oam.svg";
 import tmIcon from "./assets/icon-tm.svg";
@@ -16,7 +15,7 @@ import chatmapIcon from "./assets/icon-chatmap.svg";
 import exportIcon from "./assets/icon-export.svg";
 import umapIcon from "./assets/icon-umap.svg";
 
-interface Product {
+interface Tool {
   id: string;
   title: string;
   href: string;
@@ -37,7 +36,7 @@ const SECTIONS: Section[] = [
   { id: "data", title: "Data" },
 ];
 
-const PRODUCTS_DATA: Product[] = [
+const TOOLS_DATA: Tool[] = [
   {
     id: "drone",
     title: "Drone Tasking Manager",
@@ -96,35 +95,34 @@ const PRODUCTS_DATA: Product[] = [
   },
 ];
 
-@customElement("hotosm-shared-menu")
-export class SharedMenu extends LitElement {
+export default class HotToolMenu extends LitElement {
   static styles = styles;
 
   @property({ type: Boolean, attribute: "show-logos", reflect: false })
   showLogos = false;
 
-  private products: Product[] = PRODUCTS_DATA;
+  private tools: Tool[] = TOOLS_DATA;
 
-  private getProductsBySection(sectionId: string): Product[] {
-    return this.products.filter((p) => p.section === sectionId);
+  private getToolsBySection(sectionId: string): Tool[] {
+    return this.tools.filter((t) => t.section === sectionId);
   }
 
   private handleSelect(event: CustomEvent) {
     const selectedValue = event.detail.item.value;
-    const product = this.products.find((p) => p.id === selectedValue);
+    const tool = this.tools.find((t) => t.id === selectedValue);
 
-    if (product) {
+    if (tool) {
       // Dispatch custom event for external handling if needed
       this.dispatchEvent(
-        new CustomEvent("product-selected", {
-          detail: { product },
+        new CustomEvent("tool-selected", {
+          detail: { tool },
           bubbles: true,
           composed: true,
         })
       );
 
-      // Open product page in new tab
-      window.open(product.href, "_blank", "noopener,noreferrer");
+      // Open tool page in new tab
+      window.open(tool.href, "_blank", "noopener,noreferrer");
     }
   }
 
@@ -134,36 +132,33 @@ export class SharedMenu extends LitElement {
         <wa-button
           slot="trigger"
           appearance="plain"
-          aria-label="Open products menu"
+          aria-label="Open tools menu"
         >
-          <wa-icon
-            src="${gridIcon}"
-            class="menu-icon"
-          ></wa-icon>
+          <wa-icon src="${gridIcon}" class="menu-icon"></wa-icon>
         </wa-button>
 
         ${SECTIONS.map((section, sectionIndex) => {
-          const products = this.getProductsBySection(section.id);
-          if (products.length === 0) return "";
+          const tools = this.getToolsBySection(section.id);
+          if (tools.length === 0) return "";
 
           return html`
             <div
               class="section-group ${sectionIndex > 0 ? "section-divider" : ""}"
             >
               <wa-dropdown-label>${section.title}</wa-dropdown-label>
-              ${products.map(
-                (product) => html`
-                  <wa-dropdown-item value="${product.id}">
+              ${tools.map(
+                (tool) => html`
+                  <wa-dropdown-item value="${tool.id}">
                     ${this.showLogos
                       ? html`<img
                           slot="icon"
-                          src="${product.icon}"
-                          alt="${product.title}"
+                          src="${tool.icon}"
+                          alt="${tool.title}"
                           style="width: 32px; height: 32px; object-fit: contain; display: block;"
                         />`
                       : ""}
-                    <div class="product-content">
-                      <div class="product-title">${product.title}</div>
+                    <div class="tool-content">
+                      <div class="tool-title">${tool.title}</div>
                     </div>
                   </wa-dropdown-item>
                 `
@@ -173,11 +168,5 @@ export class SharedMenu extends LitElement {
         })}
       </wa-dropdown>
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "hotosm-shared-menu": SharedMenu;
   }
 }
