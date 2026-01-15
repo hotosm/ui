@@ -153,8 +153,10 @@ If you are working directly in HTML, or other ways without a configured
 bundler, you can import all the components as a bundle, as use them like so:
 
   ```html
-  <!-- The importmap is required to resolve @awesome.me/webawesome imports in hotosm/ui -->
-  <!-- It's also vital to import from dist-cdn to avoid needing to import subdependencies for webawesome -->
+  <!-- The importmap is required to resolve @awesome.me/webawesome
+    imports in hotosm/ui -->
+  <!-- It's also vital to import from dist-cdn to avoid
+     needing to import subdependencies for webawesome -->
   <head>
     <script type="importmap">
       {
@@ -163,8 +165,14 @@ bundler, you can import all the components as a bundle, as use them like so:
         }
       }
     </script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0/dist-cdn/webawesome.loader.js"></script>  
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.4.0/dist/hotosm-ui.js"></script>  
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0/dist-cdn/webawesome.loader.js"
+    ></script>  
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.4.0/dist/hotosm-ui.js"
+    ></script>  
   </head>
 
   <body>
