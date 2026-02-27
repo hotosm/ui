@@ -40,7 +40,8 @@
     "./dist/hotosm-ui.js": "./dist/hotosm-ui.js",
     "./dist/components/*": "./dist/components/*",
     "./dist/themes/*": "./dist/themes/*",
-    "./dist/style.css": "./dist/style.css"
+    "./dist/style.css": "./dist/style.css",
+    "./dist/style-core.css": "./dist/style-core.css"
   },
   "files": [
     "dist"

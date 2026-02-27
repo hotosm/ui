@@ -1,0 +1,18 @@
+/* HOT-only styles — use this instead of style.css when loading
+   WebAwesome CSS separately from CDN for cross-tool cache sharing.
+
+   Usage:
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/style-core.css">
+*/
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* HOT theme variables */
+@import 'themes/hot.css';
+
+/* WebAwesome overrides for HOT */
+@import 'themes/hot-wa.css';
