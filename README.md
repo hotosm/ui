@@ -44,176 +44,269 @@
   🎯 <strong>Roadmap / Tasks</strong>: 
   <a href="https://github.com/orgs/hotosm/projects/37/views/3" target="_blank">https://github.com/orgs/hotosm/projects/37/views/3</a>
 </p>
-
-
 <!-- markdownlint-enable -->
 
 ---
 
-## Shared UI Components with HOT Theming
+## Overview
 
-This repository contains advice on how to use the WebAwesome
-[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-library, references to the HOTOSM style guide, and a few 'wrapper'
-components to assist development:
+Shared [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+built with [Lit](https://lit.dev) and themed for HOTOSM tools using
+[WebAwesome](https://webawesome.com) primitives.
 
-1. Reduced code duplication across HOT tools (we repeat a lot!)
-2. Simplified developer experience to create a HOT app.
-3. Reasonably consistent theming and style across tools.
+**Goals:**
 
-The main goal of this project is not to re-invent the wheel, or add an extra burden
-of development and maintenance. It should include a minimal number of
-components, such as:
+- Reduce code duplication across HOT tools.
+- Provide a consistent HOT look-and-feel out of the box.
+- Keep the component set small and focused (header, sidebar, footer, etc.).
 
-- Header, including auth flows (OSM, Google) and login info.
-- Sidebar with links to extra resources.
-- Footer with links.
+**WebAwesome version:** `3.2.1`
 
-## Quick start
+---
 
-Current HOTOSM UI version used: `0.3.1-b5`
-Current WebAwesome version used: `3.2.1`
-
-### Install WebAwesome
+## Installation
 
 ```bash
-pnpm install "@awesome.me/webawesome@3.2.1"
+pnpm install @hotosm/ui @awesome.me/webawesome@3.2.1
 ```
 
 > [!NOTE]
-> It's important to pin the version of web awesome used to the version in this
-> library, to avoid any conflicts and incompatibilities between components.
+> `@awesome.me/webawesome` is a **peer dependency**. Always pin it to the
+> version shown above to avoid conflicts between HOT components and
+> WebAwesome internals.
 
-### Install HOT Components
+---
 
-```bash
-pnpm install "@hotosm/ui"
+## Loading Styles
+
+Two CSS files are published. Choose the one that fits your setup.
+
+### Option A — Bundled (recommended for simplicity)
+
+A single self-contained file with WebAwesome base styles + HOT theme
+already inlined. Nothing else to load.
+
+```html
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style.css">
 ```
 
-### Configure The Styles
+Or from a bundler:
 
-In your `index.html` or equivalent frontend root, add the following classes
-to your `<html>` block:
+```js
+import '@hotosm/ui/dist/style.css';
+```
 
-  ```html
-  <!DOCTYPE html>
-  <html class="wa-theme-default wa-palette-hotosm wa-brand-red wa-neutral-gray
-    wa-success-cyan wa-warning-yellow wa-danger-orange">
-    <head>
-      xxx
-    </head>
-    <body>
-      xxx
-    </body>
-  </html>
-  ```
+### Option B — Split / CDN-optimised (recommended for multi-tool caching)
+
+If you run several HOT tools (FMTM, Tasking Manager, etc.) and want
+the browser to **cache WebAwesome CSS once** across all of them, load
+WebAwesome from CDN separately and use the slim HOT-only stylesheet:
+
+```html
+<!-- WebAwesome CSS — shared across all HOT tools via browser cache -->
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+
+<!-- HOT theme only (fonts + design tokens + WebAwesome overrides) -->
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css">
+```
+
+Or from a bundler:
+
+```js
+// WebAwesome (resolve from node_modules)
+import '@awesome.me/webawesome/dist/styles/native.css';
+import '@awesome.me/webawesome/dist/styles/utilities.css';
+import '@awesome.me/webawesome/dist/styles/themes/default.css';
+
+// HOT theme only
+import '@hotosm/ui/dist/style-core.css';
+```
+
+| File | Size | Contains |
+| --- | --- | --- |
+| `style.css` | ~105 KB | WebAwesome + fonts + HOT theme (everything) |
+| `style-core.css` | ~21 KB | Fonts + HOT theme only (no WebAwesome) |
+
+> [!TIP]
+> **Which should I pick?**
+>
+> - Building a single standalone app? Use **Option A** — zero config.
+> - Running multiple HOT tools on the same domain or expecting users to
+>   navigate between them? Use **Option B** — the ~84 KB of shared
+>   WebAwesome CSS is fetched once and cached by the browser.
+
+---
+
+## HTML Setup
+
+Add the required WebAwesome classes to your `<html>` element:
+
+```html
+<!DOCTYPE html>
+<html class="wa-theme-default wa-palette-hotosm wa-brand-red wa-neutral-gray
+  wa-success-cyan wa-warning-yellow wa-danger-orange">
+  <head>...</head>
+  <body>...</body>
+</html>
+```
 
 > [!IMPORTANT]
-> These classes determine the colour usage for different component variants,
-> and probably should not be changed!
+> These classes control the colour palette used by every WebAwesome
+> component. Do not remove them unless you are building a custom theme.
 
-And import the required styles in your `main.ts` or equivalent (we import from
-package rather than CDN, to allow the bundler to work its CSS tree-shaking
-magic).
+---
 
-  ```js
-  import '@hotosm/ui/dist/style.css';
-  ```
+## Using Components
 
-If you wish to use any of the variables in `hot.css` manually, you can reference
-them as variables like so:
+### Via Bundler (Vite, Webpack, etc.)
 
-  ```css
-  /* In your CSS file */
-  some-param: var(--hot-some-param);
-  /* See all variables in the `theme/hot.css` file */
-  ```
+Import individual components — your bundler will tree-shake the rest:
 
-### Use The Components
+```js
+import '@hotosm/ui/dist/components/header/header.js';
+```
 
-#### Via Bundler
+```html
+<hot-header title="My App"></hot-header>
+```
 
-Import each component individually into your code:
+### Via CDN / Plain HTML / HTMX
 
-  ```html
-  <script>
-    import '@hotosm/ui/dist/components/header/header.js';
+The recommended approach for HTMX and plain-HTML apps loads WebAwesome
+styles and components from CDN so the browser can cache them once across
+all HOT tools (Option B from the styles section above):
+
+```html
+<!DOCTYPE html>
+<html class="wa-theme-default wa-palette-hotosm">
+<head>
+  <!-- WebAwesome CSS — cached once across all HOT tools at this WA version -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+
+  <!-- HOT UI theme (fonts + HOT design tokens + WebAwesome overrides, ~21 KB) -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css">
+
+  <!-- Import map: resolves WebAwesome bare-module specifiers
+       inside hotosm-ui.js -->
+  <!-- WA components load lazily from CDN only when first used;
+       no separate loader needed -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@awesome.me/webawesome/dist/components/":
+          "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+      }
+    }
   </script>
 
-  <hot-header
-    param1=""
-    param2=""
-  >
-  </hot-header>
-  ```
+  <!-- HOT UI web components -->
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js">
+  </script>
+</head>
 
-#### Via CDN
+<body>
+  <hot-header id="hdr" title="My App" size="small"></hot-header>
 
-If you are working directly in HTML, or other ways without a configured
-bundler, you can import all the components as a bundle, as use them like so:
+  <script>
+    // Boolean props must be set via JS — an HTML attribute is always truthy.
+    // Defaults: drawer=true, show-login=false, border-bottom=true
+    const hdr = document.getElementById('hdr');
+    hdr.drawer = false;       // disable the hamburger drawer
+    hdr.showLogin = false;    // hide the login button
+  </script>
+</body>
+</html>
+```
 
-  ```html
-  <!-- The importmap is required to resolve @awesome.me/webawesome
-    imports in hotosm/ui -->
-  <!-- It's also vital to import from dist-cdn to avoid
-     needing to import subdependencies for webawesome -->
-  <head>
-    <script type="importmap">
-      {
-        "imports": {
-          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0/dist-cdn/components/"
-        }
-      }
-    </script>
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0/dist-cdn/webawesome.loader.js"
-    ></script>  
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.4.0/dist/hotosm-ui.js"
-    ></script>  
-  </head>
+> [!TIP]
+> If you need only a single self-contained stylesheet instead of the three
+> WA links above, you can use Option A (`style.css`) — but then the ~84 KB
+> of WebAwesome CSS is bundled into the HOT package and cannot be shared
+> across tools as a single cached resource.
 
-  <body>
-    <hot-header title="Test App" size="small" show-login="false"></hot-header>
-  </body>
-  ```
+### React
 
-#### React
+Web Components work in React with a small caveat — use `ref` callbacks
+for custom events if React's synthetic event system doesn't forward them:
 
-Import in the same way as the bundler example above, except events
-are bound to slightly differently:
+```jsx
+import '@hotosm/ui/dist/components/header/header.js';
 
-  ```jsx
-  <hot-header
-    title="Test App"
-    size="small"
-    showLogin="false"
-    onLogin={() => {
-      console.log('handler');
-    }}
-  ></hot-header>
-  ```
+function App() {
+  return (
+    <hot-header
+      title="My App"
+      ref={(el) => {
+        if (el) el.addEventListener('login', () => console.log('logged in'));
+      }}
+    />
+  );
+}
+```
 
-### Component Guides
+---
 
-- Header: see [`/header.md`](/header.md) for detailed integration, styling, and
-  framework examples.
+## Using HOT Design Tokens
 
-### How to contribute
+The HOT theme exposes CSS custom properties you can reference in your
+own stylesheets:
 
-- Clone the project `git clone git@github.com:hotosm/ui.git`
-- Install dependencies `pnpm install`
-- Run the storybook `pnpm run dev`
-- Write code!
+```css
+.my-card {
+  background: var(--hot-color-primary-50);
+  color: var(--hot-color-neutral-900);
+  font-family: var(--hot-font-sans);
+  padding: var(--hot-spacing-medium);
+  border-radius: var(--hot-border-radius-large);
+}
+```
 
-For **styling**, check `/theme`:
+See all available tokens in
+[`src/themes/hot.css`](src/themes/hot.css).
 
-- `hot.css` has a HOT theme, used across HOT components.
-- `hot-wa.css` has a WebAwesome theme, re-defining style variables.
+---
 
-### License
+## Component Guides
 
-HOT UI is free and open source software! you may use any HOT UI project under the
-terms of the GNU Affero General Public License (AGPL) Version 3.
+- **Header:** see [`header.md`](header.md) for detailed integration,
+  styling, and framework examples.
+
+---
+
+## Contributing
+
+```bash
+git clone git@github.com:hotosm/ui.git
+cd ui
+pnpm install
+pnpm run dev        # starts Storybook on localhost:3001
+```
+
+**Styling files** (under `src/themes/`):
+
+| File | Purpose |
+| --- | --- |
+| `hot.css` | HOT design tokens (colours, typography, spacing) |
+| `hot-wa.css` | WebAwesome variable overrides to apply the HOT palette |
+
+---
+
+## License
+
+HOT UI is free and open source software. You may use any HOT UI project
+under the terms of the
+[GNU Affero General Public License (AGPL) Version 3](LICENSE.md).

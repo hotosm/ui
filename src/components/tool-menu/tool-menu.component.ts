@@ -1,6 +1,10 @@
-import "@awesome.me/webawesome/dist/components/dropdown/dropdown";
-import "@awesome.me/webawesome/dist/components/button/button";
-import "@awesome.me/webawesome/dist/components/icon/icon";
+// Dynamic imports: resolved by bundlers, ignored gracefully for CDN usage
+// where webawesome.loader.js registers all wa-* elements globally.
+Promise.allSettled([
+  import("@awesome.me/webawesome/dist/components/dropdown/dropdown.js"),
+  import("@awesome.me/webawesome/dist/components/button/button.js"),
+  import("@awesome.me/webawesome/dist/components/icon/icon.js"),
+]);
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { styles } from "./tool-menu.styles.js";

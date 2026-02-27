@@ -132,24 +132,54 @@ import '@hotosm/ui/dist/components/header/header.js';
 
 ### HTML (CDN-only)
 
+Load WebAwesome styles and components from CDN so the browser caches
+them once across all HOT tools. An import map is required to resolve
+WebAwesome module specifiers inside `hotosm-ui.js`:
+
 ```html
 <!DOCTYPE html>
-<html class="hot-theme-light wa-theme-default wa-palette-hotosm">
+<html class="wa-theme-default wa-palette-hotosm">
 <head>
   <meta charset="UTF-8" />
   <title>HOT Header — HTML demo</title>
-  <link rel="stylesheet" href="https://unpkg.com/@hotosm/ui/dist/style.css" />
-  <script type="module" src="https://unpkg.com/@hotosm/ui/dist/hotosm-ui.js"></script>
+
+  <!-- WebAwesome CSS (cached across HOT tools) -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+
+  <!-- HOT theme only (fonts + HOT tokens + WA overrides) -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css">
+
+  <!-- Import map: resolves WA bare-module specifiers -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@awesome.me/webawesome/dist/components/":
+          "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+      }
+    }
+  </script>
+
+  <!-- HOT UI web components -->
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js">
+  </script>
 </head>
 <body>
-  <hot-header id="hdr" title="Field TM" size="small" showLogin="true"></hot-header>
+  <hot-header id="hdr" title="Field TM" size="small"></hot-header>
 
   <script>
     const hdr = document.getElementById('hdr');
 
-    // Map boolean and complex props via JS properties
+    // Boolean props must be set via JS - HTML attribute presence is always truthy.
     hdr.borderBottom = true;
     hdr.drawer = true;
+    hdr.showLogin = true;     // set false to hide the login button
     hdr.defaultLoginIcon = 'user';
 
     // Logo needs to be provided

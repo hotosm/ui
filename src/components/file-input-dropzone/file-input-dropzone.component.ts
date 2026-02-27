@@ -1,8 +1,12 @@
 import { LitElement, html } from 'lit';
 import { property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import '@awesome.me/webawesome/dist/components/icon/icon.js';
-import '@awesome.me/webawesome/dist/components/divider/divider.js';
+// Dynamic imports: resolved by bundlers, ignored gracefully for CDN usage
+// where webawesome.loader.js registers all wa-* elements globally.
+Promise.allSettled([
+  import('@awesome.me/webawesome/dist/components/icon/icon.js'),
+  import('@awesome.me/webawesome/dist/components/divider/divider.js'),
+]);
 import '../list-card/list-card.js';
 
 import styles from './file-input-dropzone.styles.js';

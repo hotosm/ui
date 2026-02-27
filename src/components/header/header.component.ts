@@ -1,7 +1,11 @@
-import '@awesome.me/webawesome/dist/components/tab-group/tab-group.js';
-import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
-import '@awesome.me/webawesome/dist/components/icon/icon.js';
-import '@awesome.me/webawesome/dist/components/drawer/drawer.js';
+// Dynamic imports: resolved by bundlers, ignored gracefully for CDN usage
+// where webawesome.loader.js registers all wa-* elements globally.
+Promise.allSettled([
+  import('@awesome.me/webawesome/dist/components/tab-group/tab-group.js'),
+  import('@awesome.me/webawesome/dist/components/dialog/dialog.js'),
+  import('@awesome.me/webawesome/dist/components/icon/icon.js'),
+  import('@awesome.me/webawesome/dist/components/drawer/drawer.js'),
+]);
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
@@ -77,6 +81,9 @@ export class Header extends LitElement {
 
   async connectedCallback() {
     super.connectedCallback();
+
+    // Only initialise Hanko when the login UI is actually enabled
+    if (!this.showLogin) return;
 
     await registerHanko('https://dev.login.hotosm.org', {
       shadow: false, // We can't use shadow dom, as the OSM custom element part is not exposed
