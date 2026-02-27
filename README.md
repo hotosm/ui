@@ -150,16 +150,15 @@ Add the required WebAwesome classes to your `<html>` element:
 
 ```html
 <!DOCTYPE html>
-<html class="wa-theme-default wa-palette-hotosm wa-brand-red wa-neutral-gray
-  wa-success-cyan wa-warning-yellow wa-danger-orange">
+<html class="wa-theme-default wa-palette-hotosm">
   <head>...</head>
   <body>...</body>
 </html>
 ```
 
 > [!IMPORTANT]
-> These classes control the colour palette used by every WebAwesome
-> component. Do not remove them unless you are building a custom theme.
+> These classes activate the HOT colour palette and light theme for every
+> WebAwesome component on the page. Do not remove them.
 
 ---
 
@@ -219,14 +218,14 @@ all HOT tools (Option B from the styles section above):
 </head>
 
 <body>
-  <hot-header id="hdr" title="My App" size="small"></hot-header>
+  <hot-header id="hdr" title="My App" size="small" show-login></hot-header>
 
   <script>
-    // Boolean props must be set via JS — an HTML attribute is always truthy.
-    // Defaults: drawer=true, show-login=false, border-bottom=true
+    // Boolean props default to false.
+    // Include the attribute to make it true.
     const hdr = document.getElementById('hdr');
-    hdr.drawer = false;       // disable the hamburger drawer
-    hdr.showLogin = false;    // hide the login button
+    hdr.drawer = true;        // enable the hamburger drawer
+    hdr.borderBottom = true;  // enable bottom border
   </script>
 </body>
 </html>

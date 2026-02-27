@@ -57,12 +57,12 @@ export default css`
   }
 
   .remove-button:hover {
-    background-color: var(--hot-color-red-50);
-    color: var(--hot-color-red-600);
+    background-color: var(--hot-color-danger-50);
+    color: var(--hot-color-danger-600);
   }
 
   .remove-button:focus-visible {
-    outline: 2px solid var(--hot-color-red-600);
+    outline: 2px solid var(--wa-color-focus);
     outline-offset: 2px;
   }
 

@@ -11,13 +11,13 @@ export default css`
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--wa-color-overlay-modal);
     backdrop-filter: blur(4px);
     z-index: 9999;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    padding: 0.25rem;
+    padding: var(--hot-spacing-2x-small);
     animation: fadeIn 0.3s ease-out;
   }
 
@@ -49,9 +49,9 @@ export default css`
 
   .consent-callout {
     --wa-callout-spacing: 2rem;
-    border-radius: 16px;
+    border-radius: var(--hot-border-radius-x-large);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(243, 77, 71, 0.2);
+    border: 1px solid var(--hot-color-primary-100);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(249, 250, 251, 0.98));
     backdrop-filter: blur(16px);
     position: relative;
@@ -65,38 +65,38 @@ export default css`
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--hot-color-red-500), var(--hot-color-red-600), var(--hot-color-red-700));
-    border-radius: 16px 16px 0 0;
+    background: linear-gradient(90deg, var(--hot-color-primary-500), var(--hot-color-primary-600), var(--hot-color-primary-700));
+    border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
   }
 
   .consent-icon {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-    color: var(--hot-color-red-500);
+    color: var(--hot-color-primary-500);
   }
 
   .consent-content {
-    padding: 0.75rem;
+    padding: var(--hot-spacing-small);
   }
 
   .consent-header {
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.3;
-    margin: 0 0 1rem 0;
-    color: #1f2937;
+    font-weight: var(--hot-font-weight-semibold);
+    font-size: var(--hot-font-size-large);
+    line-height: var(--hot-line-height-dense);
+    margin: 0 0 var(--hot-spacing-medium) 0;
+    color: var(--hot-color-neutral-950);
     text-align: center;
   }
 
   .consent-message {
-    margin-bottom: 2rem;
+    margin-bottom: var(--hot-spacing-2x-large);
     text-align: center;
   }
 
   .consent-message p {
-    margin: 0 0 1rem 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: #4b5563;
+    margin: 0 0 var(--hot-spacing-medium) 0;
+    font-size: var(--hot-font-size-small);
+    line-height: var(--hot-line-height-normal);
+    color: var(--hot-color-neutral-700);
   }
 
   .consent-message p:last-child {
@@ -106,7 +106,7 @@ export default css`
   .consent-actions {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--hot-spacing-small);
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -114,48 +114,29 @@ export default css`
   .consent-button {
     width: 100%;
     min-width: auto;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border-radius: 8px;
   }
 
-  .consent-button:hover {
+  .consent-button::part(base) {
+    font-weight: var(--hot-font-weight-semibold);
+    transition: all 0.2s ease;
+    border-radius: var(--hot-border-radius-large);
+  }
+
+  .consent-button::part(base):hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   }
 
-  .decline-button {
-    background: #f3f4f6;
-    border: 1px solid #d1d5db;
-    color: #374151;
-  }
-
-  .decline-button:hover {
-    background: #e5e7eb;
-    border-color: #9ca3af;
-  }
-
-  .accept-button {
-    background: linear-gradient(135deg, var(--hot-color-red-500), var(--hot-color-red-600));
-    border: 1px solid var(--hot-color-red-600);
-    color: white;
-  }
-
-  .accept-button:hover {
-    background: linear-gradient(135deg, var(--hot-color-red-600), var(--hot-color-red-700));
-    border-color: var(--hot-color-red-700);
-  }
-
   /* Focus styles for accessibility */
   .consent-button:focus {
-    outline: 2px solid var(--hot-color-red-500);
+    outline: 2px solid var(--wa-color-focus);
     outline-offset: 2px;
   }
 
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     .consent-callout {
-      border: 2px solid #000;
+      border: 2px solid var(--hot-color-neutral-0);
     }
 
     .consent-button {
@@ -176,29 +157,29 @@ export default css`
   /* Responsive design for larger screens */
   @media (min-width: 481px) {
     .consent-overlay {
-      padding: 0.5rem;
+      padding: var(--hot-spacing-x-small);
     }
 
     .consent-content {
-      padding: 1rem;
+      padding: var(--hot-spacing-medium);
     }
 
     .consent-header {
-      font-size: 1.25rem;
+      font-size: var(--hot-font-size-large);
     }
 
     .consent-message p {
-      font-size: 1rem;
+      font-size: var(--hot-font-size-medium);
     }
 
     .consent-actions {
-      gap: 1rem;
+      gap: var(--hot-spacing-medium);
     }
   }
 
   @media (min-width: 769px) {
     .consent-overlay {
-      padding: 1rem;
+      padding: var(--hot-spacing-medium);
     }
 
     .consent-container {
@@ -206,11 +187,11 @@ export default css`
     }
 
     .consent-content {
-      padding: 1.5rem;
+      padding: var(--hot-spacing-x-large);
     }
 
     .consent-header {
-      font-size: 1.5rem;
+      font-size: var(--hot-font-size-x-large);
     }
 
     .consent-actions {

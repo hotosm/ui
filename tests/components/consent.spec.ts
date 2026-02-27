@@ -30,11 +30,11 @@ describe('<hot-consent>', () => {
 
 // --- TESTS ---
 
-  it('renders (open by default)', () => {
+  it('renders (closed by default)', () => {
     expect(el).toBeInTheDocument();
     expect(el.shadowRoot).toBeTruthy();
-    expect(getOverlay(el)).toBeTruthy();
-    expect(el.isOpen).toBe(true);
+    expect(getOverlay(el)).toBeNull();
+    expect(el.isOpen).toBe(false);
   });
 
   it('does not render anything when isOpen = false', async () => {
@@ -47,11 +47,15 @@ describe('<hot-consent>', () => {
   it('clicking accept: closes, writes localStorage=true, and emits "agree"', async () => {
     const agreeSpy = vi.fn();
     el.addEventListener('agree', agreeSpy);
+    el.isOpen = true;
+    await el.updateComplete;
 
     const btn = getAcceptButton(el);
     expect(btn).toBeTruthy();
 
-    btn!.click();
+    btn!.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, composed: true })
+    );
     await el.updateComplete;
 
     expect(agreeSpy).toHaveBeenCalledOnce();
@@ -64,11 +68,15 @@ describe('<hot-consent>', () => {
   it('clicking decline: closes, writes localStorage=false, and emits "disagree"', async () => {
     const disagreeSpy = vi.fn();
     el.addEventListener('disagree', disagreeSpy);
+    el.isOpen = true;
+    await el.updateComplete;
 
     const btn = getDeclineButton(el);
     expect(btn).toBeTruthy();
 
-    btn!.click();
+    btn!.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, composed: true })
+    );
     await el.updateComplete;
 
     expect(disagreeSpy).toHaveBeenCalledOnce();
@@ -105,6 +113,7 @@ describe('<hot-consent>', () => {
   }); 
 
   it('renders custom title and button labels', async () => {
+    el.isOpen = true;
     el.title = 'We value your privacy';
     el.agreeLabel = 'Totally Agree';
     el.notAgreeLabel = 'No way';
@@ -119,13 +128,16 @@ describe('<hot-consent>', () => {
   });
 
   it('uses consentId as the localStorage key prefix', async () => {
+    el.isOpen = true;
     el.consentId = 'map-app';
     await el.updateComplete;
 
     const btn = getAcceptButton(el);
     expect(btn).toBeTruthy();
 
-    btn!.click();
+    btn!.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, composed: true })
+    );
     await el.updateComplete;
     // Verify localStorage uses the custom consentId prefix
     expect(localStorage.getItem('map-app-consent-agree')).toBe('true');

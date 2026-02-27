@@ -48,7 +48,7 @@ export const styles = css`
   }
 
   .menu-icon {
-    color: var(--hot-color-gray-800);
+    color: var(--hot-color-neutral-800);
   }
 
   /* Dropdown positioning - FIXED SELECTOR */

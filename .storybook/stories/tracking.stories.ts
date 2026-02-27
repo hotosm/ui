@@ -13,6 +13,7 @@ export const Tracking: StoryObj = {
   args: {
     siteId: "1",
     domain: "localhost",
+    showConsent: true,
   },
   argTypes: {
     siteId: {
@@ -25,6 +26,11 @@ export const Tracking: StoryObj = {
       options: ["localhost", "anotherdomain"],
       control: {
         type: "select",
+      },
+    },
+    showConsent: {
+      control: {
+        type: "boolean",
       },
     },
   },
@@ -71,6 +77,7 @@ export const Tracking: StoryObj = {
         id="hot-tracking"
         site-id=${args.siteId}
         domain=${args.domain}
+        ?show-consent=${args.showConsent}
       >
       </hot-tracking>
 

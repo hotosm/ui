@@ -41,7 +41,7 @@ export class Header extends LitElement {
 
   /** Add a drawer icon with a click event to e.g. open a sidebar. */
   @property({ type: Boolean })
-  accessor drawer: boolean = true;
+  accessor drawer: boolean = false;
 
   /** Array of menu items to include as navigation tabs. */
   @property({ type: Array })
@@ -56,8 +56,8 @@ export class Header extends LitElement {
   accessor size: sizes = "small";
 
   /** Border bottom. */
-  @property({ type: Boolean })
-  accessor borderBottom: boolean = true;
+  @property({ type: Boolean, attribute: 'border-bottom' })
+  accessor borderBottom: boolean = false;
   
   /** Index of the selected tab. */
   @property({ type: Number })
@@ -67,11 +67,11 @@ export class Header extends LitElement {
   accessor activeTabIndex: number = 0;
 
   /** Show/hide login functionality. */
-  @property({ type: Boolean })
+  @property({ type: Boolean, attribute: 'show-login' })
   accessor showLogin: boolean = false;
 
   /** Control the login modal state. */
-  @property({ type: Boolean })
+  @property({ type: Boolean, attribute: 'login-modal-open' })
   accessor loginModalOpen: boolean = false;
 
   /** Default fallback icon for providers without custom icons. */
@@ -154,7 +154,7 @@ export class Header extends LitElement {
               `
             : html`
             <hot-logo
-              ?iconOnly="${this.title.length > 0}"
+              ?icon-only=${this.title.length > 0}
             >
             </hot-logo>
             `}

@@ -25,8 +25,8 @@ export class Consent extends LitElement {
   @property({ type: String, attribute: "consent-id" })
   accessor consentId: string = "";
 
-  @property({ type: Boolean })
-  accessor isOpen: boolean = true;
+  @property({ type: Boolean, attribute: 'is-open' })
+  accessor isOpen: boolean = false;
 
   @property({ type: String })
   accessor title: string = "About the information we collect";

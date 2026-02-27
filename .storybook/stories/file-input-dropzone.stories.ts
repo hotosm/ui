@@ -45,7 +45,7 @@ export const Default: Story = {
       ?multiple=${args.multiple}
       accept=${args.accept || ''}
       max-size=${args.maxSize || 0}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
       ?disabled=${args.disabled}
       label=${args.label || ''}
     ></hot-file-input-dropzone>
@@ -62,7 +62,7 @@ export const SingleFile: Story = {
     <hot-file-input-dropzone
       ?multiple=${args.multiple}
       label=${args.label}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
     ></hot-file-input-dropzone>
   `,
 };
@@ -77,7 +77,7 @@ export const MultipleFiles: Story = {
     <hot-file-input-dropzone
       ?multiple=${args.multiple}
       label=${args.label}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
     ></hot-file-input-dropzone>
   `,
 };
@@ -94,7 +94,7 @@ export const ImagesOnly: Story = {
       ?multiple=${args.multiple}
       accept=${args.accept}
       label=${args.label}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
     ></hot-file-input-dropzone>
   `,
 };
@@ -112,7 +112,7 @@ export const DocumentsOnly: Story = {
       ?multiple=${args.multiple}
       accept=${args.accept}
       label=${args.label}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
     ></hot-file-input-dropzone>
   `,
 };
@@ -129,7 +129,7 @@ export const WithSizeLimit: Story = {
       ?multiple=${args.multiple}
       .maxSize=${args.maxSize}
       label=${args.label}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
     ></hot-file-input-dropzone>
   `,
 };
@@ -144,7 +144,7 @@ export const Disabled: Story = {
     <hot-file-input-dropzone
       ?disabled=${args.disabled}
       label=${args.label}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
     ></hot-file-input-dropzone>
   `,
 };
@@ -158,7 +158,7 @@ export const NoPreview: Story = {
   render: (args) => html`
     <hot-file-input-dropzone
       ?multiple=${args.multiple}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
       label=${args.label}
     ></hot-file-input-dropzone>
   `,
@@ -177,7 +177,7 @@ export const ErrorStates: Story = {
           accept="image/*"
           .maxSize=${10 * 1000}
           label="Upload images (max 10KB)"
-          showPreview=${true}
+          show-preview
           ?multiple=${true}
         ></hot-file-input-dropzone>
       </div>
@@ -191,7 +191,7 @@ export const ErrorStates: Story = {
         <hot-file-input-dropzone
           accept="image/*"
           label="Images only"
-          showPreview=${true}
+          show-preview
         ></hot-file-input-dropzone>
       </div>
     </div>
@@ -318,7 +318,7 @@ export const RealUpload: Story = {
           id="real-upload-dropzone"
           ?multiple=${true}
           label="Select files to upload (max 100MB each)"
-          showPreview=${true}
+          show-preview
           .maxSize=${100 * 1000 * 1000}
         ></hot-file-input-dropzone>
 
@@ -396,7 +396,7 @@ export const CompactVariant: Story = {
       variant=${args.variant}
       accept=${args.accept}
       label=${args.label}
-      .showPreview=${args.showPreview}
+      ?show-preview=${args.showPreview}
     ></hot-file-input-dropzone>
   `,
 };
@@ -410,7 +410,7 @@ export const VariantComparison: Story = {
           variant="compact"
           accept=".zip"
           label="Upload your .zip file here"
-          showPreview=${true}
+          show-preview
         ></hot-file-input-dropzone>
       </div>
 
@@ -420,7 +420,7 @@ export const VariantComparison: Story = {
           variant="traditional"
           accept=".zip"
           label="Upload files"
-          showPreview=${true}
+          show-preview
         ></hot-file-input-dropzone>
       </div>
     </div>

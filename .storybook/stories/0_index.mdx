@@ -1,42 +1,87 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Intro" />
- 
-<hot-logo></hot-logo><br />
 
-# HOTOSM UI
+# HOT Shared UI
 
-## Shared UI Components with HOT Theming
+<hot-logo></hot-logo>
 
-This repository contains HOT themed UI components to reduce code duplication
-and simplify the lives of developers needing to prototype and develop well
-designed web applications quickly.
-
-They are available as
-[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-and have first-class React support.
-
-The main goal of this project is not to re-invent the wheel, or add an extra burden
-of development and maintenance.
+Shared [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+built with [Lit](https://lit.dev) and themed for HOTOSM tools using
+[WebAwesome](https://webawesome.com).
 
 ## Install
 
-`npm install @hotosm/ui`
+```bash
+pnpm install @hotosm/ui @awesome.me/webawesome@3.2.1
+```
 
-And import the styles:
+`@awesome.me/webawesome` is a peer dependency. Pin it to `3.2.1`.
+
+## Load Styles
+
+Option A (single bundled file):
 
 ```js
-  import '@hotosm/ui/dist/style.css';
+import '@hotosm/ui/dist/style.css';
 ```
 
-## Use
+Option B (split for cross-tool caching):
 
-Example to display the HOT logo:
+```js
+import '@awesome.me/webawesome/dist/styles/native.css';
+import '@awesome.me/webawesome/dist/styles/utilities.css';
+import '@awesome.me/webawesome/dist/styles/themes/default.css';
+import '@hotosm/ui/dist/style-core.css';
+```
+
+## Use Components
+
+Bundler usage:
+
+```js
+import '@hotosm/ui/dist/components/header/header.js';
+```
 
 ```html
-<hot-logo></hot-logo>
+<hot-header title="My App"></hot-header>
 ```
 
-<hot-logo></hot-logo>
+CDN / plain HTML / HTMX usage:
 
-See usage details under each component story.
+```html
+<html class="wa-theme-default wa-palette-hotosm">
+  <head>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css">
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@awesome.me/webawesome/dist/components/":
+            "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+        }
+      }
+    </script>
+    <script type="module"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js"></script>
+  </head>
+  <body>
+    <hot-header title="My App" show-login></hot-header>
+  </body>
+</html>
+```
+
+Boolean props are presence-based in HTML:
+
+- Omit attribute => `false`
+- Include attribute => `true`
+- Use kebab-case attributes like `show-login`, `border-bottom`, `drawer`
+
+See full integration details in `README.md` and component-specific docs.

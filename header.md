@@ -72,14 +72,12 @@ import '@hotosm/ui/dist/components/header/header.js';
     </script>
   </head>
   <body>
-    <hot-header id="hdr" title="My App" size="small"></hot-header>
+    <hot-header id="hdr" title="My App" size="small" border-bottom drawer></hot-header>
 
     <script>
     const hdr = document.getElementById('hdr');
 
-    // Map boolean and complex props via JS properties
-    hdr.borderBottom = true;
-    hdr.drawer = true;
+    // Map complex props via JS properties
     hdr.defaultLoginIcon = 'user';
 
     // Logo needs to be provided
@@ -171,15 +169,13 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
   </script>
 </head>
 <body>
-  <hot-header id="hdr" title="Field TM" size="small"></hot-header>
+  <hot-header id="hdr" title="Field TM" size="small" border-bottom drawer show-login></hot-header>
 
   <script>
     const hdr = document.getElementById('hdr');
 
-    // Boolean props must be set via JS - HTML attribute presence is always truthy.
-    hdr.borderBottom = true;
-    hdr.drawer = true;
-    hdr.showLogin = true;     // set false to hide the login button
+    // Boolean props default to false.
+    // Include attributes in HTML when true (e.g. border-bottom, drawer, show-login).
     hdr.defaultLoginIcon = 'user';
 
     // Logo needs to be provided
@@ -255,6 +251,7 @@ export default function AppHeader() {
       { label: 'Support', href: 'https://example.com/support' },
       { label: 'Docs', href: 'https://example.com/docs' }
     ];
+    el.showLogin = true;
 
     const onTabChange = (e) => console.log('tab-change', e.detail);
     const onLogin = () => console.log('login clicked');
@@ -268,7 +265,7 @@ export default function AppHeader() {
   }, []);
 
   return (
-    <hot-header ref={ref} title="My App" size="small" showLogin="true" />
+    <hot-header ref={ref} title="My App" size="small" />
   );
 }
 ```
@@ -330,7 +327,7 @@ declare global {
   bind:this={headerEl}
   title="My App"
   size="small"
-  showLogin="true"
+  show-login
   on:login={onLogin}
   on:tab-change={onTabChange}
 />
@@ -343,17 +340,17 @@ declare global {
 - title: string — Text title shown next to the logo
 - logo: string | URL — Image URL for the logo (optional)
 - size: 'small' | 'medium' | 'large' — Header height variant
-- drawer: boolean (default true) — Show the drawer button
+- drawer: boolean (default false) — Show the drawer button
 - drawerLinks: Array<{ label: string; href: string }>
 - tabs: Array<{ label: string; clickEvent: () => void }>
 - activeTabIndex: number — Controls which tab is active
-- borderBottom: boolean (default true) — Show bottom border
+- borderBottom: boolean (default false) — Show bottom border
 - showLogin: boolean — Shows a "Login" button and modal
 
 Notes:
 
-- In plain HTML, the presence of a boolean attribute is treated as true.
-  Set false by assigning the property from JS (e.g., `el.borderBottom = false`).
+- In plain HTML, booleans are presence-based. Omit the attribute for false,
+  include it for true (e.g., `show-login`, `border-bottom`, `drawer`).
 - Arrays and functions must be assigned as properties from JS (attributes are
   strings).
 
@@ -428,8 +425,8 @@ Notes:
 
 ## Troubleshooting
 
-- I see "true" when I pass booleans as attributes: assign booleans via JS
-  properties (`el.showLogin = true/false`).
+- Booleans not applying from HTML: use kebab-case presence attributes
+  (`show-login`, `border-bottom`, `drawer`) and avoid `="true"`/`="false"`.
 - Tabs don't navigate: `tabs` need `clickEvent` functions. Ensure you assign
   the array as a property, not as an attribute string.
 - Styles not taking effect: confirm you imported `@hotosm/ui/dist/style.css`

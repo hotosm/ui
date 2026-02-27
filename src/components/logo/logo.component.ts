@@ -13,10 +13,10 @@ export class Logo extends LitElement {
 
   name = 'hot-logo';
 
-  @property({ type: Boolean })
+  @property({ type: Boolean, attribute: 'icon-only' })
   accessor iconOnly = false;
 
-  @property({ type: Boolean })
+  @property({ type: Boolean, attribute: 'text-only' })
   accessor textOnly = false;
 
   protected render() {

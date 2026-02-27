@@ -23,11 +23,11 @@ export class ListCard extends LitElement {
   @property({ type: String })
   accessor itemId = '';
 
-  @property({ type: Boolean })
-  accessor showRemove = true;
+  @property({ type: Boolean, attribute: 'show-remove' })
+  accessor showRemove = false;
 
-  @property({ type: Boolean })
-  accessor showIcon = true;
+  @property({ type: Boolean, attribute: 'show-icon' })
+  accessor showIcon = false;
 
   private _handleRemove() {
     this.dispatchEvent(

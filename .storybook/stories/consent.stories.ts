@@ -64,7 +64,7 @@ export const Consent: StoryObj = {
         @disagree=${() => {
           parameters.showDisagreeToast()
         }}
-        isOpen=${args.isOpen}
+        ?is-open=${args.isOpen}
       >
         We use cookies and similar technologies to recognize and analyze your
         visits, and measure traffic usage and activity. You can learn about how

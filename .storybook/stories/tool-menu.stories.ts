@@ -35,7 +35,7 @@ export const Default: Story = {
   render: (args) => {
     return html`
       <hotosm-tool-menu
-        ?show-logos="${args.showLogos}"
+        ?show-logos=${args.showLogos}
         @product-selected=${(e: CustomEvent) => {
           console.log("Product selected:", e.detail.product);
         }}
@@ -83,7 +83,7 @@ export const WithLogos: Story = {
   render: (args) => {
     return html`
       <hotosm-tool-menu
-        ?show-logos="${args.showLogos}"
+        ?show-logos=${args.showLogos}
         @product-selected=${(e: CustomEvent) => {
           console.log("Product selected:", e.detail.product);
         }}

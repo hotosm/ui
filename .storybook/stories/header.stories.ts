@@ -105,9 +105,9 @@ export const WithConfigurableProviders: Story = {
       <hot-header
         title="${args.title}"
         size="${args.size}"
-        ?borderBottom="${args.borderBottom}"
-        ?drawer="${args.drawer}"
-        ?showLogin="${args.showLogin}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
         .loginProviders="${args.loginProviders}"
         default-login-icon="${args.defaultLoginIcon}"
         @login=${() => {
@@ -175,9 +175,9 @@ export const WithoutLogin: Story = {
         id="hot-header-component"
         title="${args.title}"
         size="${args.size}"
-        ?borderBottom="${args.borderBottom}"
-        ?drawer="${args.drawer}"
-        ?showLogin="${args.showLogin}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
       ></hot-header>
 
       <div style="padding: 20px;">
@@ -212,9 +212,9 @@ export const WithNav: Story = {
       <hot-header
         title="${args.title}"
         size="${args.size}"
-        ?borderBottom="${args.borderBottom}"
-        ?drawer="${args.drawer}"
-        ?showLogin="${args.showLogin}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
       ></hot-header>

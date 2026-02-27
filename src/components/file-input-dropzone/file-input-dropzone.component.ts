@@ -29,8 +29,8 @@ export class FileInputDropzone extends LitElement {
   @property({ type: Number })
   accessor maxSize = 0;
 
-  @property({ type: Boolean })
-  accessor showPreview = true;
+  @property({ type: Boolean, attribute: 'show-preview' })
+  accessor showPreview = false;
 
   @property({ type: Boolean })
   accessor disabled = false;

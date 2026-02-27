@@ -33,7 +33,7 @@ export class MatomoTracking extends LitElement {
 
   /** Whether to show the consent banner */
   @property({ type: Boolean, attribute: "show-consent" })
-  accessor showConsent: boolean = true;
+  accessor showConsent: boolean = false;
 
   /** The consent message to display */
   @property({ type: String, attribute: "consent-message" })
@@ -66,40 +66,40 @@ export class MatomoTracking extends LitElement {
   static styles = css`
     :host {
       display: block;
-      font-family: var(--wa-font-sans);
+      font-family: var(--hot-font-sans);
     }
-    
+
     .consent-banner {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      padding: 1rem;
+      padding: var(--hot-spacing-medium);
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-top: 1px solid var(--wa-color-surface-border);
     }
-    
+
     .error-banner {
       position: fixed;
-      top: 1rem;
-      left: 1rem;
-      right: 1rem;
+      top: var(--hot-spacing-medium);
+      left: var(--hot-spacing-medium);
+      right: var(--hot-spacing-medium);
       z-index: 1001;
       max-width: 600px;
       margin: 0 auto;
     }
-    
+
     .toast-banner {
       position: fixed;
-      top: 1rem;
-      right: 1rem;
+      top: var(--hot-spacing-medium);
+      right: var(--hot-spacing-medium);
       z-index: 1002;
       max-width: 450px;
       animation: slideIn 0.3s ease-out;
     }
-    
+
     @keyframes slideIn {
       from {
         transform: translateX(100%);
@@ -110,40 +110,44 @@ export class MatomoTracking extends LitElement {
         opacity: 1;
       }
     }
-    
+
     .consent-actions {
       display: flex;
-      gap: 0.75rem;
-      margin-top: 1rem;
+      gap: var(--hot-spacing-small);
+      margin-top: var(--hot-spacing-medium);
       justify-content: flex-end;
     }
-    
+
     wa-callout {
-      --wa-callout-spacing: 1.5rem;
+      --wa-callout-spacing: var(--hot-spacing-x-large);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-      border-radius: 12px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: var(--hot-border-radius-large);
+      border: 1px solid var(--wa-color-surface-border);
       backdrop-filter: blur(8px);
     }
-    
+
     wa-button {
       min-width: 80px;
-      font-weight: 500;
+      font-weight: var(--hot-font-weight-semibold);
       transition: all 0.2s ease;
     }
-    
+
     wa-button:hover {
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-    
+
     .error-banner wa-callout {
-      border-radius: 16px;
-      box-shadow: 0 16px 48px rgba(243, 77, 71, 0.2);
-      border: 1px solid rgba(243, 77, 71, 0.2);
-      background: linear-gradient(135deg, rgba(254, 236, 239, 0.95), rgba(253, 208, 214, 0.95));
+      border-radius: var(--hot-border-radius-x-large);
+      box-shadow: 0 16px 48px color-mix(in oklab, var(--hot-color-primary-500) 20%, transparent);
+      border: 1px solid color-mix(in oklab, var(--hot-color-primary-500) 20%, transparent);
+      background: linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--hot-color-primary-50) 95%, transparent),
+        color-mix(in oklab, var(--hot-color-primary-100) 95%, transparent)
+      );
     }
-    
+
     .error-banner wa-callout::before {
       content: '';
       position: absolute;
@@ -151,24 +155,28 @@ export class MatomoTracking extends LitElement {
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--hot-color-red-500), var(--hot-color-red-600), var(--hot-color-red-700));
-      border-radius: 16px 16px 0 0;
+      background: linear-gradient(90deg, var(--hot-color-primary-500), var(--hot-color-primary-600), var(--hot-color-primary-700));
+      border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
     }
-    
+
     .toast-banner wa-callout {
-      border-radius: 14px;
+      border-radius: var(--hot-border-radius-x-large);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
       border: 1px solid rgba(0, 0, 0, 0.06);
       background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(12px);
     }
-    
+
     .toast-banner wa-callout[variant="success"] {
-      box-shadow: 0 12px 40px rgba(34, 197, 94, 0.15);
-      border: 1px solid rgba(34, 197, 94, 0.2);
-      background: linear-gradient(135deg, rgba(240, 253, 244, 0.95), rgba(220, 252, 231, 0.95));
+      box-shadow: 0 12px 40px color-mix(in oklab, var(--hot-color-success-500) 15%, transparent);
+      border: 1px solid color-mix(in oklab, var(--hot-color-success-500) 20%, transparent);
+      background: linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--hot-color-success-50) 95%, transparent),
+        color-mix(in oklab, var(--hot-color-success-100) 95%, transparent)
+      );
     }
-    
+
     .toast-banner wa-callout[variant="success"]::before {
       content: '';
       position: absolute;
@@ -176,16 +184,20 @@ export class MatomoTracking extends LitElement {
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, #22c55e, #16a34a);
-      border-radius: 14px 14px 0 0;
+      background: linear-gradient(90deg, var(--hot-color-success-500), var(--hot-color-success-600));
+      border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
     }
-    
+
     .toast-banner wa-callout[variant="brand"] {
-      box-shadow: 0 12px 40px rgba(243, 77, 71, 0.15);
-      border: 1px solid rgba(243, 77, 71, 0.2);
-      background: linear-gradient(135deg, rgba(254, 236, 239, 0.95), rgba(253, 208, 214, 0.95));
+      box-shadow: 0 12px 40px color-mix(in oklab, var(--hot-color-primary-500) 15%, transparent);
+      border: 1px solid color-mix(in oklab, var(--hot-color-primary-500) 20%, transparent);
+      background: linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--hot-color-primary-50) 95%, transparent),
+        color-mix(in oklab, var(--hot-color-primary-100) 95%, transparent)
+      );
     }
-    
+
     .toast-banner wa-callout[variant="brand"]::before {
       content: '';
       position: absolute;
@@ -193,18 +205,18 @@ export class MatomoTracking extends LitElement {
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--hot-color-red-500), var(--hot-color-red-600));
-      border-radius: 14px 14px 0 0;
+      background: linear-gradient(90deg, var(--hot-color-primary-500), var(--hot-color-primary-600));
+      border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
     }
-    
+
     .consent-banner wa-callout {
-      border-radius: 16px;
+      border-radius: var(--hot-border-radius-x-large);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--wa-color-surface-border);
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(249, 250, 251, 0.98));
       backdrop-filter: blur(16px);
     }
-    
+
     .consent-banner wa-callout::before {
       content: '';
       position: absolute;
@@ -212,35 +224,35 @@ export class MatomoTracking extends LitElement {
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--hot-color-red-500), var(--hot-color-red-600), var(--hot-color-red-700));
-      border-radius: 16px 16px 0 0;
+      background: linear-gradient(90deg, var(--hot-color-primary-500), var(--hot-color-primary-600), var(--hot-color-primary-700));
+      border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
     }
-    
+
     wa-icon {
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     }
-    
+
     @media (max-width: 768px) {
       .consent-banner {
-        padding: 0.75rem;
+        padding: var(--hot-spacing-small);
       }
-      
+
       .error-banner {
-        left: 0.5rem;
-        right: 0.5rem;
+        left: var(--hot-spacing-x-small);
+        right: var(--hot-spacing-x-small);
         max-width: none;
       }
-      
+
       .toast-banner {
-        right: 0.5rem;
-        max-width: calc(100vw - 1rem);
+        right: var(--hot-spacing-x-small);
+        max-width: calc(100vw - var(--hot-spacing-medium));
       }
-      
+
       .consent-actions {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--hot-spacing-x-small);
       }
-      
+
       wa-button {
         width: 100%;
       }

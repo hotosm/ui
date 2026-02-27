@@ -46,8 +46,8 @@ export const Default: Story = {
       subtitle=${args.subtitle}
       icon=${args.icon}
       itemId=${args.itemId}
-      ?showRemove=${args.showRemove}
-      ?showIcon=${args.showIcon}
+      ?show-remove=${args.showRemove}
+      ?show-icon=${args.showIcon}
     ></hot-list-card>
   `,
 };
@@ -60,6 +60,8 @@ export const FileTypes: Story = {
         subtitle="3.5 MB"
         icon="file-pdf"
         itemId="file-1"
+        show-icon
+        show-remove
       ></hot-list-card>
 
       <hot-list-card
@@ -67,6 +69,8 @@ export const FileTypes: Story = {
         subtitle="1.2 MB"
         icon="file-excel"
         itemId="file-2"
+        show-icon
+        show-remove
       ></hot-list-card>
 
       <hot-list-card
@@ -74,6 +78,8 @@ export const FileTypes: Story = {
         subtitle="850 KB"
         icon="file-word"
         itemId="file-3"
+        show-icon
+        show-remove
       ></hot-list-card>
 
       <hot-list-card
@@ -81,6 +87,8 @@ export const FileTypes: Story = {
         subtitle="5.5 MB"
         icon="file-archive"
         itemId="file-4"
+        show-icon
+        show-remove
       ></hot-list-card>
 
       <hot-list-card
@@ -88,6 +96,8 @@ export const FileTypes: Story = {
         subtitle="2.1 MB"
         icon="file-image"
         itemId="file-5"
+        show-icon
+        show-remove
       ></hot-list-card>
     </div>
   `,
