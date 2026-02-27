@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1 (2026-02-27)
+
+### Fix
+
+- ensure styles css included in esbuild bundling
+
 ## 0.6.0 (2026-02-27)
 
 ### Fix
