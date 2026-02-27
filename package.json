@@ -62,10 +62,10 @@
     "node": ">=14.17.0"
   },
   "peerDependencies": {
-    "@awesome.me/webawesome": "3.0.0"
+    "@awesome.me/webawesome": "3.2.1"
   },
   "devDependencies": {
-    "@awesome.me/webawesome": "3.0.0-beta.1",
+    "@awesome.me/webawesome": "3.2.1",
     "@storybook/addon-docs": "^9.0.18",
     "@storybook/addon-links": "^9.0.18",
     "@storybook/web-components-vite": "^9.0.18",

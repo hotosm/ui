@@ -398,9 +398,8 @@ export class MatomoTracking extends LitElement {
       return;
     }
 
-    console.log(
-      `Setting Matomo tracking for site=${matomoTrackingId} domain=${this.domain}`
-    );
+    // Debug: uncomment for local development
+    // console.log(`Setting Matomo tracking for site=${matomoTrackingId} domain=${this.domain}`);
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);

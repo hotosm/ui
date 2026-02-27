@@ -4,5 +4,5 @@
     "rootDir": "./src"
   },
   "include": ["src"],
-  "exclude": ["src/**/*.component.ts", "src/react/**/*"]
+  "exclude": ["src/**/*.component.ts"]
 }

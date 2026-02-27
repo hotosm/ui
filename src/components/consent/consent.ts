@@ -7,5 +7,7 @@ declare global {
   }
 }
 
-// Define web component
-customElements.define("hot-consent", Consent);
+// Define web component (guard against duplicate registration)
+if (!customElements.get('hot-consent')) {
+  customElements.define('hot-consent', Consent);
+}

@@ -11,7 +11,7 @@ primitives.
 ## Installation
 
 ```bash
-pnpm add @hotosm/ui @awesome.me/webawesome@3.0.0-beta.1
+pnpm add @hotosm/ui @awesome.me/webawesome@3.2.1
 ```
 
 > Important: Pin WebAwesome to the version used by this package to avoid

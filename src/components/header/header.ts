@@ -7,5 +7,7 @@ declare global {
   }
 }
 
-// Define web component
-customElements.define("hot-header", Header);
+// Define web component (guard against duplicate registration)
+if (!customElements.get('hot-header')) {
+  customElements.define('hot-header', Header);
+}

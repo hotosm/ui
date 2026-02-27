@@ -101,7 +101,6 @@ export class Header extends LitElement {
 
 
   selectTab(index: number) {
-    console.log('Selecting tab:', index);
     if (index !== this.selectedTab && index >= 0 && index < this.tabs.length) {
       const previousTab = this.selectedTab;
       this.selectedTab = index;
@@ -210,7 +209,7 @@ export class Header extends LitElement {
                     ${this.drawerLinks.map(
                       (link) => html`
                         <li style="margin: 1.5rem 0;">
-                          <a href="${link.href}" style="color: inherit; text-decoration: none; font-size: 1.2rem;">${link.label}</a>
+                          <a href="${link.href}" data-drawer-close style="color: inherit; text-decoration: none; font-size: 1.2rem;">${link.label}</a>
                         </li>
                       `
                     )}

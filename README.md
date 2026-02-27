@@ -72,12 +72,12 @@ components, such as:
 ## Quick start
 
 Current HOTOSM UI version used: `0.3.1-b5`
-Current WebAwesome version used: `3.0.0-beta.1`
+Current WebAwesome version used: `3.2.1`
 
 ### Install WebAwesome
 
 ```bash
-pnpm install "@awesome.me/webawesome@3.0.0-beta.1"
+pnpm install "@awesome.me/webawesome@3.2.1"
 ```
 
 > [!NOTE]

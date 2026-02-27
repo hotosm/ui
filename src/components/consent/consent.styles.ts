@@ -15,7 +15,7 @@ export default css`
     backdrop-filter: blur(4px);
     z-index: 9999;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     padding: 0.25rem;
     animation: fadeIn 0.3s ease-out;

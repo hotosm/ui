@@ -1,7 +1,7 @@
 /* HOT theme for WebAwesome
 
 1. First import WebAwesome base styles
-@import url("https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/webawesome.css");
+@import url("https://early.webawesome.com/webawesome@3.2.1/dist/styles/webawesome.css");
 
 2. Then import our HOT theme variables
 @import "./hot.css";
@@ -175,7 +175,7 @@
     --wa-color-danger: var(--wa-color-danger-50);
     --wa-color-danger-key: 50;
 
-    /* Check the defaults at https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/color/palettes/default.css */
+    /* Check the defaults at https://early.webawesome.com/webawesome@3.2.1/dist/styles/color/palettes/default.css */
     /* No change made to: purple, indigo, pink, green */
 
     --wa-color-green-95: #e3f9e3 /* oklch(96.006% 0.03715 145.28) */;
@@ -274,7 +274,7 @@
     /*
     * Spacing, rounding, etc
     *
-    * See https://early.webawesome.com/webawesome@3.0.0-beta.1/dist/styles/themes/default.css for all options
+    * See https://early.webawesome.com/webawesome@3.2.1/dist/styles/themes/default.css for all options
     */
     /*  */
 

@@ -9,4 +9,7 @@ declare global {
   }
 }
 
-customElements.define("hot-file-input-dropzone", FileInputDropzone);
+// Guard against duplicate registration
+if (!customElements.get('hot-file-input-dropzone')) {
+  customElements.define('hot-file-input-dropzone', FileInputDropzone);
+}
