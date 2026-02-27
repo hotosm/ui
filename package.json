@@ -54,6 +54,7 @@
     "dev": "storybook dev -p 3001 --no-open",
     "build:docs": "storybook build --output-dir docs",
     "build": "node scripts/build.js",
+    "serve:dist": "node scripts/serve-dist.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
