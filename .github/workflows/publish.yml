@@ -6,27 +6,26 @@ on:
   # Allow manual trigger (workflow_dispatch)
   workflow_dispatch:
 
-permissions:
-  id-token: write  # Required for OIDC NPM publish
-  contents: read
-
 jobs:
   publish:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      id-token: write  # Required for OIDC trusted publishing
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: "pnpm"
-          cache-dependency-path: "pnpm-lock.yaml"
-          registry-url: https://registry.npmjs.org
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -35,4 +34,4 @@ jobs:
         run: pnpm run build
 
       - name: Publish
-        run: npm publish --access=public
+        run: pnpm publish --access public --no-git-checks
