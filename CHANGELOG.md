@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.0 (2026-02-27)
+
+### Feat
+
+- fix all wa style tokens, better dev docs, storybooks, booleans default all false
+
+### Fix
+
+- fixes to component registration
+- fix #68 by adding two style css file options
+
 ## 0.6.1 (2026-02-27)
 
 ### Fix
