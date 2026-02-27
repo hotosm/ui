@@ -58,8 +58,9 @@
     "coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build"
   },
+  "packageManager": "pnpm@10.11.0",
   "engines": {
-    "node": ">=14.17.0"
+    "node": ">=18.0.0"
   },
   "peerDependencies": {
     "@awesome.me/webawesome": "3.2.1"
