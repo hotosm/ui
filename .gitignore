@@ -66,6 +66,7 @@ Thumbs.db
 # Package manager files (keep pnpm-lock.yaml as it's used)
 package-lock.json
 yarn.lock
+.pnpm-store
 
 # Storybook
 .storybook-out/

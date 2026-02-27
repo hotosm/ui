@@ -55,5 +55,14 @@ async function copyDir(src, dest) {
 }
 
 await copyDir('src/themes', `${outdir}/themes`).catch(() => {});
-await fs.copyFile('src/style.css', `${outdir}/style.css`).catch(() => {});
 await copyDir('src/assets', `${outdir}/assets`).catch(() => {});
+
+// Bundle style.css through esbuild so @import paths (including
+// @awesome.me/webawesome) are resolved from node_modules and inlined.
+// The Google Fonts @import URL is kept as-is (external URL).
+await esbuild.build({
+  entryPoints: ['./src/style.css'],
+  bundle: true,
+  minify: true,
+  outfile: `${outdir}/style.css`,
+}).catch(() => process.exit(1));
