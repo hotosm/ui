@@ -6,6 +6,10 @@ on:
   # Allow manual trigger (workflow_dispatch)
   workflow_dispatch:
 
+permissions:
+  id-token: write  # Required for OIDC NPM publish
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
