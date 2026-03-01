@@ -1,0 +1,122 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Loading Strategies" />
+
+# Loading Strategies
+
+This page covers the tradeoff between first contentful paint (FCP) and flash of
+unstyled content (FOUC) when HOT UI is used in plain HTML, CDN, or HTMX
+multi-page apps.
+
+## Why Multi-Page Apps Behave Differently
+
+In a single-page app, the JavaScript bundle loads once and client-side routing
+swaps content without reloading the document. In a multi-page app, each
+navigation is a full page load, so the browser repeats the same startup work:
+
+1. Parse HTML.
+2. Fetch CSS.
+3. Fetch JavaScript modules.
+4. Define custom elements.
+5. Upgrade and render components.
+
+That means FOUC can show up on every navigation, not just the first visit.
+
+## Where FOUC Comes From
+
+The main sources are:
+
+1. Web components such as `wa-card`, `wa-button`, and `hot-header` are not fully
+   rendered until their JavaScript definitions load.
+2. Design tokens such as `--hot-color-*` and `--wa-color-*` are not available
+   until the relevant stylesheets or inline styles are parsed.
+3. Fonts may swap after first paint, but that is usually the least disruptive
+   issue.
+
+## Recommended Tradeoff
+
+Avoid hiding the entire page with rules like `body { opacity: 0; }`. That
+removes FOUC, but replaces it with a blank screen, which generally feels more
+broken than a brief component upgrade.
+
+A better default is:
+
+1. Render the document immediately.
+2. Hide only the custom elements that have not been defined yet.
+3. Inline the minimum theme tokens needed for acceptable first paint.
+4. Preload the component module so registration happens sooner.
+
+## Hide Only Undefined Elements
+
+Use the `:not(:defined)` selector to keep layout stable while custom elements are
+waiting to upgrade.
+
+```css
+wa-card:not(:defined),
+wa-button:not(:defined),
+wa-badge:not(:defined),
+wa-callout:not(:defined),
+wa-input:not(:defined),
+wa-textarea:not(:defined),
+hot-header:not(:defined) {
+  visibility: hidden;
+}
+```
+
+Use `visibility: hidden` instead of `display: none` so the browser still
+reserves layout space and the page does not jump when components become defined.
+
+## Inline Critical Tokens
+
+Inline a small set of high-value tokens in the document `<head>` so the basic
+text, surface, and brand colors look correct before the full stylesheet arrives.
+
+```html
+<style>
+  :root {
+    --wa-color-brand-fill-loud: #d43f3f;
+    --wa-color-brand-border-loud: #ed5c5e;
+    --wa-color-brand-on-loud: #ffffff;
+    --hot-color-neutral-900: #404248;
+    --hot-color-neutral-50: #f3f3f3;
+  }
+</style>
+```
+
+This should stay small. The goal is to stabilize first paint, not to duplicate
+the whole design token system inline.
+
+## Preload The Module
+
+When loading from a CDN, add `modulepreload` for the HOT UI bundle so the browser
+fetches it earlier.
+
+```html
+<link rel="modulepreload"
+  href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js">
+
+<script type="module"
+  src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js"></script>
+```
+
+This helps reduce the delay before custom elements are registered, but it does
+not remove the need to download, parse, and execute the module.
+
+## What Cannot Be Eliminated
+
+With JavaScript-defined web components loaded from an external CDN, some
+first-visit upgrade delay is unavoidable. The browser must execute the module
+before the custom elements can render fully.
+
+The realistic goal is not to eliminate FOUC completely. It is to make the first
+paint fast, readable, and visually stable while components upgrade.
+
+## Practical Summary
+
+For most HOT UI integrations:
+
+1. Do not hide the whole page.
+2. Hide only undefined custom elements.
+3. Inline a few critical tokens.
+4. Use `modulepreload`.
+5. Rely on normal browser caching to make repeat visits much faster.
