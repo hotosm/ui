@@ -1,4 +1,4 @@
-# HOTOSM UI — Header Component (`hot-header`)
+# HOTOSM UI - Header Component (`hot-header`)
 
 Shared web component providing a branded HOT header with optional navigation
 tabs, a drawer, and login modal. It is built with Lit and uses WebAwesome
@@ -139,7 +139,7 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
 <html class="wa-theme-default wa-palette-hotosm">
 <head>
   <meta charset="UTF-8" />
-  <title>HOT Header — HTML demo</title>
+  <title>HOT Header - HTML demo</title>
 
   <!-- WebAwesome CSS (cached across HOT tools) -->
   <link rel="stylesheet"
@@ -337,15 +337,15 @@ declare global {
 
 ### Properties
 
-- title: string — Text title shown next to the logo
-- logo: string | URL — Image URL for the logo (optional)
-- size: 'small' | 'medium' | 'large' — Header height variant
-- drawer: boolean (default false) — Show the drawer button
+- title: string - Text title shown next to the logo
+- logo: string | URL - Image URL for the logo (optional)
+- size: 'small' | 'medium' | 'large' - Header height variant
+- drawer: boolean (default false) - Show the drawer button
 - drawerLinks: Array<{ label: string; href: string }>
 - tabs: Array<{ label: string; clickEvent: () => void }>
-- activeTabIndex: number — Controls which tab is active
-- borderBottom: boolean (default false) — Show bottom border
-- showLogin: boolean — Shows a "Login" button and modal
+- activeTabIndex: number - Controls which tab is active
+- borderBottom: boolean (default false) - Show bottom border
+- showLogin: boolean - Shows a "Login" button and modal
 
 Notes:
 
@@ -356,10 +356,10 @@ Notes:
 
 ### Events
 
-- tab-change — Fired when a tab is selected
+- tab-change - Fired when a tab is selected
   - detail: `{ selectedIndex: number, previousIndex: number,
     tab: { label, clickEvent } }`
-- login — Fired when the "Login" button is clicked
+- login - Fired when the "Login" button is clicked
 
 ## Styling
 

@@ -84,7 +84,7 @@ pnpm install @hotosm/ui @awesome.me/webawesome@3.2.1
 
 Two CSS files are published. Choose the one that fits your setup.
 
-### Option A — Bundled (recommended for simplicity)
+### Option A - Bundled (recommended for simplicity)
 
 A single self-contained file with WebAwesome base styles + HOT theme
 already inlined. Nothing else to load.
@@ -100,14 +100,14 @@ Or from a bundler:
 import '@hotosm/ui/dist/style.css';
 ```
 
-### Option B — Split / CDN-optimised (recommended for multi-tool caching)
+### Option B - Split / CDN-optimised (recommended for multi-tool caching)
 
 If you run several HOT tools (FMTM, Tasking Manager, etc.) and want
 the browser to **cache WebAwesome CSS once** across all of them, load
 WebAwesome from CDN separately and use the slim HOT-only stylesheet:
 
 ```html
-<!-- WebAwesome CSS — shared across all HOT tools via browser cache -->
+<!-- WebAwesome CSS - shared across all HOT tools via browser cache -->
 <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
 <link rel="stylesheet"
@@ -140,9 +140,9 @@ import '@hotosm/ui/dist/style-core.css';
 > [!TIP]
 > **Which should I pick?**
 >
-> - Building a single standalone app? Use **Option A** — zero config.
+> - Building a single standalone app? Use **Option A** - zero config.
 > - Running multiple HOT tools on the same domain or expecting users to
->   navigate between them? Use **Option B** — the ~84 KB of shared
+>   navigate between them? Use **Option B** - the ~84 KB of shared
 >   WebAwesome CSS is fetched once and cached by the browser.
 
 ---
@@ -169,7 +169,7 @@ Add the required WebAwesome classes to your `<html>` element:
 
 ### Via Bundler (Vite, Webpack, etc.)
 
-Import individual components — your bundler will tree-shake the rest:
+Import individual components - your bundler will tree-shake the rest:
 
 ```js
 import '@hotosm/ui/dist/components/header/header.js';
@@ -189,7 +189,7 @@ all HOT tools (Option B from the styles section above):
 <!DOCTYPE html>
 <html class="wa-theme-default wa-palette-hotosm">
 <head>
-  <!-- WebAwesome CSS — cached once across all HOT tools at this WA version -->
+  <!-- WebAwesome CSS - cached once across all HOT tools at this WA version -->
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
   <link rel="stylesheet"
@@ -236,13 +236,13 @@ all HOT tools (Option B from the styles section above):
 
 > [!TIP]
 > If you need only a single self-contained stylesheet instead of the three
-> WA links above, you can use Option A (`style.css`) — but then the ~84 KB
+> WA links above, you can use Option A (`style.css`) - but then the ~84 KB
 > of WebAwesome CSS is bundled into the HOT package and cannot be shared
 > across tools as a single cached resource.
 
 ### React
 
-Web Components work in React with a small caveat — use `ref` callbacks
+Web Components work in React with a small caveat - use `ref` callbacks
 for custom events if React's synthetic event system doesn't forward them:
 
 ```jsx

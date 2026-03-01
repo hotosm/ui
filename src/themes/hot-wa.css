@@ -14,7 +14,7 @@
 /* ─── Palette layer ─────────────────────────────────────────────────────────
    Maps HOT primitive colors onto WA's named palette slots.
    WA numbers 05 (darkest) → 95 (lightest); HOT numbers 950 (darkest) → 50 (lightest).
-   These are ONLY color primitives — no typography or spacing here, because
+   These are ONLY color primitives - no typography or spacing here, because
    WA declares those tokens in @layer wa-theme which has higher priority than
    @layer wa-color-palette. Typography/spacing overrides live in wa-theme below.
 ─────────────────────────────────────────────────────────────────────────── */
@@ -315,21 +315,21 @@
     --wa-color-success-border-quiet: var(--wa-color-success-90); /* success-100 */
     --wa-color-success-border-normal: var(--wa-color-success-80); /* success-200 */
     --wa-color-success-border-loud: var(--wa-color-success-60);  /* success-400 */
-    --wa-color-success-on-quiet: var(--wa-color-success-20);     /* success-800 — a11y: cyan needs dark text */
+    --wa-color-success-on-quiet: var(--wa-color-success-20);     /* success-800 - a11y: cyan needs dark text */
     --wa-color-success-on-normal: var(--wa-color-success-20);    /* success-800 */
     --wa-color-success-on-loud: white;
 
     /* Warning = HOT yellow
-       on-* and on-loud use dark amber for contrast — white on bright yellow is unreadable */
+       on-* and on-loud use dark amber for contrast - white on bright yellow is unreadable */
     --wa-color-warning-fill-quiet: var(--wa-color-warning-95);   /* warning-50  */
     --wa-color-warning-fill-normal: var(--wa-color-warning-90);  /* warning-100 */
     --wa-color-warning-fill-loud: var(--wa-color-warning-50);    /* warning-500 (#FED82E) */
     --wa-color-warning-border-quiet: var(--wa-color-warning-90); /* warning-100 */
     --wa-color-warning-border-normal: var(--wa-color-warning-80); /* warning-200 */
     --wa-color-warning-border-loud: var(--wa-color-warning-40);  /* warning-600 (amber) */
-    --wa-color-warning-on-quiet: var(--wa-color-warning-05);     /* warning-950 — a11y: yellow needs dark text */
+    --wa-color-warning-on-quiet: var(--wa-color-warning-05);     /* warning-950 - a11y: yellow needs dark text */
     --wa-color-warning-on-normal: var(--wa-color-warning-05);    /* warning-950 */
-    --wa-color-warning-on-loud: var(--wa-color-warning-05);      /* warning-950 — white on yellow = ~1:1 contrast */
+    --wa-color-warning-on-loud: var(--wa-color-warning-05);      /* warning-950 - white on yellow = ~1:1 contrast */
 
     /* Danger = HOT red
        on-quiet/normal use darker values for accessibility */
@@ -339,7 +339,7 @@
     --wa-color-danger-border-quiet: var(--wa-color-danger-90); /* danger-100 */
     --wa-color-danger-border-normal: var(--wa-color-danger-80); /* danger-200 */
     --wa-color-danger-border-loud: var(--wa-color-danger-60);  /* danger-400 */
-    --wa-color-danger-on-quiet: var(--wa-color-danger-05);     /* danger-950 — a11y */
+    --wa-color-danger-on-quiet: var(--wa-color-danger-05);     /* danger-950 - a11y */
     --wa-color-danger-on-normal: var(--wa-color-danger-05);    /* danger-950 */
     --wa-color-danger-on-loud: white;
 
@@ -354,7 +354,7 @@
     --wa-color-neutral-border-loud: var(--wa-color-neutral-60);  /* neutral-400 */
     --wa-color-neutral-on-quiet: var(--wa-color-neutral-05);     /* neutral-950 */
     --wa-color-neutral-on-normal: var(--wa-color-neutral-05);    /* neutral-950 */
-    --wa-color-neutral-on-loud: var(--wa-color-neutral-05);      /* neutral-950 — dark text on light gray fill */
+    --wa-color-neutral-on-loud: var(--wa-color-neutral-05);      /* neutral-950 - dark text on light gray fill */
     /* #endregion */
   }
 
@@ -373,7 +373,7 @@
     --wa-font-family-code: var(--hot-font-mono);
     --wa-font-family-longform: var(--hot-font-serif);
 
-    /* Font sizes — fixed values to match HOT scale */
+    /* Font sizes - fixed values to match HOT scale */
     --wa-font-size-2xs: var(--hot-font-size-2x-small); /* 10px */
     --wa-font-size-xs: var(--hot-font-size-x-small);   /* 12px */
     --wa-font-size-s: var(--hot-font-size-small);      /* 14px */
@@ -383,7 +383,7 @@
     --wa-font-size-2xl: var(--hot-font-size-2x-large); /* 36px */
     --wa-font-size-3xl: var(--hot-font-size-3x-large); /* 48px */
     --wa-font-size-4xl: var(--hot-font-size-4x-large); /* 72px */
-    /* wa-font-size-scale, wa-font-size-smaller/larger use calc() — no override */
+    /* wa-font-size-scale, wa-font-size-smaller/larger use calc() - no override */
 
     /* Font weights */
     --wa-font-weight-light: var(--hot-font-weight-light);       /* 300 */
