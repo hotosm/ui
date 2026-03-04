@@ -33,6 +33,16 @@ const fiveTab = Array.from({ length: 5 }, (_, index) => ({
   clickEvent: () => {}
 }));
 
+// Tasking Manager-style nav items (many tabs to test overflow/scroll)
+const tmTabs = [
+  { label: 'Explore projects', clickEvent: () => alert('Explore projects'), href: '/explore' },
+  { label: 'My contributions', clickEvent: () => alert('My contributions'), href: '/contributions' },
+  { label: 'Manage', clickEvent: () => alert('Manage'), href: '/manage' },
+  { label: 'Learn', clickEvent: () => alert('Learn'), href: '/learn/map' },
+  { label: 'About', clickEvent: () => alert('About'), href: '/about' },
+  { label: 'Support', clickEvent: () => alert('Support'), href: '/support' },
+];
+
 const meta: Meta = {
   title: "Header",
   component: "hot-header",
@@ -48,8 +58,9 @@ const meta: Meta = {
     borderBottom: { control: 'boolean' },
     drawer: { control: 'boolean' },
     showLogin: { control: 'boolean' },
+    loggedIn: { control: 'boolean' },
+    userName: { control: 'text' },
     loginModalOpen: { control: 'boolean' },
-    loginProviders: { control: 'object' },
     defaultLoginIcon: { control: 'text' },
     selectedTab: {
       options: [0,1,2,3,4,5],
@@ -58,13 +69,14 @@ const meta: Meta = {
       },
     },
     tabs: {
-      options: ['1 Tab', '2 Tabs', '3 Tabs', '4 Tabs', '5 Tabs'],
+      options: ['1 Tab', '2 Tabs', '3 Tabs', '4 Tabs', '5 Tabs', '6 Tabs (TM-style)'],
       mapping: {
         '1 Tab': oneTab,
         '2 Tabs': twoTab,
         '3 Tabs': threeTab,
         '4 Tabs': fourTab,
         '5 Tabs': fiveTab,
+        '6 Tabs (TM-style)': tmTabs,
       },
       control: {
         type: 'radio',
@@ -83,6 +95,7 @@ export const WithConfigurableProviders: Story = {
     borderBottom: true,
     drawer: true,
     showLogin: true,
+    loggedIn: false,
     loginModalOpen: false,
     loginProviders: {
       "osm": {
@@ -108,11 +121,11 @@ export const WithConfigurableProviders: Story = {
         ?border-bottom=${args.borderBottom}
         ?drawer=${args.drawer}
         ?show-login=${args.showLogin}
+        ?logged-in=${args.loggedIn}
         .loginProviders="${args.loginProviders}"
         default-login-icon="${args.defaultLoginIcon}"
-        @login=${() => {
-          console.log('Login event dispatched');
-        }}
+        @login=${() => console.log('Login event dispatched')}
+        @logout=${() => console.log('Logout event dispatched')}
         .drawerLinks=${[
           { label: "Learn", href: "/learn" },
           { label: "About", href: "/about" },
@@ -123,40 +136,8 @@ export const WithConfigurableProviders: Story = {
 
       <div style="padding: 20px;">
         <h2>Header with Configurable Login Providers</h2>
-        <p>This example demonstrates the new configurable login providers functionality.</p>
-        <p>Click the "Login" button to see multiple login options configured via the <code>loginProviders</code> property.</p>
-        
-        <h3>Configuration:</h3>
-        <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>{
-  "loginProviders": {
-    "osm": {
-      "icon": "https://www.openstreetmap.org/assets/osm_logo.svg",
-      "loginUrl": "https://openstreetmap.org/auth/osm",
-      "redirectUrl": "https://app.example.com/auth/callback",
-      "name": "OpenStreetMap"
-    },
-    "google": {
-      "icon": "https://developers.google.com/identity/images/g-logo.png",
-      "loginUrl": "https://accounts.google.com/o/oauth2/auth",
-      "redirectUrl": "https://app.example.com/auth/callback", 
-      "name": "Google"
-    }
-  }
-}</code></pre>
-
-        <h3>Features:</h3>
-        <ul>
-          <li>Configurable multiple login providers</li>
-          <li>Custom icons for each provider</li>
-          <li>Fallback to default icon when none specified</li>
-          <li>Backend-handled OAuth (no clientId needed)</li>
-          <li>Support for client-side OAuth (with clientId)</li>
-          <li>Backward compatibility with OSM properties</li>
-        </ul>
+        <p>Toggle <code>loggedIn</code> in the controls to switch between Login button and user avatar.</p>
       </div>
-
-      <h1>Test on a separate page</h1>
-      Test on a separate page <a href="/osm-auth-test/index.html" target="_blank">here</a>
     `;
   }
 };
@@ -182,16 +163,7 @@ export const WithoutLogin: Story = {
 
       <div style="padding: 20px;">
         <h2>Header without Login</h2>
-        <p>This header component is displayed without login functionality.</p>
-        <p>Notice that the login button is not visible when <code>showLogin</code> is set to <code>false</code>.</p>
-        
-        <h3>Use Cases:</h3>
-        <ul>
-          <li>Public information pages</li>
-          <li>Landing pages</li>
-          <li>Documentation sites</li>
-          <li>Any context where authentication is not required</li>
-        </ul>
+        <p>Login functionality is hidden when <code>showLogin</code> is <code>false</code>.</p>
       </div>
     `;
   }
@@ -200,11 +172,11 @@ export const WithoutLogin: Story = {
 export const WithNav: Story = {
   args: {
     title: "OpenAerialMap",
-    size: "small",
+    size: "medium",
     borderBottom: true,
     drawer: true,
     showLogin: false,
-    tabs: twoTab,
+    tabs: "5 Tabs",
     selectedTab: 0,
   },
   render: (args) => {
@@ -215,13 +187,206 @@ export const WithNav: Story = {
         ?border-bottom=${args.borderBottom}
         ?drawer=${args.drawer}
         ?show-login=${args.showLogin}
+        style="max-width: 900px; margin-inline: auto; display: block;"
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
       ></hot-header>
 
       <div style="padding: 20px;">
         <h2>Header with navigation tabs</h2>
-        <p>Navigation tabs link to different pages on the site.</p>
+        <p>Resize the canvas width to see navigation arrows appear when tabs overflow.</p>
+      </div>
+    `;
+  }
+};
+
+/**
+ * Mimics the Tasking Manager header at various sizes.
+ * Resize the viewport to test responsive behaviour.
+ */
+export const SmallWithNav: Story = {
+  args: {
+    title: "Tasking Manager",
+    size: "small",
+    borderBottom: true,
+    drawer: true,
+    showLogin: true,
+    loggedIn: false,
+    tabs: "6 Tabs (TM-style)",
+    selectedTab: 0,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title="${args.title}"
+        size="${args.size}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
+        ?logged-in=${args.loggedIn}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+        .drawerLinks=${[
+          { label: "Learn", href: "/learn" },
+          { label: "About", href: "/about" },
+          { label: "Support", href: "/support" },
+        ]}
+      ></hot-header>
+      <div style="padding: 20px;">
+        <h2>Small header — Tasking Manager style</h2>
+        <p>Toggle <code>loggedIn</code> to see the avatar replace the Login button.</p>
+      </div>
+    `;
+  }
+};
+
+export const MediumWithNav: Story = {
+  args: {
+    title: "Tasking Manager",
+    size: "medium",
+    borderBottom: true,
+    drawer: true,
+    showLogin: true,
+    loggedIn: false,
+    tabs: "6 Tabs (TM-style)",
+    selectedTab: 0,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title="${args.title}"
+        size="${args.size}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
+        ?logged-in=${args.loggedIn}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+        .drawerLinks=${[
+          { label: "Learn", href: "/learn" },
+          { label: "About", href: "/about" },
+          { label: "Support", href: "/support" },
+        ]}
+      ></hot-header>
+      <div style="padding: 20px;">
+        <h2>Medium header</h2>
+        <p>Logo should be visibly larger than the small variant.</p>
+      </div>
+    `;
+  }
+};
+
+export const LargeWithNav: Story = {
+  args: {
+    title: "Tasking Manager",
+    size: "large",
+    borderBottom: true,
+    drawer: true,
+    showLogin: true,
+    loggedIn: false,
+    tabs: "6 Tabs (TM-style)",
+    selectedTab: 0,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title="${args.title}"
+        size="${args.size}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
+        ?logged-in=${args.loggedIn}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+        .drawerLinks=${[
+          { label: "Learn", href: "/learn" },
+          { label: "About", href: "/about" },
+          { label: "Support", href: "/support" },
+        ]}
+      ></hot-header>
+      <div style="padding: 20px;">
+        <h2>Large header</h2>
+        <p>Logo should be the largest of the three size variants.</p>
+      </div>
+    `;
+  }
+};
+
+/**
+ * Constrained width to force nav overflow and test arrow scrolling.
+ */
+export const NavOverflowTest: Story = {
+  args: {
+    title: "Tasking Manager",
+    size: "medium",
+    borderBottom: true,
+    drawer: true,
+    showLogin: false,
+    tabs: "6 Tabs (TM-style)",
+    selectedTab: 0,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title="${args.title}"
+        size="${args.size}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
+        style="max-width: 700px; margin-inline: auto; display: block;"
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+      ></hot-header>
+      <div style="max-width: 700px; margin-inline: auto; padding: 20px;">
+        <h2>Nav overflow / scroll arrows test</h2>
+        <p>
+          The header is constrained to 700px to force tab overflow.
+          A right arrow should appear; clicking it reveals hidden tabs and shows a left arrow.
+        </p>
+      </div>
+    `;
+  }
+};
+
+/**
+ * Demonstrates the logged-in state with a text-initial avatar and Logout dropdown.
+ */
+export const LoggedIn: Story = {
+  args: {
+    title: "Tasking Manager",
+    size: "medium",
+    borderBottom: true,
+    drawer: true,
+    showLogin: true,
+    loggedIn: true,
+    userName: "Jane Doe",
+    tabs: "6 Tabs (TM-style)",
+    selectedTab: 0,
+  },
+  render: (args) => {
+    return html`
+      <hot-header
+        title="${args.title}"
+        size="${args.size}"
+        ?border-bottom=${args.borderBottom}
+        ?drawer=${args.drawer}
+        ?show-login=${args.showLogin}
+        ?logged-in=${args.loggedIn}
+        user-name="${args.userName}"
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+        @logout=${() => alert('Logout clicked!')}
+        .drawerLinks=${[
+          { label: "Learn", href: "/learn" },
+          { label: "About", href: "/about" },
+          { label: "Support", href: "/support" },
+        ]}
+      ></hot-header>
+      <div style="padding: 20px;">
+        <h2>Logged-in header with text avatar</h2>
+        <p>A circular avatar showing the first letter of the user's name replaces the Login button.
+           Click the avatar to open a dropdown with a <strong>Logout</strong> option.</p>
+        <p>Change the <code>userName</code> control to see the initial update.</p>
       </div>
     `;
   }
