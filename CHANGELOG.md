@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0 (2026-03-04)
+
+### Fix
+
+- update header to align with tasking manager layout fixes #180
+
 ## 0.7.0 (2026-02-27)
 
 ### Feat
