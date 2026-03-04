@@ -72,10 +72,10 @@ export class Header extends LitElement {
   @property({ type: String })
   accessor size: sizes = "small";
 
-  /** Border bottom. */
-  @property({ type: Boolean, attribute: 'border-bottom' })
-  accessor borderBottom: boolean = false;
-  
+  /** Centre-align navigation tabs instead of the default left alignment. */
+  @property({ type: Boolean, attribute: 'tabs-center-align' })
+  accessor tabsCenterAlign: boolean = false;
+
   /** Index of the selected tab. */
   @property({ type: Number })
   accessor selectedTab: number = 0;
@@ -107,11 +107,23 @@ export class Header extends LitElement {
   private _navScrollAtStart = true;
   private _navScrollAtEnd = false;
 
-  /** Ensure we only auto-sync from URL once unless tabs change */
-  private _urlMatchInitialized = false;
+  /** Bound handler references for cleanup in disconnectedCallback */
+  private _boundLocationSync: (() => void) | null = null;
 
   async connectedCallback() {
     super.connectedCallback();
+
+    // Listen for URL changes so the active tab stays in sync
+    // Works for SPA (pushState/replaceState) and htmx navigation
+    this._boundLocationSync = () => this.syncActiveTab();
+    window.addEventListener('popstate', this._boundLocationSync);
+    window.addEventListener('hot-locationchange', this._boundLocationSync);
+    // htmx fires this after pushState-based navigation
+    window.addEventListener('htmx:pushedIntoHistory', this._boundLocationSync);
+
+    // Patch history.pushState / replaceState once so every SPA router
+    // automatically triggers our listener (no framework coupling needed).
+    Header._patchHistory();
 
     // Only initialise Hanko when the login UI is actually enabled
     if (!this.showLogin) return;
@@ -137,9 +149,19 @@ export class Header extends LitElement {
     });
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._boundLocationSync) {
+      window.removeEventListener('popstate', this._boundLocationSync);
+      window.removeEventListener('hot-locationchange', this._boundLocationSync);
+      window.removeEventListener('htmx:pushedIntoHistory', this._boundLocationSync);
+      this._boundLocationSync = null;
+    }
+  }
+
   protected firstUpdated(_changed: PropertyValues) {
     this._updateNavScrollState();
-    this._syncActiveTabWithLocation();
+    this.syncActiveTab();
   }
 
   protected updated(changedProps: Map<string | number | symbol, unknown>) {
@@ -161,10 +183,9 @@ export class Header extends LitElement {
     if (changedProps.has('tabs') || changedProps.has('size')) {
       this.updateComplete.then(() => this._updateNavScrollState());
 
-      // When tabs change (e.g. first assignment), try to pick the active tab from URL
+      // When tabs change (e.g. first assignment), re-sync from URL
       if (changedProps.has('tabs')) {
-        this._urlMatchInitialized = false;
-        this._syncActiveTabWithLocation();
+        this.syncActiveTab();
       }
     }
   }
@@ -230,9 +251,18 @@ export class Header extends LitElement {
     window.setTimeout(() => this._updateNavScrollState(), 250);
   }
 
-  /** Try to infer the active tab from the current browser URL and tab hrefs. */
-  private _syncActiveTabWithLocation() {
-    if (this._urlMatchInitialized) return;
+  /**
+   * Match the active tab to the current browser URL.
+   *
+   * Works automatically for:
+   *  - htmx navigation (listens for `htmx:pushedIntoHistory` and `popstate`)
+   *  - SPA routers (intercepts `history.pushState` / `replaceState`)
+   *  - Traditional page loads (runs on `firstUpdated`)
+   *
+   * Host apps can also call this manually after programmatic navigation:
+   *   `document.querySelector('hot-header').syncActiveTab();`
+   */
+  syncActiveTab() {
     if (typeof window === 'undefined' || !this.tabs?.length) return;
 
     const currentPath = window.location.pathname.replace(/\/+$/, '');
@@ -249,7 +279,6 @@ export class Header extends LitElement {
         if (!path) return;
 
         if (currentPath === path) {
-          // Exact match wins immediately
           bestIndex = index;
           bestScore = Number.MAX_SAFE_INTEGER;
         } else if (
@@ -257,7 +286,6 @@ export class Header extends LitElement {
           currentPath.startsWith(path) &&
           path.length > bestScore
         ) {
-          // Longest matching prefix (e.g. /projects vs /projects/123)
           bestIndex = index;
           bestScore = path.length;
         }
@@ -266,12 +294,35 @@ export class Header extends LitElement {
       }
     });
 
-    if (bestIndex >= 0) {
+    if (bestIndex >= 0 && bestIndex !== this.activeTabIndex) {
       this.selectedTab = bestIndex;
       this.activeTabIndex = bestIndex;
-      this._urlMatchInitialized = true;
       this.requestUpdate();
     }
+  }
+
+  /**
+   * Patch `history.pushState` and `history.replaceState` once globally
+   * so that every call dispatches a `hot-locationchange` event.
+   * Safe to call multiple times - the patch is applied only once.
+   */
+  private static _historyPatched = false;
+  private static _patchHistory() {
+    if (Header._historyPatched || typeof window === 'undefined') return;
+    Header._historyPatched = true;
+
+    const origPush = history.pushState.bind(history);
+    const origReplace = history.replaceState.bind(history);
+
+    history.pushState = function (data: unknown, unused: string, url?: string | URL | null) {
+      origPush(data, unused, url);
+      window.dispatchEvent(new Event('hot-locationchange'));
+    };
+
+    history.replaceState = function (data: unknown, unused: string, url?: string | URL | null) {
+      origReplace(data, unused, url);
+      window.dispatchEvent(new Event('hot-locationchange'));
+    };
   }
 
   protected render() {
@@ -305,7 +356,8 @@ export class Header extends LitElement {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          ${this.topLinkLabel}
+                          <span class="header--top-link-full">${this.topLinkLabel}</span>
+                          <span class="header--top-link-short">HOT Website</span>
                           <svg width="11" height="11" viewBox="0 0 11 11" class="header--external-icon" aria-hidden="true"><path fill="currentColor" d="M9.778 9.778H1.222V1.222H5.5V0H1.222C.544 0 0 .55 0 1.222v8.556C0 10.45.544 11 1.222 11h8.556C10.45 11 11 10.45 11 9.778V5.5H9.778v4.278zM6.722 0v1.222h2.194L2.91 7.23l.862.862 6.007-6.007v2.194H11V0H6.722z"></path></svg>
                         </a>
                       `
@@ -316,10 +368,7 @@ export class Header extends LitElement {
           : null}
 
         <header
-          class=${headerVariants({
-            size: this.size,
-            borderBottom: this.borderBottom,
-          })}
+          class=${headerVariants({ size: this.size })}
         >
         <a href="/" class="header--link">
           ${logoSrc.length > 0
@@ -347,7 +396,7 @@ export class Header extends LitElement {
         </a>
 
         ${/* Navigation bar for desktop, hide on mobile */ ""}
-        <nav class="header--nav">
+        <nav class="header--nav ${this.tabsCenterAlign ? 'header--nav-center' : ''}">
           ${this.tabs.length > 0
             ? html`
                 <div class="header--nav-wrapper">
@@ -429,7 +478,7 @@ export class Header extends LitElement {
                   </wa-button>
                 `
             : null}
-          ${this.drawer
+          ${this._showDrawer
             ? html`
                 <wa-drawer label=" " id="drawer-overview">
                   <div class="drawer-content">
@@ -474,7 +523,11 @@ export class Header extends LitElement {
                     </ul>
                   </div>
                 </wa-drawer>
-                <wa-button appearance="outlined" @click=${() => this._handleDrawerOpen()}>
+                <wa-button
+                  appearance="outlined"
+                  class="${this.drawer ? '' : 'header--drawer-mobile-only'}"
+                  @click=${() => this._handleDrawerOpen()}
+                >
                     <wa-icon name="bars"></wa-icon>
                 </wa-button>
               `
@@ -583,6 +636,15 @@ export class Header extends LitElement {
 
   private _handleModalClose() {
     this.loginModalOpen = false;
+  }
+
+  /**
+   * Should the drawer markup be rendered?
+   * True when `drawer` is explicitly set, or when there are nav tabs
+   * (so mobile users can still navigate via the sidebar).
+   */
+  private get _showDrawer(): boolean {
+    return this.drawer || this.tabs.length > 0;
   }
 
   /** Derive a single uppercase letter from the user's name (fallback: "U"). */

@@ -228,7 +228,6 @@ all HOT tools (Option B from the styles section above):
     // Include the attribute to make it true.
     const hdr = document.getElementById('hdr');
     hdr.drawer = true;        // enable the hamburger drawer
-    hdr.borderBottom = true;  // enable bottom border
   </script>
 </body>
 </html>

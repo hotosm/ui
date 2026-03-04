@@ -72,7 +72,7 @@ import '@hotosm/ui/dist/components/header/header.js';
     </script>
   </head>
   <body>
-    <hot-header id="hdr" title="My App" size="small" border-bottom drawer></hot-header>
+    <hot-header id="hdr" title="My App" size="small" drawer></hot-header>
 
     <script>
     const hdr = document.getElementById('hdr');
@@ -169,13 +169,13 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
   </script>
 </head>
 <body>
-  <hot-header id="hdr" title="Field TM" size="small" border-bottom drawer show-login></hot-header>
+  <hot-header id="hdr" title="Field TM" size="small" drawer show-login></hot-header>
 
   <script>
     const hdr = document.getElementById('hdr');
 
     // Boolean props default to false.
-    // Include attributes in HTML when true (e.g. border-bottom, drawer, show-login).
+    // Include attributes in HTML when true (e.g. drawer, show-login, tabs-center-align).
     hdr.defaultLoginIcon = 'user';
 
     // Logo needs to be provided
@@ -344,13 +344,13 @@ declare global {
 - drawerLinks: Array<{ label: string; href: string }>
 - tabs: Array<{ label: string; clickEvent: () => void }>
 - activeTabIndex: number - Controls which tab is active
-- borderBottom: boolean (default false) - Show bottom border
+- tabsCenterAlign: boolean (default false) - Centre-align navigation tabs
 - showLogin: boolean - Shows a "Login" button and modal
 
 Notes:
 
 - In plain HTML, booleans are presence-based. Omit the attribute for false,
-  include it for true (e.g., `show-login`, `border-bottom`, `drawer`).
+  include it for true (e.g., `show-login`, `drawer`, `tabs-center-align`).
 - Arrays and functions must be assigned as properties from JS (attributes are
   strings).
 
@@ -426,7 +426,7 @@ Notes:
 ## Troubleshooting
 
 - Booleans not applying from HTML: use kebab-case presence attributes
-  (`show-login`, `border-bottom`, `drawer`) and avoid `="true"`/`="false"`.
+  (`show-login`, `drawer`, `tabs-center-align`) and avoid `="true"`/`="false"`.
 - Tabs don't navigate: `tabs` need `clickEvent` functions. Ensure you assign
   the array as a property, not as an attribute string.
 - Styles not taking effect: confirm you imported `@hotosm/ui/dist/style.css`

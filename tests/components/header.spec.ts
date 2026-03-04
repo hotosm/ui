@@ -105,6 +105,21 @@ describe('<hot-header>', () => {
     expect(icon).not.toBeNull();
   });
 
+  it('renders both full and short link text spans for responsive display', async () => {
+    const el = document.createElement('hot-header') as Header;
+    el.size = 'medium';
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    const sr = el.shadowRoot!;
+    const full = sr.querySelector('.header--top-link-full');
+    const short = sr.querySelector('.header--top-link-short');
+    expect(full).not.toBeNull();
+    expect(short).not.toBeNull();
+    expect(full!.textContent).toContain('Humanitarian OpenStreetMap Team Website');
+    expect(short!.textContent).toContain('HOT Website');
+  });
+
   it('uses correct default tagline and link text', async () => {
     const el = document.createElement('hot-header') as Header;
     el.size = 'medium';
@@ -138,24 +153,29 @@ describe('<hot-header>', () => {
     expect(el.shadowRoot!.querySelector('.header--title')).toBeNull();
   });
 
-  // ── Border bottom ──
+  // ── Centre-align tabs ──
 
-  it('applies border-bottom class when borderBottom is true', async () => {
+  it('applies centre-align class to nav when tabsCenterAlign is true', async () => {
     const el = document.createElement('hot-header') as Header;
-    el.borderBottom = true;
+    el.tabsCenterAlign = true;
+    el.tabs = [{ label: 'A' }, { label: 'B' }];
     document.body.appendChild(el);
     await (el as any).updateComplete;
 
-    expect(el.shadowRoot!.querySelector('header')!.classList.contains('border-bottom')).toBe(true);
+    const nav = el.shadowRoot!.querySelector('.header--nav');
+    expect(nav).not.toBeNull();
+    expect(nav!.classList.contains('header--nav-center')).toBe(true);
   });
 
-  it('does not apply border-bottom class when borderBottom is false', async () => {
+  it('does not apply centre-align class by default', async () => {
     const el = document.createElement('hot-header') as Header;
-    el.borderBottom = false;
+    el.tabs = [{ label: 'A' }, { label: 'B' }];
     document.body.appendChild(el);
     await (el as any).updateComplete;
 
-    expect(el.shadowRoot!.querySelector('header')!.classList.contains('border-bottom')).toBe(false);
+    const nav = el.shadowRoot!.querySelector('.header--nav');
+    expect(nav).not.toBeNull();
+    expect(nav!.classList.contains('header--nav-center')).toBe(false);
   });
 
   // ── Login button (logged-out state) ──
@@ -360,13 +380,28 @@ describe('<hot-header>', () => {
     expect(sr.querySelector('wa-button[appearance="outlined"]')).not.toBeNull();
   });
 
-  it('does not render drawer when drawer prop is false', async () => {
+  it('does not render drawer when drawer is false and no tabs exist', async () => {
     const el = document.createElement('hot-header') as Header;
     el.drawer = false;
     document.body.appendChild(el);
     await (el as any).updateComplete;
 
     expect(el.shadowRoot!.querySelector('#drawer-overview')).toBeNull();
+  });
+
+  it('auto-renders drawer when drawer is false but tabs exist (for mobile nav)', async () => {
+    const el = document.createElement('hot-header') as Header;
+    el.drawer = false;
+    el.tabs = [{ label: 'Map' }, { label: 'Docs' }];
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    const sr = el.shadowRoot!;
+    // Drawer markup should be present for mobile users
+    expect(sr.querySelector('#drawer-overview')).not.toBeNull();
+    // The hamburger button should have the mobile-only class
+    const btn = sr.querySelector('.header--drawer-mobile-only');
+    expect(btn).not.toBeNull();
   });
 
   it('includes tab labels in the drawer nav when tabs and drawer are both set', async () => {
@@ -400,5 +435,34 @@ describe('<hot-header>', () => {
     expect(links.length).toBe(2);
     expect((links[0] as HTMLAnchorElement).textContent?.trim()).toBe('Support');
     expect((links[1] as HTMLAnchorElement).getAttribute('href')).toBe('/docs');
+  });
+
+  // ── Active tab URL sync ──
+
+  it('exposes a public syncActiveTab method', async () => {
+    const el = document.createElement('hot-header') as Header;
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    expect(typeof el.syncActiveTab).toBe('function');
+  });
+
+  it('syncs active tab based on current URL path', async () => {
+    // Simulate being on /manage
+    history.replaceState(null, '', '/manage');
+
+    const el = document.createElement('hot-header') as Header;
+    el.tabs = [
+      { label: 'Explore', href: '/explore' },
+      { label: 'Manage', href: '/manage' },
+      { label: 'About', href: '/about' },
+    ];
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    expect(el.activeTabIndex).toBe(1);
+
+    // Clean up URL
+    history.replaceState(null, '', '/');
   });
 });

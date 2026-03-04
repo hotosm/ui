@@ -8,9 +8,6 @@ export const headerVariants = cva("header", {
       medium: "header--size-medium",
       large: "header--size-large",
     },
-    borderBottom: {
-      true: "border-bottom",
-    },
   },
 });
 
@@ -34,12 +31,8 @@ export const styles = css`
     padding: var(--hot-spacing-2x-small) var(--hot-spacing-small);
   }
 
-  .header.border-bottom {
-    border-bottom: var(--hot-spacing-3x-small) solid var(--hot-color-neutral-50);
-  }
-
   /* ================================================================
-   * Top bar (tagline + external link) — hidden on "small" variant
+   * Top bar (tagline + external link) - hidden on "small" variant
    * ================================================================ */
 
   .header--top {
@@ -74,6 +67,35 @@ export const styles = css`
     margin-left: var(--hot-spacing-3x-small);
     width: 0.65em;
     height: 0.65em;
+  }
+
+  /* On mobile: hide the tagline and show the short link text */
+  .header--top-link-short {
+    display: inline;
+  }
+
+  .header--top-link-full {
+    display: none;
+  }
+
+  @media (min-width: 769px) {
+    .header--top-link-short {
+      display: none;
+    }
+
+    .header--top-link-full {
+      display: inline;
+    }
+
+    .header--top-tagline {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header--top-tagline {
+      display: none;
+    }
   }
 
   /* ================================================================
@@ -185,6 +207,10 @@ export const styles = css`
     justify-content: flex-start;
   }
 
+  .header--nav-center .header--tab-group::part(nav) {
+    justify-content: center;
+  }
+
   .header--tab::part(base) {
     font-size: var(--hot-font-size-medium);
     font-weight: var(--hot-font-weight-bold);
@@ -229,6 +255,20 @@ export const styles = css`
     min-width: 2.5rem;
     min-height: 2.5rem;
     padding: 0.5rem;
+  }
+
+  /*
+   * When drawer is not explicitly enabled but tabs exist, show the
+   * hamburger only on mobile so users can still reach the nav items.
+   */
+  .header--drawer-mobile-only {
+    display: inline-flex;
+  }
+
+  @media (min-width: 769px) {
+    .header--drawer-mobile-only {
+      display: none;
+    }
   }
 
   /* ================================================================
@@ -295,9 +335,9 @@ export const styles = css`
   /* ================================================================
    * Size variants
    *
-   *   small  — compact toolbar    (48 px)
-   *   medium — standard header    (60 px)
-   *   large  — prominent header   (72 px)
+   *   small  - compact toolbar    (48 px)
+   *   medium - standard header    (60 px)
+   *   large  - prominent header   (72 px)
    *
    * Each section scales: header height, logo, title, buttons, tabs.
    * ================================================================ */
