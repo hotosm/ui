@@ -527,6 +527,7 @@ export class Header extends LitElement {
                   appearance="outlined"
                   class="${this.drawer ? '' : 'header--drawer-mobile-only'}"
                   @click=${() => this._handleDrawerOpen()}
+                  aria-label="Open Sidebar"
                 >
                     <wa-icon name="bars"></wa-icon>
                 </wa-button>
