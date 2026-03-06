@@ -23,8 +23,8 @@ export class Logo extends LitElement {
 
     return html`
       <div class="logo">
-        ${ !this.textOnly ? html`<img src=${HotLogoIconSVG} />` : null }
-        ${ !this.iconOnly ? html`<img src=${HotLogoTextSVG} />` : null }
+        ${ !this.textOnly ? html`<img src=${HotLogoIconSVG} alt="Logo" />` : null }
+        ${ !this.iconOnly ? html`<img src=${HotLogoTextSVG} alt="Logo" />` : null }
       </div>
     `;
   }
