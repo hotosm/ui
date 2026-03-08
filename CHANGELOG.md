@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0 (2026-03-08)
+
+### Feat
+
+- replace implementation of auth in header with a <slot> for other components
+
+### Fix
+
+- add aria-label to sidebar open button
+- **logo**: add alt attribute to logo element
+
 ## 0.8.1 (2026-03-04)
 
 ### Fix
