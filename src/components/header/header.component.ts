@@ -2,7 +2,6 @@
 // where webawesome.loader.js registers all wa-* elements globally.
 Promise.allSettled([
   import('@awesome.me/webawesome/dist/components/tab-group/tab-group.js'),
-  import('@awesome.me/webawesome/dist/components/dialog/dialog.js'),
   import('@awesome.me/webawesome/dist/components/icon/icon.js'),
   import('@awesome.me/webawesome/dist/components/drawer/drawer.js'),
   import('@awesome.me/webawesome/dist/components/dropdown/dropdown.js'),
@@ -12,13 +11,9 @@ Promise.allSettled([
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import type { CSSResultGroup, PropertyValues } from 'lit';
-// @ts-ignore (hanko doesn't like being wrapped...)
-import { register as registerHanko } from '@teamhanko/hanko-elements';
 
 import { headerVariants, type sizes, styles } from './header.styles.js';
 import registerBundledIcons from "../icons.js"
-import osmLogoRaw from '../../assets/logo/osm-logo.svg?raw';
-const osmLogoDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(osmLogoRaw)}`;
 
 registerBundledIcons();
 
@@ -83,26 +78,6 @@ export class Header extends LitElement {
   @property({ type: Number })
   accessor activeTabIndex: number = 0;
 
-  /** Show/hide login functionality. */
-  @property({ type: Boolean, attribute: 'show-login' })
-  accessor showLogin: boolean = false;
-
-  /** Control the login modal state. */
-  @property({ type: Boolean, attribute: 'login-modal-open' })
-  accessor loginModalOpen: boolean = false;
-
-  /** Default fallback icon for providers without custom icons. */
-  @property({ type: String, attribute: "default-login-icon" })
-  accessor defaultLoginIcon: string = "user";
-
-  /** Whether the user is currently logged in. When true, an avatar is shown instead of the Login button. */
-  @property({ type: Boolean, attribute: 'logged-in' })
-  accessor loggedIn: boolean = false;
-
-  /** Display name of the logged-in user. The first letter is used for the avatar initial. */
-  @property({ type: String, attribute: 'user-name' })
-  accessor userName: string = "";
- 
   /** Internal state for desktop nav scrolling */
   private _navScrollAtStart = true;
   private _navScrollAtEnd = false;
@@ -125,28 +100,6 @@ export class Header extends LitElement {
     // automatically triggers our listener (no framework coupling needed).
     Header._patchHistory();
 
-    // Only initialise Hanko when the login UI is actually enabled
-    if (!this.showLogin) return;
-
-    await registerHanko('https://dev.login.hotosm.org', {
-      shadow: false, // We can't use shadow dom, as the OSM custom element part is not exposed
-      // injectStyles: false, // Set to false if you do not want to inject any default styles.
-      // enablePasskeys: false, // Set to false if you do not want to display passkey-related content.
-      // hidePasskeyButtonOnLogin: true, // Hides the button to sign in with a passkey on the login page.
-      // // translations: undefined, // Additional translations can be added here. English is used when the option is not
-      // // // present or set to `null`, whereas setting an empty object `{}` prevents the elements
-      // // // from displaying any translations.
-      // // translationsLocation: '/i18n', // The URL or path where the translation files are located.
-      // // fallbackLanguage: 'en', // The fallback language to be used if a translation is not available.
-      // storageKey: 'hanko', // The name of the cookie the session token is stored in and the prefix / name of local storage keys
-      // cookieDomain: undefined, // The domain where the cookie set from the SDK is available. When undefined,
-      // // defaults to the domain of the page where the cookie was created.
-      // cookieSameSite: 'lax', // Specify whether/when cookies are sent with cross-site requests.
-      sessionCheckInterval: 30000, // Interval for session validity checks in milliseconds. Must be greater than 3000 (3s).
-      // sessionTokenLocation: 'cookie' // Specify where the session token should be stored. Either `cookie` or `sessionStorage`.
-    }).catch((_error: Error) => {
-      // handle error
-    });
   }
 
   disconnectedCallback() {
@@ -455,29 +408,7 @@ export class Header extends LitElement {
         
 
         <div id="right-section" class="header--right-section">
-           ${this.showLogin
-            ? this.loggedIn
-              ? html`
-                  <wa-dropdown placement="bottom-end" class="header--user-dropdown" @wa-select=${(e: CustomEvent) => this._handleUserMenuSelect(e)}>
-                    <button slot="trigger" class="header--avatar-trigger" aria-label="User menu">
-                      <span class="header--avatar-initial">${this._avatarInitial}</span>
-                    </button>
-                    <wa-dropdown-item value="logout">
-                      <wa-icon slot="prefix" name="right-from-bracket"></wa-icon>
-                      Logout
-                    </wa-dropdown-item>
-                  </wa-dropdown>
-                `
-              : html`
-                  <wa-button
-                    variant="brand"
-                    class="login-button"
-                    @click=${() => this._handleLogin()}
-                  >
-                    Login
-                  </wa-button>
-                `
-            : null}
+          <slot name="auth"></slot>
           ${this._showDrawer
             ? html`
                 <wa-drawer label=" " id="drawer-overview">
@@ -535,47 +466,8 @@ export class Header extends LitElement {
             : null}
         </div>
 
-        <!-- Login Modal -->
-        ${this.showLogin
-          ? html`
-              <wa-dialog 
-                class="login-modal"
-                ?open=${this.loginModalOpen}
-                @wa-hide=${() => this._handleModalClose()}
-              >
-                <wa-button appearance="outlined" @click=${() => this._handleModalClose()}>
-                    <wa-icon  name="xmark"></wa-icon>
-                </wa-button>
-
-                <hanko-auth redirect-to="${location.origin}"></hanko-auth>
-              </wa-dialog>
-            `
-          : null}
       </header>
       </div>
-
-      <!-- Here we must directly include the hanko style overrides, as it includes a SVG -->
-      <!-- Note we can't remove the existing svg, so need to hide and override it -->
-      <!-- THIS ISN'T WORKING WELL. We can either try and fix the styling or perhaps manipulate the DOM via Javascript instead?? -->
-      <style>
-        .hanko_form #icon-custom-provider {
-          display: none;
-        }
-      
-        .hanko_form .hanko_loadingSpinnerWrapperIcon:has(#icon-custom-provider) {
-          background: url("${osmLogoDataUrl}") no-repeat center center;
-          background-size: contain;
-          display: inline-flex;
-          align-items: center;
-          height: 100%;
-          margin: 0 5px;
-          justify-content: inherit;
-          flex-wrap: inherit;
-          width: 100%;
-          column-gap: 10px;
-          margin-left: 10px;
-        }
-      </style>
     `;
   }
 
@@ -630,15 +522,6 @@ export class Header extends LitElement {
     }
   }
 
-  private _handleLogin() {
-    this.loginModalOpen = true;
-    this.dispatchEvent(new Event("login"));
-  }
-
-  private _handleModalClose() {
-    this.loginModalOpen = false;
-  }
-
   /**
    * Should the drawer markup be rendered?
    * True when `drawer` is explicitly set, or when there are nav tabs
@@ -646,20 +529,6 @@ export class Header extends LitElement {
    */
   private get _showDrawer(): boolean {
     return this.drawer || this.tabs.length > 0;
-  }
-
-  /** Derive a single uppercase letter from the user's name (fallback: "U"). */
-  private get _avatarInitial(): string {
-    const letter = this.userName?.trim()?.[0];
-    return letter ? letter.toUpperCase() : 'U';
-  }
-
-  private _handleUserMenuSelect(e: CustomEvent) {
-    const item = e.detail?.item;
-    const value = item?.value ?? item?.getAttribute?.('value');
-    if (value === 'logout') {
-      this.dispatchEvent(new Event('logout', { bubbles: true }));
-    }
   }
 
   private _handleDrawerOpen() {

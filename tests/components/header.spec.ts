@@ -178,119 +178,30 @@ describe('<hot-header>', () => {
     expect(nav!.classList.contains('header--nav-center')).toBe(false);
   });
 
-  // ── Login button (logged-out state) ──
+  // ── Auth slot ──
 
-  it('emits a "login" event and opens the dialog when the login button is clicked', async () => {
+  it('renders an auth slot in the right section', async () => {
     const el = document.createElement('hot-header') as Header;
-    el.showLogin = true;
-    el.loggedIn = false;
-
     document.body.appendChild(el);
     await (el as any).updateComplete;
 
-    const handler = vi.fn();
-    el.addEventListener('login', handler);
-
-    const loginButton = el.shadowRoot!.querySelector('wa-button.login-button') as HTMLElement;
-    expect(loginButton).not.toBeNull();
-
-    loginButton.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
-    await (el as any).updateComplete;
-
-    expect(handler).toHaveBeenCalledTimes(1);
-
-    const dialog = el.shadowRoot!.querySelector('wa-dialog.login-modal') as HTMLElement & { open?: boolean };
-    expect(dialog).not.toBeNull();
-    const isOpen = dialog.open === true || dialog.hasAttribute('open');
-    expect(isOpen).toBe(true);
+    const slot = el.shadowRoot!.querySelector('slot[name="auth"]');
+    expect(slot).not.toBeNull();
   });
 
-  it('does not render login button or dialog when showLogin is false', async () => {
+  it('projects slotted auth content into the right section', async () => {
     const el = document.createElement('hot-header') as Header;
-    el.showLogin = false;
+    const authEl = document.createElement('button');
+    authEl.slot = 'auth';
+    authEl.textContent = 'Login';
+    el.appendChild(authEl);
     document.body.appendChild(el);
     await (el as any).updateComplete;
 
-    const sr = el.shadowRoot!;
-    expect(sr.querySelector('.login-button')).toBeNull();
-    expect(sr.querySelector('.login-modal')).toBeNull();
-  });
-
-  // ── Logged-in avatar & dropdown ──
-
-  it('shows text-initial avatar instead of login button when loggedIn is true', async () => {
-    const el = document.createElement('hot-header') as Header;
-    el.showLogin = true;
-    el.loggedIn = true;
-    el.userName = 'Jane Doe';
-    document.body.appendChild(el);
-    await (el as any).updateComplete;
-
-    const sr = el.shadowRoot!;
-
-    // Login button should NOT be present
-    expect(sr.querySelector('.login-button')).toBeNull();
-
-    // Avatar trigger should be present
-    const trigger = sr.querySelector('.header--avatar-trigger');
-    expect(trigger).not.toBeNull();
-
-    // Text initial should show the first letter of the user's name
-    const initial = sr.querySelector('.header--avatar-initial');
-    expect(initial).not.toBeNull();
-    expect(initial!.textContent).toBe('J');
-  });
-
-  it('shows fallback "U" initial when loggedIn but no userName', async () => {
-    const el = document.createElement('hot-header') as Header;
-    el.showLogin = true;
-    el.loggedIn = true;
-    el.userName = '';
-    document.body.appendChild(el);
-    await (el as any).updateComplete;
-
-    const sr = el.shadowRoot!;
-    const initial = sr.querySelector('.header--avatar-initial');
-    expect(initial).not.toBeNull();
-    expect(initial!.textContent).toBe('U');
-  });
-
-  it('renders a dropdown with a Logout item when logged in', async () => {
-    const el = document.createElement('hot-header') as Header;
-    el.showLogin = true;
-    el.loggedIn = true;
-    document.body.appendChild(el);
-    await (el as any).updateComplete;
-
-    const dropdown = el.shadowRoot!.querySelector('.header--user-dropdown');
-    expect(dropdown).not.toBeNull();
-
-    const logoutItem = el.shadowRoot!.querySelector('wa-dropdown-item[value="logout"]');
-    expect(logoutItem).not.toBeNull();
-    expect(logoutItem!.textContent).toContain('Logout');
-  });
-
-  it('emits a "logout" event when Logout is selected from the dropdown', async () => {
-    const el = document.createElement('hot-header') as Header;
-    el.showLogin = true;
-    el.loggedIn = true;
-    document.body.appendChild(el);
-    await (el as any).updateComplete;
-
-    const handler = vi.fn();
-    el.addEventListener('logout', handler);
-
-    // Simulate wa-select on the dropdown
-    const dropdown = el.shadowRoot!.querySelector('.header--user-dropdown') as HTMLElement;
-    expect(dropdown).not.toBeNull();
-
-    dropdown.dispatchEvent(new CustomEvent('wa-select', {
-      detail: { item: { value: 'logout' } },
-      bubbles: true,
-      composed: true
-    }));
-
-    expect(handler).toHaveBeenCalledTimes(1);
+    // The slotted element should be assigned to the auth slot
+    const slot = el.shadowRoot!.querySelector('slot[name="auth"]') as HTMLSlotElement;
+    expect(slot).not.toBeNull();
+    expect(slot.assignedElements()).toContain(authEl);
   });
 
   // ── Navigation tabs ──

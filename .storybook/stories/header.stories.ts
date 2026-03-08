@@ -57,11 +57,6 @@ const meta: Meta = {
     },
     drawer: { control: 'boolean' },
     tabsCenterAlign: { control: 'boolean' },
-    showLogin: { control: 'boolean' },
-    loggedIn: { control: 'boolean' },
-    userName: { control: 'text' },
-    loginModalOpen: { control: 'boolean' },
-    defaultLoginIcon: { control: 'text' },
     selectedTab: {
       options: [0,1,2,3,4,5],
       control: {
@@ -88,66 +83,55 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-export const WithConfigurableProviders: Story = {
+/**
+ * The header exposes an `auth` slot in the top-right corner.
+ * Drop any auth web component (e.g. <hotosm-auth>) into that slot and it
+ * will appear alongside the drawer button without any coupling to the header.
+ *
+ * This story uses a plain button as a stand-in to show placement.
+ */
+export const WithAuthSlot: Story = {
   args: {
     title: "HOTOSM Tools",
     size: "small",
     drawer: true,
-    showLogin: true,
-    loggedIn: false,
-    loginModalOpen: false,
-    loginProviders: {
-      "osm": {
-        "icon": "https://www.openstreetmap.org/assets/osm_logo-4b074077c29e100f40ee64f5177886e36b570d4cc3ab10c7b263003d09642e3f.svg",
-        "loginUrl": "https://www.openstreetmap.org/oauth2/authorize",
-        "redirectUrl": "https://ui.hotosm.com/auth/callback",
-        "name": "OpenStreetMap"
-      },
-      "google": {
-        "icon": "https://developers.google.com/identity/images/g-logo.png",
-        "loginUrl": "https://accounts.google.com/o/oauth2/auth",
-        "redirectUrl": "https://ui.hotosm.com/auth/callback", 
-        "name": "Google"
-      }
-    },
-    defaultLoginIcon: "user"
   },
   render: (args) => {
     return html`
       <hot-header
         title="${args.title}"
         size="${args.size}"
-
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
-        ?logged-in=${args.loggedIn}
-        .loginProviders="${args.loginProviders}"
-        default-login-icon="${args.defaultLoginIcon}"
-        @login=${() => console.log('Login event dispatched')}
-        @logout=${() => console.log('Logout event dispatched')}
         .drawerLinks=${[
           { label: "Learn", href: "/learn" },
           { label: "About", href: "/about" },
           { label: "Support", href: "/support" },
           { label: "Download Custom ODK Collect", href: "/download" }
         ]}
-      ></hot-header>
+      >
+        <!-- Slot in your auth component here, e.g.: <hotosm-auth slot="auth" api-url="https://dev.login.hotosm.org"></hotosm-auth> -->
+        <button slot="auth" style="padding: 6px 14px; border-radius: 4px; background: #d73f3f; color: white; border: none; cursor: pointer; font-size: 0.875rem;">
+          Login (placeholder)
+        </button>
+      </hot-header>
 
       <div style="padding: 20px;">
-        <h2>Header with Configurable Login Providers</h2>
-        <p>Toggle <code>loggedIn</code> in the controls to switch between Login button and user avatar.</p>
+        <h2>Header with auth slot</h2>
+        <p>
+          The header provides an <code>auth</code> slot in the top-right corner.
+          Replace the placeholder button with <code>&lt;hotosm-auth slot="auth" ...&gt;</code>
+          (or any other auth component) — the header has no opinion on the implementation.
+        </p>
       </div>
     `;
   }
 };
 
-export const WithoutLogin: Story = {
+export const WithoutAuth: Story = {
   args: {
     title: "HOTOSM Tools",
     size: "small",
-
     drawer: true,
-    showLogin: false,
   },
   render: (args) => {
     return html`
@@ -155,14 +139,12 @@ export const WithoutLogin: Story = {
         id="hot-header-component"
         title="${args.title}"
         size="${args.size}"
-
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
       ></hot-header>
 
       <div style="padding: 20px;">
-        <h2>Header without Login</h2>
-        <p>Login functionality is hidden when <code>showLogin</code> is <code>false</code>.</p>
+        <h2>Header without auth component</h2>
+        <p>When nothing is placed in the <code>auth</code> slot, the top-right corner is empty.</p>
       </div>
     `;
   }
@@ -174,7 +156,6 @@ export const WithNav: Story = {
     size: "medium",
 
     drawer: true,
-    showLogin: false,
     tabs: "5 Tabs",
     selectedTab: 0,
   },
@@ -185,7 +166,6 @@ export const WithNav: Story = {
         size="${args.size}"
 
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
         style="max-width: 900px; margin-inline: auto; display: block;"
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
@@ -209,8 +189,6 @@ export const SmallWithNav: Story = {
     size: "small",
 
     drawer: true,
-    showLogin: true,
-    loggedIn: false,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
   },
@@ -221,8 +199,6 @@ export const SmallWithNav: Story = {
         size="${args.size}"
 
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
-        ?logged-in=${args.loggedIn}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
         .drawerLinks=${[
@@ -233,7 +209,6 @@ export const SmallWithNav: Story = {
       ></hot-header>
       <div style="padding: 20px;">
         <h2>Small header - Tasking Manager style</h2>
-        <p>Toggle <code>loggedIn</code> to see the avatar replace the Login button.</p>
       </div>
     `;
   }
@@ -245,8 +220,6 @@ export const MediumWithNav: Story = {
     size: "medium",
 
     drawer: true,
-    showLogin: true,
-    loggedIn: false,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
   },
@@ -257,8 +230,6 @@ export const MediumWithNav: Story = {
         size="${args.size}"
 
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
-        ?logged-in=${args.loggedIn}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
         .drawerLinks=${[
@@ -281,8 +252,6 @@ export const LargeWithNav: Story = {
     size: "large",
 
     drawer: true,
-    showLogin: true,
-    loggedIn: false,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
   },
@@ -293,8 +262,6 @@ export const LargeWithNav: Story = {
         size="${args.size}"
 
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
-        ?logged-in=${args.loggedIn}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
         .drawerLinks=${[
@@ -320,7 +287,6 @@ export const NavOverflowTest: Story = {
     size: "medium",
 
     drawer: true,
-    showLogin: false,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
   },
@@ -331,7 +297,6 @@ export const NavOverflowTest: Story = {
         size="${args.size}"
 
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
         style="max-width: 700px; margin-inline: auto; display: block;"
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
@@ -347,49 +312,6 @@ export const NavOverflowTest: Story = {
   }
 };
 
-/**
- * Demonstrates the logged-in state with a text-initial avatar and Logout dropdown.
- */
-export const LoggedIn: Story = {
-  args: {
-    title: "Tasking Manager",
-    size: "medium",
-
-    drawer: true,
-    showLogin: true,
-    loggedIn: true,
-    userName: "Jane Doe",
-    tabs: "6 Tabs (TM-style)",
-    selectedTab: 0,
-  },
-  render: (args) => {
-    return html`
-      <hot-header
-        title="${args.title}"
-        size="${args.size}"
-
-        ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
-        ?logged-in=${args.loggedIn}
-        user-name="${args.userName}"
-        .tabs=${args.tabs}
-        selectedTab=${args.selectedTab}
-        @logout=${() => alert('Logout clicked!')}
-        .drawerLinks=${[
-          { label: "Learn", href: "/learn" },
-          { label: "About", href: "/about" },
-          { label: "Support", href: "/support" },
-        ]}
-      ></hot-header>
-      <div style="padding: 20px;">
-        <h2>Logged-in header with text avatar</h2>
-        <p>A circular avatar showing the first letter of the user's name replaces the Login button.
-           Click the avatar to open a dropdown with a <strong>Logout</strong> option.</p>
-        <p>Change the <code>userName</code> control to see the initial update.</p>
-      </div>
-    `;
-  }
-};
 
 /**
  * Centre-aligned navigation tabs (opt-in via tabs-center-align).
@@ -399,7 +321,6 @@ export const CenteredTabs: Story = {
     title: "Tasking Manager",
     size: "medium",
     drawer: true,
-    showLogin: false,
     tabsCenterAlign: true,
     tabs: "3 Tabs",
     selectedTab: 0,
@@ -410,7 +331,6 @@ export const CenteredTabs: Story = {
         title="${args.title}"
         size="${args.size}"
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
         ?tabs-center-align=${args.tabsCenterAlign}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
@@ -432,7 +352,6 @@ export const AutoMobileDrawer: Story = {
     title: "Tasking Manager",
     size: "medium",
     drawer: false,
-    showLogin: true,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
   },
@@ -442,7 +361,6 @@ export const AutoMobileDrawer: Story = {
         title="${args.title}"
         size="${args.size}"
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
         .drawerLinks=${[
@@ -474,7 +392,6 @@ export const ActiveTabUrlSync: Story = {
     title: "Tasking Manager",
     size: "medium",
     drawer: true,
-    showLogin: false,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
   },
@@ -499,7 +416,6 @@ export const ActiveTabUrlSync: Story = {
         title="${args.title}"
         size="${args.size}"
         ?drawer=${args.drawer}
-        ?show-login=${args.showLogin}
         .tabs=${args.tabs}
         selectedTab=${args.selectedTab}
         .drawerLinks=${[
