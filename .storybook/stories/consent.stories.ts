@@ -36,7 +36,7 @@ export const Consent: StoryObj = {
       }
     },
     addKeyLocalStorage: (consentId: number) => {
-      localStorage.setItem(`${consentId}-consent-agree`, 'true');
+      localStorage.setItem(`${consentId}-consent-agree`, "true");
     },
     removeKeyLocalStorage: (consentId: number) => {
       localStorage.removeItem(`${consentId}-consent-agree`);
@@ -45,10 +45,10 @@ export const Consent: StoryObj = {
   render: (args, { parameters }) => {
     return html`
       <wa-button @click=${() => {
-        parameters.removeKeyLocalStorage(args.consentId)
+        parameters.removeKeyLocalStorage(args.consentId);
       }}>Re-Enable Banner</wa-button>
       <wa-button @click=${() => {
-        parameters.addKeyLocalStorage(args.consentId)
+        parameters.addKeyLocalStorage(args.consentId);
       }}>Disable Banner</wa-button>
       <br /><br />
 
@@ -59,10 +59,10 @@ export const Consent: StoryObj = {
         not-agree-label="I DO NOT accept"
         title=${"What info we collect about you?"}
         @agree=${() => {
-          parameters.showAgreeToast()
+          parameters.showAgreeToast();
         }}
         @disagree=${() => {
-          parameters.showDisagreeToast()
+          parameters.showDisagreeToast();
         }}
         ?is-open=${args.isOpen}
       >

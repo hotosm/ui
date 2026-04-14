@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -59,13 +59,18 @@ export default css`
   }
 
   .consent-callout::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--hot-color-primary-500), var(--hot-color-primary-600), var(--hot-color-primary-700));
+    background: linear-gradient(
+      90deg,
+      var(--hot-color-primary-500),
+      var(--hot-color-primary-600),
+      var(--hot-color-primary-700)
+    );
     border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
   }
 

@@ -1,33 +1,30 @@
-import { deleteAsync } from 'del';
-import { exec } from 'child_process';
-import { globby } from 'globby';
-import esbuild from 'esbuild';
-import fs from 'fs/promises';
-import util from 'util';
-const outdir = 'dist';
+import { deleteAsync } from "del";
+import { exec } from "child_process";
+import { globby } from "globby";
+import esbuild from "esbuild";
+import fs from "fs/promises";
+import util from "util";
+const outdir = "dist";
 const execPromise = util.promisify(exec);
 const bundleDirectories = [outdir];
 
 const config = {
-  format: 'esm',
-  target: 'es2017',
-  entryPoints: [
-    './src/hotosm-ui.ts',
-    ...(await globby('./src/components/**/!(*.(style)).ts')),
-  ],
-  chunkNames: 'chunks/[name].[hash]',
+  format: "esm",
+  target: "es2017",
+  entryPoints: ["./src/hotosm-ui.ts", ...(await globby("./src/components/**/!(*.(style)).ts"))],
+  chunkNames: "chunks/[name].[hash]",
   bundle: true,
   splitting: true,
-  external: ['@awesome.me/webawesome', '@awesome.me/webawesome/*'],
+  external: ["@awesome.me/webawesome", "@awesome.me/webawesome/*"],
   minify: true,
-  tsconfig: 'tsconfig.json',
+  tsconfig: "tsconfig.json",
   loader: {
-    '.svg': 'dataurl',
-    '.png': 'dataurl',
-    '.ts': 'ts',
-    '.js': 'js',
+    ".svg": "dataurl",
+    ".png": "dataurl",
+    ".ts": "ts",
+    ".js": "js",
   },
-  resolveExtensions: ['.ts', '.js', '.tsx', '.jsx'],
+  resolveExtensions: [".ts", ".js", ".tsx", ".jsx"],
   outdir,
 };
 
@@ -35,7 +32,7 @@ await Promise.all([...bundleDirectories.map((dir) => deleteAsync(dir))]);
 await fs.mkdir(outdir, { recursive: true });
 
 execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`, {
-  stdio: 'inherit',
+  stdio: "inherit",
 });
 esbuild.build(config).catch(() => process.exit(1));
 
@@ -54,8 +51,8 @@ async function copyDir(src, dest) {
   }
 }
 
-await copyDir('src/themes', `${outdir}/themes`).catch(() => {});
-await copyDir('src/assets', `${outdir}/assets`).catch(() => {});
+await copyDir("src/themes", `${outdir}/themes`).catch(() => {});
+await copyDir("src/assets", `${outdir}/assets`).catch(() => {});
 
 // Bundle CSS through esbuild so @import paths (including
 // @awesome.me/webawesome) are resolved from node_modules and inlined.
@@ -66,13 +63,13 @@ await copyDir('src/assets', `${outdir}/assets`).catch(() => {});
 //                   separately from CDN for cross-tool cache sharing
 await Promise.all([
   esbuild.build({
-    entryPoints: ['./src/style.css'],
+    entryPoints: ["./src/style.css"],
     bundle: true,
     minify: true,
     outfile: `${outdir}/style.css`,
   }),
   esbuild.build({
-    entryPoints: ['./src/style-core.css'],
+    entryPoints: ["./src/style-core.css"],
     bundle: true,
     minify: true,
     outfile: `${outdir}/style-core.css`,

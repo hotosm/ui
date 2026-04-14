@@ -1,9 +1,9 @@
 // Dynamic imports: resolved by bundlers, ignored gracefully for CDN usage
 // where webawesome.loader.js registers all wa-* elements globally.
 Promise.allSettled([
-  import('@awesome.me/webawesome/dist/components/callout/callout.js'),
-  import('@awesome.me/webawesome/dist/components/icon/icon.js'),
-  import('@awesome.me/webawesome/dist/components/button/button.js'),
+  import("@awesome.me/webawesome/dist/components/callout/callout.js"),
+  import("@awesome.me/webawesome/dist/components/icon/icon.js"),
+  import("@awesome.me/webawesome/dist/components/button/button.js"),
 ]);
 
 import { LitElement, html, css } from "lit";
@@ -16,7 +16,6 @@ declare global {
 }
 
 export class MatomoTracking extends LitElement {
-
   name = "hot-tracking";
 
   /** The Matomo site id for tracking. */
@@ -37,7 +36,8 @@ export class MatomoTracking extends LitElement {
 
   /** The consent message to display */
   @property({ type: String, attribute: "consent-message" })
-  accessor consentMessage: string = "We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience. By clicking 'Accept', you consent to our use of cookies and tracking technologies.";
+  accessor consentMessage: string =
+    "We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience. By clicking 'Accept', you consent to our use of cookies and tracking technologies.";
 
   @state()
   private consentGiven: boolean = false;
@@ -149,13 +149,18 @@ export class MatomoTracking extends LitElement {
     }
 
     .error-banner wa-callout::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--hot-color-primary-500), var(--hot-color-primary-600), var(--hot-color-primary-700));
+      background: linear-gradient(
+        90deg,
+        var(--hot-color-primary-500),
+        var(--hot-color-primary-600),
+        var(--hot-color-primary-700)
+      );
       border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
     }
 
@@ -178,7 +183,7 @@ export class MatomoTracking extends LitElement {
     }
 
     .toast-banner wa-callout[variant="success"]::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -199,7 +204,7 @@ export class MatomoTracking extends LitElement {
     }
 
     .toast-banner wa-callout[variant="brand"]::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -218,13 +223,18 @@ export class MatomoTracking extends LitElement {
     }
 
     .consent-banner wa-callout::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, var(--hot-color-primary-500), var(--hot-color-primary-600), var(--hot-color-primary-700));
+      background: linear-gradient(
+        90deg,
+        var(--hot-color-primary-500),
+        var(--hot-color-primary-600),
+        var(--hot-color-primary-700)
+      );
       border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
     }
 
@@ -307,7 +317,7 @@ export class MatomoTracking extends LitElement {
   private showErrorCallout(message: string) {
     this.errorMessage = message;
     this.showError = true;
-    
+
     // Auto-hide error after 10 seconds
     setTimeout(() => {
       this.showError = false;
@@ -317,7 +327,7 @@ export class MatomoTracking extends LitElement {
   private showSuccessCallout(message: string) {
     this.successMessage = message;
     this.showSuccess = true;
-    
+
     // Auto-hide success after 5 seconds
     setTimeout(() => {
       this.showSuccess = false;
@@ -327,7 +337,7 @@ export class MatomoTracking extends LitElement {
   private showInfoCallout(message: string) {
     this.infoMessage = message;
     this.showInfo = true;
-    
+
     // Auto-hide info after 5 seconds
     setTimeout(() => {
       this.showInfo = false;
@@ -336,7 +346,9 @@ export class MatomoTracking extends LitElement {
 
   protected render() {
     return html`
-      ${this.showError ? html`
+      ${
+        this.showError
+          ? html`
         <div class="error-banner">
           <wa-callout style="padding: 1rem;" variant="danger" appearance="outlined filled" size="large">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-exclamation"></wa-icon>
@@ -346,9 +358,13 @@ export class MatomoTracking extends LitElement {
             </div>
           </wa-callout>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
       
-      ${this.showSuccess ? html`
+      ${
+        this.showSuccess
+          ? html`
         <div class="toast-banner">
           <wa-callout style="padding: 1rem;" variant="success" appearance="outlined accent" size="medium">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-check"></wa-icon>
@@ -358,9 +374,13 @@ export class MatomoTracking extends LitElement {
             </div>
           </wa-callout>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
       
-      ${this.showInfo ? html`
+      ${
+        this.showInfo
+          ? html`
         <div class="toast-banner">
           <wa-callout style="padding: 1rem;" variant="brand" appearance="outlined filled" size="medium">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-info"></wa-icon>
@@ -370,9 +390,13 @@ export class MatomoTracking extends LitElement {
             </div>
           </wa-callout>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
       
-      ${this.consentShown ? html`
+      ${
+        this.consentShown
+          ? html`
         <div class="consent-banner">
           <wa-callout  variant="brand" appearance="outlined filled" size="large">
             <wa-icon slot="icon" family="classic" variant="solid" name="shield-check"></wa-icon>
@@ -398,7 +422,9 @@ export class MatomoTracking extends LitElement {
             </div>
           </wa-callout>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
     `;
   }
 
@@ -407,18 +433,18 @@ export class MatomoTracking extends LitElement {
 
     // Abort if current domain does not match
     if (window.location.hostname !== this.domain) {
-      console.warn(`[hot-tracking] Domain mismatch: expected "${this.domain}", got "${window.location.hostname}". Tracking disabled.`);
+      console.warn(
+        `[hot-tracking] Domain mismatch: expected "${this.domain}", got "${window.location.hostname}". Tracking disabled.`,
+      );
       return;
     }
 
     const matomoTrackingId = this.siteId;
 
     // Close and halt execution if siteId or domain not set
-    if (
-      (matomoTrackingId.length === 0 || this.domain.length === 0)
-    ) {
+    if (matomoTrackingId.length === 0 || this.domain.length === 0) {
       this.showErrorCallout(
-        "Matomo tracking is not properly configured. Please provide both site-id and domain attributes."
+        "Matomo tracking is not properly configured. Please provide both site-id and domain attributes.",
       );
       return;
     }

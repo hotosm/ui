@@ -122,7 +122,7 @@ export class HotToolMenu extends LitElement {
           detail: { tool },
           bubbles: true,
           composed: true,
-        })
+        }),
       );
 
       // Open tool page in new tab
@@ -153,19 +153,21 @@ export class HotToolMenu extends LitElement {
               ${tools.map(
                 (tool) => html`
                   <wa-dropdown-item value="${tool.id}">
-                    ${this.showLogos
-                      ? html`<img
+                    ${
+                      this.showLogos
+                        ? html`<img
                           slot="icon"
                           src="${tool.icon}"
                           alt="${tool.title}"
                           style="width: 32px; height: 32px; object-fit: contain; display: block;"
                         />`
-                      : ""}
+                        : ""
+                    }
                     <div class="tool-content">
                       <div class="tool-title">${tool.title}</div>
                     </div>
                   </wa-dropdown-item>
-                `
+                `,
               )}
             </div>
           `;

@@ -6,8 +6,7 @@ export const styles = css`
   }
 
   wa-dropdown-item {
-    --wa-dropdown-item-padding: var(--hot-spacing-small)
-      var(--hot-spacing-medium);
+    --wa-dropdown-item-padding: var(--hot-spacing-small) var(--hot-spacing-medium);
     --wa-dropdown-item-min-height: 60px;
     cursor: pointer;
   }
@@ -31,8 +30,8 @@ export const styles = css`
   wa-dropdown-label {
     font-weight: var(--hot-font-weight-semibold);
     font-size: var(--hot-font-size-small);
-    padding: var(--hot-spacing-x-small) var(--hot-spacing-medium)
-      var(--hot-spacing-2x-small) var(--hot-spacing-medium);
+    padding: var(--hot-spacing-x-small) var(--hot-spacing-medium) var(--hot-spacing-2x-small)
+      var(--hot-spacing-medium);
   }
 
   .tool-title {

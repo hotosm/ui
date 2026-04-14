@@ -89,15 +89,18 @@ Two CSS files are published. Choose the one that fits your setup.
 A single self-contained file with WebAwesome base styles + HOT theme
 already inlined. Nothing else to load.
 
+<!-- markdownlint-disable MD013 -->
+
 ```html
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style.css" />
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 Or from a bundler:
 
 ```js
-import '@hotosm/ui/dist/style.css';
+import "@hotosm/ui/dist/style.css";
 ```
 
 ### Option B - Split / CDN-optimised (recommended for multi-tool caching)
@@ -106,36 +109,45 @@ If you run several HOT tools (FMTM, Tasking Manager, etc.) and want
 the browser to **cache WebAwesome CSS once** across all of them, load
 WebAwesome from CDN separately and use the slim HOT-only stylesheet:
 
+<!-- markdownlint-disable MD013 -->
+
 ```html
 <!-- WebAwesome CSS - shared across all HOT tools via browser cache -->
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css"
+/>
 
 <!-- HOT theme only (fonts + design tokens + WebAwesome overrides) -->
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css" />
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 Or from a bundler:
 
 ```js
 // WebAwesome (resolve from node_modules)
-import '@awesome.me/webawesome/dist/styles/native.css';
-import '@awesome.me/webawesome/dist/styles/utilities.css';
-import '@awesome.me/webawesome/dist/styles/themes/default.css';
+import "@awesome.me/webawesome/dist/styles/native.css";
+import "@awesome.me/webawesome/dist/styles/utilities.css";
+import "@awesome.me/webawesome/dist/styles/themes/default.css";
 
 // HOT theme only
-import '@hotosm/ui/dist/style-core.css';
+import "@hotosm/ui/dist/style-core.css";
 ```
 
-| File | Size | Contains |
-| --- | --- | --- |
-| `style.css` | ~105 KB | WebAwesome + fonts + HOT theme (everything) |
-| `style-core.css` | ~21 KB | Fonts + HOT theme only (no WebAwesome) |
+| File             | Size    | Contains                                    |
+| ---------------- | ------- | ------------------------------------------- |
+| `style.css`      | ~105 KB | WebAwesome + fonts + HOT theme (everything) |
+| `style-core.css` | ~21 KB  | Fonts + HOT theme only (no WebAwesome)      |
 
 > [!TIP]
 > **Which should I pick?**
@@ -154,8 +166,12 @@ Add the required WebAwesome classes to your `<html>` element:
 ```html
 <!DOCTYPE html>
 <html class="wa-theme-default wa-palette-hotosm">
-  <head>...</head>
-  <body>...</body>
+  <head>
+    ...
+  </head>
+  <body>
+    ...
+  </body>
 </html>
 ```
 
@@ -172,7 +188,7 @@ Add the required WebAwesome classes to your `<html>` element:
 Import individual components - your bundler will tree-shake the rest:
 
 ```js
-import '@hotosm/ui/dist/components/header/header.js';
+import "@hotosm/ui/dist/components/header/header.js";
 ```
 
 ```html
@@ -188,48 +204,57 @@ all HOT tools (Option B from the styles section above):
 ```html
 <!DOCTYPE html>
 <html class="wa-theme-default wa-palette-hotosm">
-<head>
-  <!-- WebAwesome CSS - cached once across all HOT tools at this WA version -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+  <head>
+    <!-- WebAwesome CSS - cached once across all HOT tools at this WA version -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css"
+    />
 
-  <!-- HOT UI theme (fonts + HOT design tokens + WebAwesome overrides, ~21 KB) -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css">
+    <!-- HOT UI theme (fonts + HOT design tokens + WebAwesome overrides,
+    ~21 KB) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css"
+    />
 
-  <!-- Import map: resolves WebAwesome bare-module specifiers
+    <!-- Import map: resolves WebAwesome bare-module specifiers
        inside hotosm-ui.js -->
-  <!-- WA components load lazily from CDN only when first used;
+    <!-- WA components load lazily from CDN only when first used;
        no separate loader needed -->
-  <script type="importmap">
-    {
-      "imports": {
-        "@awesome.me/webawesome/dist/components/":
-          "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+    <script type="importmap">
+      {
+        "imports": {
+          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+        }
       }
-    }
-  </script>
+    </script>
 
-  <!-- HOT UI web components -->
-  <script type="module"
-    src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js">
-  </script>
-</head>
+    <!-- HOT UI web components -->
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js"
+    ></script>
+  </head>
 
-<body>
-  <hot-header id="hdr" title="My App" size="small" show-login></hot-header>
+  <body>
+    <hot-header id="hdr" title="My App" size="small" show-login></hot-header>
 
-  <script>
-    // Boolean props default to false.
-    // Include the attribute to make it true.
-    const hdr = document.getElementById('hdr');
-    hdr.drawer = true;        // enable the hamburger drawer
-  </script>
-</body>
+    <script>
+      // Boolean props default to false.
+      // Include the attribute to make it true.
+      const hdr = document.getElementById("hdr");
+      hdr.drawer = true; // enable the hamburger drawer
+    </script>
+  </body>
 </html>
 ```
 
@@ -245,14 +270,14 @@ Web Components work in React with a small caveat - use `ref` callbacks
 for custom events if React's synthetic event system doesn't forward them:
 
 ```jsx
-import '@hotosm/ui/dist/components/header/header.js';
+import "@hotosm/ui/dist/components/header/header.js";
 
 function App() {
   return (
     <hot-header
       title="My App"
       ref={(el) => {
-        if (el) el.addEventListener('login', () => console.log('logged in'));
+        if (el) el.addEventListener("login", () => console.log("logged in"));
       }}
     />
   );
@@ -299,9 +324,9 @@ pnpm run dev        # starts Storybook on localhost:3001
 
 **Styling files** (under `src/themes/`):
 
-| File | Purpose |
-| --- | --- |
-| `hot.css` | HOT design tokens (colours, typography, spacing) |
+| File         | Purpose                                                |
+| ------------ | ------------------------------------------------------ |
+| `hot.css`    | HOT design tokens (colours, typography, spacing)       |
 | `hot-wa.css` | WebAwesome variable overrides to apply the HOT palette |
 
 ---

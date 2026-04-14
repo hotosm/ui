@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Loading Strategies" />
 
@@ -92,11 +92,12 @@ When loading from a CDN, add `modulepreload` for the HOT UI bundle so the browse
 fetches it earlier.
 
 ```html
-<link rel="modulepreload"
-  href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js" />
 
-<script type="module"
-  src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js"></script>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js"
+></script>
 ```
 
 This helps reduce the delay before custom elements are registered, but it does

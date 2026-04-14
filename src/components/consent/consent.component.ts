@@ -1,22 +1,21 @@
 // Dynamic imports: resolved by bundlers, ignored gracefully for CDN usage
 // where webawesome.loader.js registers all wa-* elements globally.
 Promise.allSettled([
-  import('@awesome.me/webawesome/dist/components/callout/callout.js'),
-  import('@awesome.me/webawesome/dist/components/icon/icon.js'),
-  import('@awesome.me/webawesome/dist/components/button/button.js'),
+  import("@awesome.me/webawesome/dist/components/callout/callout.js"),
+  import("@awesome.me/webawesome/dist/components/icon/icon.js"),
+  import("@awesome.me/webawesome/dist/components/button/button.js"),
 ]);
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
-import styles from './consent.styles.js';
-import type { CSSResultGroup } from 'lit';
+import styles from "./consent.styles.js";
+import type { CSSResultGroup } from "lit";
 
 import registerBundledIcons from "../icons.js";
 
 registerBundledIcons();
 
 export class Consent extends LitElement {
-
   static styles: CSSResultGroup = [styles];
 
   name = "hot-consent";
@@ -25,14 +24,15 @@ export class Consent extends LitElement {
   @property({ type: String, attribute: "consent-id" })
   accessor consentId: string = "";
 
-  @property({ type: Boolean, attribute: 'is-open' })
+  @property({ type: Boolean, attribute: "is-open" })
   accessor isOpen: boolean = false;
 
   @property({ type: String })
   accessor title: string = "About the information we collect";
 
   @property({ type: String })
-  accessor message: string = "We use cookies and similar technologies to recognize and analyze your visits, and measure traffic usage and activity.";
+  accessor message: string =
+    "We use cookies and similar technologies to recognize and analyze your visits, and measure traffic usage and activity.";
 
   @property({ type: String, attribute: "agree-label" })
   accessor agreeLabel: string = "I Agree";
@@ -89,9 +89,7 @@ export class Consent extends LitElement {
   private _setDisagree(_e: MouseEvent) {
     this.isOpen = false;
     localStorage.setItem(`${this.consentId}-consent-agree`, "false");
-    this.dispatchEvent(
-      new Event("disagree", { bubbles: true, composed: true })
-    );
+    this.dispatchEvent(new Event("disagree", { bubbles: true, composed: true }));
   }
 
   connectedCallback() {

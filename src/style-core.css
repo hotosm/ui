@@ -9,10 +9,10 @@
 */
 
 /* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 /* HOT theme variables */
-@import 'themes/hot.css';
+@import "themes/hot.css";
 
 /* WebAwesome overrides for HOT */
-@import 'themes/hot-wa.css';
+@import "themes/hot-wa.css";

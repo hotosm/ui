@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit';
+import type { Meta, StoryObj } from "@storybook/web-components-vite";
+import { html } from "lit";
 
-import '../../src/hotosm-ui';
+import "../../src/hotosm-ui";
 
 const meta: Meta = {
-  title: 'Components/List Card',
-  component: 'hot-list-card',
+  title: "Components/List Card",
+  component: "hot-list-card",
   argTypes: {
     title: {
-      control: 'text',
+      control: "text",
     },
     subtitle: {
-      control: 'text',
+      control: "text",
     },
     icon: {
-      control: 'text',
+      control: "text",
     },
     itemId: {
-      control: 'text',
+      control: "text",
     },
     showRemove: {
-      control: 'boolean',
+      control: "boolean",
     },
     showIcon: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
@@ -33,10 +33,10 @@ type Story = StoryObj;
 
 export const Default: Story = {
   args: {
-    title: 'document.pdf',
-    subtitle: '2.4 MB',
-    icon: 'file',
-    itemId: 'item-1',
+    title: "document.pdf",
+    subtitle: "2.4 MB",
+    icon: "file",
+    itemId: "item-1",
     showRemove: true,
     showIcon: true,
   },
@@ -54,7 +54,7 @@ export const Default: Story = {
 
 export const FileTypes: Story = {
   render: () => html`
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <div style="display: flex; flex-direction: column; gap: 1rem">
       <hot-list-card
         title="report.pdf"
         subtitle="3.5 MB"

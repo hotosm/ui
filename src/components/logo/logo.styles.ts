@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   .logo {
@@ -13,4 +13,4 @@ export default css`
     height: 100%;
     width: auto;
   }
-`
+`;

@@ -1,15 +1,15 @@
-import { LitElement, html } from 'lit';
-import { property, state, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { LitElement, html } from "lit";
+import { property, state, query } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 // Dynamic imports: resolved by bundlers, ignored gracefully for CDN usage
 // where webawesome.loader.js registers all wa-* elements globally.
 Promise.allSettled([
-  import('@awesome.me/webawesome/dist/components/icon/icon.js'),
-  import('@awesome.me/webawesome/dist/components/divider/divider.js'),
+  import("@awesome.me/webawesome/dist/components/icon/icon.js"),
+  import("@awesome.me/webawesome/dist/components/divider/divider.js"),
 ]);
-import '../list-card/list-card.js';
+import "../list-card/list-card.js";
 
-import styles from './file-input-dropzone.styles.js';
+import styles from "./file-input-dropzone.styles.js";
 
 export interface FileWithPreview {
   file: File;
@@ -18,28 +18,28 @@ export interface FileWithPreview {
 
 export class FileInputDropzone extends LitElement {
   static styles = [styles];
-  name = 'hot-file-input-dropzone';
+  name = "hot-file-input-dropzone";
 
   @property({ type: Boolean })
   accessor multiple = false;
 
   @property({ type: String })
-  accessor accept = '';
+  accessor accept = "";
 
   @property({ type: Number })
   accessor maxSize = 0;
 
-  @property({ type: Boolean, attribute: 'show-preview' })
+  @property({ type: Boolean, attribute: "show-preview" })
   accessor showPreview = false;
 
   @property({ type: Boolean })
   accessor disabled = false;
 
   @property({ type: String })
-  accessor label = '';
+  accessor label = "";
 
   @property({ type: String })
-  accessor variant: 'traditional' | 'compact' = 'traditional';
+  accessor variant: "traditional" | "compact" = "traditional";
 
   @state()
   private accessor isDragging = false;
@@ -48,10 +48,10 @@ export class FileInputDropzone extends LitElement {
   private accessor selectedFiles: FileWithPreview[] = [];
 
   @state()
-  private accessor errorMessage = '';
+  private accessor errorMessage = "";
 
   @state()
-  private accessor statusMessage = '';
+  private accessor statusMessage = "";
 
   @query('input[type="file"]')
   private accessor fileInput!: HTMLInputElement;
@@ -92,7 +92,7 @@ export class FileInputDropzone extends LitElement {
   }
 
   private _handleKeyDown(e: KeyboardEvent) {
-    if (!this.disabled && (e.key === 'Enter' || e.key === ' ')) {
+    if (!this.disabled && (e.key === "Enter" || e.key === " ")) {
       e.preventDefault();
       this.fileInput.click();
     }
@@ -105,32 +105,30 @@ export class FileInputDropzone extends LitElement {
   }
 
   private _processFiles(files: File[]) {
-    this.errorMessage = '';
+    this.errorMessage = "";
 
     if (!this.multiple && files.length > 1) {
-      this.errorMessage = 'Only one file can be selected';
+      this.errorMessage = "Only one file can be selected";
       return;
     }
 
     if (this.accept) {
-      const acceptedTypes = this.accept
-        .split(',')
-        .map((t) => t.trim().toLowerCase());
+      const acceptedTypes = this.accept.split(",").map((t) => t.trim().toLowerCase());
       const invalidFiles = files.filter((file) => {
         const fileName = file.name.toLowerCase();
         const fileType = file.type.toLowerCase();
 
         return !acceptedTypes.some((type) => {
-          if (type.startsWith('.')) {
+          if (type.startsWith(".")) {
             return fileName.endsWith(type);
           }
 
-          if (type.endsWith('/*')) {
-            const category = type.split('/')[0];
+          if (type.endsWith("/*")) {
+            const category = type.split("/")[0];
             if (fileType) {
-              return fileType.startsWith(category + '/');
+              return fileType.startsWith(category + "/");
             }
-            const ext = fileName.substring(fileName.lastIndexOf('.'));
+            const ext = fileName.substring(fileName.lastIndexOf("."));
             return this._getFileIcon(ext).includes(category);
           }
 
@@ -142,9 +140,7 @@ export class FileInputDropzone extends LitElement {
       });
 
       if (invalidFiles.length > 0) {
-        this.errorMessage = `Invalid file type(s): ${invalidFiles
-          .map((f) => f.name)
-          .join(', ')}`;
+        this.errorMessage = `Invalid file type(s): ${invalidFiles.map((f) => f.name).join(", ")}`;
         return;
       }
     }
@@ -153,8 +149,8 @@ export class FileInputDropzone extends LitElement {
       const oversizedFiles = files.filter((file) => file.size > this.maxSize);
       if (oversizedFiles.length > 0) {
         this.errorMessage = `File(s) exceed maximum size of ${this._formatFileSize(
-          this.maxSize
-        )}: ${oversizedFiles.map((f) => f.name).join(', ')}`;
+          this.maxSize,
+        )}: ${oversizedFiles.map((f) => f.name).join(", ")}`;
         return;
       }
     }
@@ -171,30 +167,30 @@ export class FileInputDropzone extends LitElement {
     }
 
     this.dispatchEvent(
-      new CustomEvent('hot-file-change', {
+      new CustomEvent("hot-file-change", {
         detail: {
           files: this.selectedFiles.map((f) => f.file),
         },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
 
     this.dispatchEvent(
-      new CustomEvent('hot-files-selected', {
+      new CustomEvent("hot-files-selected", {
         detail: {
           files: filesWithPreview.map((f) => f.file),
           allFiles: this.selectedFiles.map((f) => f.file),
         },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
 
     const fileCount = filesWithPreview.length;
     this.statusMessage = `${fileCount} ${
-      fileCount === 1 ? 'file' : 'files'
-    } selected: ${filesWithPreview.map((f) => f.file.name).join(', ')}`;
+      fileCount === 1 ? "file" : "files"
+    } selected: ${filesWithPreview.map((f) => f.file.name).join(", ")}`;
   }
 
   private _removeFile(id: string) {
@@ -202,31 +198,31 @@ export class FileInputDropzone extends LitElement {
     this.selectedFiles = this.selectedFiles.filter((f) => f.id !== id);
 
     if (this.fileInput) {
-      this.fileInput.value = '';
+      this.fileInput.value = "";
     }
 
     this.dispatchEvent(
-      new CustomEvent('hot-file-change', {
+      new CustomEvent("hot-file-change", {
         detail: {
           files: this.selectedFiles.map((f) => f.file),
         },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
 
     if (removedFile) {
       this.statusMessage = `File removed: ${removedFile.file.name}. ${
         this.selectedFiles.length
-      } ${this.selectedFiles.length === 1 ? 'file' : 'files'} remaining.`;
+      } ${this.selectedFiles.length === 1 ? "file" : "files"} remaining.`;
     }
   }
 
   private _formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
 
     const kilobyte = 1000;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(kilobyte));
     const value = bytes / Math.pow(kilobyte, i);
 
@@ -236,24 +232,23 @@ export class FileInputDropzone extends LitElement {
   }
 
   private _getFileIcon(type: string): string {
-    if (type.startsWith('image/')) return 'file-image';
-    if (type.startsWith('video/')) return 'file-video';
-    if (type.startsWith('audio/')) return 'file-audio';
-    if (type === 'application/pdf') return 'file-pdf';
-    if (type.includes('word')) return 'file-word';
-    if (type.includes('sheet') || type.includes('excel')) return 'file-excel';
-    if (type.includes('zip') || type.includes('rar') || type.includes('7z'))
-      return 'file-archive';
-    if (type.includes('text')) return 'file-text';
+    if (type.startsWith("image/")) return "file-image";
+    if (type.startsWith("video/")) return "file-video";
+    if (type.startsWith("audio/")) return "file-audio";
+    if (type === "application/pdf") return "file-pdf";
+    if (type.includes("word")) return "file-word";
+    if (type.includes("sheet") || type.includes("excel")) return "file-excel";
+    if (type.includes("zip") || type.includes("rar") || type.includes("7z")) return "file-archive";
+    if (type.includes("text")) return "file-text";
 
-    return 'file';
+    return "file";
   }
 
   public clearFiles() {
     this.selectedFiles = [];
-    this.errorMessage = '';
+    this.errorMessage = "";
     if (this.fileInput) {
-      this.fileInput.value = '';
+      this.fileInput.value = "";
     }
   }
 
@@ -264,30 +259,38 @@ export class FileInputDropzone extends LitElement {
   protected render() {
     const dropzoneClasses = {
       dropzone: true,
-      'dropzone--dragging': this.isDragging,
-      'dropzone--disabled': this.disabled,
-      'dropzone--has-files': this.selectedFiles.length > 0,
-      'dropzone--compact': this.variant === 'compact',
+      "dropzone--dragging": this.isDragging,
+      "dropzone--disabled": this.disabled,
+      "dropzone--has-files": this.selectedFiles.length > 0,
+      "dropzone--compact": this.variant === "compact",
     };
 
-    const isCompact = this.variant === 'compact';
+    const isCompact = this.variant === "compact";
 
     return html`
       <div class="file-input-dropzone">
-        ${this.label && this.variant === 'traditional'
-          ? html`<label class="label" id="dropzone-label">${this.label}</label>`
-          : ''}
-        ${this.variant === 'traditional' ? html`<wa-divider></wa-divider>` : ''}
+        ${
+          this.label && this.variant === "traditional"
+            ? html`<label class="label" id="dropzone-label">${this.label}</label>`
+            : ""
+        }
+        ${
+          this.variant === "traditional"
+            ? html`
+                <wa-divider></wa-divider>
+              `
+            : ""
+        }
 
         <div
           class=${classMap(dropzoneClasses)}
           role="button"
-          tabindex=${this.disabled ? '-1' : '0'}
+          tabindex=${this.disabled ? "-1" : "0"}
           aria-disabled=${this.disabled}
-          aria-label=${this.label || 'File upload'}
-          aria-describedby="dropzone-description${this.accept || this.maxSize
-            ? ' dropzone-hints'
-            : ''}"
+          aria-label=${this.label || "File upload"}
+          aria-describedby="dropzone-description${
+            this.accept || this.maxSize ? " dropzone-hints" : ""
+          }"
           @dragover=${this._handleDragOver}
           @dragleave=${this._handleDragLeave}
           @drop=${this._handleDrop}
@@ -307,54 +310,65 @@ export class FileInputDropzone extends LitElement {
 
           <div class="dropzone-content">
             <wa-icon
-              name="${isCompact ? 'arrow-up-from-bracket' : 'cloud-arrow-up'}"
+              name="${isCompact ? "arrow-up-from-bracket" : "cloud-arrow-up"}"
               class="dropzone-icon"
               aria-hidden="true"
             ></wa-icon>
             <div class="dropzone-text">
-              ${isCompact
-                ? html`<div class="compact-text" id="dropzone-description">
+              ${
+                isCompact
+                  ? html`<div class="compact-text" id="dropzone-description">
                     ${this.label}
                   </div>`
-                : this.isDragging
-                ? html`<div id="dropzone-description">
-                    Drop ${this.multiple ? 'files' : 'file'} here
+                  : this.isDragging
+                    ? html`<div id="dropzone-description">
+                    Drop ${this.multiple ? "files" : "file"} here
                   </div>`
-                : html`
+                    : html`
                     <div class="dropzone-cta" id="dropzone-description">
                       <div>
-                        Drop ${this.multiple ? 'files' : 'file'} here or&nbsp;
+                        Drop ${this.multiple ? "files" : "file"} here or&nbsp;
                       </div>
                       <div class="browse">browse</div>
                     </div>
-                    ${this.accept || this.maxSize
-                      ? html`<div id="dropzone-hints">
-                          ${this.accept
-                            ? html`<div class="dropzone-accept">
-                                ${this.accept.split(',').join(', ')} only
+                    ${
+                      this.accept || this.maxSize
+                        ? html`<div id="dropzone-hints">
+                          ${
+                            this.accept
+                              ? html`<div class="dropzone-accept">
+                                ${this.accept.split(",").join(", ")} only
                               </div>`
-                            : ''}
-                          ${this.maxSize
-                            ? html`<div class="dropzone-maxsize">
+                              : ""
+                          }
+                          ${
+                            this.maxSize
+                              ? html`<div class="dropzone-maxsize">
                                 Max size: ${this._formatFileSize(this.maxSize)}
                               </div>`
-                            : ''}
+                              : ""
+                          }
                         </div>`
-                      : ''}
-                  `}
+                        : ""
+                    }
+                  `
+              }
             </div>
           </div>
         </div>
-        ${this.errorMessage
-          ? html`
+        ${
+          this.errorMessage
+            ? html`
               <div class="error-message" role="alert">
                 <wa-icon name="exclamation-circle"></wa-icon>
                 ${this.errorMessage}
               </div>
             `
-          : ''}
-        ${this.showPreview && this.selectedFiles.length > 0
-          ? html`
+            : ""
+        }
+        ${
+          this.showPreview && this.selectedFiles.length > 0
+            ? html`
               <div class="file-preview-list">
                 ${this.selectedFiles.map(
                   ({ file, id }) => html`
@@ -365,11 +379,12 @@ export class FileInputDropzone extends LitElement {
                       itemId=${id}
                       @hot-remove=${() => this._removeFile(id)}
                     ></hot-list-card>
-                  `
+                  `,
                 )}
               </div>
             `
-          : ''}
+            : ""
+        }
 
         <div
           class="sr-only"

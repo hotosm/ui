@@ -38,10 +38,7 @@ export const Tracking: StoryObj = {
     agree: (siteId, domain) => {
       const tracking = document.getElementById("hot-tracking");
       if (tracking) {
-        tracking.agree(
-          siteId,
-          domain
-        );  
+        tracking.agree(siteId, domain);
       }
       const agreeAlert = document.getElementById("agree-alert");
       if (agreeAlert) {
@@ -55,7 +52,7 @@ export const Tracking: StoryObj = {
       }
     },
     addKeyLocalStorage: (siteId: number) => {
-      localStorage.setItem(`${siteId}-consent-agree`, 'true');
+      localStorage.setItem(`${siteId}-consent-agree`, "true");
     },
     removeKeyLocalStorage: (siteId: number) => {
       localStorage.removeItem(`${siteId}-consent-agree`);
@@ -64,10 +61,10 @@ export const Tracking: StoryObj = {
   render: (args, { parameters }) => {
     return html`
       <wa-button @click=${() => {
-        parameters.removeKeyLocalStorage(args.siteId)
+        parameters.removeKeyLocalStorage(args.siteId);
       }}>Re-Enable Banner</wa-button>
       <wa-button @click=${() => {
-        parameters.addKeyLocalStorage(args.siteId)
+        parameters.addKeyLocalStorage(args.siteId);
       }}>Disable Banner</wa-button>
 
       <br /><br />

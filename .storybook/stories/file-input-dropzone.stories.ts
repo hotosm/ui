@@ -1,33 +1,33 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit';
+import type { Meta, StoryObj } from "@storybook/web-components-vite";
+import { html } from "lit";
 
-import '../../src/hotosm-ui';
+import "../../src/hotosm-ui";
 
 const meta: Meta = {
-  title: 'Forms/File Input Dropzone',
-  component: 'hot-file-input-dropzone',
+  title: "Forms/File Input Dropzone",
+  component: "hot-file-input-dropzone",
   argTypes: {
     multiple: {
-      control: 'boolean',
+      control: "boolean",
     },
     accept: {
-      control: 'text',
+      control: "text",
     },
     maxSize: {
-      control: 'number',
+      control: "number",
     },
     showPreview: {
-      control: 'boolean',
+      control: "boolean",
     },
     disabled: {
-      control: 'boolean',
+      control: "boolean",
     },
     label: {
-      control: 'text',
+      control: "text",
     },
     variant: {
-      control: 'select',
-      options: ['traditional', 'compact'],
+      control: "select",
+      options: ["traditional", "compact"],
     },
   },
 };
@@ -37,17 +37,17 @@ type Story = StoryObj;
 
 export const Default: Story = {
   args: {
-    label: 'Upload files',
+    label: "Upload files",
     showPreview: true,
   },
   render: (args) => html`
     <hot-file-input-dropzone
       ?multiple=${args.multiple}
-      accept=${args.accept || ''}
+      accept=${args.accept || ""}
       max-size=${args.maxSize || 0}
       ?show-preview=${args.showPreview}
       ?disabled=${args.disabled}
-      label=${args.label || ''}
+      label=${args.label || ""}
     ></hot-file-input-dropzone>
   `,
 };
@@ -55,7 +55,7 @@ export const Default: Story = {
 export const SingleFile: Story = {
   args: {
     multiple: false,
-    label: 'Upload a single file',
+    label: "Upload a single file",
     showPreview: true,
   },
   render: (args) => html`
@@ -70,7 +70,7 @@ export const SingleFile: Story = {
 export const MultipleFiles: Story = {
   args: {
     multiple: true,
-    label: 'Upload multiple files',
+    label: "Upload multiple files",
     showPreview: true,
   },
   render: (args) => html`
@@ -85,8 +85,8 @@ export const MultipleFiles: Story = {
 export const ImagesOnly: Story = {
   args: {
     multiple: true,
-    accept: 'image/*',
-    label: 'Image Upload',
+    accept: "image/*",
+    label: "Image Upload",
     showPreview: true,
   },
   render: (args) => html`
@@ -102,9 +102,8 @@ export const ImagesOnly: Story = {
 export const DocumentsOnly: Story = {
   args: {
     multiple: true,
-    accept:
-      '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.odt,.ods,.odp,.rtf',
-    label: 'Upload documents',
+    accept: ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.odt,.ods,.odp,.rtf",
+    label: "Upload documents",
     showPreview: true,
   },
   render: (args) => html`
@@ -121,7 +120,7 @@ export const WithSizeLimit: Story = {
   args: {
     multiple: true,
     maxSize: 5 * 1000 * 1000,
-    label: 'Upload files (max 5MB each)',
+    label: "Upload files (max 5MB each)",
     showPreview: true,
   },
   render: (args) => html`
@@ -137,7 +136,7 @@ export const WithSizeLimit: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
-    label: 'Upload disabled',
+    label: "Upload disabled",
     showPreview: true,
   },
   render: (args) => html`
@@ -153,7 +152,7 @@ export const NoPreview: Story = {
   args: {
     multiple: true,
     showPreview: false,
-    label: 'Upload without preview',
+    label: "Upload without preview",
   },
   render: (args) => html`
     <hot-file-input-dropzone
@@ -201,29 +200,29 @@ export const ErrorStates: Story = {
 export const RealUpload: Story = {
   render: () => {
     const handleRealUpload = async () => {
-      const dropzone = document.querySelector('#real-upload-dropzone') as any;
+      const dropzone = document.querySelector("#real-upload-dropzone") as any;
       const files = dropzone?.getFiles() || [];
 
       if (files.length === 0) {
-        alert('Please select files to upload');
+        alert("Please select files to upload");
         return;
       }
 
-      const statusEl = document.querySelector('#real-upload-status');
-      const uploadBtn = document.querySelector('#real-upload-btn') as any;
-      const resultsEl = document.querySelector('#real-upload-results');
+      const statusEl = document.querySelector("#real-upload-status");
+      const uploadBtn = document.querySelector("#real-upload-btn") as any;
+      const resultsEl = document.querySelector("#real-upload-results");
 
       uploadBtn.disabled = true;
-      if (statusEl) statusEl.innerHTML = 'Uploading...';
-      if (resultsEl) resultsEl.innerHTML = '';
+      if (statusEl) statusEl.innerHTML = "Uploading...";
+      if (resultsEl) resultsEl.innerHTML = "";
 
       try {
         const uploadPromises = files.map(async (file: File) => {
           const formData = new FormData();
-          formData.append('file', file);
+          formData.append("file", file);
 
-          const response = await fetch('https://tmpfiles.org/api/v1/upload', {
-            method: 'POST',
+          const response = await fetch("https://tmpfiles.org/api/v1/upload", {
+            method: "POST",
             body: formData,
           });
 
@@ -232,16 +231,13 @@ export const RealUpload: Story = {
           }
 
           const result = await response.json();
-          const uploadUrl = result.data?.url || '';
-          const downloadUrl = uploadUrl.replace(
-            'tmpfiles.org/',
-            'tmpfiles.org/dl/'
-          );
+          const uploadUrl = result.data?.url || "";
+          const downloadUrl = uploadUrl.replace("tmpfiles.org/", "tmpfiles.org/dl/");
 
           return {
             name: file.name,
             url: downloadUrl,
-            success: result.status === 'success',
+            success: result.status === "success",
           };
         });
 
@@ -269,9 +265,9 @@ export const RealUpload: Story = {
                All uploaded files are automatically deleted after 60 minutes.
               </div>
             </div>
-          `
+          `,
             )
-            .join('');
+            .join("");
 
           resultsEl.innerHTML = resultsList;
         }
@@ -289,12 +285,12 @@ export const RealUpload: Story = {
     };
 
     const handleClear = () => {
-      const dropzone = document.querySelector('#real-upload-dropzone') as any;
+      const dropzone = document.querySelector("#real-upload-dropzone") as any;
       dropzone?.clearFiles();
-      const statusEl = document.querySelector('#real-upload-status');
-      const resultsEl = document.querySelector('#real-upload-results');
-      if (statusEl) statusEl.innerHTML = '';
-      if (resultsEl) resultsEl.innerHTML = '';
+      const statusEl = document.querySelector("#real-upload-status");
+      const resultsEl = document.querySelector("#real-upload-results");
+      if (statusEl) statusEl.innerHTML = "";
+      if (resultsEl) resultsEl.innerHTML = "";
     };
 
     return html`
@@ -386,9 +382,9 @@ const results = await Promise.all(uploadPromises);
 
 export const CompactVariant: Story = {
   args: {
-    variant: 'compact',
-    accept: '.zip',
-    label: 'Upload your .zip file here',
+    variant: "compact",
+    accept: ".zip",
+    label: "Upload your .zip file here",
     showPreview: true,
   },
   render: (args) => html`
@@ -403,9 +399,9 @@ export const CompactVariant: Story = {
 
 export const VariantComparison: Story = {
   render: () => html`
-    <div style="display: flex; flex-direction: column; gap: 2rem;">
+    <div style="display: flex; flex-direction: column; gap: 2rem">
       <div>
-        <h3 style="margin-bottom: 1rem;">Compact</h3>
+        <h3 style="margin-bottom: 1rem">Compact</h3>
         <hot-file-input-dropzone
           variant="compact"
           accept=".zip"
@@ -415,7 +411,7 @@ export const VariantComparison: Story = {
       </div>
 
       <div>
-        <h3 style="margin-bottom: 1rem;">Traditional (Default)</h3>
+        <h3 style="margin-bottom: 1rem">Traditional (Default)</h3>
         <hot-file-input-dropzone
           variant="traditional"
           accept=".zip"

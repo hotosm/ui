@@ -1,13 +1,13 @@
-import MatomoTracking from './tracking.component.js';
+import MatomoTracking from "./tracking.component.js";
 export default MatomoTracking;
 
 declare global {
   interface HTMLElementTagNameMap {
-    'hot-tracking': MatomoTracking;
+    "hot-tracking": MatomoTracking;
   }
 }
 
 // Define web component (guard against duplicate registration)
-if (!customElements.get('hot-tracking')) {
-  customElements.define('hot-tracking', MatomoTracking);
+if (!customElements.get("hot-tracking")) {
+  customElements.define("hot-tracking", MatomoTracking);
 }

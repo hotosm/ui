@@ -1,46 +1,44 @@
-import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { LitElement, html } from "lit";
+import { property } from "lit/decorators.js";
 // Dynamic import: resolved by bundlers, ignored gracefully for CDN usage
 // where webawesome.loader.js registers all wa-* elements globally.
-Promise.allSettled([
-  import('@awesome.me/webawesome/dist/components/icon/icon.js'),
-]);
-import styles from './list-card.styles.js';
+Promise.allSettled([import("@awesome.me/webawesome/dist/components/icon/icon.js")]);
+import styles from "./list-card.styles.js";
 
 export class ListCard extends LitElement {
   static styles = [styles];
-  name = 'hot-list-card';
+  name = "hot-list-card";
 
   @property({ type: String })
-  accessor title = '';
+  accessor title = "";
 
   @property({ type: String })
-  accessor subtitle = '';
+  accessor subtitle = "";
 
   @property({ type: String })
-  accessor icon = '';
+  accessor icon = "";
 
   @property({ type: String })
-  accessor itemId = '';
+  accessor itemId = "";
 
-  @property({ type: Boolean, attribute: 'show-remove' })
+  @property({ type: Boolean, attribute: "show-remove" })
   accessor showRemove = false;
 
-  @property({ type: Boolean, attribute: 'show-icon' })
+  @property({ type: Boolean, attribute: "show-icon" })
   accessor showIcon = false;
 
   private _handleRemove() {
     this.dispatchEvent(
-      new CustomEvent('hot-remove', {
+      new CustomEvent("hot-remove", {
         detail: { id: this.itemId },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
   private _handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       this._handleRemove();
     }
@@ -51,17 +49,18 @@ export class ListCard extends LitElement {
 
     return html`
       <div class="list-item" role="listitem">
-        ${showIconElement
-          ? html`<wa-icon name=${this.icon} class="list-icon" aria-hidden="true"></wa-icon>`
-          : ''}
+        ${
+          showIconElement
+            ? html`<wa-icon name=${this.icon} class="list-icon" aria-hidden="true"></wa-icon>`
+            : ""
+        }
         <div class="list-info">
           <div class="list-title" id="title-${this.itemId}">${this.title}</div>
-          ${this.subtitle
-            ? html`<div class="list-subtitle">${this.subtitle}</div>`
-            : ''}
+          ${this.subtitle ? html`<div class="list-subtitle">${this.subtitle}</div>` : ""}
         </div>
-        ${this.showRemove
-          ? html`
+        ${
+          this.showRemove
+            ? html`
               <button
                 type="button"
                 class="remove-button"
@@ -72,7 +71,8 @@ export class ListCard extends LitElement {
                 <wa-icon name="xmark" class="remove-icon" aria-hidden="true"></wa-icon>
               </button>
             `
-          : ''}
+            : ""
+        }
       </div>
     `;
   }

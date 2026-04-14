@@ -1,13 +1,13 @@
-import Consent from './consent.component.js';
+import Consent from "./consent.component.js";
 export default Consent;
 
 declare global {
   interface HTMLElementTagNameMap {
-    'hot-consent': Consent;
+    "hot-consent": Consent;
   }
 }
 
 // Define web component (guard against duplicate registration)
-if (!customElements.get('hot-consent')) {
-  customElements.define('hot-consent', Consent);
+if (!customElements.get("hot-consent")) {
+  customElements.define("hot-consent", Consent);
 }

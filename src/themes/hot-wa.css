@@ -274,16 +274,8 @@
     --wa-color-text-quiet: var(--hot-color-neutral-600);
     --wa-color-text-link: var(--hot-color-primary-600);
 
-    --wa-color-overlay-modal: color-mix(
-      in oklab,
-      var(--hot-color-neutral-950) 50%,
-      transparent
-    );
-    --wa-color-overlay-inline: color-mix(
-      in oklab,
-      var(--hot-color-neutral-200) 25%,
-      transparent
-    );
+    --wa-color-overlay-modal: color-mix(in oklab, var(--hot-color-neutral-950) 50%, transparent);
+    --wa-color-overlay-inline: color-mix(in oklab, var(--hot-color-neutral-200) 25%, transparent);
 
     --wa-color-shadow: color-mix(
       in oklab,
@@ -297,64 +289,72 @@
     --wa-color-mix-active: black 20%;
 
     /* Brand = HOT primary (red) */
-    --wa-color-brand-fill-quiet: var(--wa-color-brand-95);   /* primary-50  */
-    --wa-color-brand-fill-normal: var(--wa-color-brand-90);  /* primary-100 */
-    --wa-color-brand-fill-loud: var(--wa-color-brand-50);    /* primary-500 */
+    --wa-color-brand-fill-quiet: var(--wa-color-brand-95); /* primary-50  */
+    --wa-color-brand-fill-normal: var(--wa-color-brand-90); /* primary-100 */
+    --wa-color-brand-fill-loud: var(--wa-color-brand-50); /* primary-500 */
     --wa-color-brand-border-quiet: var(--wa-color-brand-90); /* primary-100 */
     --wa-color-brand-border-normal: var(--wa-color-brand-80); /* primary-200 */
-    --wa-color-brand-border-loud: var(--wa-color-brand-60);  /* primary-400 */
-    --wa-color-brand-on-quiet: var(--wa-color-brand-40);     /* primary-600 */
-    --wa-color-brand-on-normal: var(--wa-color-brand-30);    /* primary-700 */
+    --wa-color-brand-border-loud: var(--wa-color-brand-60); /* primary-400 */
+    --wa-color-brand-on-quiet: var(--wa-color-brand-40); /* primary-600 */
+    --wa-color-brand-on-normal: var(--wa-color-brand-30); /* primary-700 */
     --wa-color-brand-on-loud: white;
 
     /* Success = HOT cyan
        on-quiet/normal use darker values for sufficient contrast on light backgrounds */
-    --wa-color-success-fill-quiet: var(--wa-color-success-95);   /* success-50  */
-    --wa-color-success-fill-normal: var(--wa-color-success-90);  /* success-100 */
-    --wa-color-success-fill-loud: var(--wa-color-success-50);    /* success-500 */
+    --wa-color-success-fill-quiet: var(--wa-color-success-95); /* success-50  */
+    --wa-color-success-fill-normal: var(--wa-color-success-90); /* success-100 */
+    --wa-color-success-fill-loud: var(--wa-color-success-50); /* success-500 */
     --wa-color-success-border-quiet: var(--wa-color-success-90); /* success-100 */
     --wa-color-success-border-normal: var(--wa-color-success-80); /* success-200 */
-    --wa-color-success-border-loud: var(--wa-color-success-60);  /* success-400 */
-    --wa-color-success-on-quiet: var(--wa-color-success-20);     /* success-800 - a11y: cyan needs dark text */
-    --wa-color-success-on-normal: var(--wa-color-success-20);    /* success-800 */
+    --wa-color-success-border-loud: var(--wa-color-success-60); /* success-400 */
+    --wa-color-success-on-quiet: var(
+      --wa-color-success-20
+    ); /* success-800 - a11y: cyan needs dark text */
+    --wa-color-success-on-normal: var(--wa-color-success-20); /* success-800 */
     --wa-color-success-on-loud: white;
 
     /* Warning = HOT yellow
        on-* and on-loud use dark amber for contrast - white on bright yellow is unreadable */
-    --wa-color-warning-fill-quiet: var(--wa-color-warning-95);   /* warning-50  */
-    --wa-color-warning-fill-normal: var(--wa-color-warning-90);  /* warning-100 */
-    --wa-color-warning-fill-loud: var(--wa-color-warning-50);    /* warning-500 (#FED82E) */
+    --wa-color-warning-fill-quiet: var(--wa-color-warning-95); /* warning-50  */
+    --wa-color-warning-fill-normal: var(--wa-color-warning-90); /* warning-100 */
+    --wa-color-warning-fill-loud: var(--wa-color-warning-50); /* warning-500 (#FED82E) */
     --wa-color-warning-border-quiet: var(--wa-color-warning-90); /* warning-100 */
     --wa-color-warning-border-normal: var(--wa-color-warning-80); /* warning-200 */
-    --wa-color-warning-border-loud: var(--wa-color-warning-40);  /* warning-600 (amber) */
-    --wa-color-warning-on-quiet: var(--wa-color-warning-05);     /* warning-950 - a11y: yellow needs dark text */
-    --wa-color-warning-on-normal: var(--wa-color-warning-05);    /* warning-950 */
-    --wa-color-warning-on-loud: var(--wa-color-warning-05);      /* warning-950 - white on yellow = ~1:1 contrast */
+    --wa-color-warning-border-loud: var(--wa-color-warning-40); /* warning-600 (amber) */
+    --wa-color-warning-on-quiet: var(
+      --wa-color-warning-05
+    ); /* warning-950 - a11y: yellow needs dark text */
+    --wa-color-warning-on-normal: var(--wa-color-warning-05); /* warning-950 */
+    --wa-color-warning-on-loud: var(
+      --wa-color-warning-05
+    ); /* warning-950 - white on yellow = ~1:1 contrast */
 
     /* Danger = HOT red
        on-quiet/normal use darker values for accessibility */
-    --wa-color-danger-fill-quiet: var(--wa-color-danger-95);   /* danger-50  */
-    --wa-color-danger-fill-normal: var(--wa-color-danger-90);  /* danger-100 */
-    --wa-color-danger-fill-loud: var(--wa-color-danger-50);    /* danger-500 */
+    --wa-color-danger-fill-quiet: var(--wa-color-danger-95); /* danger-50  */
+    --wa-color-danger-fill-normal: var(--wa-color-danger-90); /* danger-100 */
+    --wa-color-danger-fill-loud: var(--wa-color-danger-50); /* danger-500 */
     --wa-color-danger-border-quiet: var(--wa-color-danger-90); /* danger-100 */
     --wa-color-danger-border-normal: var(--wa-color-danger-80); /* danger-200 */
-    --wa-color-danger-border-loud: var(--wa-color-danger-60);  /* danger-400 */
-    --wa-color-danger-on-quiet: var(--wa-color-danger-05);     /* danger-950 - a11y */
-    --wa-color-danger-on-normal: var(--wa-color-danger-05);    /* danger-950 */
+    --wa-color-danger-border-loud: var(--wa-color-danger-60); /* danger-400 */
+    --wa-color-danger-on-quiet: var(--wa-color-danger-05); /* danger-950 - a11y */
+    --wa-color-danger-on-normal: var(--wa-color-danger-05); /* danger-950 */
     --wa-color-danger-on-loud: white;
 
     /* Neutral = HOT gray (secondary button colour)
        fill-loud uses neutral-200 (light gray) for a secondary button feel;
        on-loud uses neutral-950 (dark text) for contrast on light fill */
-    --wa-color-neutral-fill-quiet: var(--wa-color-neutral-95);   /* neutral-50  */
-    --wa-color-neutral-fill-normal: var(--wa-color-neutral-90);  /* neutral-100 */
-    --wa-color-neutral-fill-loud: var(--wa-color-neutral-80);    /* neutral-200 */
+    --wa-color-neutral-fill-quiet: var(--wa-color-neutral-95); /* neutral-50  */
+    --wa-color-neutral-fill-normal: var(--wa-color-neutral-90); /* neutral-100 */
+    --wa-color-neutral-fill-loud: var(--wa-color-neutral-80); /* neutral-200 */
     --wa-color-neutral-border-quiet: var(--wa-color-neutral-90); /* neutral-100 */
     --wa-color-neutral-border-normal: var(--wa-color-neutral-80); /* neutral-200 */
-    --wa-color-neutral-border-loud: var(--wa-color-neutral-60);  /* neutral-400 */
-    --wa-color-neutral-on-quiet: var(--wa-color-neutral-05);     /* neutral-950 */
-    --wa-color-neutral-on-normal: var(--wa-color-neutral-05);    /* neutral-950 */
-    --wa-color-neutral-on-loud: var(--wa-color-neutral-05);      /* neutral-950 - dark text on light gray fill */
+    --wa-color-neutral-border-loud: var(--wa-color-neutral-60); /* neutral-400 */
+    --wa-color-neutral-on-quiet: var(--wa-color-neutral-05); /* neutral-950 */
+    --wa-color-neutral-on-normal: var(--wa-color-neutral-05); /* neutral-950 */
+    --wa-color-neutral-on-loud: var(
+      --wa-color-neutral-05
+    ); /* neutral-950 - dark text on light gray fill */
     /* #endregion */
   }
 
@@ -375,21 +375,21 @@
 
     /* Font sizes - fixed values to match HOT scale */
     --wa-font-size-2xs: var(--hot-font-size-2x-small); /* 10px */
-    --wa-font-size-xs: var(--hot-font-size-x-small);   /* 12px */
-    --wa-font-size-s: var(--hot-font-size-small);      /* 14px */
-    --wa-font-size-m: var(--hot-font-size-medium);     /* 16px */
-    --wa-font-size-l: var(--hot-font-size-large);      /* 20px */
-    --wa-font-size-xl: var(--hot-font-size-x-large);   /* 24px */
+    --wa-font-size-xs: var(--hot-font-size-x-small); /* 12px */
+    --wa-font-size-s: var(--hot-font-size-small); /* 14px */
+    --wa-font-size-m: var(--hot-font-size-medium); /* 16px */
+    --wa-font-size-l: var(--hot-font-size-large); /* 20px */
+    --wa-font-size-xl: var(--hot-font-size-x-large); /* 24px */
     --wa-font-size-2xl: var(--hot-font-size-2x-large); /* 36px */
     --wa-font-size-3xl: var(--hot-font-size-3x-large); /* 48px */
     --wa-font-size-4xl: var(--hot-font-size-4x-large); /* 72px */
     /* wa-font-size-scale, wa-font-size-smaller/larger use calc() - no override */
 
     /* Font weights */
-    --wa-font-weight-light: var(--hot-font-weight-light);       /* 300 */
-    --wa-font-weight-normal: var(--hot-font-weight-normal);     /* 400 */
+    --wa-font-weight-light: var(--hot-font-weight-light); /* 300 */
+    --wa-font-weight-normal: var(--hot-font-weight-normal); /* 400 */
     --wa-font-weight-semibold: var(--hot-font-weight-semibold); /* 500 */
-    --wa-font-weight-bold: var(--hot-font-weight-bold);         /* 700 */
+    --wa-font-weight-bold: var(--hot-font-weight-bold); /* 700 */
 
     /* Functional font weights */
     --wa-font-weight-body: var(--wa-font-weight-normal);
@@ -399,28 +399,28 @@
     --wa-font-weight-action: var(--wa-font-weight-semibold);
 
     /* Line heights */
-    --wa-line-height-condensed: var(--hot-line-height-dense);   /* 1.4 */
-    --wa-line-height-normal: var(--hot-line-height-normal);     /* 1.8 */
-    --wa-line-height-expanded: var(--hot-line-height-loose);    /* 2.2 */
+    --wa-line-height-condensed: var(--hot-line-height-dense); /* 1.4 */
+    --wa-line-height-normal: var(--hot-line-height-normal); /* 1.8 */
+    --wa-line-height-expanded: var(--hot-line-height-loose); /* 2.2 */
     /* #endregion */
 
     /* #region Spacing */
     --wa-space-3xs: var(--hot-spacing-3x-small); /* 2px  */
     --wa-space-2xs: var(--hot-spacing-2x-small); /* 4px  */
-    --wa-space-xs: var(--hot-spacing-x-small);   /* 8px  */
-    --wa-space-s: var(--hot-spacing-small);      /* 12px */
-    --wa-space-m: var(--hot-spacing-medium);     /* 16px */
-    --wa-space-l: var(--hot-spacing-large);      /* 20px */
-    --wa-space-xl: var(--hot-spacing-x-large);   /* 28px */
+    --wa-space-xs: var(--hot-spacing-x-small); /* 8px  */
+    --wa-space-s: var(--hot-spacing-small); /* 12px */
+    --wa-space-m: var(--hot-spacing-medium); /* 16px */
+    --wa-space-l: var(--hot-spacing-large); /* 20px */
+    --wa-space-xl: var(--hot-spacing-x-large); /* 28px */
     --wa-space-2xl: var(--hot-spacing-2x-large); /* 36px */
     --wa-space-3xl: var(--hot-spacing-3x-large); /* 48px */
     --wa-space-4xl: var(--hot-spacing-4x-large); /* 72px */
     /* #endregion */
 
     /* #region Border radius */
-    --wa-border-radius-s: var(--hot-border-radius-small);   /* 3px  */
-    --wa-border-radius-m: var(--hot-border-radius-medium);  /* 4px  */
-    --wa-border-radius-l: var(--hot-border-radius-large);   /* 8px  */
+    --wa-border-radius-s: var(--hot-border-radius-small); /* 3px  */
+    --wa-border-radius-m: var(--hot-border-radius-medium); /* 4px  */
+    --wa-border-radius-l: var(--hot-border-radius-large); /* 8px  */
     --wa-border-radius-pill: var(--hot-border-radius-pill); /* 9999px */
     --wa-border-radius-circle: var(--hot-border-radius-circle); /* 50% */
     /* #endregion */

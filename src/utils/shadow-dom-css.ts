@@ -17,14 +17,14 @@ export interface CSSInjectionOptions {
 
 function querySelectorAllDeep(
   selector: string,
-  root: Document | Element | ShadowRoot = document
+  root: Document | Element | ShadowRoot = document,
 ): Element[] {
   const elements: Element[] = [];
 
   const matches = root.querySelectorAll(selector);
   elements.push(...Array.from(matches));
 
-  const allElements = root.querySelectorAll('*');
+  const allElements = root.querySelectorAll("*");
   allElements.forEach((element) => {
     if (element.shadowRoot) {
       elements.push(...querySelectorAllDeep(selector, element.shadowRoot));
@@ -39,12 +39,7 @@ function querySelectorAllDeep(
  * @param options Configuration options for CSS injection
  */
 export function injectCSSIntoShadowDOM(options: CSSInjectionOptions): void {
-  const {
-    css,
-    selector = 'wa-button',
-    all = true,
-    styleId = 'hot-theme-injection',
-  } = options;
+  const { css, selector = "wa-button", all = true, styleId = "hot-theme-injection" } = options;
 
   // Find all matching elements, including those in nested shadow DOMs
   const elements = all
@@ -67,7 +62,7 @@ export function injectCSSIntoShadowDOM(options: CSSInjectionOptions): void {
       if (existingStyle) return;
 
       // Create and inject the style element
-      const styleElement = document.createElement('style');
+      const styleElement = document.createElement("style");
       styleElement.id = styleId;
       styleElement.textContent = css;
       element.shadowRoot.appendChild(styleElement);

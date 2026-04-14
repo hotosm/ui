@@ -3,44 +3,52 @@ import { html } from "lit";
 
 import "../../src/hotosm-ui";
 
-const oneTab = [
-  { label: 'ONE TAB ONLY', clickEvent: () => {} }
-];
+const oneTab = [{ label: "ONE TAB ONLY", clickEvent: () => {} }];
 const twoTab = [
   {
-    label: 'Projects',
-    clickEvent: async () => {alert('Going to projects page')}
+    label: "Projects",
+    clickEvent: async () => {
+      alert("Going to projects page");
+    },
   },
   {
-    label: 'Organisations',
-    clickEvent: async () => {alert('Going to organisations page')}
+    label: "Organisations",
+    clickEvent: async () => {
+      alert("Going to organisations page");
+    },
   },
   {
-    label: 'Test',
-    clickEvent: async () => {alert('Going to test page')}
-  }
+    label: "Test",
+    clickEvent: async () => {
+      alert("Going to test page");
+    },
+  },
 ];
 const threeTab = Array.from({ length: 3 }, (_, index) => ({
   label: `TAB Number ${index + 1}`,
-  clickEvent: () => {}
+  clickEvent: () => {},
 }));
 const fourTab = Array.from({ length: 4 }, (_, index) => ({
   label: `TAB Number ${index + 1}`,
-  clickEvent: () => {}
+  clickEvent: () => {},
 }));
 const fiveTab = Array.from({ length: 5 }, (_, index) => ({
   label: `TAB Number ${index + 1}`,
-  clickEvent: () => {}
+  clickEvent: () => {},
 }));
 
 // Tasking Manager-style nav items (many tabs to test overflow/scroll)
 const tmTabs = [
-  { label: 'Explore projects', clickEvent: () => alert('Explore projects'), href: '/explore' },
-  { label: 'My contributions', clickEvent: () => alert('My contributions'), href: '/contributions' },
-  { label: 'Manage', clickEvent: () => alert('Manage'), href: '/manage' },
-  { label: 'Learn', clickEvent: () => alert('Learn'), href: '/learn/map' },
-  { label: 'About', clickEvent: () => alert('About'), href: '/about' },
-  { label: 'Support', clickEvent: () => alert('Support'), href: '/support' },
+  { label: "Explore projects", clickEvent: () => alert("Explore projects"), href: "/explore" },
+  {
+    label: "My contributions",
+    clickEvent: () => alert("My contributions"),
+    href: "/contributions",
+  },
+  { label: "Manage", clickEvent: () => alert("Manage"), href: "/manage" },
+  { label: "Learn", clickEvent: () => alert("Learn"), href: "/learn/map" },
+  { label: "About", clickEvent: () => alert("About"), href: "/about" },
+  { label: "Support", clickEvent: () => alert("Support"), href: "/support" },
 ];
 
 const meta: Meta = {
@@ -50,31 +58,31 @@ const meta: Meta = {
     layout: "fullscreen",
   },
   argTypes: {
-    title: { control: 'text' },
+    title: { control: "text" },
     size: {
-      control: { type: 'select' },
-      options: ['small', 'medium', 'large']
+      control: { type: "select" },
+      options: ["small", "medium", "large"],
     },
-    drawer: { control: 'boolean' },
-    tabsCenterAlign: { control: 'boolean' },
+    drawer: { control: "boolean" },
+    tabsCenterAlign: { control: "boolean" },
     selectedTab: {
-      options: [0,1,2,3,4,5],
+      options: [0, 1, 2, 3, 4, 5],
       control: {
         type: "select",
       },
     },
     tabs: {
-      options: ['1 Tab', '2 Tabs', '3 Tabs', '4 Tabs', '5 Tabs', '6 Tabs (TM-style)'],
+      options: ["1 Tab", "2 Tabs", "3 Tabs", "4 Tabs", "5 Tabs", "6 Tabs (TM-style)"],
       mapping: {
-        '1 Tab': oneTab,
-        '2 Tabs': twoTab,
-        '3 Tabs': threeTab,
-        '4 Tabs': fourTab,
-        '5 Tabs': fiveTab,
-        '6 Tabs (TM-style)': tmTabs,
+        "1 Tab": oneTab,
+        "2 Tabs": twoTab,
+        "3 Tabs": threeTab,
+        "4 Tabs": fourTab,
+        "5 Tabs": fiveTab,
+        "6 Tabs (TM-style)": tmTabs,
       },
       control: {
-        type: 'radio',
+        type: "radio",
       },
     },
   },
@@ -106,7 +114,7 @@ export const WithAuthSlot: Story = {
           { label: "Learn", href: "/learn" },
           { label: "About", href: "/about" },
           { label: "Support", href: "/support" },
-          { label: "Download Custom ODK Collect", href: "/download" }
+          { label: "Download Custom ODK Collect", href: "/download" },
         ]}
       >
         <!-- Slot in your auth component here, e.g.: <hotosm-auth slot="auth" api-url="https://dev.login.hotosm.org"></hotosm-auth> -->
@@ -124,7 +132,7 @@ export const WithAuthSlot: Story = {
         </p>
       </div>
     `;
-  }
+  },
 };
 
 export const WithoutAuth: Story = {
@@ -147,7 +155,7 @@ export const WithoutAuth: Story = {
         <p>When nothing is placed in the <code>auth</code> slot, the top-right corner is empty.</p>
       </div>
     `;
-  }
+  },
 };
 
 export const WithNav: Story = {
@@ -176,7 +184,7 @@ export const WithNav: Story = {
         <p>Resize the canvas width to see navigation arrows appear when tabs overflow.</p>
       </div>
     `;
-  }
+  },
 };
 
 /**
@@ -211,7 +219,7 @@ export const SmallWithNav: Story = {
         <h2>Small header - Tasking Manager style</h2>
       </div>
     `;
-  }
+  },
 };
 
 export const MediumWithNav: Story = {
@@ -243,7 +251,7 @@ export const MediumWithNav: Story = {
         <p>Logo should be visibly larger than the small variant.</p>
       </div>
     `;
-  }
+  },
 };
 
 export const LargeWithNav: Story = {
@@ -275,7 +283,7 @@ export const LargeWithNav: Story = {
         <p>Logo should be the largest of the three size variants.</p>
       </div>
     `;
-  }
+  },
 };
 
 /**
@@ -309,9 +317,8 @@ export const NavOverflowTest: Story = {
         </p>
       </div>
     `;
-  }
+  },
 };
-
 
 /**
  * Centre-aligned navigation tabs (opt-in via tabs-center-align).
@@ -340,7 +347,7 @@ export const CenteredTabs: Story = {
         <p>Toggle <code>tabsCenterAlign</code> to switch between left and centre alignment.</p>
       </div>
     `;
-  }
+  },
 };
 
 /**
@@ -377,7 +384,7 @@ export const AutoMobileDrawer: Story = {
         </p>
       </div>
     `;
-  }
+  },
 };
 
 /**
@@ -397,18 +404,18 @@ export const ActiveTabUrlSync: Story = {
   },
   render: (args) => {
     const routes = [
-      { path: '/explore', label: 'Go to /explore' },
-      { path: '/contributions', label: 'Go to /contributions' },
-      { path: '/manage', label: 'Go to /manage' },
-      { path: '/learn/map', label: 'Go to /learn/map' },
-      { path: '/about', label: 'Go to /about' },
-      { path: '/support', label: 'Go to /support' },
+      { path: "/explore", label: "Go to /explore" },
+      { path: "/contributions", label: "Go to /contributions" },
+      { path: "/manage", label: "Go to /manage" },
+      { path: "/learn/map", label: "Go to /learn/map" },
+      { path: "/about", label: "Go to /about" },
+      { path: "/support", label: "Go to /support" },
     ];
 
     function navigate(path: string) {
       // Simulate SPA navigation - this triggers the hot-locationchange
       // event that the header is already listening for.
-      history.pushState(null, '', path);
+      history.pushState(null, "", path);
     }
 
     return html`
@@ -443,7 +450,7 @@ export const ActiveTabUrlSync: Story = {
           )}
         </div>
         <p style="margin-top: 12px; font-size: 0.85rem; color: #666;">
-          Current path: <code id="current-path">${typeof window !== 'undefined' ? window.location.pathname : '/'}</code>
+          Current path: <code id="current-path">${typeof window !== "undefined" ? window.location.pathname : "/"}</code>
           <br/>
           <em>Note: the path shown above updates on click but the display only reflects
           the last pushState - refresh the page to reset.</em>
@@ -458,5 +465,5 @@ export const ActiveTabUrlSync: Story = {
         });
       </script>
     `;
-  }
+  },
 };

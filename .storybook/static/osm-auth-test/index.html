@@ -1,29 +1,40 @@
-<!DOCTYPE html>
-<html lang="en" class="wa-palette-hotosm wa-brand-red wa-neutral-gray wa-success-cyan wa-warning-yellow wa-danger-orange">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OSM OAuth Header</title>
-  <script type="module" src="../../../dist/hotosm-ui.js"></script>
-  <link rel="stylesheet" href="../../../dist/style.css">
-  <style>
-    body { margin: 0; font-family: sans-serif; background: #f8f9fa; }
-    main { padding: 2rem; }
-  </style>
-</head>
-<body>
-
-  <main>
-    <hot-header
-      title="OSM Auth Demo"
-      logo="https://www.hotosm.org/images/hot-logo-icon-nav.svg"
-      show-login
-      osm-oauth-client-id="9qmECyRwBNFyqNl9LszwHX1WOxKFKeBsA5ofAS1GJGY"
-      osm-oauth-redirect-uri="https://ui.hotosm.org/"
-    ></hot-header>
-    <h2>Welcome to the OSM OAuth Header Demo</h2>
-    <p>Click the Login button in the header to start the OSM OAuth flow.</p>
-    <p><b>Note:</b> Replace <code>YOUR_CLIENT_ID</code> and <code>YOUR_REDIRECT_URI</code> with your actual OSM OAuth credentials.</p>
-  </main>
-</body>
+<!doctype html>
+<html
+  lang="en"
+  class="wa-palette-hotosm wa-brand-red wa-neutral-gray wa-success-cyan wa-warning-yellow wa-danger-orange"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OSM OAuth Header</title>
+    <script type="module" src="../../../dist/hotosm-ui.js"></script>
+    <link rel="stylesheet" href="../../../dist/style.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #f8f9fa;
+      }
+      main {
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <hot-header
+        title="OSM Auth Demo"
+        logo="https://www.hotosm.org/images/hot-logo-icon-nav.svg"
+        show-login
+        osm-oauth-client-id="9qmECyRwBNFyqNl9LszwHX1WOxKFKeBsA5ofAS1GJGY"
+        osm-oauth-redirect-uri="https://ui.hotosm.org/"
+      ></hot-header>
+      <h2>Welcome to the OSM OAuth Header Demo</h2>
+      <p>Click the Login button in the header to start the OSM OAuth flow.</p>
+      <p>
+        <b>Note:</b> Replace <code>YOUR_CLIENT_ID</code> and <code>YOUR_REDIRECT_URI</code> with
+        your actual OSM OAuth credentials.
+      </p>
+    </main>
+  </body>
 </html>

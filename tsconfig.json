@@ -5,11 +5,7 @@
     "target": "es2017",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "lib": [
-      "dom",
-      "dom.Iterable",
-      "es2020"
-    ],
+    "lib": ["dom", "dom.Iterable", "es2020"],
     "emitDeclarationOnly": true,
     "declaration": true,
     "rootDir": ".",
@@ -23,18 +19,14 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "useDefineForClassFields": false, /* See https://lit.dev/docs/components/properties/#avoiding-issues-with-class-fields */
+    "useDefineForClassFields": false /* See https://lit.dev/docs/components/properties/#avoiding-issues-with-class-fields */,
     "removeComments": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "useUnknownInCatchVariables": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "types": [
-      "user-agent-data-types"
-    ]
+    "types": ["user-agent-data-types"]
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

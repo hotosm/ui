@@ -1,6 +1,6 @@
 {/* Typography.mdx */}
- 
-import { Meta, Typeset, Subtitle } from '@storybook/addon-docs/blocks';
+
+import { Meta, Typeset, Subtitle } from "@storybook/addon-docs/blocks";
 
 <Meta title="Typography" />
  
@@ -39,7 +39,7 @@ for example:
   font-size: var(--hot-font-size-2x-large);
   letter-spacing: var(--hot-letter-spacing-dense);
   font-weight: var(--hot-font-weight-light);
-  line-height:  var(--hot-line-height-normal);
+  line-height: var(--hot-line-height-normal);
 }
 ```
 
@@ -47,28 +47,44 @@ for example:
 
 You have to include the following web fonts if you want to use them:
 
-* [Archivo](https://fonts.google.com/specimen/Archivo) - `var(--hot-font-sans)`
-* [Barlow](https://fonts.google.com/specimen/Barlow) - `var(--hot-font-sans-variant)`
-* [Barlow Condensed](https://fonts.google.com/specimen/Barlow+Condensed) - `var(--hot-font-sans-variant-condensed)`
+- [Archivo](https://fonts.google.com/specimen/Archivo) - `var(--hot-font-sans)`
+- [Barlow](https://fonts.google.com/specimen/Barlow) - `var(--hot-font-sans-variant)`
+- [Barlow Condensed](https://fonts.google.com/specimen/Barlow+Condensed) - `var(--hot-font-sans-variant-condensed)`
 
-<h4 style={{
-  fontFamily: "var(--hot-font-sans)"
-}}>{SampleText}</h4>
+<h4
+  style={{
+    fontFamily: "var(--hot-font-sans)",
+  }}
+>
+  {SampleText}
+</h4>
 <Subtitle>var(--hot-font-sans)</Subtitle>
 
-<h4 style={{
-  fontFamily: "var(--hot-font-sans-variant)"
-}}>{SampleText}</h4>
+<h4
+  style={{
+    fontFamily: "var(--hot-font-sans-variant)",
+  }}
+>
+  {SampleText}
+</h4>
 <Subtitle>var(--hot-font-sans-variant)</Subtitle>
 
-<h4 style={{
-  fontFamily: "var(--hot-font-serif)"
-}}>{SampleText}</h4>
+<h4
+  style={{
+    fontFamily: "var(--hot-font-serif)",
+  }}
+>
+  {SampleText}
+</h4>
 <Subtitle>var(--hot-font-serif)</Subtitle>
 
-<h4 style={{
-  fontFamily: "var(--hot-font-mono)"
-}}>{SampleText}</h4>
+<h4
+  style={{
+    fontFamily: "var(--hot-font-mono)",
+  }}
+>
+  {SampleText}
+</h4>
 <Subtitle>var(--hot-font-mono)</Subtitle>
 
 ## Font size
@@ -83,10 +99,9 @@ You have to include the following web fonts if you want to use them:
     typography.size.l2,
     typography.size.l3,
     typography.size.l4,
-    typography.size.l5
+    typography.size.l5,
   ]}
   fontWeight={typography.weight.normal}
   sampleText={SampleText}
   fontFamily={typography.type.primary}
 />
-

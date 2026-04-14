@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -52,7 +52,9 @@ export default css`
     align-items: center;
     justify-content: center;
     border-radius: var(--hot-border-radius-small);
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
     color: var(--hot-color-neutral-500);
   }
 

@@ -22,14 +22,14 @@ pnpm add @hotosm/ui @awesome.me/webawesome@3.2.1
 1. Add WebAwesome theme classes to your root HTML element:
 
 ```html
-<html class="hot-theme-light wa-theme-default wa-palette-hotosm">
+<html class="hot-theme-light wa-theme-default wa-palette-hotosm"></html>
 ```
 
 1. Import the HOT UI CSS once in your app (preferred: bundle CSS):
 
 ```js
 // main.ts / main.js
-import '@hotosm/ui/dist/style.css';
+import "@hotosm/ui/dist/style.css";
 ```
 
 This CSS bundles:
@@ -48,15 +48,15 @@ inside its Shadow DOM. No extra setup is required for styling.
 - All components bundle (recommended):
 
 ```js
-import '@hotosm/ui/dist/hotosm-ui.js';
+import "@hotosm/ui/dist/hotosm-ui.js";
 ```
 
 - Or only the header:
 
 ```js
 // Logo required as default in header, unless override
-import '@hotosm/ui/dist/components/logo/logo.js';
-import '@hotosm/ui/dist/components/header/header.js';
+import "@hotosm/ui/dist/components/logo/logo.js";
+import "@hotosm/ui/dist/components/header/header.js";
 ```
 
 ### HTML (bundler)
@@ -66,64 +66,62 @@ import '@hotosm/ui/dist/components/header/header.js';
 <html class="hot-theme-light wa-theme-default wa-palette-hotosm">
   <head>
     <script type="module">
-      import '@hotosm/ui/dist/style.css';
-      import '@hotosm/ui/dist/components/logo/logo.js';
-      import '@hotosm/ui/dist/components/header/header.js';
+      import "@hotosm/ui/dist/style.css";
+      import "@hotosm/ui/dist/components/logo/logo.js";
+      import "@hotosm/ui/dist/components/header/header.js";
     </script>
   </head>
   <body>
     <hot-header id="hdr" title="My App" size="small" drawer></hot-header>
 
     <script>
-    const hdr = document.getElementById('hdr');
+      const hdr = document.getElementById("hdr");
 
-    // Map complex props via JS properties
-    hdr.defaultLoginIcon = 'user';
+      // Map complex props via JS properties
+      hdr.defaultLoginIcon = "user";
 
-    // Logo needs to be provided
-    hdr.logo = "{logo_url}";
+      // Logo needs to be provided
+      hdr.logo = "{logo_url}";
 
-    // Tabs must be provided as functions from JS
-    hdr.tabs = [
-      { 
-        label: 'Learn', 
-        clickEvent: () => (location.href = 
-          'https://hotosm.github.io/fmtm') 
-      },
-      { 
-        label: 'About', 
-        clickEvent: () => (location.href = 
-          'https://docs.fmtm.dev/about/about/') 
-      },
-      { 
-        label: 'Support', 
-        clickEvent: () => (location.href = 
-          'https://github.com/hotosm/fmtm/issues/') 
-      }
-    ];
-    hdr.activeTabIndex = 0;
+      // Tabs must be provided as functions from JS
+      hdr.tabs = [
+        {
+          label: "Learn",
+          clickEvent: () => (location.href = "https://hotosm.github.io/fmtm"),
+        },
+        {
+          label: "About",
+          clickEvent: () => (location.href = "https://docs.fmtm.dev/about/about/"),
+        },
+        {
+          label: "Support",
+          clickEvent: () => (location.href = "https://github.com/hotosm/fmtm/issues/"),
+        },
+      ];
+      hdr.activeTabIndex = 0;
 
-    // Drawer links
-    hdr.drawerLinks = [
-      { label: "Learn", href: "https://hotosm.github.io/fmtm" },
-      { label: "About", href: "https://docs.fmtm.dev/about/about/" },
-      { label: "Support", href: "https://github.com/hotosm/fmtm/issues/" },
-      { 
-        label: "Download Custom ODK Collect", 
-        href: "https://github.com/hotosm/odkcollect/releases/download/" +
-          "v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk" 
-      }
-    ];
+      // Drawer links
+      hdr.drawerLinks = [
+        { label: "Learn", href: "https://hotosm.github.io/fmtm" },
+        { label: "About", href: "https://docs.fmtm.dev/about/about/" },
+        { label: "Support", href: "https://github.com/hotosm/fmtm/issues/" },
+        {
+          label: "Download Custom ODK Collect",
+          href:
+            "https://github.com/hotosm/odkcollect/releases/download/" +
+            "v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk",
+        },
+      ];
 
-    // Events
-    hdr.addEventListener('login', () => {
-      console.log('Login event dispatched');
-    });
+      // Events
+      hdr.addEventListener("login", () => {
+        console.log("Login event dispatched");
+      });
 
-    hdr.addEventListener('tab-change', (e) => {
-      console.log('tab-change', e.detail);
-    });
-  </script>
+      hdr.addEventListener("tab-change", (e) => {
+        console.log("tab-change", e.detail);
+      });
+    </script>
   </body>
 </html>
 ```
@@ -137,92 +135,98 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
 ```html
 <!DOCTYPE html>
 <html class="wa-theme-default wa-palette-hotosm">
-<head>
-  <meta charset="UTF-8" />
-  <title>HOT Header - HTML demo</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HOT Header - HTML demo</title>
 
-  <!-- WebAwesome CSS (cached across HOT tools) -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+    <!-- WebAwesome CSS (cached across HOT tools) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css"
+    />
 
-  <!-- HOT theme only (fonts + HOT tokens + WA overrides) -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css">
+    <!-- HOT theme only (fonts + HOT tokens + WA overrides) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css"
+    />
 
-  <!-- Import map: resolves WA bare-module specifiers -->
-  <script type="importmap">
-    {
-      "imports": {
-        "@awesome.me/webawesome/dist/components/":
-          "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+    <!-- Import map: resolves WA bare-module specifiers -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+        }
       }
-    }
-  </script>
+    </script>
 
-  <!-- HOT UI web components -->
-  <script type="module"
-    src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js">
-  </script>
-</head>
-<body>
-  <hot-header id="hdr" title="Field TM" size="small" drawer show-login></hot-header>
+    <!-- HOT UI web components -->
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js"
+    ></script>
+  </head>
+  <body>
+    <hot-header id="hdr" title="Field TM" size="small" drawer show-login></hot-header>
 
-  <script>
-    const hdr = document.getElementById('hdr');
+    <script>
+      const hdr = document.getElementById("hdr");
 
-    // Boolean props default to false.
-    // Include attributes in HTML when true (e.g. drawer, show-login, tabs-center-align).
-    hdr.defaultLoginIcon = 'user';
+      // Boolean props default to false.
+      // Include attributes in HTML when true (e.g. drawer, show-login, tabs-center-align).
+      hdr.defaultLoginIcon = "user";
 
-    // Logo needs to be provided
-    hdr.logo = "{logo_url}";
+      // Logo needs to be provided
+      hdr.logo = "{logo_url}";
 
-    // Tabs must be provided as functions from JS
-    hdr.tabs = [
-      { 
-        label: 'Learn', 
-        clickEvent: () => (location.href = 
-          'https://hotosm.github.io/fmtm') 
-      },
-      { 
-        label: 'About', 
-        clickEvent: () => (location.href = 
-          'https://docs.fmtm.dev/about/about/') 
-      },
-      { 
-        label: 'Support', 
-        clickEvent: () => (location.href = 
-          'https://github.com/hotosm/fmtm/issues/') 
-      }
-    ];
-    hdr.activeTabIndex = 0;
+      // Tabs must be provided as functions from JS
+      hdr.tabs = [
+        {
+          label: "Learn",
+          clickEvent: () => (location.href = "https://hotosm.github.io/fmtm"),
+        },
+        {
+          label: "About",
+          clickEvent: () => (location.href = "https://docs.fmtm.dev/about/about/"),
+        },
+        {
+          label: "Support",
+          clickEvent: () => (location.href = "https://github.com/hotosm/fmtm/issues/"),
+        },
+      ];
+      hdr.activeTabIndex = 0;
 
-    // Drawer links
-    hdr.drawerLinks = [
-      { label: "Learn", href: "https://hotosm.github.io/fmtm" },
-      { label: "About", href: "https://docs.fmtm.dev/about/about/" },
-      { label: "Support", href: "https://github.com/hotosm/fmtm/issues/" },
-      { 
-        label: "Download Custom ODK Collect", 
-        href: "https://github.com/hotosm/odkcollect/releases/download/" +
-          "v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk" 
-      }
-    ];
+      // Drawer links
+      hdr.drawerLinks = [
+        { label: "Learn", href: "https://hotosm.github.io/fmtm" },
+        { label: "About", href: "https://docs.fmtm.dev/about/about/" },
+        { label: "Support", href: "https://github.com/hotosm/fmtm/issues/" },
+        {
+          label: "Download Custom ODK Collect",
+          href:
+            "https://github.com/hotosm/odkcollect/releases/download/" +
+            "v2024.3.5-entity-select/ODK-Collect-v2024.3.5-HOTOSM-FMTM.apk",
+        },
+      ];
 
-    // Events
-    hdr.addEventListener('login', () => {
-      console.log('Login event dispatched');
-    });
+      // Events
+      hdr.addEventListener("login", () => {
+        console.log("Login event dispatched");
+      });
 
-    hdr.addEventListener('tab-change', (e) => {
-      console.log('tab-change', e.detail);
-    });
-  </script>
-</body>
+      hdr.addEventListener("tab-change", (e) => {
+        console.log("tab-change", e.detail);
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -230,9 +234,9 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
 
 ```jsx
 // AppHeader.tsx / AppHeader.jsx
-import { useEffect, useRef } from 'react';
-import '@hotosm/ui/dist/style.css';
-import '@hotosm/ui/dist/hotosm-ui.js';
+import { useEffect, useRef } from "react";
+import "@hotosm/ui/dist/style.css";
+import "@hotosm/ui/dist/hotosm-ui.js";
 
 export default function AppHeader() {
   const ref = useRef(null);
@@ -242,52 +246,51 @@ export default function AppHeader() {
     if (!el) return;
 
     el.tabs = [
-      { label: 'Home', clickEvent: () => console.log('to /') },
-      { label: 'Projects', clickEvent: () => console.log('to /projects') },
-      { label: 'About', clickEvent: () => console.log('to /about') }
+      { label: "Home", clickEvent: () => console.log("to /") },
+      { label: "Projects", clickEvent: () => console.log("to /projects") },
+      { label: "About", clickEvent: () => console.log("to /about") },
     ];
     el.activeTabIndex = 0;
     el.drawerLinks = [
-      { label: 'Support', href: 'https://example.com/support' },
-      { label: 'Docs', href: 'https://example.com/docs' }
+      { label: "Support", href: "https://example.com/support" },
+      { label: "Docs", href: "https://example.com/docs" },
     ];
     el.showLogin = true;
 
-    const onTabChange = (e) => console.log('tab-change', e.detail);
-    const onLogin = () => console.log('login clicked');
-    el.addEventListener('tab-change', onTabChange);
-    el.addEventListener('login', onLogin);
+    const onTabChange = (e) => console.log("tab-change", e.detail);
+    const onLogin = () => console.log("login clicked");
+    el.addEventListener("tab-change", onTabChange);
+    el.addEventListener("login", onLogin);
 
     return () => {
-      el.removeEventListener('tab-change', onTabChange);
-      el.removeEventListener('login', onLogin);
+      el.removeEventListener("tab-change", onTabChange);
+      el.removeEventListener("login", onLogin);
     };
   }, []);
 
-  return (
-    <hot-header ref={ref} title="My App" size="small" />
-  );
+  return <hot-header ref={ref} title="My App" size="small" />;
 }
 ```
 
 TypeScript note: add an intrinsic element type if needed:
 
+<!-- markdownlint-disable MD013 -->
+
 ```ts
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'hot-header': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>, 
-        HTMLElement
-      > & {
+      "hot-header": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
         title?: string;
-        size?: 'small' | 'medium' | 'large';
+        size?: "small" | "medium" | "large";
         showLogin?: boolean | string;
       };
     }
   }
 }
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 ### Svelte
 
@@ -358,7 +361,7 @@ Notes:
 
 - tab-change - Fired when a tab is selected
   - detail: `{ selectedIndex: number, previousIndex: number,
-    tab: { label, clickEvent } }`
+tab: { label, clickEvent } }`
 - login - Fired when the "Login" button is clicked
 
 ## Styling
@@ -395,7 +398,9 @@ hot-header {
 - Active tab underline color (via tokens used by internal rules):
 
 ```css
-hot-header { --hot-color-red-500: #dc2626; }
+hot-header {
+  --hot-color-red-500: #dc2626;
+}
 ```
 
 - Login modal look (the dialog reads CSS variables):

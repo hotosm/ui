@@ -1,19 +1,19 @@
 // Dynamic imports: resolved by bundlers, ignored gracefully for CDN usage
 // where webawesome.loader.js registers all wa-* elements globally.
 Promise.allSettled([
-  import('@awesome.me/webawesome/dist/components/tab-group/tab-group.js'),
-  import('@awesome.me/webawesome/dist/components/icon/icon.js'),
-  import('@awesome.me/webawesome/dist/components/drawer/drawer.js'),
-  import('@awesome.me/webawesome/dist/components/dropdown/dropdown.js'),
-  import('@awesome.me/webawesome/dist/components/dropdown-item/dropdown-item.js'),
+  import("@awesome.me/webawesome/dist/components/tab-group/tab-group.js"),
+  import("@awesome.me/webawesome/dist/components/icon/icon.js"),
+  import("@awesome.me/webawesome/dist/components/drawer/drawer.js"),
+  import("@awesome.me/webawesome/dist/components/dropdown/dropdown.js"),
+  import("@awesome.me/webawesome/dist/components/dropdown-item/dropdown-item.js"),
 ]);
 
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
-import type { CSSResultGroup, PropertyValues } from 'lit';
+import type { CSSResultGroup, PropertyValues } from "lit";
 
-import { headerVariants, type sizes, styles } from './header.styles.js';
-import registerBundledIcons from "../icons.js"
+import { headerVariants, type sizes, styles } from "./header.styles.js";
+import registerBundledIcons from "../icons.js";
 
 registerBundledIcons();
 
@@ -26,7 +26,6 @@ interface MenuItem {
 }
 
 export class Header extends LitElement {
-
   static styles: CSSResultGroup = [styles];
 
   name = "hot-header";
@@ -36,15 +35,15 @@ export class Header extends LitElement {
   accessor title: string = "";
 
   /** Optional tagline text shown in the top header bar. */
-  @property({ type: String, attribute: 'top-tagline' })
+  @property({ type: String, attribute: "top-tagline" })
   accessor topTagline: string = "Mapping our world together";
 
   /** Optional label for the website link in the top header bar. */
-  @property({ type: String, attribute: 'top-link-label' })
+  @property({ type: String, attribute: "top-link-label" })
   accessor topLinkLabel: string = "Humanitarian OpenStreetMap Team Website";
 
   /** Optional href for the website link in the top header bar. */
-  @property({ type: String, attribute: 'top-link-href' })
+  @property({ type: String, attribute: "top-link-href" })
   accessor topLinkHref: string = "https://www.hotosm.org";
 
   /** Display a logo on the left of the header. */
@@ -68,7 +67,7 @@ export class Header extends LitElement {
   accessor size: sizes = "small";
 
   /** Centre-align navigation tabs instead of the default left alignment. */
-  @property({ type: Boolean, attribute: 'tabs-center-align' })
+  @property({ type: Boolean, attribute: "tabs-center-align" })
   accessor tabsCenterAlign: boolean = false;
 
   /** Index of the selected tab. */
@@ -91,23 +90,22 @@ export class Header extends LitElement {
     // Listen for URL changes so the active tab stays in sync
     // Works for SPA (pushState/replaceState) and htmx navigation
     this._boundLocationSync = () => this.syncActiveTab();
-    window.addEventListener('popstate', this._boundLocationSync);
-    window.addEventListener('hot-locationchange', this._boundLocationSync);
+    window.addEventListener("popstate", this._boundLocationSync);
+    window.addEventListener("hot-locationchange", this._boundLocationSync);
     // htmx fires this after pushState-based navigation
-    window.addEventListener('htmx:pushedIntoHistory', this._boundLocationSync);
+    window.addEventListener("htmx:pushedIntoHistory", this._boundLocationSync);
 
     // Patch history.pushState / replaceState once so every SPA router
     // automatically triggers our listener (no framework coupling needed).
     Header._patchHistory();
-
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     if (this._boundLocationSync) {
-      window.removeEventListener('popstate', this._boundLocationSync);
-      window.removeEventListener('hot-locationchange', this._boundLocationSync);
-      window.removeEventListener('htmx:pushedIntoHistory', this._boundLocationSync);
+      window.removeEventListener("popstate", this._boundLocationSync);
+      window.removeEventListener("hot-locationchange", this._boundLocationSync);
+      window.removeEventListener("htmx:pushedIntoHistory", this._boundLocationSync);
       this._boundLocationSync = null;
     }
   }
@@ -121,10 +119,10 @@ export class Header extends LitElement {
     super.updated(changedProps);
 
     // Keep the active tab in sync when host apps control the selected tab
-    if (changedProps.has('selectedTab')) {
+    if (changedProps.has("selectedTab")) {
       const newIndex = this.selectedTab;
       if (
-        typeof newIndex === 'number' &&
+        typeof newIndex === "number" &&
         newIndex >= 0 &&
         newIndex < this.tabs.length &&
         newIndex !== this.activeTabIndex
@@ -133,16 +131,15 @@ export class Header extends LitElement {
       }
     }
 
-    if (changedProps.has('tabs') || changedProps.has('size')) {
+    if (changedProps.has("tabs") || changedProps.has("size")) {
       this.updateComplete.then(() => this._updateNavScrollState());
 
       // When tabs change (e.g. first assignment), re-sync from URL
-      if (changedProps.has('tabs')) {
+      if (changedProps.has("tabs")) {
         this.syncActiveTab();
       }
     }
   }
-
 
   selectTab(index: number) {
     if (index !== this.selectedTab && index >= 0 && index < this.tabs.length) {
@@ -150,17 +147,19 @@ export class Header extends LitElement {
       this.selectedTab = index;
       // Update the active tab index
       this.activeTabIndex = index;
-      
+
       // Dispatch a custom event for tab change
-      this.dispatchEvent(new CustomEvent('tab-change', {
-        detail: { 
-          selectedIndex: index, 
-          previousIndex: previousTab,
-          tab: this.tabs[index]
-        },
-        bubbles: true
-      }));
-      
+      this.dispatchEvent(
+        new CustomEvent("tab-change", {
+          detail: {
+            selectedIndex: index,
+            previousIndex: previousTab,
+            tab: this.tabs[index],
+          },
+          bubbles: true,
+        }),
+      );
+
       // Trigger a re-render to update the active state
       this.requestUpdate();
     }
@@ -168,9 +167,7 @@ export class Header extends LitElement {
 
   /** Update which nav arrows should be visible/enabled based on scroll position. */
   private _updateNavScrollState() {
-    const container = this.renderRoot?.querySelector(
-      '.header--nav-scroll',
-    ) as HTMLElement | null;
+    const container = this.renderRoot?.querySelector(".header--nav-scroll") as HTMLElement | null;
     if (!container) return;
 
     const { scrollLeft, scrollWidth, clientWidth } = container;
@@ -185,20 +182,15 @@ export class Header extends LitElement {
   }
 
   /** Scroll the desktop nav horizontally to reveal hidden items. */
-  private _scrollNav(direction: 'left' | 'right') {
-    const container = this.renderRoot?.querySelector(
-      '.header--nav-scroll',
-    ) as HTMLElement | null;
+  private _scrollNav(direction: "left" | "right") {
+    const container = this.renderRoot?.querySelector(".header--nav-scroll") as HTMLElement | null;
     if (!container) return;
 
     // Two main states: fully left, or fully right (mirrors Tasking Manager)
     const maxScroll = Math.max(container.scrollWidth - container.clientWidth, 0);
-    const target =
-      direction === 'right'
-        ? maxScroll
-        : 0;
+    const target = direction === "right" ? maxScroll : 0;
 
-    container.scrollTo({ left: target, behavior: 'smooth' });
+    container.scrollTo({ left: target, behavior: "smooth" });
 
     // Recalculate arrow state shortly after scroll
     window.setTimeout(() => this._updateNavScrollState(), 250);
@@ -216,9 +208,9 @@ export class Header extends LitElement {
    *   `document.querySelector('hot-header').syncActiveTab();`
    */
   syncActiveTab() {
-    if (typeof window === 'undefined' || !this.tabs?.length) return;
+    if (typeof window === "undefined" || !this.tabs?.length) return;
 
-    const currentPath = window.location.pathname.replace(/\/+$/, '');
+    const currentPath = window.location.pathname.replace(/\/+$/, "");
     if (!currentPath) return;
 
     let bestIndex = -1;
@@ -228,7 +220,7 @@ export class Header extends LitElement {
       if (!tab?.href) return;
       try {
         const url = new URL(tab.href, window.location.origin);
-        const path = url.pathname.replace(/\/+$/, '');
+        const path = url.pathname.replace(/\/+$/, "");
         if (!path) return;
 
         if (currentPath === path) {
@@ -261,7 +253,7 @@ export class Header extends LitElement {
    */
   private static _historyPatched = false;
   private static _patchHistory() {
-    if (Header._historyPatched || typeof window === 'undefined') return;
+    if (Header._historyPatched || typeof window === "undefined") return;
     Header._historyPatched = true;
 
     const origPush = history.pushState.bind(history);
@@ -269,12 +261,12 @@ export class Header extends LitElement {
 
     history.pushState = function (data: unknown, unused: string, url?: string | URL | null) {
       origPush(data, unused, url);
-      window.dispatchEvent(new Event('hot-locationchange'));
+      window.dispatchEvent(new Event("hot-locationchange"));
     };
 
     history.replaceState = function (data: unknown, unused: string, url?: string | URL | null) {
       origReplace(data, unused, url);
-      window.dispatchEvent(new Event('hot-locationchange'));
+      window.dispatchEvent(new Event("hot-locationchange"));
     };
   }
 
@@ -288,21 +280,25 @@ export class Header extends LitElement {
 
     return html`
       <div class="header-container">
-        ${this.size !== 'small'
-          ? html`
+        ${
+          this.size !== "small"
+            ? html`
               <div class="header--top">
                 <div class="header--top-left">
-                  ${this.topTagline
-                    ? html`
+                  ${
+                    this.topTagline
+                      ? html`
                         <span class="header--top-tagline">
                           ${this.topTagline}
                         </span>
                       `
-                    : null}
+                      : null
+                  }
                 </div>
                 <div class="header--top-right">
-                  ${this.topLinkHref && this.topLinkLabel
-                    ? html`
+                  ${
+                    this.topLinkHref && this.topLinkLabel
+                      ? html`
                         <a
                           href="${this.topLinkHref}"
                           class="header--top-link"
@@ -314,18 +310,21 @@ export class Header extends LitElement {
                           <svg width="11" height="11" viewBox="0 0 11 11" class="header--external-icon" aria-hidden="true"><path fill="currentColor" d="M9.778 9.778H1.222V1.222H5.5V0H1.222C.544 0 0 .55 0 1.222v8.556C0 10.45.544 11 1.222 11h8.556C10.45 11 11 10.45 11 9.778V5.5H9.778v4.278zM6.722 0v1.222h2.194L2.91 7.23l.862.862 6.007-6.007v2.194H11V0H6.722z"></path></svg>
                         </a>
                       `
-                    : null}
+                      : null
+                  }
                 </div>
               </div>
             `
-          : null}
+            : null
+        }
 
         <header
           class=${headerVariants({ size: this.size })}
         >
         <a href="/" class="header--link">
-          ${logoSrc.length > 0
-            ? html`
+          ${
+            logoSrc.length > 0
+              ? html`
                 <img
                   id="logo"
                   src="${this.logo}"
@@ -333,30 +332,34 @@ export class Header extends LitElement {
                   class="header--logo-img"
                 />
               `
-            : html`
+              : html`
             <hot-logo
               ?icon-only=${this.title.length > 0}
             >
             </hot-logo>
-            `}
-          ${this.title.length > 0
-            ? html`
+            `
+          }
+          ${
+            this.title.length > 0
+              ? html`
                 <h1 class="header--title">
                   ${this.title}
                 </h1>
               `
-            : null}
+              : null
+          }
         </a>
 
         ${/* Navigation bar for desktop, hide on mobile */ ""}
-        <nav class="header--nav ${this.tabsCenterAlign ? 'header--nav-center' : ''}">
-          ${this.tabs.length > 0
-            ? html`
+        <nav class="header--nav ${this.tabsCenterAlign ? "header--nav-center" : ""}">
+          ${
+            this.tabs.length > 0
+              ? html`
                 <div class="header--nav-wrapper">
                   <button
                     class="header--nav-arrow header--nav-arrow-left"
                     ?disabled=${this._navScrollAtStart}
-                    @click=${() => this._scrollNav('left')}
+                    @click=${() => this._scrollNav("left")}
                     aria-hidden=${this._navScrollAtStart}
                     tabindex=${this._navScrollAtStart ? -1 : 0}
                   >
@@ -369,8 +372,7 @@ export class Header extends LitElement {
                   >
                     <wa-tab-group
                       class="header--tab-group"
-                      @wa-tab-show=${(e: CustomEvent) =>
-                        this._handleTabShow(e)}
+                      @wa-tab-show=${(e: CustomEvent) => this._handleTabShow(e)}
                     >
                       ${this.tabs.map((item, index) => {
                         const isActive = this.activeTabIndex === index;
@@ -381,8 +383,7 @@ export class Header extends LitElement {
                             slot="nav"
                             ?active=${isActive}
                             data-index="${index}"
-                            @click=${(e: MouseEvent) =>
-                              this._tabClick(e, item.clickEvent, index)}
+                            @click=${(e: MouseEvent) => this._tabClick(e, item.clickEvent, index)}
                           >
                             ${item.label}
                           </wa-tab>
@@ -394,7 +395,7 @@ export class Header extends LitElement {
                   <button
                     class="header--nav-arrow header--nav-arrow-right"
                     ?disabled=${this._navScrollAtEnd}
-                    @click=${() => this._scrollNav('right')}
+                    @click=${() => this._scrollNav("right")}
                     aria-hidden=${this._navScrollAtEnd}
                     tabindex=${this._navScrollAtEnd ? -1 : 0}
                   >
@@ -402,19 +403,22 @@ export class Header extends LitElement {
                   </button>
                 </div>
               `
-            : null}
+              : null
+          }
         </nav>
 
         
 
         <div id="right-section" class="header--right-section">
           <slot name="auth"></slot>
-          ${this._showDrawer
-            ? html`
+          ${
+            this._showDrawer
+              ? html`
                 <wa-drawer label=" " id="drawer-overview">
                   <div class="drawer-content">
-                    ${this.tabs.length
-                      ? html`
+                    ${
+                      this.tabs.length
+                        ? html`
                           <div class="drawer-nav">
                             <ul class="drawer-nav-list">
                               ${this.tabs.map(
@@ -435,7 +439,8 @@ export class Header extends LitElement {
                             <hr class="drawer-separator" />
                           </div>
                         `
-                      : null}
+                        : null
+                    }
 
                     <ul class="drawer-link-list">
                       ${this.drawerLinks.map(
@@ -456,14 +461,15 @@ export class Header extends LitElement {
                 </wa-drawer>
                 <wa-button
                   appearance="outlined"
-                  class="${this.drawer ? '' : 'header--drawer-mobile-only'}"
+                  class="${this.drawer ? "" : "header--drawer-mobile-only"}"
                   @click=${() => this._handleDrawerOpen()}
                   aria-label="Open Sidebar"
                 >
                     <wa-icon name="bars"></wa-icon>
                 </wa-button>
               `
-            : null}
+              : null
+          }
         </div>
 
       </header>
@@ -475,36 +481,35 @@ export class Header extends LitElement {
     // Prevent default behavior to avoid potential conflicts
     e.preventDefault();
     e.stopPropagation();
-    
+
     try {
       // Update the selected tab state first
       this.selectTab(index);
-      
+
       // Use setTimeout to ensure DOM updates are complete before navigation
       // This is more reliable than requestAnimationFrame for navigation
       setTimeout(async () => {
         try {
-          if (typeof clickAction === 'function') {
+          if (typeof clickAction === "function") {
             await clickAction();
           }
         } catch (navigationError) {
-          console.error('Error during navigation:', navigationError);
+          console.error("Error during navigation:", navigationError);
           // Try synchronous fallback
-          if (typeof clickAction === 'function') {
+          if (typeof clickAction === "function") {
             clickAction();
           }
         }
       }, 0);
-      
     } catch (error) {
-      console.error('Error handling tab click:', error);
+      console.error("Error handling tab click:", error);
       // Fallback: try the action synchronously
       try {
-        if (typeof clickAction === 'function') {
+        if (typeof clickAction === "function") {
           clickAction();
         }
       } catch (fallbackError) {
-        console.error('Fallback navigation also failed:', fallbackError);
+        console.error("Fallback navigation also failed:", fallbackError);
       }
     }
   }
@@ -513,12 +518,12 @@ export class Header extends LitElement {
     // Alternative handler for WebAwesome tab-show events
     try {
       const tab = e.target as HTMLElement;
-      const index = parseInt(tab.getAttribute('data-index') || '0', 10);
+      const index = parseInt(tab.getAttribute("data-index") || "0", 10);
       if (!isNaN(index) && index < this.tabs.length) {
         this.selectTab(index);
       }
     } catch (error) {
-      console.error('Error handling tab show event:', error);
+      console.error("Error handling tab show event:", error);
     }
   }
 
@@ -532,10 +537,9 @@ export class Header extends LitElement {
   }
 
   private _handleDrawerOpen() {
-    const drawer = this.renderRoot?.querySelector('#drawer-overview');
+    const drawer = this.renderRoot?.querySelector("#drawer-overview");
     if (drawer) (drawer as any).open = true;
   }
-
 }
 
 export default Header;

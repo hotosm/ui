@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -72,7 +72,7 @@ export default css`
     background-color: var(--hot-color-neutral-100);
   }
 
-  .dropzone input[type='file'] {
+  .dropzone input[type="file"] {
     position: absolute;
     width: 1px;
     height: 1px;

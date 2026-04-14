@@ -1,34 +1,33 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v5
+      - name: Checkout repo
+        uses: actions/checkout@v5
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v6
-      with:
-        node-version: '24'
-        cache: pnpm
-        cache-dependency-path: pnpm-lock.yaml
-        
-    - name: Install dependencies
-      run: pnpm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
-    - name: Install Playwright Browsers
-      run: pnpm exec playwright install --with-deps
+      - name: Install dependencies
+        run: pnpm install
 
-    - name: Run Vitest in browser mode
-      run: pnpm test
-    
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Vitest in browser mode
+        run: pnpm test

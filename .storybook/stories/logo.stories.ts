@@ -18,20 +18,36 @@ export const Full: StoryObj = {
     iconOnly: false,
     textOnly: false,
   },
-  render: () => html`<hot-logo></hot-logo>`,
+  render: () =>
+    html`
+      <hot-logo></hot-logo>
+    `,
 };
 
 export const IconOnly: StoryObj = {
-  render: () => html`<hot-logo icon-only></hot-logo>`,
+  render: () =>
+    html`
+      <hot-logo icon-only></hot-logo>
+    `,
 };
 
 export const TextOnly: StoryObj = {
-  render: () => html`<hot-logo text-only></hot-logo>`,
+  render: () =>
+    html`
+      <hot-logo text-only></hot-logo>
+    `,
 };
 
 export const OnDark: StoryObj = {
   render: () => html`
-    <div style="background: var(--hot-color-neutral-950); padding: var(--hot-spacing-medium); display: inline-block; border-radius: var(--hot-border-radius-large);">
+    <div
+      style="
+        background: var(--hot-color-neutral-950);
+        padding: var(--hot-spacing-medium);
+        display: inline-block;
+        border-radius: var(--hot-border-radius-large);
+      "
+    >
       <hot-logo></hot-logo>
     </div>
   `,
