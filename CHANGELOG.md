@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.1 (2026-04-14)
+
+### Fix
+
+- **tracking**: fix tracking component matomo popup correctly
+
+### Refactor
+
+- replace prettier with oxfmt and run hooks on all code
+
 ## 0.9.0 (2026-03-08)
 
 ### Feat
