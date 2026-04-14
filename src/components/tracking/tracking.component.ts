@@ -259,31 +259,42 @@ export class MatomoTracking extends LitElement {
     }
   `;
 
+  private get consentKey(): string {
+    return `hot-matomo-consent-${this.siteId}`;
+  }
+
+  private getStoredConsent(): boolean | null {
+    const value = localStorage.getItem(this.consentKey);
+    if (value === null) return null;
+    return value === "true";
+  }
+
+  private setStoredConsent(granted: boolean) {
+    localStorage.setItem(this.consentKey, String(granted));
+  }
+
   agree() {
     this.consentGiven = true;
     this.consentShown = false;
-    
+    this.setStoredConsent(true);
+
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
-    if (_paq.length === 0) return;
-    
     _paq.push(["rememberConsentGiven"]);
     _paq.push(["trackPageView"]);
-    
-    // Show success message
+
     this.showSuccessCallout("Tracking consent granted. Thank you!");
   }
 
   disagree() {
     this.consentGiven = false;
     this.consentShown = false;
-    
+    this.setStoredConsent(false);
+
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
-    if (_paq.length === 0) return;
     _paq.push(["forgetConsentGiven"]);
-    
-    // Show info message
+
     this.showInfoCallout("Tracking disabled. You can change this preference later.");
   }
 
@@ -394,11 +405,9 @@ export class MatomoTracking extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // Close and halt execution if wrong domain
+    // Abort if current domain does not match
     if (window.location.hostname !== this.domain) {
-      this.showErrorCallout(
-        `Matomo tracking is not configured for this domain. Current domain: ${window.location.hostname}, Expected: ${this.domain}`
-      );
+      console.warn(`[hot-tracking] Domain mismatch: expected "${this.domain}", got "${window.location.hostname}". Tracking disabled.`);
       return;
     }
 
@@ -414,17 +423,12 @@ export class MatomoTracking extends LitElement {
       return;
     }
 
-    // Debug: uncomment for local development
-    // console.log(`Setting Matomo tracking for site=${matomoTrackingId} domain=${this.domain}`);
-
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
 
-    // tracker methods like "setCustomDimension" should be called before "trackPageView"
-    _paq.push(["requireConsent"]);
     _paq.push(["setDomains", [this.domain]]);
-    _paq.push(["enableLinkTracking"]); // Tracks downloads
-    _paq.push(["trackVisibleContentImpressions"]); // Tracks content
+    _paq.push(["enableLinkTracking"]);
+    _paq.push(["trackVisibleContentImpressions"]);
 
     (function (matomoURL) {
       _paq.push(["setTrackerUrl", `${matomoURL}/matomo.php`]);
@@ -443,10 +447,30 @@ export class MatomoTracking extends LitElement {
       }
     })(this.matomoURL);
 
-    // Show consent banner after a short delay
-    setTimeout(() => {
-      this.showConsentBanner();
-    }, 1000);
+    if (this.showConsent) {
+      // Consent mode: require consent before tracking
+      _paq.push(["requireConsent"]);
+
+      const storedConsent = this.getStoredConsent();
+
+      if (storedConsent === true) {
+        // Previously granted — re-apply consent and track
+        this.consentGiven = true;
+        _paq.push(["rememberConsentGiven"]);
+        _paq.push(["trackPageView"]);
+      } else if (storedConsent === false) {
+        // Previously declined — don't track, don't show banner
+        this.consentGiven = false;
+      } else {
+        // No stored preference — show consent banner after a short delay
+        setTimeout(() => {
+          this.showConsentBanner();
+        }, 1000);
+      }
+    } else {
+      // No consent required — track immediately
+      _paq.push(["trackPageView"]);
+    }
   }
 }
 
