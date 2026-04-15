@@ -15,6 +15,10 @@ function createElement(attrs: Partial<Record<string, string>> = {}): MatomoTrack
   if (attrs["show-consent"] !== undefined) {
     el.setAttribute("show-consent", attrs["show-consent"]);
   }
+  // To opt out of consent (showConsent defaults to true), explicitly disable it
+  if (attrs["no-consent"] !== undefined) {
+    el.showConsent = false;
+  }
   return el;
 }
 
@@ -60,8 +64,8 @@ describe("<hot-tracking>", () => {
 
   // ── No-consent mode (showConsent=false) ──
 
-  it("tracks immediately when show-consent is not set", async () => {
-    el = createElement();
+  it("tracks immediately when show-consent is disabled", async () => {
+    el = createElement({ "no-consent": "" });
     document.body.appendChild(el);
     await el.updateComplete;
 
@@ -70,21 +74,29 @@ describe("<hot-tracking>", () => {
     expect(commands).not.toContain("requireConsent");
   });
 
-  it("does not render consent banner when show-consent is not set", async () => {
+  it("does not render consent dialog when show-consent is disabled", async () => {
+    el = createElement({ "no-consent": "" });
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    const dialog = el.shadowRoot?.querySelector("wa-dialog[open]");
+    expect(dialog).toBeNull();
+  });
+
+  // ── Consent mode (default) ──
+
+  it("requires consent by default without show-consent attribute", async () => {
     el = createElement();
     document.body.appendChild(el);
     await el.updateComplete;
 
-    const banner = el.shadowRoot?.querySelector(".consent-banner");
-    expect(banner).toBeNull();
+    const commands = window._paq.map((cmd: any[]) => cmd[0]);
+    expect(commands).toContain("requireConsent");
+    expect(commands).not.toContain("trackPageView");
   });
 
-  // ── Consent mode ──
-
-  it("pushes requireConsent and shows banner when show-consent is set and no stored preference", async () => {
-    vi.useFakeTimers();
-
-    el = createElement({ "show-consent": "" });
+  it("pushes requireConsent and shows dialog when no stored preference", async () => {
+    el = createElement();
     document.body.appendChild(el);
     await el.updateComplete;
 
@@ -92,20 +104,48 @@ describe("<hot-tracking>", () => {
     expect(commands).toContain("requireConsent");
     expect(commands).not.toContain("trackPageView");
 
-    // Advance past the 1s delay for the banner
-    vi.advanceTimersByTime(1000);
+    const dialog = el.shadowRoot?.querySelector("wa-dialog");
+    expect(dialog).toBeTruthy();
+    expect(dialog?.hasAttribute("open")).toBe(true);
+  });
+
+  it("dialog contains Accept and Decline buttons", async () => {
+    el = createElement();
+    document.body.appendChild(el);
     await el.updateComplete;
 
-    const banner = el.shadowRoot?.querySelector(".consent-banner");
-    expect(banner).toBeTruthy();
+    const dialog = el.shadowRoot?.querySelector("wa-dialog");
+    const buttons = dialog?.querySelectorAll("wa-button");
+    expect(buttons?.length).toBe(2);
 
-    vi.useRealTimers();
+    const buttonTexts = Array.from(buttons ?? []).map((b) => b.textContent?.trim());
+    expect(buttonTexts).toContain("Decline");
+    expect(buttonTexts).toContain("Accept");
+  });
+
+  it("dialog displays the default consent message", async () => {
+    el = createElement();
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    const dialog = el.shadowRoot?.querySelector("wa-dialog");
+    expect(dialog?.textContent).toContain("We use cookies");
+  });
+
+  it("dialog displays a custom consent-message", async () => {
+    el = createElement();
+    el.setAttribute("consent-message", "Custom privacy notice.");
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    const dialog = el.shadowRoot?.querySelector("wa-dialog");
+    expect(dialog?.textContent).toContain("Custom privacy notice.");
   });
 
   it("auto-tracks when stored consent is true (returning user)", async () => {
     localStorage.setItem("hot-matomo-consent-42", "true");
 
-    el = createElement({ "show-consent": "" });
+    el = createElement();
     document.body.appendChild(el);
     await el.updateComplete;
 
@@ -114,46 +154,41 @@ describe("<hot-tracking>", () => {
     expect(commands).toContain("rememberConsentGiven");
     expect(commands).toContain("trackPageView");
 
-    // Banner should not appear
-    const banner = el.shadowRoot?.querySelector(".consent-banner");
-    expect(banner).toBeNull();
+    // Dialog should not be open
+    const dialog = el.shadowRoot?.querySelector("wa-dialog[open]");
+    expect(dialog).toBeNull();
   });
 
   it("does not track when stored consent is false (returning user who declined)", async () => {
     localStorage.setItem("hot-matomo-consent-42", "false");
 
-    el = createElement({ "show-consent": "" });
+    el = createElement();
     document.body.appendChild(el);
     await el.updateComplete;
 
     const commands = window._paq.map((cmd: any[]) => cmd[0]);
     expect(commands).not.toContain("trackPageView");
 
-    // Banner should not appear
-    const banner = el.shadowRoot?.querySelector(".consent-banner");
-    expect(banner).toBeNull();
+    // Dialog should not be open
+    const dialog = el.shadowRoot?.querySelector("wa-dialog[open]");
+    expect(dialog).toBeNull();
   });
 
   // ── agree() / disagree() ──
 
-  it("agree() stores consent, pushes tracking commands, and hides banner", async () => {
-    vi.useFakeTimers();
-
-    el = createElement({ "show-consent": "" });
+  it("agree() stores consent, pushes tracking commands, and closes dialog", async () => {
+    el = createElement();
     document.body.appendChild(el);
     await el.updateComplete;
 
-    vi.advanceTimersByTime(1000);
-    await el.updateComplete;
-
-    // Banner should be visible
-    expect(el.shadowRoot?.querySelector(".consent-banner")).toBeTruthy();
+    // Dialog should be visible
+    expect(el.shadowRoot?.querySelector("wa-dialog[open]")).toBeTruthy();
 
     el.agree();
     await el.updateComplete;
 
-    // Banner hidden
-    expect(el.shadowRoot?.querySelector(".consent-banner")).toBeNull();
+    // Dialog closed
+    expect(el.shadowRoot?.querySelector("wa-dialog[open]")).toBeNull();
 
     // localStorage persisted
     expect(localStorage.getItem("hot-matomo-consent-42")).toBe("true");
@@ -162,25 +197,18 @@ describe("<hot-tracking>", () => {
     const commands = window._paq.map((cmd: any[]) => cmd[0]);
     expect(commands).toContain("rememberConsentGiven");
     expect(commands).toContain("trackPageView");
-
-    vi.useRealTimers();
   });
 
-  it("disagree() stores refusal, pushes forgetConsentGiven, and hides banner", async () => {
-    vi.useFakeTimers();
-
-    el = createElement({ "show-consent": "" });
+  it("disagree() stores refusal, pushes forgetConsentGiven, and closes dialog", async () => {
+    el = createElement();
     document.body.appendChild(el);
-    await el.updateComplete;
-
-    vi.advanceTimersByTime(1000);
     await el.updateComplete;
 
     el.disagree();
     await el.updateComplete;
 
-    // Banner hidden
-    expect(el.shadowRoot?.querySelector(".consent-banner")).toBeNull();
+    // Dialog closed
+    expect(el.shadowRoot?.querySelector("wa-dialog[open]")).toBeNull();
 
     // localStorage persisted
     expect(localStorage.getItem("hot-matomo-consent-42")).toBe("false");
@@ -189,14 +217,12 @@ describe("<hot-tracking>", () => {
     const commands = window._paq.map((cmd: any[]) => cmd[0]);
     expect(commands).toContain("forgetConsentGiven");
     expect(commands).not.toContain("trackPageView");
-
-    vi.useRealTimers();
   });
 
   // ── localStorage key uses siteId ──
 
   it("uses site-id in the localStorage key", async () => {
-    el = createElement({ "site-id": "99", "show-consent": "" });
+    el = createElement({ "site-id": "99" });
     document.body.appendChild(el);
     await el.updateComplete;
 
