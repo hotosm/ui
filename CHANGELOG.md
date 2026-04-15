@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.2 (2026-04-15)
+
+### Fix
+
+- **tracking**: real fix to component using wa-dialog instead of custom, default show
+
 ## 0.9.1 (2026-04-14)
 
 ### Fix
