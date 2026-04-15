@@ -52,10 +52,10 @@ export const Tracking: StoryObj = {
       }
     },
     addKeyLocalStorage: (siteId: number) => {
-      localStorage.setItem(`${siteId}-consent-agree`, "true");
+      localStorage.setItem(`hot-matomo-consent-${siteId}`, "true");
     },
     removeKeyLocalStorage: (siteId: number) => {
-      localStorage.removeItem(`${siteId}-consent-agree`);
+      localStorage.removeItem(`hot-matomo-consent-${siteId}`);
     },
   },
   render: (args, { parameters }) => {

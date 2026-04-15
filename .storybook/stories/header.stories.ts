@@ -128,7 +128,7 @@ export const WithAuthSlot: Story = {
         <p>
           The header provides an <code>auth</code> slot in the top-right corner.
           Replace the placeholder button with <code>&lt;hotosm-auth slot="auth" ...&gt;</code>
-          (or any other auth component) — the header has no opinion on the implementation.
+          (or any other auth component) - the header has no opinion on the implementation.
         </p>
       </div>
     `;

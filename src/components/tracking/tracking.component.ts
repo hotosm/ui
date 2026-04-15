@@ -4,6 +4,7 @@ Promise.allSettled([
   import("@awesome.me/webawesome/dist/components/callout/callout.js"),
   import("@awesome.me/webawesome/dist/components/icon/icon.js"),
   import("@awesome.me/webawesome/dist/components/button/button.js"),
+  import("@awesome.me/webawesome/dist/components/dialog/dialog.js"),
 ]);
 
 import { LitElement, html, css } from "lit";
@@ -32,7 +33,7 @@ export class MatomoTracking extends LitElement {
 
   /** Whether to show the consent banner */
   @property({ type: Boolean, attribute: "show-consent" })
-  accessor showConsent: boolean = false;
+  accessor showConsent: boolean = true;
 
   /** The consent message to display */
   @property({ type: String, attribute: "consent-message" })
@@ -69,16 +70,29 @@ export class MatomoTracking extends LitElement {
       font-family: var(--hot-font-sans);
     }
 
-    .consent-banner {
+    wa-dialog {
+      --width: 100vw;
+    }
+
+    wa-dialog::part(dialog) {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      padding: var(--hot-spacing-medium);
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid var(--wa-color-surface-border);
+      inset: auto 0 0 0;
+      margin: 0;
+      max-width: 100vw;
+      max-height: none;
+      border-radius: var(--hot-border-radius-large) var(--hot-border-radius-large) 0 0;
+    }
+
+    wa-dialog::part(title) {
+      font-weight: var(--hot-font-weight-semibold);
+    }
+
+    wa-dialog::part(body) {
+      padding: var(--hot-spacing-medium) var(--hot-spacing-large);
+    }
+
+    wa-dialog::part(footer) {
+      padding: var(--hot-spacing-medium) var(--hot-spacing-large);
     }
 
     .error-banner {
@@ -114,7 +128,6 @@ export class MatomoTracking extends LitElement {
     .consent-actions {
       display: flex;
       gap: var(--hot-spacing-small);
-      margin-top: var(--hot-spacing-medium);
       justify-content: flex-end;
     }
 
@@ -214,39 +227,11 @@ export class MatomoTracking extends LitElement {
       border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
     }
 
-    .consent-banner wa-callout {
-      border-radius: var(--hot-border-radius-x-large);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-      border: 1px solid var(--wa-color-surface-border);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(249, 250, 251, 0.98));
-      backdrop-filter: blur(16px);
-    }
-
-    .consent-banner wa-callout::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(
-        90deg,
-        var(--hot-color-primary-500),
-        var(--hot-color-primary-600),
-        var(--hot-color-primary-700)
-      );
-      border-radius: var(--hot-border-radius-x-large) var(--hot-border-radius-x-large) 0 0;
-    }
-
     wa-icon {
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     }
 
     @media (max-width: 768px) {
-      .consent-banner {
-        padding: var(--hot-spacing-small);
-      }
-
       .error-banner {
         left: var(--hot-spacing-x-small);
         right: var(--hot-spacing-x-small);
@@ -256,15 +241,6 @@ export class MatomoTracking extends LitElement {
       .toast-banner {
         right: var(--hot-spacing-x-small);
         max-width: calc(100vw - var(--hot-spacing-medium));
-      }
-
-      .consent-actions {
-        flex-direction: column;
-        gap: var(--hot-spacing-x-small);
-      }
-
-      wa-button {
-        width: 100%;
       }
     }
   `;
@@ -394,37 +370,27 @@ export class MatomoTracking extends LitElement {
           : ""
       }
       
-      ${
-        this.consentShown
-          ? html`
-        <div class="consent-banner">
-          <wa-callout  variant="brand" appearance="outlined filled" size="large">
-            <wa-icon slot="icon" family="classic" variant="solid" name="shield-check"></wa-icon>
-            <div style="padding: 1rem;">
-              <strong>Privacy & Tracking</strong><br />
-              ${this.consentMessage}
-              <div class="consent-actions">
-                <wa-button size="small" variant="neutral" @click=${(e: Event) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  this.disagree();
-                }}>
-                  Decline
-                </wa-button>
-                <wa-button size="small" variant="brand" @click=${(e: Event) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  this.agree();
-                }}>
-                  Accept
-                </wa-button>
-              </div>
-            </div>
-          </wa-callout>
+      <wa-dialog
+        label="Privacy & Tracking"
+        ?open=${this.consentShown}
+        @wa-hide=${(e: Event) => {
+          // Prevent closing the dialog without making a choice (X button, escape, overlay click)
+          // Only allow close when agree/disagree has set consentShown to false
+          if (this.consentShown) {
+            e.preventDefault();
+          }
+        }}
+      >
+        ${this.consentMessage}
+        <div slot="footer" class="consent-actions">
+          <wa-button size="small" variant="neutral" @click=${() => this.disagree()}>
+            Decline
+          </wa-button>
+          <wa-button size="small" variant="brand" @click=${() => this.agree()}>
+            Accept
+          </wa-button>
         </div>
-      `
-          : ""
-      }
+      </wa-dialog>
     `;
   }
 
@@ -480,21 +446,19 @@ export class MatomoTracking extends LitElement {
       const storedConsent = this.getStoredConsent();
 
       if (storedConsent === true) {
-        // Previously granted — re-apply consent and track
+        // Previously granted - re-apply consent and track
         this.consentGiven = true;
         _paq.push(["rememberConsentGiven"]);
         _paq.push(["trackPageView"]);
       } else if (storedConsent === false) {
-        // Previously declined — don't track, don't show banner
+        // Previously declined - don't track, don't show banner
         this.consentGiven = false;
       } else {
-        // No stored preference — show consent banner after a short delay
-        setTimeout(() => {
-          this.showConsentBanner();
-        }, 1000);
+        // No stored preference - show consent dialog
+        this.showConsentBanner();
       }
     } else {
-      // No consent required — track immediately
+      // No consent required - track immediately
       _paq.push(["trackPageView"]);
     }
   }
