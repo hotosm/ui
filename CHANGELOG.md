@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0 (2026-05-10)
+
+### Feat
+
+- add hot-announcement component, fixes #183
+- add language selector slot next to auth/login slot in header
+
 ## 0.9.2 (2026-04-15)
 
 ### Fix
