@@ -2,6 +2,7 @@ import HotHeader from "./components/header/header.js";
 import HotLogo from "./components/logo/logo.js";
 import HotTracking from "./components/tracking/tracking.js";
 import HotConsent from "./components/consent/consent.js";
+import HotAnnouncement from "./components/announcement/announcement.js";
 import HotFileInputDropzone from "./components/file-input-dropzone/file-input-dropzone.js";
 import HotListCard from "./components/list-card/list-card.js";
 import HotToolMenu from "./components/tool-menu/tool-menu.js";
@@ -13,6 +14,7 @@ export {
   HotLogo as Logo,
   HotConsent as Consent,
   HotTracking as Tracking,
+  HotAnnouncement as Announcement,
   HotFileInputDropzone as FileInputDropzone,
   HotListCard as ListCard,
   HotToolMenu as ToolMenu,
