@@ -207,6 +207,82 @@ describe("<hot-header>", () => {
     expect(slot.assignedElements()).toContain(authEl);
   });
 
+  // ── Lang slot ──
+
+  it("renders a lang slot in the right section", async () => {
+    const el = document.createElement("hot-header") as Header;
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    const slot = el.shadowRoot!.querySelector('slot[name="lang"]');
+    expect(slot).not.toBeNull();
+  });
+
+  it("projects slotted lang content into the right section", async () => {
+    const el = document.createElement("hot-header") as Header;
+    const langEl = document.createElement("button");
+    langEl.slot = "lang";
+    langEl.textContent = "English";
+    el.appendChild(langEl);
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    const slot = el.shadowRoot!.querySelector('slot[name="lang"]') as HTMLSlotElement;
+    expect(slot).not.toBeNull();
+    expect(slot.assignedElements()).toContain(langEl);
+  });
+
+  it("places the lang slot before the auth slot in the right section", async () => {
+    const el = document.createElement("hot-header") as Header;
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    const right = el.shadowRoot!.querySelector(".header--right-section")!;
+    const slots = Array.from(right.querySelectorAll("slot")).map((s) => s.getAttribute("name"));
+    const langIdx = slots.indexOf("lang");
+    const authIdx = slots.indexOf("auth");
+    expect(langIdx).toBeGreaterThanOrEqual(0);
+    expect(authIdx).toBeGreaterThanOrEqual(0);
+    expect(langIdx).toBeLessThan(authIdx);
+  });
+
+  // ── Drawer-lang / drawer-auth slots ──
+
+  it("renders drawer-lang and drawer-auth slots inside the drawer", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.drawer = true;
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    const drawer = el.shadowRoot!.querySelector("#drawer-overview")!;
+    expect(drawer.querySelector('slot[name="drawer-lang"]')).not.toBeNull();
+    expect(drawer.querySelector('slot[name="drawer-auth"]')).not.toBeNull();
+  });
+
+  it("projects slotted drawer-lang and drawer-auth content into the drawer", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.drawer = true;
+
+    const drawerLang = document.createElement("div");
+    drawerLang.slot = "drawer-lang";
+    drawerLang.textContent = "Language picker (mobile)";
+    el.appendChild(drawerLang);
+
+    const drawerAuth = document.createElement("button");
+    drawerAuth.slot = "drawer-auth";
+    drawerAuth.textContent = "Login (mobile)";
+    el.appendChild(drawerAuth);
+
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    const drawer = el.shadowRoot!.querySelector("#drawer-overview")!;
+    const langSlot = drawer.querySelector('slot[name="drawer-lang"]') as HTMLSlotElement;
+    const authSlot = drawer.querySelector('slot[name="drawer-auth"]') as HTMLSlotElement;
+    expect(langSlot.assignedElements()).toContain(drawerLang);
+    expect(authSlot.assignedElements()).toContain(drawerAuth);
+  });
+
   // ── Navigation tabs ──
 
   it("renders navigation tabs based on the tabs prop", async () => {

@@ -250,6 +250,22 @@ export const styles = css`
     flex-shrink: 0;
   }
 
+  /* Slots in the right rail are hidden on mobile and instead projected
+   * through their drawer-* counterparts inside the sidebar. */
+  @media (max-width: 768px) {
+    .header--lang-slot,
+    .header--auth-slot {
+      display: none;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .drawer-lang-slot,
+    .drawer-auth-slot {
+      display: none;
+    }
+  }
+
   /* Base mobile touch target for drawer / close buttons */
   wa-button[appearance="outlined"] {
     min-width: 2.5rem;
@@ -486,10 +502,13 @@ export const styles = css`
       display: none;
     }
 
-    .header--right-section {
+    .header--right-section,
+    .header--size-small .header--right-section,
+    .header--size-medium .header--right-section,
+    .header--size-large .header--right-section {
       justify-content: center;
       margin-top: 0;
-      gap: var(--hot-spacing-small);
+      gap: calc(var(--hot-spacing-medium) * 2);
     }
 
     .header--size-small .header--logo-img {
@@ -574,6 +593,13 @@ export const styles = css`
 
   .drawer-link:hover {
     text-decoration: underline;
+  }
+
+  .drawer-extras {
+    display: flex;
+    flex-direction: column;
+    gap: var(--hot-spacing-small);
+    margin-top: var(--hot-spacing-medium);
   }
 
   @media (min-width: 769px) {

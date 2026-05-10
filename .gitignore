@@ -50,6 +50,9 @@ site/
 coverage/
 *.lcov
 
+# Vitest browser failure screenshots
+tests/**/__screenshots__/
+
 # Temporary files
 .tmp/
 .temp/

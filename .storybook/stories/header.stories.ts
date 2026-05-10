@@ -135,6 +135,76 @@ export const WithAuthSlot: Story = {
   },
 };
 
+/**
+ * Demonstrates the four right-side slots: `lang` and `auth` for the desktop
+ * right rail, and `drawer-lang` / `drawer-auth` for the mobile drawer.
+ *
+ * Resize below 769 px: the right-rail slots disappear, the hamburger
+ * appears, and the drawer surfaces the lang + auth controls.
+ */
+export const WithLangAndAuth: Story = {
+  args: {
+    title: "Tasking Manager",
+    size: "small",
+    drawer: false,
+    tabs: "6 Tabs (TM-style)",
+    selectedTab: 0,
+  },
+  render: (args) => {
+    const langBtnStyle =
+      "display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border: none; background: transparent; color: #1f2937; font-size: 0.95rem; font-family: inherit; cursor: pointer;";
+    const langCaret = html`
+      <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" style="flex-shrink: 0">
+        <path
+          d="M1 3l4 4 4-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    `;
+    const loginBtnStyle =
+      "padding: 6px 14px; border-radius: 4px; background: #d73f3f; color: white; border: none; cursor: pointer; font-size: 0.875rem;";
+    return html`
+      <hot-header
+        title="${args.title}"
+        size="${args.size}"
+        ?drawer=${args.drawer}
+        .tabs=${args.tabs}
+        selectedTab=${args.selectedTab}
+        .drawerLinks=${[
+          { label: "Learn", href: "/learn" },
+          { label: "About", href: "/about" },
+          { label: "Support", href: "/support" },
+        ]}
+      >
+        <button slot="lang" style="${langBtnStyle}">English ${langCaret}</button>
+        <button slot="auth" style="${loginBtnStyle}">Log in</button>
+
+        <button slot="drawer-lang" style="${langBtnStyle}; width: 100%; justify-content: space-between;">
+          English ${langCaret}
+        </button>
+        <button slot="drawer-auth" style="${loginBtnStyle}; width: 100%;">Log in</button>
+      </hot-header>
+
+      <div style="padding: 20px;">
+        <h2>Header with lang + auth slots</h2>
+        <p>
+          Wide viewports show the lang picker and login button in the right rail.
+          Resize below 769 px and they move into the drawer alongside the nav items.
+        </p>
+        <p>
+          Note: each slot only renders once, so the host app must provide content
+          for the desktop slots (<code>lang</code>, <code>auth</code>) and the
+          drawer slots (<code>drawer-lang</code>, <code>drawer-auth</code>) separately.
+        </p>
+      </div>
+    `;
+  },
+};
+
 export const WithoutAuth: Story = {
   args: {
     title: "HOTOSM Tools",

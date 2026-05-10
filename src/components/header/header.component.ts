@@ -410,7 +410,8 @@ export class Header extends LitElement {
         
 
         <div id="right-section" class="header--right-section">
-          <slot name="auth"></slot>
+          <slot name="lang" class="header--lang-slot"></slot>
+          <slot name="auth" class="header--auth-slot"></slot>
           ${
             this._showDrawer
               ? html`
@@ -457,6 +458,11 @@ export class Header extends LitElement {
                         `,
                       )}
                     </ul>
+
+                    <div class="drawer-extras">
+                      <slot name="drawer-lang" class="drawer-lang-slot"></slot>
+                      <slot name="drawer-auth" class="drawer-auth-slot"></slot>
+                    </div>
                   </div>
                 </wa-drawer>
                 <wa-button

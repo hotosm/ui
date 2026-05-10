@@ -357,6 +357,32 @@ Notes:
 - Arrays and functions must be assigned as properties from JS (attributes are
   strings).
 
+### Slots
+
+- `lang` - language picker shown in the right rail on desktop. Hidden on
+  mobile (≤ 768 px); use `drawer-lang` to surface the same control inside
+  the sidebar.
+- `auth` - login / profile component shown in the right rail on desktop.
+  Hidden on mobile; use `drawer-auth` for the sidebar copy.
+- `drawer-lang` - language picker rendered inside the drawer on mobile.
+  Hidden on desktop.
+- `drawer-auth` - login / profile rendered inside the drawer on mobile.
+  Hidden on desktop.
+
+Each named slot only renders once in the Shadow DOM, so to have a control
+appear both in the right rail (desktop) and in the drawer (mobile) the host
+app must supply the content twice - once with the desktop slot name and
+once with the matching `drawer-*` name.
+
+```html
+<hot-header>
+  <my-lang-picker slot="lang"></my-lang-picker>
+  <my-login-btn slot="auth"></my-login-btn>
+  <my-lang-picker slot="drawer-lang"></my-lang-picker>
+  <my-login-btn slot="drawer-auth"></my-login-btn>
+</hot-header>
+```
+
 ### Events
 
 - tab-change - Fired when a tab is selected
