@@ -1,0 +1,8 @@
+{
+  "version": "2026-05-10-maintenance",
+  "title": "Scheduled maintenance",
+  "message": "Tasking Manager will be offline Saturday 14:00-16:00 UTC for database upgrades.",
+  "variant": "warning",
+  "startsAt": "2026-05-01T00:00:00Z",
+  "endsAt": "2099-12-31T23:59:59Z"
+}

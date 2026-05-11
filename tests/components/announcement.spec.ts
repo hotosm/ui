@@ -130,6 +130,134 @@ describe("<hot-announcement>", () => {
     expect(localStorage.getItem("hot-announcement-v1.0.0-dismissed")).toBeNull();
   });
 
+  describe("with src (remote config)", () => {
+    let fetchSpy: ReturnType<typeof vi.spyOn>;
+
+    function mockFetchOnce(
+      body: string | object | null,
+      init: { ok?: boolean; status?: number } = {},
+    ) {
+      const ok = init.ok ?? true;
+      const status = init.status ?? 200;
+      const text = body === null ? "" : typeof body === "string" ? body : JSON.stringify(body);
+      fetchSpy.mockResolvedValueOnce(
+        new Response(text, { status, statusText: ok ? "OK" : "Error" }),
+      );
+    }
+
+    beforeEach(() => {
+      fetchSpy = vi.spyOn(globalThis, "fetch");
+    });
+
+    afterEach(() => {
+      fetchSpy.mockRestore();
+    });
+
+    async function mountWithSrc(src = "/announce.json"): Promise<Announcement> {
+      const el = document.createElement("hot-announcement") as Announcement;
+      el.src = src;
+      document.body.appendChild(el);
+      // The fetch + Response.text() + lit update chain spans several
+      // microtasks, so flush generously before tests assert.
+      await vi.waitFor(() => expect(fetchSpy).toHaveBeenCalled());
+      for (let i = 0; i < 10; i++) await Promise.resolve();
+      await (el as any).updateComplete;
+      return el;
+    }
+
+    it("fetches the config and renders a banner from it", async () => {
+      mockFetchOnce({ version: "v2.0.0", title: "Remote", message: "From the cloud" });
+      const el = await mountWithSrc();
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        "/announce.json",
+        expect.objectContaining({ signal: expect.any(AbortSignal) }),
+      );
+      const banner = el.shadowRoot!.querySelector(".announcement-banner");
+      expect(banner).not.toBeNull();
+      expect(banner!.textContent).toContain("Remote");
+      expect(banner!.textContent).toContain("From the cloud");
+    });
+
+    it("renders nothing on a 404 without throwing", async () => {
+      mockFetchOnce("", { ok: false, status: 404 });
+      const el = await mountWithSrc();
+
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
+    });
+
+    it("renders nothing on a network error without throwing", async () => {
+      fetchSpy.mockRejectedValueOnce(new TypeError("Network down"));
+      const el = await mountWithSrc();
+
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
+    });
+
+    it("renders nothing on malformed JSON", async () => {
+      mockFetchOnce("{ not valid json");
+      const el = await mountWithSrc();
+
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
+    });
+
+    it("renders nothing when the body is empty", async () => {
+      mockFetchOnce("");
+      const el = await mountWithSrc();
+
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
+    });
+
+    it("does not warn about missing version while waiting for src to load", async () => {
+      mockFetchOnce("");
+      await mountWithSrc();
+
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it("hides the banner when current time is before startsAt", async () => {
+      const future = new Date(Date.now() + 60_000).toISOString();
+      mockFetchOnce({ version: "v3.0.0", message: "Soon", startsAt: future });
+      const el = await mountWithSrc();
+
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
+    });
+
+    it("hides the banner when current time is after endsAt", async () => {
+      const past = new Date(Date.now() - 60_000).toISOString();
+      mockFetchOnce({ version: "v3.0.0", message: "Expired", endsAt: past });
+      const el = await mountWithSrc();
+
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
+    });
+
+    it("shows the banner when current time is inside the window", async () => {
+      const start = new Date(Date.now() - 60_000).toISOString();
+      const end = new Date(Date.now() + 60_000).toISOString();
+      mockFetchOnce({ version: "v3.0.0", message: "Live now", startsAt: start, endsAt: end });
+      const el = await mountWithSrc();
+
+      const banner = el.shadowRoot!.querySelector(".announcement-banner");
+      expect(banner).not.toBeNull();
+      expect(banner!.textContent).toContain("Live now");
+    });
+
+    it("respects per-version dismissal for remote configs", async () => {
+      localStorage.setItem("hot-announcement-v9.9.9-dismissed", "true");
+      mockFetchOnce({ version: "v9.9.9", message: "Already dismissed" });
+      const el = await mountWithSrc();
+
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
+    });
+
+    it("ignores invalid variant values and falls back to the default", async () => {
+      mockFetchOnce({ version: "v4.0.0", message: "Hi", variant: "explosive" });
+      const el = await mountWithSrc();
+
+      expect(el.variant).toBe("brand");
+      expect(el.shadowRoot!.querySelector(".announcement-banner")).not.toBeNull();
+    });
+  });
+
   it("renders slotted body content when provided", async () => {
     const el = document.createElement("hot-announcement") as Announcement;
     el.version = "v1.0.0";
