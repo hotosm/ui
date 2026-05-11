@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.1 (2026-05-11)
+
+### Fix
+
+- allow loading of remote announcement content from json
+
 ## 0.10.0 (2026-05-10)
 
 ### Feat
