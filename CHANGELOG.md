@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.2 (2026-08-18)
+
+### Fix
+
+- allow adding links into announcement banner content
+
 ## 0.10.1 (2026-05-11)
 
 ### Fix
