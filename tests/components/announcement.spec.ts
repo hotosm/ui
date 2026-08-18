@@ -249,12 +249,84 @@ describe("<hot-announcement>", () => {
       expect(el.shadowRoot!.querySelector(".announcement-banner")).toBeNull();
     });
 
+    it("renders a link that arrived in the remote message", async () => {
+      mockFetchOnce({
+        version: "v5.0.0",
+        message: "Watch the [guides](https://docs.drone.hotosm.org/video-guides).",
+      });
+      const el = await mountWithSrc();
+
+      const anchor = el.shadowRoot!.querySelector(".announcement-body a") as HTMLAnchorElement;
+      expect(anchor.getAttribute("href")).toBe("https://docs.drone.hotosm.org/video-guides");
+      expect(anchor.textContent).toBe("guides");
+    });
+
     it("ignores invalid variant values and falls back to the default", async () => {
       mockFetchOnce({ version: "v4.0.0", message: "Hi", variant: "explosive" });
       const el = await mountWithSrc();
 
       expect(el.variant).toBe("brand");
       expect(el.shadowRoot!.querySelector(".announcement-banner")).not.toBeNull();
+    });
+  });
+
+  describe("links in message", () => {
+    const mountWithMessage = async (message: string) => {
+      const el = document.createElement("hot-announcement") as Announcement;
+      el.version = "v1.0.0";
+      el.message = message;
+      document.body.appendChild(el);
+      await (el as any).updateComplete;
+      return el;
+    };
+
+    it("turns a markdown link into an anchor and keeps the text around it", async () => {
+      const el = await mountWithMessage(
+        "See the [video guides](https://docs.drone.hotosm.org/video-guides) for more.",
+      );
+
+      const body = el.shadowRoot!.querySelector(".announcement-body")!;
+      const anchor = body.querySelector("a") as HTMLAnchorElement;
+      expect(anchor.getAttribute("href")).toBe("https://docs.drone.hotosm.org/video-guides");
+      expect(anchor.textContent).toBe("video guides");
+      expect(anchor.getAttribute("target")).toBe("_blank");
+      expect(anchor.getAttribute("rel")).toBe("noopener noreferrer");
+      expect(body.textContent).toContain("See the");
+      expect(body.textContent).toContain("for more.");
+    });
+
+    it("autolinks a bare URL without swallowing trailing punctuation", async () => {
+      const el = await mountWithMessage("Guides: https://docs.drone.hotosm.org/video-guides.");
+
+      const anchor = el.shadowRoot!.querySelector(".announcement-body a") as HTMLAnchorElement;
+      expect(anchor.getAttribute("href")).toBe("https://docs.drone.hotosm.org/video-guides");
+      expect(anchor.textContent).toBe("https://docs.drone.hotosm.org/video-guides");
+      expect(el.shadowRoot!.querySelector(".announcement-body")!.textContent).toContain("guides.");
+    });
+
+    it("renders every link in a message with more than one", async () => {
+      const el = await mountWithMessage(
+        "[Docs](https://docs.hotosm.org) and [guides](https://docs.hotosm.org/guides).",
+      );
+
+      const anchors = el.shadowRoot!.querySelectorAll(".announcement-body a");
+      expect(anchors.length).toBe(2);
+    });
+
+    it("shows raw HTML as literal text rather than markup", async () => {
+      const el = await mountWithMessage('<a href="https://evil.example">click</a>');
+
+      const body = el.shadowRoot!.querySelector(".announcement-body")!;
+      expect(body.querySelector("a")).toBeNull();
+      expect(body.textContent).toContain('<a href="https://evil.example">click</a>');
+    });
+
+    it("does not linkify a non-http scheme", async () => {
+      const el = await mountWithMessage("[click](javascript:alert(1))");
+
+      const body = el.shadowRoot!.querySelector(".announcement-body")!;
+      expect(body.querySelector("a")).toBeNull();
+      expect(body.textContent).toContain("[click](javascript:alert(1))");
     });
   });
 

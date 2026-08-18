@@ -163,6 +163,50 @@ export const RemoteConfigFromStaticFile: Story = {
 };
 
 /**
+ * Links inside `message`. Written as markdown `[label](url)`, or as a bare
+ * URL, both of which become anchors. This is the only way to get a link into
+ * a banner driven by a remote `src` config, since raw HTML in `message` is
+ * rendered as literal text rather than markup.
+ */
+export const MessageWithLinks: Story = {
+  args: {
+    version: "v0.3.0",
+    title: "New video guides",
+    message:
+      "Additional video guides can be found here: " +
+      "https://docs.drone.hotosm.org/video-guides - or read the " +
+      "[full changelog](https://github.com/hotosm/drone-tm/releases).",
+    variant: "brand",
+  },
+  render: (args) => html`
+    <hot-announcement
+      version="${args.version}"
+      title="${args.title}"
+      message="${args.message}"
+      variant="${args.variant}"
+    ></hot-announcement>
+
+    <div style="padding: 20px;">
+      <h2>Links in a plain message</h2>
+      <p>
+        Use this when the banner is driven by a remote JSON config, where there
+        is no slot to put HTML into. Both forms work:
+      </p>
+      <pre style="background: #f6f6f6; padding: 12px; border-radius: 4px; font-size: 12px;">
+"message": "See [the guides](https://docs.drone.hotosm.org/video-guides)."
+"message": "See https://docs.drone.hotosm.org/video-guides"
+      </pre>
+      <button
+        style="padding: 6px 14px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;"
+        @click=${() => resetDismissal(args.version)}
+      >
+        Reset dismissal for ${args.version}
+      </button>
+    </div>
+  `,
+};
+
+/**
  * Plain-text variant using the `message` prop instead of slotted HTML.
  */
 export const PlainMessage: Story = {

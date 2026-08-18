@@ -22,6 +22,12 @@ interface RemoteConfig {
   endsAt?: string;
 }
 
+// Markdown `[label](url)`, or a bare URL that starts a word. Only http(s)
+// matches, so a parsed href can never carry a `javascript:` payload, and the
+// lookbehind keeps a URL quoted inside literal markup from being linkified.
+const LINK_PATTERN =
+  /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(?<=^|[\s(])(https?:\/\/[^\s<"]+[^\s<".,:;')\]])/g;
+
 function parseDate(value: string | undefined): Date | null {
   if (typeof value !== "string" || value.length === 0) return null;
   const d = new Date(value);
@@ -39,7 +45,11 @@ export class Announcement extends LitElement {
   @property({ type: String })
   accessor title: string = "";
 
-  /** Plain-text body shown when no slotted content is provided. */
+  /**
+   * Body shown when no slotted content is provided. Links may be written as
+   * markdown `[label](url)` or as a bare URL; all other markup is shown as
+   * literal text, since a remote `src` config is not a trusted HTML source.
+   */
   @property({ type: String })
   accessor message: string = "";
 
@@ -261,6 +271,28 @@ export class Announcement extends LitElement {
     this.visible = !dismissed;
   }
 
+  /** Render `message` as text, turning any links it contains into anchors. */
+  private renderMessage() {
+    const parts: unknown[] = [];
+    let cursor = 0;
+
+    for (const match of this.message.matchAll(LINK_PATTERN)) {
+      const [raw, label, markdownUrl, bareUrl] = match;
+      const href = markdownUrl ?? bareUrl;
+      parts.push(this.message.slice(cursor, match.index));
+      parts.push(
+        html`<a href="${href}" target="_blank" rel="noopener noreferrer"
+          >${label ?? bareUrl}</a
+        >`,
+      );
+      cursor = match.index + raw.length;
+    }
+
+    if (parts.length === 0) return this.message;
+    parts.push(this.message.slice(cursor));
+    return parts;
+  }
+
   protected render() {
     if (!this.visible) return null;
 
@@ -271,7 +303,7 @@ export class Announcement extends LitElement {
           <div class="announcement-content">
             <div class="announcement-body">
               ${this.title.length > 0 ? html`<strong>${this.title}</strong>` : null}
-              <slot>${this.message}</slot>
+              <slot>${this.renderMessage()}</slot>
             </div>
             <button
               type="button"
