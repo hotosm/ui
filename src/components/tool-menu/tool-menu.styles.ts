@@ -22,16 +22,11 @@ export const styles = css`
     text-align: left;
   }
 
-  .section-divider {
-    margin-top: var(--hot-spacing-x-small);
-    padding-top: var(--hot-spacing-x-small);
-  }
-
-  wa-dropdown-label {
-    font-weight: var(--hot-font-weight-semibold);
-    font-size: var(--hot-font-size-small);
-    padding: var(--hot-spacing-x-small) var(--hot-spacing-medium) var(--hot-spacing-2x-small)
-      var(--hot-spacing-medium);
+  .tool-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
   }
 
   .tool-title {

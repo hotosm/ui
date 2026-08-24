@@ -11,7 +11,7 @@ primitives.
 ## Installation
 
 ```bash
-pnpm add @hotosm/ui @awesome.me/webawesome@3.2.1
+pnpm add @hotosm/ui @awesome.me/webawesome@3.11.0
 ```
 
 > Important: Pin WebAwesome to the version used by this package to avoid
@@ -142,15 +142,15 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
     <!-- WebAwesome CSS (cached across HOT tools) -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css"
     />
 
     <!-- HOT theme only (fonts + HOT tokens + WA overrides) -->
@@ -163,7 +163,7 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
     <script type="importmap">
       {
         "imports": {
-          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
         }
       }
     </script>
