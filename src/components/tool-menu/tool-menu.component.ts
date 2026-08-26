@@ -30,7 +30,7 @@ const TOOLS_DATA: Tool[] = [
   {
     id: "drone",
     title: "Drone Tasking Manager",
-    href: "https://dronetm.org/",
+    href: "https://drone.hotosm.org/",
     icon: droneIcon,
   },
   {
@@ -54,7 +54,7 @@ const TOOLS_DATA: Tool[] = [
   {
     id: "field",
     title: "Field Tasking Manager",
-    href: "https://fmtm.hotosm.org/",
+    href: "https://field.hotosm.org/",
     icon: fieldIcon,
   },
   {

@@ -105,7 +105,7 @@ import "@hotosm/ui/dist/style.css";
 
 ### Option B - Split / CDN-optimised (recommended for multi-tool caching)
 
-If you run several HOT tools (FMTM, Tasking Manager, etc.) and want
+If you run several HOT tools (FieldTM, Tasking Manager, etc.) and want
 the browser to **cache WebAwesome CSS once** across all of them, load
 WebAwesome from CDN separately and use the slim HOT-only stylesheet:
 
