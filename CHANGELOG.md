@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.0 (2026-08-26)
+
+### Feat
+
+- add a func to load all wa components on first page load
+
+### Fix
+
+- remove font imports from css, fix #178
+- **tool-menu**: tool name already rendered alongside icons, so using alt is redundant
+- domains for fieldtm & dronetm
+
+### Refactor
+
+- **tool-menu**: remove redundant css after wa upgrade --> 3.11
+
 ## 0.10.2 (2026-08-18)
 
 ### Fix
