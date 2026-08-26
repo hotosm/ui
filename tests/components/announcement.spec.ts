@@ -3,16 +3,26 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import "../../src/components/announcement/announcement.ts";
 import { Announcement } from "../../src/components/announcement/announcement.component.ts";
 
+function clearAnnouncementStorage() {
+  for (let index = localStorage.length - 1; index >= 0; index--) {
+    const key = localStorage.key(index);
+    if (key?.startsWith("hot-announcement-") || key?.startsWith("drone-tm-announce-")) {
+      localStorage.removeItem(key);
+    }
+  }
+}
+
 describe("<hot-announcement>", () => {
   let warnSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    localStorage.clear();
+    clearAnnouncementStorage();
     warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
   });
 
   afterEach(() => {
     document.body.innerHTML = "";
+    clearAnnouncementStorage();
     warnSpy.mockRestore();
   });
 

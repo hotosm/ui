@@ -6,6 +6,13 @@ import type MatomoTracking from "../../src/components/tracking/tracking.componen
 // The test browser runs on localhost
 const TEST_HOSTNAME = window.location.hostname;
 
+function clearTrackingStorage() {
+  for (let index = localStorage.length - 1; index >= 0; index--) {
+    const key = localStorage.key(index);
+    if (key?.startsWith("hot-matomo-consent-")) localStorage.removeItem(key);
+  }
+}
+
 /** Helper: create a <hot-tracking> element with matching domain so connectedCallback proceeds. */
 function createElement(attrs: Partial<Record<string, string>> = {}): MatomoTracking {
   const el = document.createElement("hot-tracking") as MatomoTracking;
@@ -26,12 +33,13 @@ describe("<hot-tracking>", () => {
   let el: MatomoTracking;
 
   beforeEach(() => {
-    localStorage.clear();
+    clearTrackingStorage();
     window._paq = [];
   });
 
   afterEach(() => {
     el?.remove();
+    clearTrackingStorage();
     window._paq = [];
   });
 

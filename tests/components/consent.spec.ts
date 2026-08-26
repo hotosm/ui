@@ -2,6 +2,12 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import "../../src/components/consent/consent";
 import type { Consent } from "../../src/components/consent/consent.component";
 
+const CONSENT_STORAGE_KEYS = ["-consent-agree", "map-app-consent-agree"];
+
+function clearConsentStorage() {
+  for (const key of CONSENT_STORAGE_KEYS) localStorage.removeItem(key);
+}
+
 describe("<hot-consent>", () => {
   let el: Consent;
 
@@ -15,7 +21,7 @@ describe("<hot-consent>", () => {
     node.shadowRoot?.querySelector(".decline-button") as HTMLElement | null;
 
   beforeEach(async () => {
-    localStorage.clear(); //Clear localStorage before every test.
+    clearConsentStorage();
 
     el = document.createElement("hot-consent") as Consent;
     document.body.appendChild(el);
@@ -24,7 +30,8 @@ describe("<hot-consent>", () => {
   });
 
   afterEach(() => {
-    el.remove(); //Clean up the DOM after each test to prevent state bleeding between tests.
+    el.remove(); // Clean up the DOM after each test to prevent state bleeding between tests.
+    clearConsentStorage();
   });
 
   // --- TESTS ---
