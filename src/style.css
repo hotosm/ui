@@ -1,5 +1,6 @@
-/* Import fonts */
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+/* Fonts are NOT bundled (see hotosm/ui#178): a CSS @import serialises the
+   font download behind this stylesheet. Load fonts with a <link> in your
+   HTML instead - see README "Fonts". */
 
 /* Import WebAwesome base styles (modular imports from local package) */
 @import "@awesome.me/webawesome/dist/styles/native.css";

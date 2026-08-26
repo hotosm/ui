@@ -1,15 +1,9 @@
-/* HOT-only styles - use this instead of style.css when loading
-   WebAwesome CSS separately from CDN for cross-tool cache sharing.
+/* HOT-only styles - use this instead of style.css when your page loads the
+   WebAwesome base stylesheets itself (native.css, utilities.css,
+   themes/default.css). Most apps should just use style.css.
 
-   Usage:
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/style-core.css">
-*/
-
-/* Import fonts */
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+   Fonts are NOT bundled (see hotosm/ui#178) - load them with a <link> in
+   your HTML instead. See README "Fonts". */
 
 /* HOT theme variables */
 @import "themes/hot.css";
