@@ -3,17 +3,6 @@ import { html } from "lit";
 
 import "../../src/hotosm-ui";
 
-// Prevent layout shift when dropdown opens by keeping scrollbar visible
-// When wa-dropdown opens, it adds a "scroll" class to <html> and sets overflow:hidden,
-// which removes the scrollbar and causes content to shift. This style prevents that.
-const style = document.createElement("style");
-style.textContent = `
-  html.scroll {
-    overflow-y: scroll !important;
-  }
-`;
-document.head.appendChild(style);
-
 const meta: Meta = {
   title: "ToolMenu",
   component: "hotosm-tool-menu",
@@ -47,20 +36,6 @@ export const Default: Story = {
           <li>Opens tool pages in new tabs</li>
           <li>Dispatches custom "tool-selected" event</li>
         </ul>
-
-        <h3>Known Issues:</h3>
-        <p>
-          When the dropdown opens, the page content may shift slightly. This
-          happens because the dropdown adds a "scroll" class to the &lt;html&gt;
-          element with <code>overflow: hidden</code>, which removes the
-          scrollbar.
-        </p>
-        <p>To prevent this in your application, add the following CSS:</p>
-        <pre
-          style="background: #f5f5f5; padding: 10px; border-radius: 5px;"
-        ><code>html.scroll {
-  overflow-y: scroll !important;
-}</code></pre>
       </div>
     `;
   },
