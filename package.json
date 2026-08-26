@@ -61,7 +61,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@awesome.me/webawesome": "3.2.1",
+    "@awesome.me/webawesome": "3.11.0",
     "@storybook/addon-docs": "^9.0.18",
     "@storybook/addon-links": "^9.0.18",
     "@storybook/web-components-vite": "^9.0.18",
@@ -84,7 +84,7 @@
     "vitest": "^4.0.10"
   },
   "peerDependencies": {
-    "@awesome.me/webawesome": "3.2.1"
+    "@awesome.me/webawesome": "3.11.0"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -2,9 +2,9 @@
    WebAwesome CSS separately from CDN for cross-tool cache sharing.
 
    Usage:
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@latest/dist/style-core.css">
 */
 

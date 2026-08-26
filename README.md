@@ -63,14 +63,14 @@ built with [Lit](https://lit.dev) and themed for HOTOSM tools using
 - Provide a consistent HOT look-and-feel out of the box.
 - Keep the component set small and focused (header, sidebar, footer, etc.).
 
-**WebAwesome version:** `3.2.1`
+**WebAwesome version:** `3.11.0`
 
 ---
 
 ## Installation
 
 ```bash
-pnpm install @hotosm/ui @awesome.me/webawesome@3.2.1
+pnpm install @hotosm/ui @awesome.me/webawesome@3.11.0
 ```
 
 > [!NOTE]
@@ -105,7 +105,7 @@ import "@hotosm/ui/dist/style.css";
 
 ### Option B - Split / CDN-optimised (recommended for multi-tool caching)
 
-If you run several HOT tools (FMTM, Tasking Manager, etc.) and want
+If you run several HOT tools (FieldTM, Tasking Manager, etc.) and want
 the browser to **cache WebAwesome CSS once** across all of them, load
 WebAwesome from CDN separately and use the slim HOT-only stylesheet:
 
@@ -115,15 +115,15 @@ WebAwesome from CDN separately and use the slim HOT-only stylesheet:
 <!-- WebAwesome CSS - shared across all HOT tools via browser cache -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css"
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css"
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css"
+  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css"
 />
 
 <!-- HOT theme only (fonts + design tokens + WebAwesome overrides) -->
@@ -208,15 +208,15 @@ all HOT tools (Option B from the styles section above):
     <!-- WebAwesome CSS - cached once across all HOT tools at this WA version -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/native.css"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/utilities.css"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist/styles/themes/default.css"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css"
     />
 
     <!-- HOT UI theme (fonts + HOT design tokens + WebAwesome overrides,
@@ -233,7 +233,7 @@ all HOT tools (Option B from the styles section above):
     <script type="importmap">
       {
         "imports": {
-          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.2.1/dist-cdn/components/"
+          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
         }
       }
     </script>
