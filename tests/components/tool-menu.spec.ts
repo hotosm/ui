@@ -75,7 +75,7 @@ describe("<hotosm-tool-menu>", () => {
     expect(logos).toHaveLength(TOOL_IDS.length);
     expect(logos.every((logo) => logo.getAttribute("slot") === "icon")).toBe(true);
     expect(logos.every((logo) => !!logo.getAttribute("src"))).toBe(true);
-    expect(logos[0].getAttribute("alt")).toBe("Drone Tasking Manager");
+    expect(logos.every((logo) => logo.getAttribute("alt") === "")).toBe(true);
   });
 
   it("keeps rendering logos when the removed show-logos attribute is passed", async () => {
