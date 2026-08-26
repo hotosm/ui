@@ -128,50 +128,31 @@ import "@hotosm/ui/dist/components/header/header.js";
 
 ### HTML (CDN-only)
 
-Load WebAwesome styles and components from CDN so the browser caches
-them once across all HOT tools. An import map is required to resolve
-WebAwesome module specifiers inside `hotosm-ui.js`:
+jsDelivr's `/+esm` endpoint rewrites bare-module specifiers server-side,
+so no import map is needed. `wa-cloak` hides the page until all custom
+elements are defined (2s max):
+
+<!-- markdownlint-disable MD013 -->
 
 ```html
 <!DOCTYPE html>
-<html class="wa-theme-default wa-palette-hotosm">
+<html class="wa-theme-default wa-palette-hotosm wa-cloak">
   <head>
     <meta charset="UTF-8" />
     <title>HOT Header - HTML demo</title>
 
-    <!-- WebAwesome CSS (cached across HOT tools) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css"
-    />
+    <!-- WebAwesome base styles + HOT theme, self-contained.
+         Fonts are not bundled - see README "Fonts". -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
 
-    <!-- HOT theme only (fonts + HOT tokens + WA overrides) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css"
-    />
-
-    <!-- Import map: resolves WA bare-module specifiers -->
-    <script type="importmap">
-      {
-        "imports": {
-          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
-        }
-      }
-    </script>
-
-    <!-- HOT UI web components -->
+    <!-- Register every wa-* element, then the hot-* components -->
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js/+esm"
+    ></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js/+esm"
     ></script>
   </head>
   <body>
@@ -229,6 +210,8 @@ WebAwesome module specifiers inside `hotosm-ui.js`:
   </body>
 </html>
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 ### React
 

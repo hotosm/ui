@@ -82,80 +82,45 @@ pnpm install @hotosm/ui @awesome.me/webawesome@3.11.0
 
 ## Loading Styles
 
-Two CSS files are published. Choose the one that fits your setup.
-
-### Option A - Bundled (recommended for simplicity)
-
-A single self-contained file with WebAwesome base styles + HOT theme
-already inlined. Nothing else to load.
-
-<!-- markdownlint-disable MD013 -->
-
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style.css" />
-```
-
-<!-- markdownlint-enable MD013 -->
-
-Or from a bundler:
+Use the single self-contained stylesheet (WebAwesome base styles + HOT
+theme inlined):
 
 ```js
 import "@hotosm/ui/dist/style.css";
 ```
 
-### Option B - Split / CDN-optimised (recommended for multi-tool caching)
-
-If you run several HOT tools (FieldTM, Tasking Manager, etc.) and want
-the browser to **cache WebAwesome CSS once** across all of them, load
-WebAwesome from CDN separately and use the slim HOT-only stylesheet:
+Or from CDN:
 
 <!-- markdownlint-disable MD013 -->
 
 ```html
-<!-- WebAwesome CSS - shared across all HOT tools via browser cache -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css"
-/>
-
-<!-- HOT theme only (fonts + design tokens + WebAwesome overrides) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
 ```
 
 <!-- markdownlint-enable MD013 -->
 
-Or from a bundler:
+`style-core.css` (HOT theme only, no WebAwesome) exists for pages that
+load the WebAwesome base stylesheets themselves - most apps don't need it.
 
-```js
-// WebAwesome (resolve from node_modules)
-import "@awesome.me/webawesome/dist/styles/native.css";
-import "@awesome.me/webawesome/dist/styles/utilities.css";
-import "@awesome.me/webawesome/dist/styles/themes/default.css";
+### Fonts
 
-// HOT theme only
-import "@hotosm/ui/dist/style-core.css";
+Fonts are **not** bundled in the CSS
+([#178](https://github.com/hotosm/ui/issues/178) - a CSS `@import` would
+serialise the font download behind the stylesheet). Add them to your HTML
+so they load in parallel:
+
+<!-- markdownlint-disable MD013 -->
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+/>
 ```
 
-| File             | Size    | Contains                                    |
-| ---------------- | ------- | ------------------------------------------- |
-| `style.css`      | ~105 KB | WebAwesome + fonts + HOT theme (everything) |
-| `style-core.css` | ~21 KB  | Fonts + HOT theme only (no WebAwesome)      |
-
-> [!TIP]
-> **Which should I pick?**
->
-> - Building a single standalone app? Use **Option A** - zero config.
-> - Running multiple HOT tools on the same domain or expecting users to
->   navigate between them? Use **Option B** - the ~84 KB of shared
->   WebAwesome CSS is fetched once and cached by the browser.
+<!-- markdownlint-enable MD013 -->
 
 ---
 
@@ -185,63 +150,68 @@ Add the required WebAwesome classes to your `<html>` element:
 
 ### Via Bundler (Vite, Webpack, etc.)
 
-Import individual components - your bundler will tree-shake the rest:
+Recommended: register **all** WebAwesome elements once, up front, so every
+custom element is defined before first render - this eliminates flash of
+undefined custom elements (FOUCE) without maintaining per-page import
+lists:
 
 ```js
-import "@hotosm/ui/dist/components/header/header.js";
+import "@hotosm/ui/dist/style.css";
+import "@hotosm/ui/dist/webawesome-all.js"; // registers every wa-* element
+import "@hotosm/ui/dist/components/header/header.js"; // hot-* components you use
 ```
 
 ```html
 <hot-header title="My App"></hot-header>
 ```
 
+Put WebAwesome in its own long-lived chunk so app deploys don't invalidate
+the browser-cached copy:
+
+```js
+// vite.config.ts
+build: {
+  rollupOptions: {
+    output: {
+      manualChunks(id) {
+        if (id.includes("@awesome.me/webawesome")) return "webawesome";
+      },
+    },
+  },
+},
+```
+
+Byte-critical app? Skip `webawesome-all.js` and cherry-pick individual
+WebAwesome components instead - then add the `wa-cloak` class to `<html>`
+as a FOUCE backstop (pure CSS, ships in WebAwesome's `utilities.css`,
+already included in `style.css`).
+
 ### Via CDN / Plain HTML / HTMX
 
-The recommended approach for HTMX and plain-HTML apps loads WebAwesome
-styles and components from CDN so the browser can cache them once across
-all HOT tools (Option B from the styles section above):
+Use jsDelivr's `/+esm` endpoint, which rewrites bare-module specifiers
+server-side - no import map needed. Same strategy as bundlers: register
+everything before anything renders.
+
+<!-- markdownlint-disable MD013 -->
 
 ```html
 <!DOCTYPE html>
-<html class="wa-theme-default wa-palette-hotosm">
+<!-- wa-cloak: hides the page until all custom elements are defined (2s max) -->
+<html class="wa-theme-default wa-palette-hotosm wa-cloak">
   <head>
-    <!-- WebAwesome CSS - cached once across all HOT tools at this WA version -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css"
-    />
+    <!-- Fonts: see "Fonts" above -->
 
-    <!-- HOT UI theme (fonts + HOT design tokens + WebAwesome overrides,
-    ~21 KB) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/style-core.css"
-    />
+    <!-- WebAwesome base styles + HOT theme, self-contained -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
 
-    <!-- Import map: resolves WebAwesome bare-module specifiers
-       inside hotosm-ui.js -->
-    <!-- WA components load lazily from CDN only when first used;
-       no separate loader needed -->
-    <script type="importmap">
-      {
-        "imports": {
-          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
-        }
-      }
-    </script>
-
-    <!-- HOT UI web components -->
+    <!-- Register every wa-* element, then the hot-* components -->
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.6.1/dist/hotosm-ui.js"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js/+esm"
+    ></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js/+esm"
     ></script>
   </head>
 
@@ -258,11 +228,11 @@ all HOT tools (Option B from the styles section above):
 </html>
 ```
 
-> [!TIP]
-> If you need only a single self-contained stylesheet instead of the three
-> WA links above, you can use Option A (`style.css`) - but then the ~84 KB
-> of WebAwesome CSS is bundled into the HOT package and cannot be shared
-> across tools as a single cached resource.
+<!-- markdownlint-enable MD013 -->
+
+For multi-page (HTMX) apps, also inline a few critical theme tokens in
+`<head>` so first paint looks right before the CDN CSS arrives - see
+[Loading Strategies](https://hotosm.github.io/ui/?path=/docs/loading-strategies--docs).
 
 ### React
 

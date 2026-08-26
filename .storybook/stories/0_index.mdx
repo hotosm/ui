@@ -18,72 +18,38 @@ pnpm install @hotosm/ui @awesome.me/webawesome@3.11.0
 
 `@awesome.me/webawesome` is a peer dependency. Pin it to `3.11.0`.
 
-## Load Styles
+## Use It
 
-Option A (single bundled file):
-
-```js
-import "@hotosm/ui/dist/style.css";
-```
-
-Option B (split for cross-tool caching):
+Bundler usage - register everything up front so no custom element renders
+undefined (see [Loading Strategies](?path=/docs/loading-strategies--docs)):
 
 ```js
-import "@awesome.me/webawesome/dist/styles/native.css";
-import "@awesome.me/webawesome/dist/styles/utilities.css";
-import "@awesome.me/webawesome/dist/styles/themes/default.css";
-import "@hotosm/ui/dist/style-core.css";
-```
-
-## Use Components
-
-Bundler usage:
-
-```js
-import "@hotosm/ui/dist/components/header/header.js";
+import "@hotosm/ui/dist/style.css"; // WebAwesome base styles + HOT theme
+import "@hotosm/ui/dist/webawesome-all.js"; // registers every wa-* element
+import "@hotosm/ui/dist/components/header/header.js"; // hot-* components you use
 ```
 
 ```html
 <hot-header title="My App"></hot-header>
 ```
 
-CDN / plain HTML / HTMX usage:
+Fonts are not bundled - add the Google Fonts `<link>` to your HTML (see
+README "Fonts").
+
+CDN / plain HTML / HTMX usage (jsDelivr `/+esm` resolves bare-module
+specifiers - no import map needed):
 
 ```html
-<html class="wa-theme-default wa-palette-hotosm">
+<html class="wa-theme-default wa-palette-hotosm wa-cloak">
   <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/native.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/utilities.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist/styles/themes/default.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/style-core.css"
-    />
-
-    <script type="importmap">
-      {
-        "imports": {
-          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
-        }
-      }
-    </script>
-    <link
-      rel="modulepreload"
-      href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js"
-    />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js/+esm"
+    ></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js/+esm"
     ></script>
   </head>
   <body>

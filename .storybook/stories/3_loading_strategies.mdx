@@ -4,120 +4,85 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Loading Strategies
 
-This page covers the tradeoff between first contentful paint (FCP) and flash of
-unstyled content (FOUC) when HOT UI is used in plain HTML, CDN, or HTMX
-multi-page apps.
+How to avoid flash of undefined custom elements (FOUCE) when using HOT UI.
 
-## Why Multi-Page Apps Behave Differently
+## The Strategy
 
-In a single-page app, the JavaScript bundle loads once and client-side routing
-swaps content without reloading the document. In a multi-page app, each
-navigation is a full page load, so the browser repeats the same startup work:
+Register every custom element **before anything renders**, then keep a
+pure-CSS backstop for anything that slips through. Cherry-picking
+components per page saves some bytes but reintroduces FOUCE whenever the
+import list drifts - we trade a one-off, well-cached download for zero
+maintenance.
 
-1. Parse HTML.
-2. Fetch CSS.
-3. Fetch JavaScript modules.
-4. Define custom elements.
-5. Upgrade and render components.
+## Single-Page Apps (Vite, Webpack, etc.)
 
-That means FOUC can show up on every navigation, not just the first visit.
+Import everything in your entry file, before the app mounts:
 
-## Where FOUC Comes From
-
-The main sources are:
-
-1. Web components such as `wa-card`, `wa-button`, and `hot-header` are not fully
-   rendered until their JavaScript definitions load.
-2. Design tokens such as `--hot-color-*` and `--wa-color-*` are not available
-   until the relevant stylesheets or inline styles are parsed.
-3. Fonts may swap after first paint, but that is usually the least disruptive
-   issue.
-
-## Recommended Tradeoff
-
-Avoid hiding the entire page with rules like `body { opacity: 0; }`. That
-removes FOUC, but replaces it with a blank screen, which generally feels more
-broken than a brief component upgrade.
-
-A better default is:
-
-1. Render the document immediately.
-2. Hide only the custom elements that have not been defined yet.
-3. Inline the minimum theme tokens needed for acceptable first paint.
-4. Preload the component module so registration happens sooner.
-
-## Hide Only Undefined Elements
-
-Use the `:not(:defined)` selector to keep layout stable while custom elements are
-waiting to upgrade.
-
-```css
-wa-card:not(:defined),
-wa-button:not(:defined),
-wa-badge:not(:defined),
-wa-callout:not(:defined),
-wa-input:not(:defined),
-wa-textarea:not(:defined),
-hot-header:not(:defined) {
-  visibility: hidden;
-}
+```js
+import "@hotosm/ui/dist/style.css";
+import "@hotosm/ui/dist/webawesome-all.js"; // registers every wa-* element
+import "@hotosm/ui/dist/components/header/header.js"; // hot-* components you use
 ```
 
-Use `visibility: hidden` instead of `display: none` so the browser still
-reserves layout space and the page does not jump when components become defined.
+Because these are static imports in the entry chunk, all elements are
+defined before the first render. No cloaking, no pop-in, no layout shift.
 
-## Inline Critical Tokens
+Keep WebAwesome in its own chunk so app deploys don't invalidate the
+browser-cached copy (see README for the `manualChunks` snippet).
 
-Inline a small set of high-value tokens in the document `<head>` so the basic
-text, surface, and brand colors look correct before the full stylesheet arrives.
+## Multi-Page Apps (HTMX, plain HTML, CDN)
+
+Every navigation is a full page load, so the browser repeats the startup
+work each time. Three pieces:
+
+1. **Load modules via jsDelivr `/+esm`** (rewrites bare-module specifiers,
+   so no import map is needed):
+
+   ```html
+   <script
+     type="module"
+     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js/+esm"
+   ></script>
+   <script
+     type="module"
+     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js/+esm"
+   ></script>
+   ```
+
+2. **Inline a few critical theme tokens** in `<head>` so first paint looks
+   right before the CDN CSS arrives. Keep it small - stabilise first
+   paint, don't duplicate the token system:
+
+   ```html
+   <style>
+     :root {
+       --wa-color-brand-fill-loud: #d43f3f;
+       --wa-color-brand-border-loud: #ed5c5e;
+       --wa-color-brand-on-loud: #ffffff;
+       --hot-color-neutral-900: #404248;
+       --hot-color-neutral-50: #f3f3f3;
+     }
+   </style>
+   ```
+
+3. **Load fonts with a `<link>`, never a CSS `@import`** (an `@import`
+   serialises the font download behind the stylesheet - see
+   [#178](https://github.com/hotosm/ui/issues/178)). The exact tags are in
+   the README under "Fonts".
+
+## The Backstop: `wa-cloak`
+
+Add the `wa-cloak` class to `<html>` (or any wrapper). It's pure CSS,
+shipped in WebAwesome's `utilities.css` (included in `style.css`): the
+element stays hidden while it contains any undefined custom element, and
+reveals itself the moment everything registers - or after 2 seconds, so a
+broken load can never blank the page forever.
 
 ```html
-<style>
-  :root {
-    --wa-color-brand-fill-loud: #d43f3f;
-    --wa-color-brand-border-loud: #ed5c5e;
-    --wa-color-brand-on-loud: #ffffff;
-    --hot-color-neutral-900: #404248;
-    --hot-color-neutral-50: #f3f3f3;
-  }
-</style>
+<html class="wa-theme-default wa-palette-hotosm wa-cloak"></html>
 ```
 
-This should stay small. The goal is to stabilize first paint, not to duplicate
-the whole design token system inline.
-
-## Preload The Module
-
-When loading from a CDN, add `modulepreload` for the HOT UI bundle so the browser
-fetches it earlier.
-
-```html
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js" />
-
-<script
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/@hotosm/ui@0.7.0/dist/hotosm-ui.js"
-></script>
-```
-
-This helps reduce the delay before custom elements are registered, but it does
-not remove the need to download, parse, and execute the module.
-
-## What Cannot Be Eliminated
-
-With JavaScript-defined web components loaded from an external CDN, some
-first-visit upgrade delay is unavoidable. The browser must execute the module
-before the custom elements can render fully.
-
-The realistic goal is not to eliminate FOUC completely. It is to make the first
-paint fast, readable, and visually stable while components upgrade.
-
-## Practical Summary
-
-For most HOT UI integrations:
-
-1. Do not hide the whole page.
-2. Hide only undefined custom elements.
-3. Inline a few critical tokens.
-4. Use `modulepreload`.
-5. Rely on normal browser caching to make repeat visits much faster.
+With everything registered up front the cloak never actually engages - it
+only exists to catch regressions. MPAs that prefer per-element pop-in over
+whole-page hiding can use `:not(:defined) { visibility: hidden }` on
+specific elements instead.
