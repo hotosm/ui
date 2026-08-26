@@ -45,6 +45,10 @@
       "import": "./dist/hotosm-ui.js"
     },
     "./dist/hotosm-ui.js": "./dist/hotosm-ui.js",
+    "./dist/webawesome-all.js": {
+      "types": "./dist/webawesome-all.d.ts",
+      "import": "./dist/webawesome-all.js"
+    },
     "./dist/components/*": "./dist/components/*",
     "./dist/themes/*": "./dist/themes/*",
     "./dist/style.css": "./dist/style.css",

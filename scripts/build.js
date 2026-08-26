@@ -54,6 +54,28 @@ async function copyDir(src, dest) {
 await copyDir("src/themes", `${outdir}/themes`).catch(() => {});
 await copyDir("src/assets", `${outdir}/assets`).catch(() => {});
 
+// Generate webawesome-all.js: static imports of every WebAwesome component,
+// pinned to the version in peerDependencies. Apps import this once so all
+// wa-* elements are defined before first render, eliminating FOUCE without
+// maintaining per-app import lists.
+const waComponentsDir = "node_modules/@awesome.me/webawesome/dist/components";
+const waComponents = (await fs.readdir(waComponentsDir, { withFileTypes: true }))
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+  .sort();
+const waImports = [];
+for (const name of waComponents) {
+  const entryFile = `${waComponentsDir}/${name}/${name}.js`;
+  try {
+    await fs.access(entryFile);
+    waImports.push(`import "@awesome.me/webawesome/dist/components/${name}/${name}.js";`);
+  } catch {
+    // directory without a matching entry file (internal helpers)
+  }
+}
+await fs.writeFile(`${outdir}/webawesome-all.js`, waImports.join("\n") + "\n");
+await fs.writeFile(`${outdir}/webawesome-all.d.ts`, "export {};\n");
+
 // Bundle CSS through esbuild so @import paths (including
 // @awesome.me/webawesome) are resolved from node_modules and inlined.
 // The Google Fonts @import URL is kept as-is (external URL).
