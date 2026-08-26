@@ -125,11 +125,9 @@ export class HotToolMenu extends LitElement {
                 slot="icon"
                 class="tool-logo"
                 src="${tool.icon}"
-                alt="${tool.title}"
+                alt=""
               />
-              <div class="tool-content">
-                <div class="tool-title">${tool.title}</div>
-              </div>
+              <div class="tool-title">${tool.title}</div>
             </wa-dropdown-item>
           `,
         )}
