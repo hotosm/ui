@@ -128,9 +128,10 @@ import "@hotosm/ui/dist/components/header/header.js";
 
 ### HTML (CDN-only)
 
-jsDelivr's `/+esm` endpoint rewrites bare-module specifiers server-side,
-so no import map is needed. `wa-cloak` hides the page until all custom
-elements are defined (2s max):
+Load the raw dist files, with an import map for the bare
+`@awesome.me/webawesome/...` imports in `webawesome-all.js` (not
+jsDelivr's `/+esm` URLs - see README "Via CDN / Plain HTML / HTMX").
+`wa-cloak` hides the page until all custom elements are defined (2s max):
 
 <!-- markdownlint-disable MD013 -->
 
@@ -145,14 +146,22 @@ elements are defined (2s max):
          Fonts are not bundled - see README "Fonts". -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
 
+    <script type="importmap">
+      {
+        "imports": {
+          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
+        }
+      }
+    </script>
+
     <!-- Register every wa-* element, then the hot-* components -->
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js/+esm"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js"
     ></script>
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js/+esm"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js"
     ></script>
   </head>
   <body>

@@ -188,9 +188,11 @@ already included in `style.css`).
 
 ### Via CDN / Plain HTML / HTMX
 
-Use jsDelivr's `/+esm` endpoint, which rewrites bare-module specifiers
-server-side - no import map needed. Same strategy as bundlers: register
-everything before anything renders.
+Load the raw dist files, with an import map to resolve the bare
+`@awesome.me/webawesome/...` imports in `webawesome-all.js`. The map's
+WebAwesome pin must match the version this `@hotosm/ui` release was
+built against. Do not use jsDelivr's `/+esm` URLs - they duplicate
+element registrations and most `wa-*` elements never register.
 
 <!-- markdownlint-disable MD013 -->
 
@@ -204,14 +206,22 @@ everything before anything renders.
     <!-- WebAwesome base styles + HOT theme, self-contained -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
 
+    <script type="importmap">
+      {
+        "imports": {
+          "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
+        }
+      }
+    </script>
+
     <!-- Register every wa-* element, then the hot-* components -->
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js/+esm"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js"
     ></script>
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js/+esm"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js"
     ></script>
   </head>
 

@@ -35,17 +35,28 @@ browser-cached copy (see README for the `manualChunks` snippet).
 Every navigation is a full page load, so the browser repeats the startup
 work each time. Three pieces:
 
-1. **Load modules via jsDelivr `/+esm`** (rewrites bare-module specifiers,
-   so no import map is needed):
+1. **Load the raw dist files with an import map** - the map resolves the
+   bare `@awesome.me/webawesome/...` imports in `webawesome-all.js`, and
+   its WebAwesome pin must match the version this `@hotosm/ui` release
+   was built against. Use these exact URLs, not jsDelivr's `/+esm`
+   variants - `/+esm` duplicates element registrations and most `wa-*`
+   elements never register:
 
    ```html
+   <script type="importmap">
+     {
+       "imports": {
+         "@awesome.me/webawesome/dist/components/": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.11.0/dist-cdn/components/"
+       }
+     }
+   </script>
    <script
      type="module"
-     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js/+esm"
+     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js"
    ></script>
    <script
      type="module"
-     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js/+esm"
+     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js"
    ></script>
    ```
 
