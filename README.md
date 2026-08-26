@@ -335,4 +335,4 @@ pnpm run dev        # starts Storybook on localhost:3001
 
 HOT UI is free and open source software. You may use any HOT UI project
 under the terms of the
-[GNU Affero General Public License (AGPL) Version 3](LICENSE.md).
+[GNU General Public License (GPL) Version 3](LICENSE.md).
