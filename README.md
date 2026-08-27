@@ -104,23 +104,11 @@ load the WebAwesome base stylesheets themselves - most apps don't need it.
 
 ### Fonts
 
-Fonts are **not** bundled in the CSS
-([#178](https://github.com/hotosm/ui/issues/178) - a CSS `@import` would
-serialise the font download behind the stylesheet). Add them to your HTML
-so they load in parallel:
+**There are none to load.** Since 2026-08-27 the design system uses the
+platform's own sans stack - no Archivo, no Barlow, no webfonts at all.
 
-<!-- markdownlint-disable MD013 -->
-
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;700&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-/>
-```
-
-<!-- markdownlint-enable MD013 -->
+See [MADR 0014](https://docs.hotosm.org/decisions/0014-system-fonts)
+for the rationale.
 
 ---
 

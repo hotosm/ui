@@ -170,12 +170,12 @@
    * Typography
    */
 
-  /* Fonts */
+  /* Fonts - system sans, no webfonts. See https://docs.hotosm.org/decisions/0014-system-fonts */
   --hot-font-sans:
-    Archivo, -apple-system, Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
-  --hot-font-sans-variant: "Barlow";
-  --hot-font-sans-variant-condensed: "Barlow Condensed";
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --hot-font-sans-variant: var(--hot-font-sans);
+  --hot-font-sans-variant-condensed: var(--hot-font-sans);
   --hot-font-serif: Georgia, "Times New Roman", serif;
   --hot-font-mono:
     Menlo, Monaco, Consolas, "Courier New", monospace, Consolas, "Liberation Mono", Menlo, monospace;
