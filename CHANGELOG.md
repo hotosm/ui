@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 (2026-08-27)
+
+### Fix
+
+- **header**: improvements to correctness of impl, esp the nav active underline
+- **header**: improve functionality of header active tab highlighting
+
 ## 1.0.0 (2026-08-26)
 
 ### Feat
