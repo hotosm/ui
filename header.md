@@ -66,6 +66,13 @@ match for the current URL and updates after browser, SPA, and htmx navigation.
 Nested paths match their parent tab, but only on path boundaries. External
 links and tabs without an `href` are ignored.
 
+Giving any tab a same-origin `href` opts the header into URL-driven mode, where
+the URL is authoritative: a URL matching no tab clears the highlight rather than
+leaving the previous page's tab lit. It also installs a one-time patch on
+`history.pushState` / `replaceState` so client-side routers are picked up. The
+patch only forwards to the originals and is never installed for headers whose
+tabs have no `href`.
+
 ```js
 hdr.tabs = [
   { label: "Projects", href: "/projects", clickEvent: openProjects },
@@ -77,11 +84,11 @@ Call `hdr.syncActiveTab()` after navigation that does not update browser
 history.
 
 For hash routing or custom routers, omit `href` and update the tab indexes from
-the host app:
+the host app. Nothing in the header overrides that, and `-1` means no tab is
+highlighted - useful for a "not found" route:
 
 ```js
-hdr.selectedTab = activeIndex;
-hdr.activeTabIndex = activeIndex;
+hdr.activeTabIndex = activeIndex; // selectedTab follows automatically
 ```
 
 Clicking or using the keyboard also updates the active tab.
@@ -366,8 +373,10 @@ declare global {
 - drawerLinks: Array<{ label: string; href: string }>
 - tabs: Array<{ label: string; clickEvent?: () => void; href?: string }> -
   `href` enables active-tab detection from the URL
-- activeTabIndex: number - Index of the active tab
-- selectedTab: number - Selected tab index
+- activeTabIndex: number - Index of the active tab (0-based, `-1` for none)
+- selectedTab: number - Alias of `activeTabIndex`. The two are one piece of
+  state: set either, before or after the element is connected, and the other
+  follows
 - tabsCenterAlign: boolean (default false) - Centre-align navigation tabs
 - showLogin: boolean - Shows a "Login" button and modal
 
@@ -468,7 +477,7 @@ hot-header {
 
 Notes:
 
-- Internal classes (e.g., `.header--tab::part(base)`) are inside Shadow DOM;
+- Internal classes (e.g., `.header--tab::part(tab)`) are inside Shadow DOM;
   prefer variable overrides.
 - WebAwesome parts are styled inside the component; use tokens/variables
   instead of trying to pierce Shadow DOM from outside.

@@ -102,6 +102,7 @@ export const styles = css`
    * Logo / title link
    * ================================================================ */
 
+  /* Allow long titles to truncate without shrinking the logo. */
   .header--link {
     text-decoration: none;
     display: flex;
@@ -109,12 +110,14 @@ export const styles = css`
     justify-content: flex-start;
     padding-right: var(--hot-spacing-2x-small);
     gap: var(--hot-spacing-x-small);
-    flex-shrink: 0;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .header--link hot-logo {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
   }
 
   .header--link .header--logo-img {
@@ -123,6 +126,7 @@ export const styles = css`
     display: block;
     object-fit: contain;
     vertical-align: middle;
+    flex-shrink: 0;
   }
 
   .header--title {
@@ -132,10 +136,13 @@ export const styles = css`
     margin: 0;
     line-height: 1;
     white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* ================================================================
-   * Navigation (desktop tabs with horizontal scroll arrows)
+   * Navigation (desktop tabs, with wa-tab-group's own scroll controls)
    * Hidden on mobile; shown via media query below.
    * ================================================================ */
 
@@ -161,30 +168,14 @@ export const styles = css`
     display: none;
   }
 
-  .header--nav-arrow {
-    background: transparent;
-    border: none;
+  /* Style WebAwesome's built-in overflow controls. */
+  .header--tab-group::part(scroll-button) {
     color: var(--hot-color-neutral-500);
-    cursor: pointer;
-    padding: 0;
-    font-size: var(--hot-font-size-medium);
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-shrink: 0;
   }
 
-  .header--nav-arrow:hover {
+  .header--tab-group::part(scroll-button):hover {
     color: var(--hot-color-neutral-800);
-  }
-
-  .header--nav-arrow[disabled] {
-    opacity: 0;
-    pointer-events: none;
-    width: 0;
-    padding: 0;
-    overflow: hidden;
   }
 
   .header--nav-mobile {
@@ -197,7 +188,7 @@ export const styles = css`
    * Tabs
    * ================================================================ */
 
-  .header--tab-group::part(base) {
+  .header--tab-group::part(tab-group) {
     --track-color: transparent;
     --indicator-color: transparent;
   }
@@ -211,7 +202,7 @@ export const styles = css`
     justify-content: center;
   }
 
-  .header--tab::part(base) {
+  .header--tab::part(tab) {
     font-size: var(--hot-font-size-medium);
     font-weight: var(--hot-font-weight-bold);
     color: var(--hot-color-neutral-600);
@@ -223,17 +214,17 @@ export const styles = css`
     white-space: nowrap;
   }
 
-  .header--tab[active]::part(base) {
+  .header--tab[active]::part(tab) {
     color: var(--hot-color-neutral-800);
     border-bottom-color: var(--hot-color-neutral-800);
   }
 
-  .header--tab:hover::part(base) {
+  .header--tab:hover::part(tab) {
     color: var(--hot-color-neutral-800);
     border-bottom-color: var(--hot-color-neutral-300);
   }
 
-  .header--tab[active]:hover::part(base) {
+  .header--tab[active]:hover::part(tab) {
     color: var(--hot-color-neutral-900);
     border-bottom-color: var(--hot-color-neutral-900);
   }
@@ -250,8 +241,7 @@ export const styles = css`
     flex-shrink: 0;
   }
 
-  /* Slots in the right rail are hidden on mobile and instead projected
-   * through their drawer-* counterparts inside the sidebar. */
+  /* Use the drawer-specific auth and language slots on mobile. */
   @media (max-width: 768px) {
     .header--lang-slot,
     .header--auth-slot {
@@ -273,10 +263,7 @@ export const styles = css`
     padding: 0.5rem;
   }
 
-  /*
-   * When drawer is not explicitly enabled but tabs exist, show the
-   * hamburger only on mobile so users can still reach the nav items.
-   */
+  /* Hide the automatic tab drawer button on desktop. */
   .header--drawer-mobile-only {
     display: inline-flex;
   }
@@ -381,7 +368,7 @@ export const styles = css`
     font-size: var(--hot-font-size-medium);
   }
 
-  .header--size-small .header--tab::part(base) {
+  .header--size-small .header--tab::part(tab) {
     font-size: var(--hot-font-size-small);
     padding: var(--hot-spacing-x-small);
   }
@@ -392,7 +379,7 @@ export const styles = css`
     gap: var(--hot-spacing-2x-small);
   }
 
-  .header--size-small .login-button::part(base) {
+  .header--size-small .login-button::part(button) {
     padding: var(--hot-spacing-3x-small) var(--hot-spacing-x-small);
     font-size: var(--hot-font-size-small);
   }
@@ -403,7 +390,7 @@ export const styles = css`
     padding: 0;
   }
 
-  .header--size-small .header--right-section wa-button[appearance="outlined"]::part(base) {
+  .header--size-small .header--right-section wa-button[appearance="outlined"]::part(button) {
     min-width: 1.5rem;
     min-height: 1.5rem;
     padding: var(--hot-spacing-3x-small);
@@ -428,7 +415,7 @@ export const styles = css`
     max-height: 2.25rem;
   }
 
-  .header--size-medium .login-button::part(base) {
+  .header--size-medium .login-button::part(button) {
     padding: var(--hot-spacing-2x-small) var(--hot-spacing-x-small);
     font-size: var(--hot-font-size-small);
   }
@@ -439,7 +426,7 @@ export const styles = css`
     padding: 0;
   }
 
-  .header--size-medium .header--right-section wa-button[appearance="outlined"]::part(base) {
+  .header--size-medium .header--right-section wa-button[appearance="outlined"]::part(button) {
     min-width: 2rem;
     min-height: 2rem;
     padding: var(--hot-spacing-2x-small);
@@ -567,6 +554,13 @@ export const styles = css`
 
   .drawer-nav-button:hover {
     color: var(--hot-color-primary-600);
+  }
+
+  /* Mirror of the desktop underline, so the drawer shows the current page too */
+  .drawer-nav-button--active {
+    font-weight: var(--hot-font-weight-bold);
+    box-shadow: inset 3px 0 0 0 var(--hot-color-neutral-800);
+    padding-left: var(--hot-spacing-x-small);
   }
 
   .drawer-separator {

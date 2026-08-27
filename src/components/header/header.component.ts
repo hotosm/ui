@@ -8,7 +8,7 @@ Promise.allSettled([
   import("@awesome.me/webawesome/dist/components/dropdown-item/dropdown-item.js"),
 ]);
 
-import { LitElement, html } from "lit";
+import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import type { CSSResultGroup, PropertyValues } from "lit";
 
@@ -77,27 +77,28 @@ export class Header extends LitElement {
   @property({ type: Number })
   accessor activeTabIndex: number = 0;
 
-  /** Internal state for desktop nav scrolling */
-  private _navScrollAtStart = true;
-  private _navScrollAtEnd = false;
-
   /** Bound handler references for cleanup in disconnectedCallback */
   private _boundLocationSync: (() => void) | null = null;
+  private _desktopQuery: MediaQueryList | null = null;
+  private _boundDesktopChange: ((e: MediaQueryListEvent) => void) | null = null;
 
   async connectedCallback() {
     super.connectedCallback();
 
-    // Listen for URL changes so the active tab stays in sync
-    // Works for SPA (pushState/replaceState) and htmx navigation
+    // Keep the active tab in sync with browser and htmx navigation.
     this._boundLocationSync = () => this.syncActiveTab();
     window.addEventListener("popstate", this._boundLocationSync);
     window.addEventListener("hot-locationchange", this._boundLocationSync);
-    // htmx fires this after pushState-based navigation
     window.addEventListener("htmx:pushedIntoHistory", this._boundLocationSync);
 
-    // Patch history.pushState / replaceState once so every SPA router
-    // automatically triggers our listener (no framework coupling needed).
-    Header._patchHistory();
+    // Close the mobile drawer when switching to the desktop layout.
+    if (typeof window.matchMedia === "function") {
+      this._desktopQuery = window.matchMedia("(min-width: 769px)");
+      this._boundDesktopChange = (e: MediaQueryListEvent) => {
+        if (e.matches) this._closeDrawer();
+      };
+      this._desktopQuery.addEventListener("change", this._boundDesktopChange);
+    }
   }
 
   disconnectedCallback() {
@@ -108,36 +109,45 @@ export class Header extends LitElement {
       window.removeEventListener("htmx:pushedIntoHistory", this._boundLocationSync);
       this._boundLocationSync = null;
     }
+    if (this._desktopQuery && this._boundDesktopChange) {
+      this._desktopQuery.removeEventListener("change", this._boundDesktopChange);
+      this._desktopQuery = null;
+      this._boundDesktopChange = null;
+    }
   }
 
   protected firstUpdated(_changed: PropertyValues) {
-    this._updateNavScrollState();
     this.syncActiveTab();
+  }
+
+  /** Last index both tab properties agreed on, used to spot which one moved. */
+  private _syncedTabIndex = 0;
+
+  protected willUpdate(_changed: PropertyValues) {
+    // Treat both public tab indexes as aliases, including before first render.
+    let next = this._syncedTabIndex;
+    if (this.activeTabIndex !== this._syncedTabIndex) {
+      next = this.activeTabIndex;
+    } else if (this.selectedTab !== this._syncedTabIndex) {
+      next = this.selectedTab;
+    }
+
+    if (
+      next !== this._syncedTabIndex ||
+      this.activeTabIndex !== next ||
+      this.selectedTab !== next
+    ) {
+      this._syncedTabIndex = next;
+      this.activeTabIndex = next;
+      this.selectedTab = next;
+    }
   }
 
   protected updated(changedProps: Map<string | number | symbol, unknown>) {
     super.updated(changedProps);
 
-    // Keep the active tab in sync when host apps control the selected tab
-    if (changedProps.has("selectedTab")) {
-      const newIndex = this.selectedTab;
-      if (
-        typeof newIndex === "number" &&
-        newIndex >= 0 &&
-        newIndex < this.tabs.length &&
-        newIndex !== this.activeTabIndex
-      ) {
-        this.activeTabIndex = newIndex;
-      }
-    }
-
-    if (changedProps.has("tabs") || changedProps.has("size")) {
-      this.updateComplete.then(() => this._updateNavScrollState());
-
-      // When tabs change (e.g. first assignment), re-sync from URL
-      if (changedProps.has("tabs")) {
-        this.syncActiveTab();
-      }
+    if (changedProps.has("tabs")) {
+      this.syncActiveTab();
     }
   }
 
@@ -145,10 +155,8 @@ export class Header extends LitElement {
     if (index !== this.selectedTab && index >= 0 && index < this.tabs.length) {
       const previousTab = this.selectedTab;
       this.selectedTab = index;
-      // Update the active tab index
       this.activeTabIndex = index;
 
-      // Dispatch a custom event for tab change
       this.dispatchEvent(
         new CustomEvent("tab-change", {
           detail: {
@@ -160,58 +168,11 @@ export class Header extends LitElement {
         }),
       );
 
-      // Trigger a re-render to update the active state
       this.requestUpdate();
     }
   }
 
-  /** Update which nav arrows should be visible/enabled based on scroll position. */
-  private _updateNavScrollState() {
-    const container = this.renderRoot?.querySelector(".header--nav-scroll") as HTMLElement | null;
-    if (!container) return;
-
-    const { scrollLeft, scrollWidth, clientWidth } = container;
-    const atStart = scrollLeft <= 0;
-    const atEnd = scrollLeft + clientWidth >= scrollWidth - 1;
-
-    if (atStart !== this._navScrollAtStart || atEnd !== this._navScrollAtEnd) {
-      this._navScrollAtStart = atStart;
-      this._navScrollAtEnd = atEnd;
-      this.requestUpdate();
-    }
-  }
-
-  /** Scroll the desktop nav horizontally to reveal hidden items. */
-  private _scrollNav(direction: "left" | "right") {
-    const container = this.renderRoot?.querySelector(".header--nav-scroll") as HTMLElement | null;
-    if (!container) return;
-
-    // Two main states: fully left, or fully right (mirrors Tasking Manager)
-    const maxScroll = Math.max(container.scrollWidth - container.clientWidth, 0);
-    const target = direction === "right" ? maxScroll : 0;
-
-    container.scrollTo({ left: target, behavior: "smooth" });
-
-    // Recalculate arrow state shortly after scroll
-    window.setTimeout(() => this._updateNavScrollState(), 250);
-  }
-
-  /**
-   * Match the active tab to the current browser URL.
-   *
-   * Works automatically for:
-   *  - htmx navigation (listens for `htmx:pushedIntoHistory` and `popstate`)
-   *  - SPA routers (intercepts `history.pushState` / `replaceState`)
-   *  - Traditional page loads (runs on `firstUpdated`)
-   *
-   * Only tabs with a same-origin `href` take part: tabs that only carry a
-   * `clickEvent` (hash routers, client-side routers) and tabs linking to
-   * another site (external docs, API links) are ignored, so host apps that
-   * drive `activeTabIndex` themselves are never overridden.
-   *
-   * Host apps can also call this manually after programmatic navigation:
-   *   `document.querySelector('hot-header').syncActiveTab();`
-   */
+  /** Match same-origin href tabs to the URL; tabs without href remain host-controlled. */
   syncActiveTab() {
     if (typeof window === "undefined" || !this.tabs?.length) return;
 
@@ -219,22 +180,22 @@ export class Header extends LitElement {
 
     let bestIndex = -1;
     let bestScore = -1;
+    let urlDriven = false;
 
     this.tabs.forEach((tab, index) => {
       if (!tab?.href) return;
       try {
         const url = new URL(tab.href, window.location.origin);
-        // External links (e.g. API / docs on another domain) never match
         if (url.origin !== window.location.origin) return;
         const path = Header._normalisePath(url.pathname);
+        urlDriven = true;
 
         if (currentPath === path) {
           bestIndex = index;
           bestScore = Number.MAX_SAFE_INTEGER;
         } else if (
           bestScore < Number.MAX_SAFE_INTEGER &&
-          // A root href is only ever an exact match, and prefixes must end on a
-          // path segment boundary so `/new` does not match `/newsletter`
+          // Match prefixes only at path boundaries; root is exact-only.
           path !== "/" &&
           currentPath.startsWith(`${path}/`) &&
           path.length > bestScore
@@ -243,27 +204,38 @@ export class Header extends LitElement {
           bestScore = path.length;
         }
       } catch {
-        // Ignore invalid URLs in tab config
+        // Ignore invalid tab URLs.
       }
     });
 
-    if (bestIndex >= 0 && bestIndex !== this.activeTabIndex) {
+    // A same-origin href opts the header into URL-driven highlighting.
+    if (!urlDriven) return;
+
+    // Patch history only for URL-driven headers.
+    Header._patchHistory();
+
+    // Clear the highlight when the URL matches no tab.
+    if (bestIndex !== this.activeTabIndex) {
       this.selectedTab = bestIndex;
       this.activeTabIndex = bestIndex;
       this.requestUpdate();
     }
   }
 
+  // FIXME: WebAwesome expects panels and otherwise selects tab 0, so an unmatched name represents "none" until native nav replaces it.
+  private get _activePanel(): string {
+    const tab = this.tabs[this.activeTabIndex];
+    return tab ? `${tab.label}-${this.activeTabIndex}` : Header._noActivePanel;
+  }
+
+  private static readonly _noActivePanel = "hot-header-no-active-tab";
+
   /** Strip trailing slashes, keeping the root path as `/`. */
   private static _normalisePath(path: string): string {
     return path.replace(/\/+$/, "") || "/";
   }
 
-  /**
-   * Patch `history.pushState` and `history.replaceState` once globally
-   * so that every call dispatches a `hot-locationchange` event.
-   * Safe to call multiple times - the patch is applied only once.
-   */
+  /** Dispatch `hot-locationchange` after programmatic history changes. */
   private static _historyPatched = false;
   private static _patchHistory() {
     if (Header._historyPatched || typeof window === "undefined") return;
@@ -369,22 +341,11 @@ export class Header extends LitElement {
             this.tabs.length > 0
               ? html`
                 <div class="header--nav-wrapper">
-                  <button
-                    class="header--nav-arrow header--nav-arrow-left"
-                    ?disabled=${this._navScrollAtStart}
-                    @click=${() => this._scrollNav("left")}
-                    aria-hidden=${this._navScrollAtStart}
-                    tabindex=${this._navScrollAtStart ? -1 : 0}
-                  >
-                    &#8249;
-                  </button>
 
-                  <div
-                    class="header--nav-scroll"
-                    @scroll=${() => this._updateNavScrollState()}
-                  >
+                  <div class="header--nav-scroll">
                     <wa-tab-group
                       class="header--tab-group"
+                      active="${this._activePanel}"
                       @wa-tab-show=${(e: CustomEvent) => this._handleTabShow(e)}
                     >
                       ${this.tabs.map((item, index) => {
@@ -405,15 +366,6 @@ export class Header extends LitElement {
                     </wa-tab-group>
                   </div>
 
-                  <button
-                    class="header--nav-arrow header--nav-arrow-right"
-                    ?disabled=${this._navScrollAtEnd}
-                    @click=${() => this._scrollNav("right")}
-                    aria-hidden=${this._navScrollAtEnd}
-                    tabindex=${this._navScrollAtEnd ? -1 : 0}
-                  >
-                    &#8250;
-                  </button>
                 </div>
               `
               : null
@@ -435,11 +387,15 @@ export class Header extends LitElement {
                         ? html`
                           <div class="drawer-nav">
                             <ul class="drawer-nav-list">
-                              ${this.tabs.map(
-                                (item, index) => html`
+                              ${this.tabs.map((item, index) => {
+                                const isActive = this.activeTabIndex === index;
+                                return html`
                                   <li class="drawer-nav-item">
                                     <button
-                                      class="drawer-nav-button"
+                                      class="drawer-nav-button ${
+                                        isActive ? "drawer-nav-button--active" : ""
+                                      }"
+                                      aria-current=${isActive ? "page" : nothing}
                                       data-index="${index}"
                                       @click=${(e: MouseEvent) =>
                                         this._tabClick(e, item.clickEvent, index)}
@@ -447,8 +403,8 @@ export class Header extends LitElement {
                                       ${item.label}
                                     </button>
                                   </li>
-                                `,
-                              )}
+                                `;
+                              })}
                             </ul>
                             <hr class="drawer-separator" />
                           </div>
@@ -462,7 +418,7 @@ export class Header extends LitElement {
                           <li class="drawer-link-item">
                             <a
                               href="${link.href}"
-                              data-drawer-close
+                              data-drawer="close"
                               class="drawer-link"
                             >
                               ${link.label}
@@ -497,32 +453,27 @@ export class Header extends LitElement {
   }
 
   private async _tabClick(e: MouseEvent, clickAction: (() => void) | undefined, index: number) {
-    // Prevent default behavior to avoid potential conflicts
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      // Update the selected tab state first
       this.selectTab(index);
+      // Close the mobile drawer before navigation.
+      this._closeDrawer();
 
-      // Use setTimeout to ensure DOM updates are complete before navigation
-      // This is more reliable than requestAnimationFrame for navigation
+      // Let the active state render before navigation.
       setTimeout(async () => {
         try {
           if (typeof clickAction === "function") {
             await clickAction();
           }
         } catch (navigationError) {
+          // Do not retry because the action may already have caused side effects.
           console.error("Error during navigation:", navigationError);
-          // Try synchronous fallback
-          if (typeof clickAction === "function") {
-            clickAction();
-          }
         }
       }, 0);
     } catch (error) {
       console.error("Error handling tab click:", error);
-      // Fallback: try the action synchronously
       try {
         if (typeof clickAction === "function") {
           clickAction();
@@ -534,11 +485,7 @@ export class Header extends LitElement {
   }
 
   private _handleTabShow(e: CustomEvent) {
-    // Alternative handler for WebAwesome tab-show events (e.g. keyboard activation).
-    // `wa-tab-show` is dispatched on the <wa-tab-group>, not on the tab itself, so
-    // the tab has to be resolved from the panel name in the event detail. Reading
-    // `data-index` straight off `e.target` always yielded 0, which reset the active
-    // tab to the first one every time the host app moved it.
+    // WebAwesome reports a panel name, so resolve it back to the tab index.
     try {
       const panel = (e.detail as { name?: string } | undefined)?.name;
       if (!panel) return;
@@ -556,13 +503,14 @@ export class Header extends LitElement {
     }
   }
 
-  /**
-   * Should the drawer markup be rendered?
-   * True when `drawer` is explicitly set, or when there are nav tabs
-   * (so mobile users can still navigate via the sidebar).
-   */
+  /** Render the drawer when requested or needed for mobile tab navigation. */
   private get _showDrawer(): boolean {
     return this.drawer || this.tabs.length > 0;
+  }
+
+  private _closeDrawer() {
+    const drawer = this.renderRoot?.querySelector("#drawer-overview") as { open?: boolean } | null;
+    if (drawer?.open) drawer.open = false;
   }
 
   private _handleDrawerOpen() {

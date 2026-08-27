@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
-import { page } from "@vitest/browser/context";
+import { page } from "vitest/browser";
 
 import "../../src/components/header/header.ts";
 import { Header } from "../../src/components/header/header.component.ts";
@@ -324,18 +324,52 @@ describe("<hot-header>", () => {
     expect(labels).toEqual(["Map", "Docs"]);
   });
 
-  it("renders nav scroll arrows when tabs are provided", async () => {
-    const el = document.createElement("hot-header") as Header;
-    el.tabs = [
-      { label: "A", clickEvent: () => {} },
-      { label: "B", clickEvent: () => {} },
-    ];
-    document.body.appendChild(el);
-    await (el as any).updateComplete;
+  it("leaves overflow scrolling to wa-tab-group instead of running its own", async () => {
+    // Use the desktop layout where tabs can overflow.
+    await page.viewport(1280, 800);
 
-    const sr = el.shadowRoot!;
-    expect(sr.querySelector(".header--nav-arrow-left")).not.toBeNull();
-    expect(sr.querySelector(".header--nav-arrow-right")).not.toBeNull();
+    try {
+      const el = document.createElement("hot-header") as Header;
+      el.tabs = Array.from({ length: 8 }, (_, index) => ({
+        label: `A Fairly Long Tab Label ${index + 1}`,
+        clickEvent: () => {},
+      }));
+      el.style.maxWidth = "600px";
+      el.style.display = "block";
+      document.body.appendChild(el);
+      await (el as any).updateComplete;
+
+      expect(el.shadowRoot!.querySelectorAll(".header--nav-arrow").length).toBe(0);
+
+      // WebAwesome creates controls asynchronously through ResizeObserver.
+      const group = el.shadowRoot!.querySelector("wa-tab-group")!;
+      await expect
+        .poll(() => group.shadowRoot!.querySelectorAll('[part~="scroll-button"]').length, {
+          timeout: 5000,
+        })
+        .toBe(2);
+
+      const scrollButtons = group.shadowRoot!.querySelectorAll('[part~="scroll-button"]');
+      expect((scrollButtons[0] as HTMLElement).offsetWidth).toBeGreaterThan(0);
+    } finally {
+      await page.viewport(414, 896);
+    }
+  });
+
+  it("shows no scroll controls when the tabs fit", async () => {
+    await page.viewport(1280, 800);
+
+    try {
+      const el = await mountWithTabs([
+        { label: "A", clickEvent: () => {} },
+        { label: "B", clickEvent: () => {} },
+      ]);
+
+      const group = el.shadowRoot!.querySelector("wa-tab-group")!;
+      expect(group.shadowRoot!.querySelectorAll('[part~="scroll-button"]').length).toBe(0);
+    } finally {
+      await page.viewport(414, 896);
+    }
   });
 
   it("emits tab-change event with detail when a tab is selected", async () => {
@@ -374,6 +408,98 @@ describe("<hot-header>", () => {
     await (el as any).updateComplete;
 
     expect(el.activeTabIndex).toBe(2);
+  });
+
+  it("honours activeTabIndex set before the element is connected", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.tabs = [
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+      { label: "Three", clickEvent: () => {} },
+    ];
+    el.activeTabIndex = 2;
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+
+    expect(activeTabIndexes(el)).toEqual([2]);
+
+    await settle();
+    expect(el.activeTabIndex).toBe(2);
+    expect(el.selectedTab).toBe(2);
+    expect(activeTabIndexes(el)).toEqual([2]);
+  });
+
+  it("leaves every tab unhighlighted when activeTabIndex is -1 at first render", async () => {
+    // WebAwesome initializes only visible tabs, so exercise the desktop layout.
+    await page.viewport(1280, 800);
+
+    try {
+      const el = document.createElement("hot-header") as Header;
+      el.tabs = [
+        { label: "One", clickEvent: () => {} },
+        { label: "Two", clickEvent: () => {} },
+      ];
+      el.activeTabIndex = -1;
+      document.body.appendChild(el);
+      await (el as any).updateComplete;
+      await settle();
+
+      expect(el.activeTabIndex).toBe(-1);
+      expect(activeTabIndexes(el)).toEqual([]);
+      const waActive = Array.from(el.shadowRoot!.querySelectorAll("wa-tab")).map(
+        (tab) => (tab as unknown as { active: boolean }).active,
+      );
+      expect(waActive).toEqual([false, false]);
+    } finally {
+      await page.viewport(414, 896);
+    }
+  });
+
+  it("honours selectedTab set before the element is connected", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.tabs = [
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+      { label: "Three", clickEvent: () => {} },
+    ];
+    el.selectedTab = 1;
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+    await settle();
+
+    expect(el.activeTabIndex).toBe(1);
+    expect(el.selectedTab).toBe(1);
+    expect(activeTabIndexes(el)).toEqual([1]);
+  });
+
+  it("mirrors activeTabIndex onto selectedTab after mount", async () => {
+    const el = await mountWithTabs([
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+      { label: "Three", clickEvent: () => {} },
+    ]);
+
+    el.activeTabIndex = 2;
+    await (el as any).updateComplete;
+    await settle();
+
+    expect(el.selectedTab).toBe(2);
+    expect(activeTabIndexes(el)).toEqual([2]);
+  });
+
+  it("clears the active tab when activeTabIndex has no matching tab", async () => {
+    const el = await mountWithTabs([
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+    ]);
+
+    // Host routers use -1 for "no nav item matches this route"
+    el.activeTabIndex = -1;
+    await (el as any).updateComplete;
+    await settle();
+
+    expect(el.selectedTab).toBe(-1);
+    expect(activeTabIndexes(el)).toEqual([]);
   });
 
   it("keeps the active tab after the tab group settles (no reset to the first tab)", async () => {
@@ -490,6 +616,128 @@ describe("<hot-header>", () => {
     expect((links[1] as HTMLAnchorElement).getAttribute("href")).toBe("/docs");
   });
 
+  it("runs a rejected clickEvent only once", async () => {
+    const clickEvent = vi.fn(() => Promise.reject(new Error("navigation failed")));
+    const el = await mountWithTabs([
+      { label: "One", clickEvent },
+      { label: "Two", clickEvent: () => {} },
+    ]);
+
+    (el.shadowRoot!.querySelectorAll("wa-tab")[0] as HTMLElement).click();
+    await settle();
+
+    // Retrying would duplicate whatever side effect the action already had
+    expect(clickEvent).toHaveBeenCalledTimes(1);
+  });
+
+  it("closes the drawer when a drawer nav tab is used", async () => {
+    const el = await mountWithTabs([
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+    ]);
+    el.drawer = true;
+    await (el as any).updateComplete;
+
+    const drawer = el.shadowRoot!.querySelector("#drawer-overview") as HTMLElement & {
+      open: boolean;
+    };
+    drawer.open = true;
+    await settle();
+
+    (el.shadowRoot!.querySelector(".drawer-nav-button") as HTMLElement).click();
+    await settle();
+
+    expect(drawer.open).toBe(false);
+  });
+
+  it("closes the drawer when a drawer link is used", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.drawer = true;
+    el.drawerLinks = [{ label: "Learn", href: "#learn" }];
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+    await settle();
+
+    const drawer = el.shadowRoot!.querySelector("#drawer-overview") as HTMLElement & {
+      open: boolean;
+    };
+    drawer.open = true;
+    await settle();
+
+    (el.shadowRoot!.querySelector("a.drawer-link") as HTMLElement).click();
+    await settle();
+
+    expect(drawer.open).toBe(false);
+  });
+
+  it("does not overflow a 320px viewport, even with an unwrappable title", async () => {
+    await page.viewport(320, 700);
+
+    try {
+      for (const size of ["small", "medium", "large"] as const) {
+        document.body.innerHTML = "";
+        const el = document.createElement("hot-header") as Header;
+        el.title = "OpenAerialMapImageryPortalDashboard";
+        el.size = size;
+        el.drawer = true;
+        el.tabs = [
+          { label: "Projects", clickEvent: () => {} },
+          { label: "Create Project", clickEvent: () => {} },
+        ];
+        document.body.appendChild(el);
+        await (el as any).updateComplete;
+
+        await expect
+          .poll(() => document.documentElement.scrollWidth, { timeout: 5000 })
+          .toBeLessThanOrEqual(document.documentElement.clientWidth);
+      }
+    } finally {
+      await page.viewport(414, 896);
+    }
+  });
+
+  it("closes the drawer when the layout crosses into desktop", async () => {
+    await page.viewport(768, 800);
+
+    try {
+      const el = await mountWithTabs([
+        { label: "One", clickEvent: () => {} },
+        { label: "Two", clickEvent: () => {} },
+      ]);
+      const drawer = el.shadowRoot!.querySelector("#drawer-overview") as HTMLElement & {
+        open: boolean;
+      };
+      drawer.open = true;
+      await settle();
+      expect(drawer.open).toBe(true);
+
+      await page.viewport(1100, 800);
+      await settle();
+
+      expect(drawer.open).toBe(false);
+    } finally {
+      await page.viewport(414, 896);
+    }
+  });
+
+  it("marks the active item in the drawer nav", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.drawer = true;
+    el.tabs = [
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+    ];
+    el.activeTabIndex = 1;
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+    await settle();
+
+    const buttons = Array.from(el.shadowRoot!.querySelectorAll(".drawer-nav-button"));
+    expect(buttons.map((b) => b.getAttribute("aria-current"))).toEqual([null, "page"]);
+    expect(buttons[1].classList.contains("drawer-nav-button--active")).toBe(true);
+    expect(buttons[0].classList.contains("drawer-nav-button--active")).toBe(false);
+  });
+
   // ── Active tab URL sync ──
 
   it("exposes a public syncActiveTab method", async () => {
@@ -539,8 +787,9 @@ describe("<hot-header>", () => {
       { label: "New", href: "/new" },
     ]);
 
-    // /newsletter must not activate the /new tab
-    expect(el.activeTabIndex).toBe(0);
+    // /newsletter must not activate the /new tab, and matches nothing else
+    expect(el.activeTabIndex).toBe(-1);
+    expect(activeTabIndexes(el)).toEqual([]);
 
     history.replaceState(null, "", "/");
   });
@@ -587,6 +836,45 @@ describe("<hot-header>", () => {
     expect(activeTabIndexes(el)).toEqual([1]);
 
     history.replaceState(null, "", "/");
+  });
+
+  it("clears the active tab when the URL matches no tab", async () => {
+    history.replaceState(null, "", "/projects");
+
+    const el = await mountWithTabs([
+      { label: "Projects", href: "/projects" },
+      { label: "New", href: "/new" },
+    ]);
+    expect(activeTabIndexes(el)).toEqual([0]);
+
+    history.pushState(null, "", "/somewhere-else");
+    await settle();
+
+    // Leaving the old tab lit would point at a page the user has left
+    expect(el.activeTabIndex).toBe(-1);
+    expect(activeTabIndexes(el)).toEqual([]);
+
+    history.replaceState(null, "", "/");
+  });
+
+  it("never overrides the active tab when no tab has an href", async () => {
+    history.replaceState(null, "", "/");
+
+    const el = await mountWithTabs([
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+      { label: "Three", clickEvent: () => {} },
+    ]);
+
+    // Hash / client-side routers own the active tab themselves
+    el.activeTabIndex = 2;
+    await settle();
+
+    history.pushState(null, "", "/");
+    await settle();
+
+    expect(el.activeTabIndex).toBe(2);
+    expect(activeTabIndexes(el)).toEqual([2]);
   });
 
   it("moves the active tab with keyboard arrow navigation", async () => {

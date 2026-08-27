@@ -388,10 +388,13 @@ export const NavOverflowTest: Story = {
         selectedTab=${args.selectedTab}
       ></hot-header>
       <div style="max-width: 700px; margin-inline: auto; padding: 20px;">
-        <h2>Nav overflow / scroll arrows test</h2>
+        <h2>Nav overflow / scroll controls test</h2>
         <p>
-          The header is constrained to 700px to force tab overflow.
-          A right arrow should appear; clicking it reveals hidden tabs and shows a left arrow.
+          The header is constrained to 700px to force tab overflow. Scrolling is
+          handled by <code>wa-tab-group</code>, which shows its own scroll
+          buttons at each end only while the tabs overflow - the header styles
+          them via <code>::part(scroll-button)</code> rather than running a
+          second set of arrows.
         </p>
       </div>
     `;
@@ -490,14 +493,12 @@ export const ActiveTabUrlSync: Story = {
       { path: "/support", label: "Go to /support" },
       // Nested route: matches the /manage tab on a segment boundary
       { path: "/manage/teams/42", label: "Go to /manage/teams/42" },
-      // Near miss: shares a prefix with /about but is a different route,
-      // so the active tab is left where it was
+      // Near miss: /aboutus matches no tab and clears the highlight.
       { path: "/aboutus", label: "Go to /aboutus" },
     ];
 
     function navigate(path: string) {
-      // Simulate SPA navigation - this triggers the hot-locationchange
-      // event that the header is already listening for.
+      // Simulate SPA navigation through the header's history listener.
       history.pushState(null, "", path);
     }
 
@@ -523,7 +524,7 @@ export const ActiveTabUrlSync: Story = {
         <p style="font-size: 0.9rem;">
           Matching is exact first, then longest prefix ending on a path segment
           boundary: <code>/manage/teams/42</code> activates <b>Manage</b>, while
-          <code>/aboutus</code> matches nothing and leaves the active tab alone.
+          <code>/aboutus</code> matches nothing and clears the active tab.
         </p>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">
           ${routes.map(
@@ -568,43 +569,31 @@ export const ActiveTabControlled: Story = {
   args: {
     title: "XLSForm Builder",
     size: "small",
-    tabs: "3 Tabs",
     activeTabIndex: 0,
   },
   render: (args) => {
-    const hashRoutes = [
-      { path: "/", label: "#/" },
-      { path: "/upload", label: "#/upload" },
-      { path: "/builder", label: "#/builder" },
-    ];
-    const hashTabs = [
-      { label: "Home", clickEvent: () => (window.location.hash = "/") },
-      { label: "Upload", clickEvent: () => (window.location.hash = "/upload") },
-      { label: "Builder", clickEvent: () => (window.location.hash = "/builder") },
-    ];
+    // A real app would derive this from its router.
+    const routes = ["#/", "#/upload", "#/builder"];
 
-    const syncFromHash = () => {
-      const header = document.querySelector<
-        HTMLElement & { activeTabIndex: number; selectedTab: number }
-      >("#controlled-header");
-      if (!header) return;
-      const path = window.location.hash.slice(1) || "/";
-      const index = hashRoutes.findIndex((route) => route.path === path);
-      if (index < 0) return;
-      // Both properties are kept in sync by the header, setting either is enough
-      header.selectedTab = index;
-      header.activeTabIndex = index;
+    const setActive = (index: number) => {
+      const header = document.querySelector<HTMLElement & { activeTabIndex: number }>(
+        "#controlled-header",
+      );
+      if (header) header.activeTabIndex = index;
     };
 
-    window.addEventListener("hashchange", syncFromHash);
-    queueMicrotask(syncFromHash);
+    const tabs = routes.map((route, index) => ({
+      label: ["Home", "Upload", "Builder"][index],
+      // The app navigates, then pushes the new index into the header.
+      clickEvent: () => setActive(index),
+    }));
 
     return html`
       <hot-header
         id="controlled-header"
         title="${args.title}"
         size="${args.size}"
-        .tabs=${hashTabs}
+        .tabs=${tabs}
         .activeTabIndex=${args.activeTabIndex}
       ></hot-header>
 
@@ -616,16 +605,19 @@ export const ActiveTabControlled: Story = {
           hash-based routers, where <code>window.location.pathname</code> never
           changes.
         </p>
+        <p>
+          Use the <code>activeTabIndex</code> control in the toolbar, click a tab,
+          or use the buttons below - setting either <code>activeTabIndex</code> or
+          <code>selectedTab</code> is enough, the header keeps the two in step.
+        </p>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">
-          ${hashRoutes.map(
-            (route) => html`
+          ${routes.map(
+            (route, index) => html`
               <button
                 style="padding: 6px 14px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; background: #f9f9f9;"
-                @click=${() => {
-                  window.location.hash = route.path;
-                }}
+                @click=${() => setActive(index)}
               >
-                Go to ${route.label}
+                Go to ${route}
               </button>
             `,
           )}
