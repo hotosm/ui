@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0 (2026-08-27)
+
+### BREAKING CHANGE
+
+- --hot-font-sans-variant and --hot-font-sans-variant-condensed no longer resolve to Barlow / Barlow Condensed - all three sans tokens now alias one system stack. Consumers must remove their Google Fonts <link>, and may drop any local --hot-font-* override.
+
+### Refactor
+
+- entirely remove webfonts and rely on system-sans
+
 ## 1.0.1 (2026-08-27)
 
 ### Fix

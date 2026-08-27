@@ -1,6 +1,6 @@
 {
   "name": "@hotosm/ui",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Shared UI components with HOT theming.",
   "homepage": "https://github.com/hotosm/ui#readme",
   "license": "GPL-3.0-only",
