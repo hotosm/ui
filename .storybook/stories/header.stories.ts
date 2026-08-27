@@ -71,6 +71,14 @@ const meta: Meta = {
         type: "select",
       },
     },
+    activeTabIndex: {
+      description:
+        "Index of the tab showing the underline. Set this from the host app when the URL cannot be matched (e.g. hash routing).",
+      options: [0, 1, 2, 3, 4, 5],
+      control: {
+        type: "select",
+      },
+    },
     tabs: {
       options: ["1 Tab", "2 Tabs", "3 Tabs", "4 Tabs", "5 Tabs", "6 Tabs (TM-style)"],
       mapping: {
@@ -480,6 +488,11 @@ export const ActiveTabUrlSync: Story = {
       { path: "/learn/map", label: "Go to /learn/map" },
       { path: "/about", label: "Go to /about" },
       { path: "/support", label: "Go to /support" },
+      // Nested route: matches the /manage tab on a segment boundary
+      { path: "/manage/teams/42", label: "Go to /manage/teams/42" },
+      // Near miss: shares a prefix with /about but is a different route,
+      // so the active tab is left where it was
+      { path: "/aboutus", label: "Go to /aboutus" },
     ];
 
     function navigate(path: string) {
@@ -506,6 +519,11 @@ export const ActiveTabUrlSync: Story = {
           Click a button to simulate <code>history.pushState</code>.
           The header picks up the <code>hot-locationchange</code> event and
           moves the active tab indicator to the matching route.
+        </p>
+        <p style="font-size: 0.9rem;">
+          Matching is exact first, then longest prefix ending on a path segment
+          boundary: <code>/manage/teams/42</code> activates <b>Manage</b>, while
+          <code>/aboutus</code> matches nothing and leaves the active tab alone.
         </p>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">
           ${routes.map(
@@ -534,6 +552,85 @@ export const ActiveTabUrlSync: Story = {
           if (el) el.textContent = window.location.pathname;
         });
       </script>
+    `;
+  },
+};
+
+/**
+ * Host-controlled active tab, for apps whose routing never changes
+ * `window.location.pathname` (hash routers, in-page client routers).
+ *
+ * The tabs carry no `href`, so the built-in URL sync stays out of the way and
+ * `activeTabIndex` is entirely owned by the host app. Use the `activeTabIndex`
+ * control in the toolbar, or the buttons below, to move the underline.
+ */
+export const ActiveTabControlled: Story = {
+  args: {
+    title: "XLSForm Builder",
+    size: "small",
+    tabs: "3 Tabs",
+    activeTabIndex: 0,
+  },
+  render: (args) => {
+    const hashRoutes = [
+      { path: "/", label: "#/" },
+      { path: "/upload", label: "#/upload" },
+      { path: "/builder", label: "#/builder" },
+    ];
+    const hashTabs = [
+      { label: "Home", clickEvent: () => (window.location.hash = "/") },
+      { label: "Upload", clickEvent: () => (window.location.hash = "/upload") },
+      { label: "Builder", clickEvent: () => (window.location.hash = "/builder") },
+    ];
+
+    const syncFromHash = () => {
+      const header = document.querySelector<
+        HTMLElement & { activeTabIndex: number; selectedTab: number }
+      >("#controlled-header");
+      if (!header) return;
+      const path = window.location.hash.slice(1) || "/";
+      const index = hashRoutes.findIndex((route) => route.path === path);
+      if (index < 0) return;
+      // Both properties are kept in sync by the header, setting either is enough
+      header.selectedTab = index;
+      header.activeTabIndex = index;
+    };
+
+    window.addEventListener("hashchange", syncFromHash);
+    queueMicrotask(syncFromHash);
+
+    return html`
+      <hot-header
+        id="controlled-header"
+        title="${args.title}"
+        size="${args.size}"
+        .tabs=${hashTabs}
+        .activeTabIndex=${args.activeTabIndex}
+      ></hot-header>
+
+      <div style="padding: 20px;">
+        <h2>Host-controlled active tab</h2>
+        <p>
+          These tabs have no <code>href</code>, so the URL sync ignores them and
+          the host app owns <code>activeTabIndex</code>. This is the pattern for
+          hash-based routers, where <code>window.location.pathname</code> never
+          changes.
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">
+          ${hashRoutes.map(
+            (route) => html`
+              <button
+                style="padding: 6px 14px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; background: #f9f9f9;"
+                @click=${() => {
+                  window.location.hash = route.path;
+                }}
+              >
+                Go to ${route.label}
+              </button>
+            `,
+          )}
+        </div>
+      </div>
     `;
   },
 };

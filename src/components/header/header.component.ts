@@ -204,14 +204,18 @@ export class Header extends LitElement {
    *  - SPA routers (intercepts `history.pushState` / `replaceState`)
    *  - Traditional page loads (runs on `firstUpdated`)
    *
+   * Only tabs with a same-origin `href` take part: tabs that only carry a
+   * `clickEvent` (hash routers, client-side routers) and tabs linking to
+   * another site (external docs, API links) are ignored, so host apps that
+   * drive `activeTabIndex` themselves are never overridden.
+   *
    * Host apps can also call this manually after programmatic navigation:
    *   `document.querySelector('hot-header').syncActiveTab();`
    */
   syncActiveTab() {
     if (typeof window === "undefined" || !this.tabs?.length) return;
 
-    const currentPath = window.location.pathname.replace(/\/+$/, "");
-    if (!currentPath) return;
+    const currentPath = Header._normalisePath(window.location.pathname);
 
     let bestIndex = -1;
     let bestScore = -1;
@@ -220,15 +224,19 @@ export class Header extends LitElement {
       if (!tab?.href) return;
       try {
         const url = new URL(tab.href, window.location.origin);
-        const path = url.pathname.replace(/\/+$/, "");
-        if (!path) return;
+        // External links (e.g. API / docs on another domain) never match
+        if (url.origin !== window.location.origin) return;
+        const path = Header._normalisePath(url.pathname);
 
         if (currentPath === path) {
           bestIndex = index;
           bestScore = Number.MAX_SAFE_INTEGER;
         } else if (
           bestScore < Number.MAX_SAFE_INTEGER &&
-          currentPath.startsWith(path) &&
+          // A root href is only ever an exact match, and prefixes must end on a
+          // path segment boundary so `/new` does not match `/newsletter`
+          path !== "/" &&
+          currentPath.startsWith(`${path}/`) &&
           path.length > bestScore
         ) {
           bestIndex = index;
@@ -244,6 +252,11 @@ export class Header extends LitElement {
       this.activeTabIndex = bestIndex;
       this.requestUpdate();
     }
+  }
+
+  /** Strip trailing slashes, keeping the root path as `/`. */
+  private static _normalisePath(path: string): string {
+    return path.replace(/\/+$/, "") || "/";
   }
 
   /**
@@ -521,11 +534,21 @@ export class Header extends LitElement {
   }
 
   private _handleTabShow(e: CustomEvent) {
-    // Alternative handler for WebAwesome tab-show events
+    // Alternative handler for WebAwesome tab-show events (e.g. keyboard activation).
+    // `wa-tab-show` is dispatched on the <wa-tab-group>, not on the tab itself, so
+    // the tab has to be resolved from the panel name in the event detail. Reading
+    // `data-index` straight off `e.target` always yielded 0, which reset the active
+    // tab to the first one every time the host app moved it.
     try {
-      const tab = e.target as HTMLElement;
-      const index = parseInt(tab.getAttribute("data-index") || "0", 10);
-      if (!isNaN(index) && index < this.tabs.length) {
+      const panel = (e.detail as { name?: string } | undefined)?.name;
+      if (!panel) return;
+
+      const tabs = Array.from(this.renderRoot?.querySelectorAll("wa-tab") ?? []);
+      const tab = tabs.find((el) => el.getAttribute("panel") === panel);
+      if (!tab) return;
+
+      const index = parseInt(tab.getAttribute("data-index") ?? "", 10);
+      if (!isNaN(index) && index >= 0 && index < this.tabs.length) {
         this.selectTab(index);
       }
     } catch (error) {

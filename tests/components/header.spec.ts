@@ -1,7 +1,26 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
+import { page } from "@vitest/browser/context";
 
 import "../../src/components/header/header.ts";
 import { Header } from "../../src/components/header/header.component.ts";
+
+/** wa-tab-group reacts asynchronously (MutationObserver + wa-tab-show). */
+const settle = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Indexes of the tabs currently rendering the active underline. */
+const activeTabIndexes = (el: Header) =>
+  Array.from(el.shadowRoot!.querySelectorAll("wa-tab"))
+    .map((tab, index) => (tab.hasAttribute("active") ? index : -1))
+    .filter((index) => index >= 0);
+
+async function mountWithTabs(tabs: Header["tabs"]): Promise<Header> {
+  const el = document.createElement("hot-header") as Header;
+  el.tabs = tabs;
+  document.body.appendChild(el);
+  await (el as any).updateComplete;
+  await settle();
+  return el;
+}
 
 describe("<hot-header>", () => {
   // Clean up the DOM after each test to prevent state bleeding between tests
@@ -357,6 +376,50 @@ describe("<hot-header>", () => {
     expect(el.activeTabIndex).toBe(2);
   });
 
+  it("keeps the active tab after the tab group settles (no reset to the first tab)", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.tabs = [
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+      { label: "Three", clickEvent: () => {} },
+    ];
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    // Host apps drive this from their router
+    el.selectedTab = 2;
+    el.activeTabIndex = 2;
+    await (el as any).updateComplete;
+    // wa-tab-group reacts asynchronously (MutationObserver + wa-tab-show)
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    expect(el.activeTabIndex).toBe(2);
+    const activeTabs = Array.from(el.shadowRoot!.querySelectorAll("wa-tab")).filter((tab) =>
+      tab.hasAttribute("active"),
+    );
+    expect(activeTabs.map((tab) => tab.getAttribute("data-index"))).toEqual(["2"]);
+  });
+
+  it("keeps the active tab on the clicked tab once the tab group settles", async () => {
+    const el = document.createElement("hot-header") as Header;
+    el.tabs = [
+      { label: "One", clickEvent: () => {} },
+      { label: "Two", clickEvent: () => {} },
+      { label: "Three", clickEvent: () => {} },
+    ];
+    document.body.appendChild(el);
+    await (el as any).updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    const tabs = Array.from(el.shadowRoot!.querySelectorAll("wa-tab")) as HTMLElement[];
+    tabs[2].click();
+    await (el as any).updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    expect(el.activeTabIndex).toBe(2);
+  });
+
   // ── Drawer ──
 
   it("renders drawer button when drawer prop is true", async () => {
@@ -441,18 +504,114 @@ describe("<hot-header>", () => {
     // Simulate being on /manage
     history.replaceState(null, "", "/manage");
 
-    const el = document.createElement("hot-header") as Header;
-    el.tabs = [
+    const el = await mountWithTabs([
       { label: "Explore", href: "/explore" },
       { label: "Manage", href: "/manage" },
       { label: "About", href: "/about" },
-    ];
-    document.body.appendChild(el);
-    await (el as any).updateComplete;
+    ]);
 
     expect(el.activeTabIndex).toBe(1);
+    expect(activeTabIndexes(el)).toEqual([1]);
 
     // Clean up URL
     history.replaceState(null, "", "/");
+  });
+
+  it("matches a root href even when it is not the first tab", async () => {
+    history.replaceState(null, "", "/");
+
+    const el = await mountWithTabs([
+      { label: "Home", clickEvent: () => {} },
+      { label: "Browse", clickEvent: () => {} },
+      { label: "Upload", href: "/" },
+      { label: "Profile", href: "/profile" },
+    ]);
+
+    expect(el.activeTabIndex).toBe(2);
+    expect(activeTabIndexes(el)).toEqual([2]);
+  });
+
+  it("only matches prefixes on a path segment boundary", async () => {
+    history.replaceState(null, "", "/newsletter");
+
+    const el = await mountWithTabs([
+      { label: "Projects", href: "/projects" },
+      { label: "New", href: "/new" },
+    ]);
+
+    // /newsletter must not activate the /new tab
+    expect(el.activeTabIndex).toBe(0);
+
+    history.replaceState(null, "", "/");
+  });
+
+  it("matches a nested path against its parent tab", async () => {
+    history.replaceState(null, "", "/projects/123/tasks");
+
+    const el = await mountWithTabs([
+      { label: "Home", href: "/" },
+      { label: "Projects", href: "/projects" },
+    ]);
+
+    expect(el.activeTabIndex).toBe(1);
+
+    history.replaceState(null, "", "/");
+  });
+
+  it("ignores tabs linking to another origin", async () => {
+    history.replaceState(null, "", "/");
+
+    const el = await mountWithTabs([
+      { label: "Home", href: "/" },
+      { label: "API", href: "https://api.example.com" },
+    ]);
+
+    // The external tab resolves to "/" too, but must never match
+    expect(el.activeTabIndex).toBe(0);
+  });
+
+  it("re-syncs the active tab after SPA pushState navigation", async () => {
+    history.replaceState(null, "", "/projects");
+
+    const el = await mountWithTabs([
+      { label: "Projects", href: "/projects" },
+      { label: "Admin", href: "/admin" },
+    ]);
+    expect(el.activeTabIndex).toBe(0);
+
+    history.pushState(null, "", "/admin");
+    await (el as any).updateComplete;
+    await settle();
+
+    expect(el.activeTabIndex).toBe(1);
+    expect(activeTabIndexes(el)).toEqual([1]);
+
+    history.replaceState(null, "", "/");
+  });
+
+  it("moves the active tab with keyboard arrow navigation", async () => {
+    // Nav tabs are hidden below the desktop breakpoint, and hidden elements
+    // cannot take focus, so widen the viewport for this test.
+    await page.viewport(1280, 800);
+
+    try {
+      const el = await mountWithTabs([
+        { label: "One", clickEvent: () => {} },
+        { label: "Two", clickEvent: () => {} },
+        { label: "Three", clickEvent: () => {} },
+      ]);
+
+      const tabs = Array.from(el.shadowRoot!.querySelectorAll("wa-tab")) as HTMLElement[];
+      tabs[0].focus();
+      tabs[0].dispatchEvent(
+        new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true, composed: true }),
+      );
+      await settle();
+
+      expect(el.activeTabIndex).toBe(1);
+      expect(activeTabIndexes(el)).toEqual([1]);
+    } finally {
+      await page.viewport(414, 896);
+    }
   });
 });

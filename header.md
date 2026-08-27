@@ -59,6 +59,33 @@ import "@hotosm/ui/dist/components/logo/logo.js";
 import "@hotosm/ui/dist/components/header/header.js";
 ```
 
+### Active tab (nav highlighting)
+
+For path-based routing, add an `href` to each tab. The header selects the best
+match for the current URL and updates after browser, SPA, and htmx navigation.
+Nested paths match their parent tab, but only on path boundaries. External
+links and tabs without an `href` are ignored.
+
+```js
+hdr.tabs = [
+  { label: "Projects", href: "/projects", clickEvent: openProjects },
+  { label: "About", href: "/about", clickEvent: openAbout },
+];
+```
+
+Call `hdr.syncActiveTab()` after navigation that does not update browser
+history.
+
+For hash routing or custom routers, omit `href` and update the tab indexes from
+the host app:
+
+```js
+hdr.selectedTab = activeIndex;
+hdr.activeTabIndex = activeIndex;
+```
+
+Clicking or using the keyboard also updates the active tab.
+
 ### HTML (bundler)
 
 ```html
@@ -337,8 +364,10 @@ declare global {
 - size: 'small' | 'medium' | 'large' - Header height variant
 - drawer: boolean (default false) - Show the drawer button
 - drawerLinks: Array<{ label: string; href: string }>
-- tabs: Array<{ label: string; clickEvent: () => void }>
-- activeTabIndex: number - Controls which tab is active
+- tabs: Array<{ label: string; clickEvent?: () => void; href?: string }> -
+  `href` enables active-tab detection from the URL
+- activeTabIndex: number - Index of the active tab
+- selectedTab: number - Selected tab index
 - tabsCenterAlign: boolean (default false) - Centre-align navigation tabs
 - showLogin: boolean - Shows a "Login" button and modal
 
@@ -348,6 +377,12 @@ Notes:
   include it for true (e.g., `show-login`, `drawer`, `tabs-center-align`).
 - Arrays and functions must be assigned as properties from JS (attributes are
   strings).
+
+### Methods
+
+- syncActiveTab() - Re-match the active tab against the current URL. Called
+  automatically on first render and on history changes; call it manually after
+  navigating without touching `history`.
 
 ### Slots
 
