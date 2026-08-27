@@ -4,14 +4,15 @@ import { cva } from "class-variance-authority";
 export const headerVariants = cva("header", {
   variants: {
     size: {
-      small: "header--size-small",
-      medium: "header--size-medium",
-      large: "header--size-large",
+      s: "header--size-small",
+      m: "header--size-medium",
+      l: "header--size-large",
     },
   },
 });
 
-export type sizes = "small" | "medium" | "large";
+/** Long forms are deprecated, matching Web Awesome; both are accepted. */
+export type sizes = "s" | "m" | "l" | "small" | "medium" | "large";
 
 export const styles = css`
   /* ================================================================

@@ -61,7 +61,7 @@ const meta: Meta = {
     title: { control: "text" },
     size: {
       control: { type: "select" },
-      options: ["small", "medium", "large"],
+      options: ["s", "m", "l"],
     },
     drawer: { control: "boolean" },
     tabsCenterAlign: { control: "boolean" },
@@ -109,7 +109,7 @@ type Story = StoryObj;
 export const WithAuthSlot: Story = {
   args: {
     title: "HOTOSM Tools",
-    size: "small",
+    size: "s",
     drawer: true,
   },
   render: (args) => {
@@ -153,7 +153,7 @@ export const WithAuthSlot: Story = {
 export const WithLangAndAuth: Story = {
   args: {
     title: "Tasking Manager",
-    size: "small",
+    size: "s",
     drawer: false,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
@@ -216,7 +216,7 @@ export const WithLangAndAuth: Story = {
 export const WithoutAuth: Story = {
   args: {
     title: "HOTOSM Tools",
-    size: "small",
+    size: "s",
     drawer: true,
   },
   render: (args) => {
@@ -239,7 +239,7 @@ export const WithoutAuth: Story = {
 export const WithNav: Story = {
   args: {
     title: "OpenAerialMap",
-    size: "medium",
+    size: "m",
 
     drawer: true,
     tabs: "5 Tabs",
@@ -272,7 +272,7 @@ export const WithNav: Story = {
 export const SmallWithNav: Story = {
   args: {
     title: "Tasking Manager",
-    size: "small",
+    size: "s",
 
     drawer: true,
     tabs: "6 Tabs (TM-style)",
@@ -303,7 +303,7 @@ export const SmallWithNav: Story = {
 export const MediumWithNav: Story = {
   args: {
     title: "Tasking Manager",
-    size: "medium",
+    size: "m",
 
     drawer: true,
     tabs: "6 Tabs (TM-style)",
@@ -335,7 +335,7 @@ export const MediumWithNav: Story = {
 export const LargeWithNav: Story = {
   args: {
     title: "Tasking Manager",
-    size: "large",
+    size: "l",
 
     drawer: true,
     tabs: "6 Tabs (TM-style)",
@@ -370,7 +370,7 @@ export const LargeWithNav: Story = {
 export const NavOverflowTest: Story = {
   args: {
     title: "Tasking Manager",
-    size: "medium",
+    size: "m",
 
     drawer: true,
     tabs: "6 Tabs (TM-style)",
@@ -407,7 +407,7 @@ export const NavOverflowTest: Story = {
 export const CenteredTabs: Story = {
   args: {
     title: "Tasking Manager",
-    size: "medium",
+    size: "m",
     drawer: true,
     tabsCenterAlign: true,
     tabs: "3 Tabs",
@@ -438,7 +438,7 @@ export const CenteredTabs: Story = {
 export const AutoMobileDrawer: Story = {
   args: {
     title: "Tasking Manager",
-    size: "medium",
+    size: "m",
     drawer: false,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
@@ -478,7 +478,7 @@ export const AutoMobileDrawer: Story = {
 export const ActiveTabUrlSync: Story = {
   args: {
     title: "Tasking Manager",
-    size: "medium",
+    size: "m",
     drawer: true,
     tabs: "6 Tabs (TM-style)",
     selectedTab: 0,
@@ -568,7 +568,7 @@ export const ActiveTabUrlSync: Story = {
 export const ActiveTabControlled: Story = {
   args: {
     title: "XLSForm Builder",
-    size: "small",
+    size: "s",
     activeTabIndex: 0,
   },
   render: (args) => {

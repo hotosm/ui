@@ -62,9 +62,15 @@ export class Header extends LitElement {
   @property({ type: Array })
   accessor drawerLinks: Array<{ label: string; href: string }> = [];
 
-  /** Size of toolbar vertically. */
+  /** Size of toolbar vertically. Prefer "s" | "m" | "l"; long forms are deprecated. */
   @property({ type: String })
-  accessor size: sizes = "small";
+  accessor size: sizes = "s";
+
+  /** Both spellings must behave identically, so resolve to the short form once. */
+  private get sizeShort(): "s" | "m" | "l" {
+    const long = { small: "s", medium: "m", large: "l" } as const;
+    return long[this.size as keyof typeof long] ?? (this.size as "s" | "m" | "l");
+  }
 
   /** Centre-align navigation tabs instead of the default left alignment. */
   @property({ type: Boolean, attribute: "tabs-center-align" })
@@ -266,7 +272,7 @@ export class Header extends LitElement {
     return html`
       <div class="header-container">
         ${
-          this.size !== "small"
+          this.sizeShort !== "s"
             ? html`
               <div class="header--top">
                 <div class="header--top-left">
@@ -304,7 +310,7 @@ export class Header extends LitElement {
         }
 
         <header
-          class=${headerVariants({ size: this.size })}
+          class=${headerVariants({ size: this.sizeShort })}
         >
         <a href="/" class="header--link">
           ${

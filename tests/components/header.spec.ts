@@ -60,7 +60,17 @@ describe("<hot-header>", () => {
   // ── Size variants ──
 
   it("applies the correct size class for each variant", async () => {
-    for (const size of ["small", "medium", "large"] as const) {
+    // Long and short spellings must resolve to the same class.
+    const cases = [
+      ["small", "small"],
+      ["medium", "medium"],
+      ["large", "large"],
+      ["s", "small"],
+      ["m", "medium"],
+      ["l", "large"],
+    ] as const;
+
+    for (const [size, expected] of cases) {
       const el = document.createElement("hot-header") as Header;
       el.size = size;
       el.title = "Size test";
@@ -69,10 +79,26 @@ describe("<hot-header>", () => {
 
       const header = el.shadowRoot!.querySelector("header");
       expect(header).not.toBeNull();
-      expect(header!.classList.contains(`header--size-${size}`)).toBe(true);
+      expect(header!.classList.contains(`header--size-${expected}`)).toBe(true);
 
       el.remove();
     }
+  });
+
+  it("gates the top bar on the short size too", async () => {
+    const elS = document.createElement("hot-header") as Header;
+    elS.size = "s";
+    document.body.appendChild(elS);
+    await (elS as any).updateComplete;
+    expect(elS.shadowRoot!.querySelector(".header--top")).toBeNull();
+    elS.remove();
+
+    const elM = document.createElement("hot-header") as Header;
+    elM.size = "m";
+    document.body.appendChild(elM);
+    await (elM as any).updateComplete;
+    expect(elM.shadowRoot!.querySelector(".header--top")).not.toBeNull();
+    elM.remove();
   });
 
   // ── Top bar ──

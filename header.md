@@ -106,7 +106,7 @@ Clicking or using the keyboard also updates the active tab.
     </script>
   </head>
   <body>
-    <hot-header id="hdr" title="My App" size="small" drawer></hot-header>
+    <hot-header id="hdr" title="My App" size="s" drawer></hot-header>
 
     <script>
       const hdr = document.getElementById("hdr");
@@ -199,7 +199,7 @@ jsDelivr's `/+esm` URLs - see README "Via CDN / Plain HTML / HTMX").
     ></script>
   </head>
   <body>
-    <hot-header id="hdr" title="Field TM" size="small" drawer show-login></hot-header>
+    <hot-header id="hdr" title="Field TM" size="s" drawer show-login></hot-header>
 
     <script>
       const hdr = document.getElementById("hdr");
@@ -294,7 +294,7 @@ export default function AppHeader() {
     };
   }, []);
 
-  return <hot-header ref={ref} title="My App" size="small" />;
+  return <hot-header ref={ref} title="My App" size="s" />;
 }
 ```
 
@@ -308,7 +308,7 @@ declare global {
     interface IntrinsicElements {
       "hot-header": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
         title?: string;
-        size?: "small" | "medium" | "large";
+        size?: "s" | "m" | "l";
         showLogin?: boolean | string;
       };
     }
@@ -355,7 +355,7 @@ declare global {
 <hot-header
   bind:this={headerEl}
   title="My App"
-  size="small"
+  size="s"
   show-login
   on:login={onLogin}
   on:tab-change={onTabChange}
@@ -368,7 +368,7 @@ declare global {
 
 - title: string - Text title shown next to the logo
 - logo: string | URL - Image URL for the logo (optional)
-- size: 'small' | 'medium' | 'large' - Header height variant
+- size: 's' | 'm' | 'l' - Header height variant (long forms still accepted, deprecated)
 - drawer: boolean (default false) - Show the drawer button
 - drawerLinks: Array<{ label: string; href: string }>
 - tabs: Array<{ label: string; clickEvent?: () => void; href?: string }> -

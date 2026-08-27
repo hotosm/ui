@@ -298,7 +298,7 @@ export class Announcement extends LitElement {
 
     return html`
       <div class="announcement-banner" role="status">
-        <wa-callout variant="${this.variant}" appearance="outlined filled" size="medium">
+        <wa-callout variant="${this.variant}" appearance="outlined filled" size="m">
           <wa-icon slot="icon" family="classic" variant="solid" name="circle-info"></wa-icon>
           <div class="announcement-content">
             <div class="announcement-body">

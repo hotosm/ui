@@ -214,7 +214,7 @@ element registrations and most `wa-*` elements never register.
   </head>
 
   <body>
-    <hot-header id="hdr" title="My App" size="small" show-login></hot-header>
+    <hot-header id="hdr" title="My App" size="s" show-login></hot-header>
 
     <script>
       // Boolean props default to false.

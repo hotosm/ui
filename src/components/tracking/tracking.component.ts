@@ -326,7 +326,7 @@ export class MatomoTracking extends LitElement {
         this.showError
           ? html`
         <div class="error-banner">
-          <wa-callout style="padding: 1rem;" variant="danger" appearance="outlined filled" size="large">
+          <wa-callout style="padding: 1rem;" variant="danger" appearance="outlined filled" size="l">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-exclamation"></wa-icon>
             <div style="padding: 0 1rem;">
               <strong>Tracking Configuration Error</strong><br />
@@ -342,7 +342,7 @@ export class MatomoTracking extends LitElement {
         this.showSuccess
           ? html`
         <div class="toast-banner">
-          <wa-callout style="padding: 1rem;" variant="success" appearance="outlined accent" size="medium">
+          <wa-callout style="padding: 1rem;" variant="success" appearance="outlined accent" size="m">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-check"></wa-icon>
             <div style="padding: 0 1rem;">
               <strong>Success!</strong><br />
@@ -358,7 +358,7 @@ export class MatomoTracking extends LitElement {
         this.showInfo
           ? html`
         <div class="toast-banner">
-          <wa-callout style="padding: 1rem;" variant="brand" appearance="outlined filled" size="medium">
+          <wa-callout style="padding: 1rem;" variant="brand" appearance="outlined filled" size="m">
             <wa-icon slot="icon" family="classic" variant="solid" name="circle-info"></wa-icon>
             <div style="padding: 0 1rem;">
               <strong>Information</strong><br />
@@ -383,10 +383,10 @@ export class MatomoTracking extends LitElement {
       >
         ${this.consentMessage}
         <div slot="footer" class="consent-actions">
-          <wa-button size="small" variant="neutral" @click=${() => this.disagree()}>
+          <wa-button size="s" variant="neutral" @click=${() => this.disagree()}>
             Decline
           </wa-button>
-          <wa-button size="small" variant="brand" @click=${() => this.agree()}>
+          <wa-button size="s" variant="brand" @click=${() => this.agree()}>
             Accept
           </wa-button>
         </div>

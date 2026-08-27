@@ -45,7 +45,7 @@ export class Consent extends LitElement {
     return html`
       <div class="consent-overlay">
         <div class="consent-container">
-          <wa-callout variant="brand" appearance="outlined filled" size="large" class="consent-callout">
+          <wa-callout variant="brand" appearance="outlined filled" size="l" class="consent-callout">
             <wa-icon slot="icon" family="classic" variant="solid" name="shield-check" class="consent-icon"></wa-icon>
             <div class="consent-content">
               <h2 id="consent-header" class="consent-header">
@@ -57,7 +57,7 @@ export class Consent extends LitElement {
               </div>
               <div class="consent-actions">
                 <wa-button 
-                  size="medium" 
+                  size="m" 
                   variant="neutral" 
                   class="consent-button decline-button"
                   @click=${(e: MouseEvent) => this._setDisagree(e)}
@@ -65,7 +65,7 @@ export class Consent extends LitElement {
                   ${this.notAgreeLabel}
                 </wa-button>
                 <wa-button 
-                  size="medium" 
+                  size="m" 
                   variant="brand" 
                   class="consent-button accept-button"
                   @click=${(e: MouseEvent) => this._setAgree(e)}
