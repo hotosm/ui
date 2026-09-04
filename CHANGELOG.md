@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.2 (2026-09-04)
+
+### Fix
+
+- add optional vite plugin to avoid chunk cycling
+
 ## 2.1.1 (2026-09-04)
 
 ### Refactor
