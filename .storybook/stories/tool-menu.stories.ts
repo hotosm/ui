@@ -5,7 +5,7 @@ import "../../src/hotosm-ui";
 
 const meta: Meta = {
   title: "ToolMenu",
-  component: "hotosm-tool-menu",
+  component: "hot-tool-menu",
   parameters: {
     layout: "centered",
   },
@@ -17,11 +17,11 @@ type Story = StoryObj;
 export const Default: Story = {
   render: () => {
     return html`
-      <hotosm-tool-menu
+      <hot-tool-menu
         @tool-selected=${(e: CustomEvent) => {
           console.log("Tool selected:", e.detail.tool);
         }}
-      ></hotosm-tool-menu>
+      ></hot-tool-menu>
 
       <div style="margin-top: 20px; max-width: 500px;">
         <h2>Tool Menu Component</h2>

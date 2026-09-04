@@ -17,7 +17,7 @@ const TOOL_IDS = [
 
 /** Mount the component and wait for its first render. */
 async function mount(): Promise<HotToolMenu> {
-  const el = document.createElement("hotosm-tool-menu") as HotToolMenu;
+  const el = document.createElement("hot-tool-menu") as HotToolMenu;
   document.body.appendChild(el);
   await el.updateComplete;
   return el;
@@ -35,7 +35,7 @@ function selectTool(el: HotToolMenu, toolId: string) {
   );
 }
 
-describe("<hotosm-tool-menu>", () => {
+describe("<hot-tool-menu>", () => {
   let openSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
@@ -48,7 +48,23 @@ describe("<hotosm-tool-menu>", () => {
   });
 
   it("is registered as a custom element with the correct constructor", () => {
-    expect(customElements.get("hotosm-tool-menu")).toBe(HotToolMenu);
+    expect(customElements.get("hot-tool-menu")).toBe(HotToolMenu);
+  });
+
+  it("still registers the deprecated hotosm-tool-menu alias", async () => {
+    const alias = customElements.get("hotosm-tool-menu");
+    expect(alias).toBeDefined();
+    expect(alias).not.toBe(HotToolMenu);
+    expect(alias!.prototype).toBeInstanceOf(HotToolMenu);
+
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const el = document.createElement("hotosm-tool-menu") as HotToolMenu;
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    expect(el).toBeInstanceOf(HotToolMenu);
+    expect(el.shadowRoot!.querySelectorAll("wa-dropdown-item")).toHaveLength(TOOL_IDS.length);
+    warnSpy.mockRestore();
   });
 
   it("renders every tool as a flat list, with no section grouping", async () => {
@@ -79,8 +95,8 @@ describe("<hotosm-tool-menu>", () => {
   });
 
   it("keeps rendering logos when the removed show-logos attribute is passed", async () => {
-    document.body.innerHTML = `<hotosm-tool-menu show-logos></hotosm-tool-menu>`;
-    const el = document.querySelector("hotosm-tool-menu") as HotToolMenu;
+    document.body.innerHTML = `<hot-tool-menu show-logos></hot-tool-menu>`;
+    const el = document.querySelector("hot-tool-menu") as HotToolMenu;
     await el.updateComplete;
 
     expect(el.shadowRoot!.querySelectorAll("img.tool-logo")).toHaveLength(TOOL_IDS.length);
