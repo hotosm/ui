@@ -36,6 +36,21 @@ execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`, {
 });
 esbuild.build(config).catch(() => process.exit(1));
 
+// Build the Vite helpers as a standalone Node module, separate from browser code.
+esbuild
+  .build({
+    entryPoints: ["./src/vite.ts"],
+    outfile: `${outdir}/vite.js`,
+    format: "esm",
+    platform: "node",
+    target: "node18",
+    bundle: true,
+    splitting: false,
+    minify: false,
+    tsconfig: "tsconfig.json",
+  })
+  .catch(() => process.exit(1));
+
 // Cross-platform copy for themes and style.css
 async function copyDir(src, dest) {
   await fs.mkdir(dest, { recursive: true });

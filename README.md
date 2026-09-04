@@ -153,26 +153,69 @@ import "@hotosm/ui/dist/components/header/header.js"; // hot-* components you us
 <hot-header title="My App"></hot-header>
 ```
 
-Put WebAwesome in its own long-lived chunk so app deploys don't invalidate
-the browser-cached copy:
+#### Build setup
+
+`@hotosm/ui/vite` provides build helpers for Vite 5, 7, and 8.
+
+Add the circular chunk guard to catch chunk cycles that can cause a blank page
+at runtime:
 
 ```js
 // vite.config.ts
-build: {
-  rollupOptions: {
-    output: {
-      manualChunks(id) {
-        if (id.includes("@awesome.me/webawesome")) return "webawesome";
+import { circularChunkGuard } from "@hotosm/ui/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  plugins: [circularChunkGuard()],
+});
+```
+
+Keep the guard enabled even if you do not split chunks manually. Dependency
+updates can also introduce cycles.
+
+You can also place WebAwesome in its own chunk. This lets browsers keep it
+cached when the rest of your app changes:
+
+For Vite 8:
+
+```js
+// vite.config.ts
+import { WEBAWESOME_CHUNK } from "@hotosm/ui/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [WEBAWESOME_CHUNK],
+        },
       },
     },
   },
-},
+});
 ```
 
-Byte-critical app? Skip `webawesome-all.js` and cherry-pick individual
-WebAwesome components instead - then add the `wa-cloak` class to `<html>`
-as a FOUCE backstop (pure CSS, ships in WebAwesome's `utilities.css`,
-already included in `style.css`).
+For Vite 5-7:
+
+```js
+// vite.config.ts
+import { matchWebawesome } from "@hotosm/ui/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => matchWebawesome(id),
+      },
+    },
+  },
+});
+```
+
+This cache is per origin, so it is reused across deployments of the same app,
+not across different HOT tools.
 
 ### Via CDN / Plain HTML / HTMX
 

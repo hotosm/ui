@@ -44,6 +44,10 @@
       "types": "./dist/hotosm-ui.d.ts",
       "import": "./dist/hotosm-ui.js"
     },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js"
+    },
     "./dist/hotosm-ui.js": "./dist/hotosm-ui.js",
     "./dist/webawesome-all.js": {
       "types": "./dist/webawesome-all.d.ts",
