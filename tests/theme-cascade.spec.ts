@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import { describe, it, expect, afterEach } from "vitest";
-import "../dist/style.css";
+import "../src/style.css";
 
 // Brand must be mapped in @layer wa-color-variant; an earlier layer silently
 // loses to WA's own default and turns every variant="brand" control blue.
