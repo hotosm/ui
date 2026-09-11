@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.3 (2026-09-11)
+
+### Fix
+
+- **css**: ensure hot-color-brand is correctly set to red, not default wa cyan
+
 ## 2.1.2 (2026-09-04)
 
 ### Fix
