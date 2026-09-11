@@ -132,6 +132,20 @@ Add the required WebAwesome classes to your `<html>` element:
 > These classes activate the HOT colour palette and light theme for every
 > WebAwesome component on the page. Do not remove them.
 
+### Semantic variants
+
+`brand`, `danger`, `warning` and `neutral` follow the HOT palette with no extra
+classes. `success` stays green rather than the HOT teal, which reads poorly
+against a red danger.
+
+Any variant can take any hue via WebAwesome's
+[variant classes](https://webawesome.com/docs/utilities/color/), which override
+the theme - e.g. to opt in to the teal:
+
+```html
+<html class="wa-theme-default wa-palette-hotosm wa-success-cyan"></html>
+```
+
 ---
 
 ## Using Components

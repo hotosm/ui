@@ -111,21 +111,6 @@
     --wa-color-gray: var(--wa-color-gray-40);
     --wa-color-gray-key: 40;
 
-    /* Brand → HOT primary (red) */
-    --wa-color-brand-95: var(--hot-color-primary-50);
-    --wa-color-brand-90: var(--hot-color-primary-100);
-    --wa-color-brand-80: var(--hot-color-primary-200);
-    --wa-color-brand-70: var(--hot-color-primary-300);
-    --wa-color-brand-60: var(--hot-color-primary-400);
-    --wa-color-brand-50: var(--hot-color-primary-500);
-    --wa-color-brand-40: var(--hot-color-primary-600);
-    --wa-color-brand-30: var(--hot-color-primary-700);
-    --wa-color-brand-20: var(--hot-color-primary-800);
-    --wa-color-brand-10: var(--hot-color-primary-900);
-    --wa-color-brand-05: var(--hot-color-primary-950);
-    --wa-color-brand: var(--wa-color-brand-50);
-    --wa-color-brand-key: 50;
-
     /* Neutral → HOT gray */
     --wa-color-neutral-95: var(--hot-color-neutral-50);
     --wa-color-neutral-90: var(--hot-color-neutral-100);
@@ -244,6 +229,31 @@
     --wa-color-pink-05: #28041a /* oklch(19.199% 0.06799 346.97) */;
     --wa-color-pink: var(--wa-color-pink-50);
     --wa-color-pink-key: 50;
+  }
+}
+
+/* ─── Variant layer ─────────────────────────────────────────────────────────
+   Which palette hue each variant uses. Must be here rather than in
+   wa-color-palette, which loses to WA's own brand → blue default in this layer.
+   :where() keeps specificity at zero so apps can still set wa-brand-*.
+─────────────────────────────────────────────────────────────────────────── */
+@layer wa-color-variant {
+  :where(:root),
+  :where(.wa-palette-hotosm) {
+    /* Brand → HOT primary (red) */
+    --wa-color-brand-95: var(--hot-color-primary-50);
+    --wa-color-brand-90: var(--hot-color-primary-100);
+    --wa-color-brand-80: var(--hot-color-primary-200);
+    --wa-color-brand-70: var(--hot-color-primary-300);
+    --wa-color-brand-60: var(--hot-color-primary-400);
+    --wa-color-brand-50: var(--hot-color-primary-500);
+    --wa-color-brand-40: var(--hot-color-primary-600);
+    --wa-color-brand-30: var(--hot-color-primary-700);
+    --wa-color-brand-20: var(--hot-color-primary-800);
+    --wa-color-brand-10: var(--hot-color-primary-900);
+    --wa-color-brand-05: var(--hot-color-primary-950);
+    --wa-color-brand: var(--wa-color-brand-50);
+    --wa-color-brand-key: 50;
   }
 }
 
