@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0 (2026-09-21)
+
+### Feat
+
+- big update to styling, in particular colours + fonts in line with hotosm/ui repo
+
 ## 2.1.3 (2026-09-11)
 
 ### Fix
