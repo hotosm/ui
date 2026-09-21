@@ -5,7 +5,8 @@ import "../src/style.css";
 // Brand must be mapped in @layer wa-color-variant; an earlier layer silently
 // loses to WA's own default and turns every variant="brand" control blue.
 
-const HOT_RED = "#d43f3f";
+// HOT primary is grey since ui 3.0.0 (hotosm/ui-design hot.css).
+const HOT_PRIMARY = "#828085";
 const WA_BLUE = "#344f7b";
 
 afterEach(() => {
@@ -20,12 +21,12 @@ function fill(variant: string, classes = ""): string {
 }
 
 describe("semantic variants", () => {
-  it("gives brand the HOT red with only the palette class", () => {
-    expect(fill("brand", "wa-theme-default wa-palette-hotosm")).toBe(HOT_RED);
+  it("gives brand the HOT primary with only the palette class", () => {
+    expect(fill("brand", "wa-theme-default wa-palette-hotosm")).toBe(HOT_PRIMARY);
   });
 
-  it("gives brand the HOT red even when an app forgets the classes", () => {
-    expect(fill("brand")).toBe(HOT_RED);
+  it("gives brand the HOT primary even when an app forgets the classes", () => {
+    expect(fill("brand")).toBe(HOT_PRIMARY);
   });
 
   it("still lets an app choose another hue with WA's own class", () => {
@@ -33,7 +34,7 @@ describe("semantic variants", () => {
   });
 
   it.each([
-    ["danger", "#d43f3f"],
+    ["danger", "#f34d47"],
     ["warning", "#fed82e"],
     ["neutral", "#c4c3c5"],
   ])("leaves %s on the HOT palette", (variant, expected) => {

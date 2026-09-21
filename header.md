@@ -178,7 +178,7 @@ jsDelivr's `/+esm` URLs - see README "Via CDN / Plain HTML / HTMX").
 
     <!-- WebAwesome base styles + HOT theme, self-contained.
          Fonts are not bundled - see README "Fonts". -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/style.css" />
 
     <script type="importmap">
       {
@@ -191,11 +191,11 @@ jsDelivr's `/+esm` URLs - see README "Via CDN / Plain HTML / HTMX").
     <!-- Register every wa-* element, then the hot-* components -->
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/webawesome-all.js"
     ></script>
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/hotosm-ui.js"
     ></script>
   </head>
   <body>

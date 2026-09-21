@@ -1,7 +1,3 @@
-/* Fonts are NOT bundled (see hotosm/ui#178): a CSS @import serialises the
-   font download behind this stylesheet. Load fonts with a <link> in your
-   HTML instead - see README "Fonts". */
-
 /* Import WebAwesome base styles (modular imports from local package) */
 @import "@awesome.me/webawesome/dist/styles/native.css";
 @import "@awesome.me/webawesome/dist/styles/utilities.css";
@@ -9,6 +5,9 @@
 
 /* Then import our HOT theme variables */
 @import "themes/hot.css";
+
+/* Self-hosted @font-face rules (inlined at build - no extra request) */
+@import "themes/hot-font-face.css";
 
 /* Then our WebAwesome overrides */
 @import "themes/hot-wa.css";

@@ -45,13 +45,13 @@ for example:
 
 ## Font family
 
-**There are none to load.** Since 2026-08-27 the design system uses the
-platform's own sans stack - no Archivo, no Barlow, no webfonts at all.
+Archivo, Barlow and Barlow Condensed are self-hosted and bundled in
+`style.css` / `style-core.css` - there is nothing to load separately.
+Scripts they don't cover fall back to Helvetica (Apple) or Noto
+(Android / ChromeOS).
 
-See [MADR 0014](https://docs.hotosm.org/decisions/0014-system-fonts)
+See [MADR 0014](https://docs.hotosm.org/decisions/0014-ui-fonts)
 for the rationale.
-
-The three samples below therefore render identically - that is the point.
 
 <h4
   style={{
@@ -73,6 +73,15 @@ The three samples below therefore render identically - that is the point.
 
 <h4
   style={{
+    fontFamily: "var(--hot-font-sans-variant-condensed)",
+  }}
+>
+  {SampleText}
+</h4>
+<Subtitle>var(--hot-font-sans-variant-condensed)</Subtitle>
+
+<h4
+  style={{
     fontFamily: "var(--hot-font-serif)",
   }}
 >
@@ -88,6 +97,22 @@ The three samples below therefore render identically - that is the point.
   {SampleText}
 </h4>
 <Subtitle>var(--hot-font-mono)</Subtitle>
+
+## Script fallbacks
+
+Each line sets its own `lang`, as mixed-language content should. Latin text
+stays in Archivo; other scripts use the fallback fonts. Check a script here
+before adding `:lang()` tweaks for a new language.
+
+<p lang="ar">الثعلب البني السريع يقفز فوق الكلب الكسول - Kathmandu</p>
+<p lang="ne">द्रुत खैरो स्यालले अल्छी कुकुरमाथि हाम फाल्छ - Kathmandu</p>
+<p lang="bn">দ্রুত বাদামী শেয়াল অলস কুকুরের উপর দিয়ে লাফ দেয় - Kathmandu</p>
+<p lang="am">ፈጣኑ ቡናማ ቀበሮ በሰነፉ ውሻ ላይ ይዘላል - Kathmandu</p>
+<p lang="th">สุนัขจิ้งจอกสีน้ำตาลกระโดดข้ามสุนัขขี้เกียจ - Kathmandu</p>
+<p lang="my">မြန်ဆန်သော အညိုရောင်မြေခွေး - Kathmandu</p>
+<p lang="ru">Быстрая коричневая лиса прыгает через ленивую собаку - Kathmandu</p>
+<p lang="zh-Hans">敏捷的棕色狐狸跳过了懒狗 - Kathmandu</p>
+<p lang="ja">素早い茶色の狐が怠惰な犬を飛び越える - Kathmandu</p>
 
 ## Font size
 

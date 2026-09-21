@@ -52,11 +52,11 @@ work each time. Three pieces:
    </script>
    <script
      type="module"
-     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js"
+     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/webawesome-all.js"
    ></script>
    <script
      type="module"
-     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js"
+     src="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/hotosm-ui.js"
    ></script>
    ```
 
@@ -67,19 +67,29 @@ work each time. Three pieces:
    ```html
    <style>
      :root {
-       --wa-color-brand-fill-loud: #d43f3f;
-       --wa-color-brand-border-loud: #ed5c5e;
-       --wa-color-brand-on-loud: #ffffff;
-       --hot-color-neutral-900: #404248;
-       --hot-color-neutral-50: #f3f3f3;
+       --wa-color-brand-fill-loud: #828085;
+       --wa-color-brand-border-loud: #9a969b;
+       --wa-color-brand-on-loud: #fff;
+       --hot-color-neutral-900: #182642;
+       --hot-color-neutral-50: #e6e9ee;
      }
    </style>
    ```
 
-3. **Load fonts with a `<link>`, never a CSS `@import`** (an `@import`
-   serialises the font download behind the stylesheet - see
-   [#178](https://github.com/hotosm/ui/issues/178)). The exact tags are in
-   the README under "Fonts".
+3. **Fonts need no extra tags.** The `@font-face` rules are inlined in
+   `style.css`, so there is no second stylesheet to wait on (see
+   [#178](https://github.com/hotosm/ui/issues/178)). To shave the swap on
+   first paint, preload the Latin Archivo subset:
+
+   ```html
+   <link
+     rel="preload"
+     as="font"
+     type="font/woff2"
+     crossorigin
+     href="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/assets/fonts/archivo-latin-wght-normal.woff2"
+   />
+   ```
 
 ## The Backstop: `wa-cloak`
 

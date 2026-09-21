@@ -141,7 +141,7 @@ export default css`
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     .consent-callout {
-      border: 2px solid var(--hot-color-neutral-0);
+      border: 2px solid var(--hot-color-neutral-1000);
     }
 
     .consent-button {

@@ -1,14 +1,11 @@
 /* HOT theme */
 
-/* :root makes them available globally */
 :root,
-/* :host is for Web Components and shadow DOM scopes */
 :host,
-/* .hot-theme-light allows scoping if you apply that class conditionally */
 .hot-theme-light {
   /*
-  * Color primitives
-  */
+   * Color primitives
+   */
 
   /* red - red */
 
@@ -17,11 +14,11 @@
   --hot-color-red-800: #b83032;
   --hot-color-red-700: #c53639;
   --hot-color-red-600: #d73f3f;
-  --hot-color-red-500: #d43f3f;
+  --hot-color-red-500: #f34d47;
   --hot-color-red-400: #ed5c5e;
   --hot-color-red-300: #e27a7d;
   --hot-color-red-200: #ec9ea1;
-  --hot-color-red-100: #fed1d7;
+  --hot-color-red-100: #fdd0d6;
   --hot-color-red-50: #feecef;
 
   /* rose - persian plum */
@@ -49,7 +46,7 @@
   --hot-color-yellow-400: #fae62e;
   --hot-color-yellow-300: #fdeb51;
   --hot-color-yellow-200: #fff072;
-  --hot-color-yellow-100: #ffebcf;
+  --hot-color-yellow-100: #fff59b;
   --hot-color-yellow-50: #fff9c3;
 
   /* blue - space cadet */
@@ -94,25 +91,28 @@
   --hot-color-gray-100: #e1e0e1;
   --hot-color-gray-50: #f3f3f3;
 
+  /* neutral - black & white */
+
+  --hot-color-neutral-1000: #000;
+  --hot-color-neutral-0: #fff;
+
   /*
-   * Semantic Colors
-   * These map primitive colors to semantic meanings
+   * Color tokens
    */
 
-  /* Primary colors (HOT brand color - red) */
-  --hot-color-primary-950: var(--hot-color-red-950);
-  --hot-color-primary-900: var(--hot-color-red-900);
-  --hot-color-primary-800: var(--hot-color-red-800);
-  --hot-color-primary-700: var(--hot-color-red-700);
-  --hot-color-primary-600: var(--hot-color-red-600);
-  --hot-color-primary-500: var(--hot-color-red-500);
-  --hot-color-primary-400: var(--hot-color-red-400);
-  --hot-color-primary-300: var(--hot-color-red-300);
-  --hot-color-primary-200: var(--hot-color-red-200);
-  --hot-color-primary-100: var(--hot-color-red-100);
-  --hot-color-primary-50: var(--hot-color-red-50);
+  --hot-color-primary-1000: var(--hot-color-neutral-1000);
+  --hot-color-primary-950: var(--hot-color-neutral-1000);
+  --hot-color-primary-900: var(--hot-color-gray-900);
+  --hot-color-primary-800: var(--hot-color-gray-800);
+  --hot-color-primary-700: var(--hot-color-gray-700);
+  --hot-color-primary-600: var(--hot-color-gray-600);
+  --hot-color-primary-500: var(--hot-color-gray-500);
+  --hot-color-primary-400: var(--hot-color-gray-400);
+  --hot-color-primary-300: var(--hot-color-gray-300);
+  --hot-color-primary-200: var(--hot-color-gray-200);
+  --hot-color-primary-100: var(--hot-color-gray-100);
+  --hot-color-primary-50: var(--hot-color-gray-50);
 
-  /* Danger colors (red) */
   --hot-color-danger-950: var(--hot-color-red-950);
   --hot-color-danger-900: var(--hot-color-red-900);
   --hot-color-danger-800: var(--hot-color-red-800);
@@ -125,7 +125,30 @@
   --hot-color-danger-100: var(--hot-color-red-100);
   --hot-color-danger-50: var(--hot-color-red-50);
 
-  /* Warning colors (yellow) */
+  --hot-color-neutral-950: var(--hot-color-blue-950);
+  --hot-color-neutral-900: var(--hot-color-blue-900);
+  --hot-color-neutral-800: var(--hot-color-blue-800);
+  --hot-color-neutral-700: var(--hot-color-blue-700);
+  --hot-color-neutral-600: var(--hot-color-blue-600);
+  --hot-color-neutral-500: var(--hot-color-blue-500);
+  --hot-color-neutral-400: var(--hot-color-blue-400);
+  --hot-color-neutral-300: var(--hot-color-blue-300);
+  --hot-color-neutral-200: var(--hot-color-blue-200);
+  --hot-color-neutral-100: var(--hot-color-blue-100);
+  --hot-color-neutral-50: var(--hot-color-blue-50);
+
+  --hot-color-success-950: var(--hot-color-cyan-950);
+  --hot-color-success-900: var(--hot-color-cyan-900);
+  --hot-color-success-800: var(--hot-color-cyan-800);
+  --hot-color-success-700: var(--hot-color-cyan-700);
+  --hot-color-success-600: var(--hot-color-cyan-600);
+  --hot-color-success-500: var(--hot-color-cyan-500);
+  --hot-color-success-400: var(--hot-color-cyan-400);
+  --hot-color-success-300: var(--hot-color-cyan-300);
+  --hot-color-success-200: var(--hot-color-cyan-200);
+  --hot-color-success-100: var(--hot-color-cyan-100);
+  --hot-color-success-50: var(--hot-color-cyan-50);
+
   --hot-color-warning-950: var(--hot-color-yellow-950);
   --hot-color-warning-900: var(--hot-color-yellow-900);
   --hot-color-warning-800: var(--hot-color-yellow-800);
@@ -138,67 +161,37 @@
   --hot-color-warning-100: var(--hot-color-yellow-100);
   --hot-color-warning-50: var(--hot-color-yellow-50);
 
-  /* Success colors (green) */
-  --hot-color-success-950: #2b514f;
-  --hot-color-success-900: #366361;
-  --hot-color-success-800: #408789;
-  --hot-color-success-700: #459ba0;
-  --hot-color-success-600: #4bb1b9;
-  --hot-color-success-500: #50c1cb;
-  --hot-color-success-400: #58cbd1;
-  --hot-color-success-300: #6ad4d9;
-  --hot-color-success-200: #8fe1e3;
-  --hot-color-success-100: #b9eded;
-  --hot-color-success-50: #e3f8f8;
-
-  /* Neutral colors (gray) */
-  --hot-color-neutral-1000: #ffffff;
-  --hot-color-neutral-950: var(--hot-color-gray-950);
-  --hot-color-neutral-900: var(--hot-color-gray-900);
-  --hot-color-neutral-800: var(--hot-color-gray-800);
-  --hot-color-neutral-700: var(--hot-color-gray-700);
-  --hot-color-neutral-600: var(--hot-color-gray-600);
-  --hot-color-neutral-500: var(--hot-color-gray-500);
-  --hot-color-neutral-400: var(--hot-color-gray-400);
-  --hot-color-neutral-300: var(--hot-color-gray-300);
-  --hot-color-neutral-200: var(--hot-color-gray-200);
-  --hot-color-neutral-100: var(--hot-color-gray-100);
-  --hot-color-neutral-50: var(--hot-color-gray-50);
-  --hot-color-neutral-0: #000000;
-
   /*
    * Typography
    */
 
-  /* Fonts - system sans, no webfonts. See https://docs.hotosm.org/decisions/0014-system-fonts */
+  /* Fonts - Archivo / Barlow (HOT brand) for Latin, then named fallbacks:
+     Helvetica (Apple) and Noto (Android / ChromeOS) cover most other scripts.
+     Add :lang() rules only when a new language needs them, after testing.
+     See https://docs.hotosm.org/decisions/0014-ui-fonts */
   --hot-font-sans:
-    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --hot-font-sans-variant: var(--hot-font-sans);
-  --hot-font-sans-variant-condensed: var(--hot-font-sans);
-  --hot-font-serif: Georgia, "Times New Roman", serif;
+    "Archivo", Helvetica, Noto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    sans-serif, system-ui;
+  --hot-font-sans-variant:
+    "Barlow", Helvetica, Noto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif,
+    system-ui;
+  --hot-font-sans-variant-condensed:
+    "Barlow Condensed", Helvetica, Noto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    sans-serif, system-ui;
+  --hot-font-serif: Georgia, "Times New Roman", "Noto Sans", serif, system-ui;
   --hot-font-mono:
-    Menlo, Monaco, Consolas, "Courier New", monospace, Consolas, "Liberation Mono", Menlo, monospace;
+    Menlo, Monaco, Consolas, "Courier New", monospace, Consolas, "Liberation Mono", Menlo, system-ui;
 
   /* Font sizes */
-  --hot-font-size-2x-small: 0.625rem;
-  /* 10px */
-  --hot-font-size-x-small: 0.75rem;
-  /* 12px */
-  --hot-font-size-small: 0.875rem;
-  /* 14px */
-  --hot-font-size-medium: 1rem;
-  /* 16px */
-  --hot-font-size-large: 1.25rem;
-  /* 20px */
-  --hot-font-size-x-large: 1.5rem;
-  /* 24px */
-  --hot-font-size-2x-large: 2.25rem;
-  /* 36px */
-  --hot-font-size-3x-large: 3rem;
-  /* 48px */
-  --hot-font-size-4x-large: 4.5rem;
-  /* 72px */
+  --hot-font-size-2x-small: 0.625rem; /* 10px */
+  --hot-font-size-x-small: 0.75rem; /* 12px */
+  --hot-font-size-small: 0.875rem; /* 14px */
+  --hot-font-size-medium: 1rem; /* 16px */
+  --hot-font-size-large: 1.25rem; /* 20px */
+  --hot-font-size-x-large: 1.5rem; /* 24px */
+  --hot-font-size-2x-large: 2.25rem; /* 36px */
+  --hot-font-size-3x-large: 3rem; /* 48px */
+  --hot-font-size-4x-large: 4.5rem; /* 72px */
 
   /* Font weights */
   --hot-font-weight-light: 300;
@@ -215,49 +208,36 @@
 
   /* Line heights */
   --hot-line-height-denser: 1;
-  --hot-line-height-dense: 1.4;
-  --hot-line-height-normal: 1.8;
-  --hot-line-height-loose: 2.2;
-  --hot-line-height-looser: 2.6;
+  --hot-line-height-dense: 1.2;
+  --hot-line-height-normal: 1.4;
+  --hot-line-height-loose: 2;
+  --hot-line-height-looser: 2.4;
 
   /*
    * Spacings
    */
 
-  --hot-spacing-3x-small: 0.125rem;
-  /* 2px */
-  --hot-spacing-2x-small: 0.25rem;
-  /* 4px */
-  --hot-spacing-x-small: 0.5rem;
-  /* 8px */
-  --hot-spacing-small: 0.75rem;
-  /* 12px */
-  --hot-spacing-medium: 1rem;
-  /* 16px */
-  --hot-spacing-large: 1.25rem;
-  /* 20px */
-  --hot-spacing-x-large: 1.75rem;
-  /* 28px */
-  --hot-spacing-2x-large: 2.25rem;
-  /* 36px */
-  --hot-spacing-3x-large: 3rem;
-  /* 48px */
-  --hot-spacing-4x-large: 4.5rem;
-  /* 72px */
+  --hot-spacing-3x-small: 0.125rem; /* 2px */
+  --hot-spacing-2x-small: 0.25rem; /* 4px */
+  --hot-spacing-x-small: 0.5rem; /* 8px */
+  --hot-spacing-small: 0.75rem; /* 12px */
+  --hot-spacing-medium: 1rem; /* 16px */
+  --hot-spacing-large: 1.25rem; /* 20px */
+  --hot-spacing-x-large: 1.75rem; /* 28px */
+  --hot-spacing-2x-large: 2.25rem; /* 36px */
+  --hot-spacing-3x-large: 3rem; /* 48px */
+  --hot-spacing-4x-large: 4.5rem; /* 72px */
 
   /*
    * Border radius
    */
 
-  --hot-border-radius-small: 0.1875rem;
-  /* 3px */
-  --hot-border-radius-medium: 0.25rem;
-  /* 4px */
-  --hot-border-radius-large: 0.5rem;
-  /* 8px */
-  --hot-border-radius-x-large: 1rem;
-  /* 16px */
-  --hot-border-radius-circle: 50%;
+  --hot-border-radius-small: 0.1875rem; /* 3px */
+  --hot-border-radius-medium: 0.25rem; /* 4px */
+  --hot-border-radius-large: 0.5rem; /* 8px */
+  --hot-border-radius-x-large: 1rem; /* 16px */
+  --hot-border-radius-2x-large: 3rem; /* 48px */
+  --hot-border-radius-circle: 100%;
   --hot-border-radius-pill: 9999px;
 }
 

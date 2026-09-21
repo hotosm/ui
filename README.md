@@ -94,7 +94,7 @@ Or from CDN:
 <!-- markdownlint-disable MD013 -->
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/style.css" />
 ```
 
 <!-- markdownlint-enable MD013 -->
@@ -104,11 +104,22 @@ load the WebAwesome base stylesheets themselves - most apps don't need it.
 
 ### Fonts
 
-**There are none to load.** Since 2026-08-27 the design system uses the
-platform's own sans stack - no Archivo, no Barlow, no webfonts at all.
+**Nothing to add.** `style.css` and `style-core.css` include self-hosted
+`@font-face` rules for the HOT brand fonts: Archivo (`--hot-font-sans`),
+Barlow (`--hot-font-sans-variant`) and Barlow Condensed
+(`--hot-font-sans-variant-condensed`). The woff2 files ship in
+`dist/assets/fonts` as latin / latin-ext / vietnamese subsets with
+`unicode-range`, so browsers only download what a page renders. Remove any
+Google Fonts `<link>` for these families.
 
-See [MADR 0014](https://docs.hotosm.org/decisions/0014-system-fonts)
-for the rationale.
+Scripts these fonts don't cover fall back to Helvetica (Apple) or Noto
+(Android / ChromeOS), then the system sans. Set `lang` on `<html>` and on any
+content in a different language from the page (e.g. user-created project
+names) - browsers use it to pick the right fallback, and it is what future
+per-language `:lang()` tweaks will hook onto.
+
+See [MADR 0014](https://docs.hotosm.org/decisions/0014-ui-fonts) and the
+[font test page](https://hotosm.github.io/ui-design/html/font-test.html).
 
 ---
 
@@ -135,8 +146,10 @@ Add the required WebAwesome classes to your `<html>` element:
 ### Semantic variants
 
 `brand`, `danger`, `warning` and `neutral` follow the HOT palette with no extra
-classes. `success` stays green rather than the HOT teal, which reads poorly
-against a red danger.
+classes. Since 3.0.0 `brand` follows HOT primary, which is grey (see
+[hotosm/ui-design](https://github.com/hotosm/ui-design/blob/main/css/dist/hot.css)).
+`success` stays green rather than the HOT teal, which reads poorly against a
+red danger.
 
 Any variant can take any hue via WebAwesome's
 [variant classes](https://webawesome.com/docs/utilities/color/), which override
@@ -249,7 +262,7 @@ element registrations and most `wa-*` elements never register.
     <!-- Fonts: see "Fonts" above -->
 
     <!-- WebAwesome base styles + HOT theme, self-contained -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/style.css" />
 
     <script type="importmap">
       {
@@ -262,11 +275,11 @@ element registrations and most `wa-*` elements never register.
     <!-- Register every wa-* element, then the hot-* components -->
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/webawesome-all.js"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/webawesome-all.js"
     ></script>
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@1.0.0/dist/hotosm-ui.js"
+      src="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/hotosm-ui.js"
     ></script>
   </head>
 

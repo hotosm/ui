@@ -31,14 +31,17 @@ const config = {
 await Promise.all([...bundleDirectories.map((dir) => deleteAsync(dir))]);
 await fs.mkdir(outdir, { recursive: true });
 
-execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`, {
-  stdio: "inherit",
-});
-esbuild.build(config).catch(() => process.exit(1));
-
-// Build the Vite helpers as a standalone Node module, separate from browser code.
-esbuild
-  .build({
+// Type declarations, component bundle and Vite helpers build in parallel;
+// awaiting them means any failure fails the build instead of racing past it.
+await Promise.all([
+  execPromise(`tsc --project ./tsconfig.prod.json --outdir "${outdir}"`).catch((err) => {
+    // tsc reports type errors on stdout
+    console.error(err.stdout || err.message);
+    throw err;
+  }),
+  esbuild.build(config),
+  // Build the Vite helpers as a standalone Node module, separate from browser code.
+  esbuild.build({
     entryPoints: ["./src/vite.ts"],
     outfile: `${outdir}/vite.js`,
     format: "esm",
@@ -48,8 +51,8 @@ esbuild
     splitting: false,
     minify: false,
     tsconfig: "tsconfig.json",
-  })
-  .catch(() => process.exit(1));
+  }),
+]);
 
 // Cross-platform copy for themes and style.css
 async function copyDir(src, dest) {
@@ -66,8 +69,10 @@ async function copyDir(src, dest) {
   }
 }
 
-await copyDir("src/themes", `${outdir}/themes`).catch(() => {});
-await copyDir("src/assets", `${outdir}/assets`).catch(() => {});
+// No catch: dist/themes/hot-font-face.css points at dist/assets/fonts, so a
+// failed copy must fail the build rather than ship 404ing fonts.
+await copyDir("src/themes", `${outdir}/themes`);
+await copyDir("src/assets", `${outdir}/assets`);
 
 // Generate webawesome-all.js: static imports of every WebAwesome component,
 // pinned to the version in peerDependencies. Apps import this once so all
@@ -93,22 +98,28 @@ await fs.writeFile(`${outdir}/webawesome-all.d.ts`, "export {};\n");
 
 // Bundle CSS through esbuild so @import paths (including
 // @awesome.me/webawesome) are resolved from node_modules and inlined.
-// The Google Fonts @import URL is kept as-is (external URL).
+// Font files referenced by themes/hot-font-face.css are emitted to
+// dist/assets/fonts, the same path copyDir uses, so both the bundled
+// styles and dist/themes/*.css point at one set of files.
 //
 // style.css       – fully self-contained (WebAwesome CSS inlined)
 // style-core.css  – HOT-only styles; consumers load WebAwesome CSS
 //                   separately from CDN for cross-tool cache sharing
+const cssConfig = {
+  bundle: true,
+  minify: true,
+  loader: { ".woff2": "file" },
+  assetNames: "assets/fonts/[name]",
+};
 await Promise.all([
   esbuild.build({
     entryPoints: ["./src/style.css"],
-    bundle: true,
-    minify: true,
+    ...cssConfig,
     outfile: `${outdir}/style.css`,
   }),
   esbuild.build({
     entryPoints: ["./src/style-core.css"],
-    bundle: true,
-    minify: true,
+    ...cssConfig,
     outfile: `${outdir}/style-core.css`,
   }),
-]).catch(() => process.exit(1));
+]);
