@@ -3,249 +3,136 @@ import "@testing-library/jest-dom/vitest";
 import "../../src/components/tracking/tracking";
 import type MatomoTracking from "../../src/components/tracking/tracking.component";
 
-// The test browser runs on localhost
 const TEST_HOSTNAME = window.location.hostname;
 
-function clearTrackingStorage() {
-  for (let index = localStorage.length - 1; index >= 0; index--) {
-    const key = localStorage.key(index);
-    if (key?.startsWith("hot-matomo-consent-")) localStorage.removeItem(key);
-  }
-}
+// The local script intentionally 404s; tests assert queued commands without contacting Matomo.
+const TEST_MATOMO_URL = `${window.location.origin}/__matomo-test`;
 
-/** Helper: create a <hot-tracking> element with matching domain so connectedCallback proceeds. */
 function createElement(attrs: Partial<Record<string, string>> = {}): MatomoTracking {
   const el = document.createElement("hot-tracking") as MatomoTracking;
-  // Default to matching domain + a site id so the component initialises
   el.setAttribute("domain", attrs.domain ?? TEST_HOSTNAME);
   el.setAttribute("site-id", attrs["site-id"] ?? "42");
-  if (attrs["show-consent"] !== undefined) {
-    el.setAttribute("show-consent", attrs["show-consent"]);
-  }
-  // To opt out of consent (showConsent defaults to true), explicitly disable it
-  if (attrs["no-consent"] !== undefined) {
-    el.showConsent = false;
-  }
+  el.matomoURL = TEST_MATOMO_URL;
   return el;
 }
 
+function commands(): string[] {
+  return window._paq.map((cmd: any[]) => cmd[0]);
+}
+
+function pageViews(): number {
+  return commands().filter((c) => c === "trackPageView").length;
+}
+
+function trackerScripts(): NodeListOf<HTMLScriptElement> {
+  return document.querySelectorAll("script[data-hot-tracking]");
+}
+
 describe("<hot-tracking>", () => {
-  let el: MatomoTracking;
+  const elements: MatomoTracking[] = [];
+
+  function mount(el: MatomoTracking): MatomoTracking {
+    elements.push(el);
+    document.body.appendChild(el);
+    return el;
+  }
 
   beforeEach(() => {
-    clearTrackingStorage();
     window._paq = [];
+    trackerScripts().forEach((s) => s.remove());
   });
 
   afterEach(() => {
-    el?.remove();
-    clearTrackingStorage();
+    elements.splice(0).forEach((el) => el.remove());
     window._paq = [];
+    trackerScripts().forEach((s) => s.remove());
+    vi.restoreAllMocks();
   });
 
-  // ── Domain gating ──
+  it("tracks one page view without cookies", async () => {
+    const el = mount(createElement());
+    await el.updateComplete;
+
+    expect(pageViews()).toBe(1);
+    expect(commands()).toContain("disableCookies");
+    expect(commands()).not.toContain("requireConsent");
+    expect(commands()).not.toContain("requireCookieConsent");
+    expect(commands()).not.toContain("rememberConsentGiven");
+
+    expect(commands().indexOf("disableCookies")).toBeLessThan(commands().indexOf("trackPageView"));
+  });
+
+  it("respects Do Not Track", async () => {
+    const el = mount(createElement());
+    await el.updateComplete;
+
+    expect(window._paq).toContainEqual(["setDoNotTrack", true]);
+    expect(commands().indexOf("setDoNotTrack")).toBeLessThan(commands().indexOf("trackPageView"));
+  });
+
+  it("configures the tracker with site id and Matomo URL", async () => {
+    const el = mount(createElement({ "site-id": "99" }));
+    await el.updateComplete;
+
+    expect(window._paq).toContainEqual(["setSiteId", "99"]);
+    expect(window._paq).toContainEqual(["setTrackerUrl", `${TEST_MATOMO_URL}/matomo.php`]);
+    expect(trackerScripts()).toHaveLength(1);
+    expect(trackerScripts()[0].src).toBe(`${TEST_MATOMO_URL}/matomo.js`);
+  });
+
+  it("defaults to the HOT Matomo instance", () => {
+    const el = document.createElement("hot-tracking") as MatomoTracking;
+    expect(el.matomoURL).toBe("https://matomo.hotosm.org");
+  });
+
+  it("renders no UI", async () => {
+    const el = mount(createElement());
+    await el.updateComplete;
+
+    expect(el.shadowRoot?.children.length ?? 0).toBe(0);
+    expect(getComputedStyle(el).display).toBe("none");
+  });
+
+  it("does not track again when the element is reconnected", async () => {
+    const el = mount(createElement());
+    await el.updateComplete;
+
+    el.remove();
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    expect(pageViews()).toBe(1);
+    expect(trackerScripts()).toHaveLength(1);
+  });
+
+  it("does not track again when a second instance is added", async () => {
+    const first = mount(createElement());
+    const second = mount(createElement());
+    await Promise.all([first.updateComplete, second.updateComplete]);
+
+    expect(pageViews()).toBe(1);
+    expect(trackerScripts()).toHaveLength(1);
+  });
 
   it("does nothing when domain does not match", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    el = createElement({ domain: "other.example.com" });
-    document.body.appendChild(el);
+    const el = mount(createElement({ domain: "other.example.com" }));
     await el.updateComplete;
 
-    // No _paq commands should have been pushed
     expect(window._paq).toEqual([]);
+    expect(trackerScripts()).toHaveLength(0);
     expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("Domain mismatch"));
-
-    warnSpy.mockRestore();
   });
 
-  // ── Missing config ──
+  it("does nothing and logs an error when site-id is missing", async () => {
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
-  it("shows error callout when site-id is missing", async () => {
-    el = createElement({ "site-id": "" });
-    document.body.appendChild(el);
+    const el = mount(createElement({ "site-id": "" }));
     await el.updateComplete;
 
-    const errorBanner = el.shadowRoot?.querySelector(".error-banner");
-    expect(errorBanner).toBeTruthy();
-  });
-
-  // ── No-consent mode (showConsent=false) ──
-
-  it("tracks immediately when show-consent is disabled", async () => {
-    el = createElement({ "no-consent": "" });
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const commands = window._paq.map((cmd: any[]) => cmd[0]);
-    expect(commands).toContain("trackPageView");
-    expect(commands).not.toContain("requireConsent");
-  });
-
-  it("does not render consent dialog when show-consent is disabled", async () => {
-    el = createElement({ "no-consent": "" });
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const dialog = el.shadowRoot?.querySelector("wa-dialog[open]");
-    expect(dialog).toBeNull();
-  });
-
-  // ── Consent mode (default) ──
-
-  it("requires consent by default without show-consent attribute", async () => {
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const commands = window._paq.map((cmd: any[]) => cmd[0]);
-    expect(commands).toContain("requireConsent");
-    expect(commands).not.toContain("trackPageView");
-  });
-
-  it("pushes requireConsent and shows dialog when no stored preference", async () => {
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const commands = window._paq.map((cmd: any[]) => cmd[0]);
-    expect(commands).toContain("requireConsent");
-    expect(commands).not.toContain("trackPageView");
-
-    const dialog = el.shadowRoot?.querySelector("wa-dialog");
-    expect(dialog).toBeTruthy();
-    expect(dialog?.hasAttribute("open")).toBe(true);
-  });
-
-  it("dialog contains Accept and Decline buttons", async () => {
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const dialog = el.shadowRoot?.querySelector("wa-dialog");
-    const buttons = dialog?.querySelectorAll("wa-button");
-    expect(buttons?.length).toBe(2);
-
-    const buttonTexts = Array.from(buttons ?? []).map((b) => b.textContent?.trim());
-    expect(buttonTexts).toContain("Decline");
-    expect(buttonTexts).toContain("Accept");
-  });
-
-  it("dialog displays the default consent message", async () => {
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const dialog = el.shadowRoot?.querySelector("wa-dialog");
-    expect(dialog?.textContent).toContain("We use cookies");
-  });
-
-  it("dialog displays a custom consent-message", async () => {
-    el = createElement();
-    el.setAttribute("consent-message", "Custom privacy notice.");
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const dialog = el.shadowRoot?.querySelector("wa-dialog");
-    expect(dialog?.textContent).toContain("Custom privacy notice.");
-  });
-
-  it("auto-tracks when stored consent is true (returning user)", async () => {
-    localStorage.setItem("hot-matomo-consent-42", "true");
-
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const commands = window._paq.map((cmd: any[]) => cmd[0]);
-    expect(commands).toContain("requireConsent");
-    expect(commands).toContain("rememberConsentGiven");
-    expect(commands).toContain("trackPageView");
-
-    // Dialog should not be open
-    const dialog = el.shadowRoot?.querySelector("wa-dialog[open]");
-    expect(dialog).toBeNull();
-  });
-
-  it("does not track when stored consent is false (returning user who declined)", async () => {
-    localStorage.setItem("hot-matomo-consent-42", "false");
-
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const commands = window._paq.map((cmd: any[]) => cmd[0]);
-    expect(commands).not.toContain("trackPageView");
-
-    // Dialog should not be open
-    const dialog = el.shadowRoot?.querySelector("wa-dialog[open]");
-    expect(dialog).toBeNull();
-  });
-
-  // ── agree() / disagree() ──
-
-  it("agree() stores consent, pushes tracking commands, and closes dialog", async () => {
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    // Dialog should be visible
-    expect(el.shadowRoot?.querySelector("wa-dialog[open]")).toBeTruthy();
-
-    el.agree();
-    await el.updateComplete;
-
-    // Dialog closed
-    expect(el.shadowRoot?.querySelector("wa-dialog[open]")).toBeNull();
-
-    // localStorage persisted
-    expect(localStorage.getItem("hot-matomo-consent-42")).toBe("true");
-
-    // Matomo commands pushed
-    const commands = window._paq.map((cmd: any[]) => cmd[0]);
-    expect(commands).toContain("rememberConsentGiven");
-    expect(commands).toContain("trackPageView");
-  });
-
-  it("disagree() stores refusal, pushes forgetConsentGiven, and closes dialog", async () => {
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    el.disagree();
-    await el.updateComplete;
-
-    // Dialog closed
-    expect(el.shadowRoot?.querySelector("wa-dialog[open]")).toBeNull();
-
-    // localStorage persisted
-    expect(localStorage.getItem("hot-matomo-consent-42")).toBe("false");
-
-    // Matomo command pushed
-    const commands = window._paq.map((cmd: any[]) => cmd[0]);
-    expect(commands).toContain("forgetConsentGiven");
-    expect(commands).not.toContain("trackPageView");
-  });
-
-  // ── localStorage key uses siteId ──
-
-  it("uses site-id in the localStorage key", async () => {
-    el = createElement({ "site-id": "99" });
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    el.agree();
-    expect(localStorage.getItem("hot-matomo-consent-99")).toBe("true");
-  });
-
-  // ── Matomo script injection ──
-
-  it("injects matomo.js script tag into the document", async () => {
-    el = createElement();
-    document.body.appendChild(el);
-    await el.updateComplete;
-
-    const scripts = document.querySelectorAll('script[src*="matomo.js"]');
-    expect(scripts.length).toBeGreaterThanOrEqual(1);
+    expect(window._paq).toEqual([]);
+    expect(trackerScripts()).toHaveLength(0);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("site-id and domain"));
   });
 });
