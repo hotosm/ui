@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable -->
 <p align="center">
-  <img src="https://github.com/hotosm/ui/blob/main/src/assets/logo/hot-logo-png.png?raw=true" width="250" alt="HOT"></a>
+  <img src="https://github.com/hotosm/ui/blob/main/src/assets/logo/hot-logo-png.png?raw=true" width="250" alt="HOT">
 </p>
 <p align="center">
   <em>Shared Web Components with theming for use across HOTOSM tools.</em>
@@ -104,19 +104,14 @@ load the WebAwesome base stylesheets themselves - most apps don't need it.
 
 ### Fonts
 
-**Nothing to add.** `style.css` and `style-core.css` include self-hosted
-`@font-face` rules for the HOT brand fonts: Archivo (`--hot-font-sans`),
+`style.css` and `style-core.css` bundle Archivo (`--hot-font-sans`),
 Barlow (`--hot-font-sans-variant`) and Barlow Condensed
-(`--hot-font-sans-variant-condensed`). The woff2 files ship in
-`dist/assets/fonts` as latin / latin-ext / vietnamese subsets with
-`unicode-range`, so browsers only download what a page renders. Remove any
-Google Fonts `<link>` for these families.
+(`--hot-font-sans-variant-condensed`). Browsers load only the needed woff2
+subsets from `dist/assets/fonts`. Remove Google Fonts links for these families.
 
-Scripts these fonts don't cover fall back to Helvetica (Apple) or Noto
-(Android / ChromeOS), then the system sans. Set `lang` on `<html>` and on any
-content in a different language from the page (e.g. user-created project
-names) - browsers use it to pick the right fallback, and it is what future
-per-language `:lang()` tweaks will hook onto.
+Other scripts use Helvetica (Apple), Noto (Android / ChromeOS), then system
+sans. Set `lang` on `<html>` and content in other languages to help browsers
+choose a fallback.
 
 See [MADR 0014](https://docs.hotosm.org/decisions/0014-ui-fonts) and the
 [font test page](https://hotosm.github.io/ui-design/html/font-test.html).
@@ -165,10 +160,8 @@ the theme - e.g. to opt in to the teal:
 
 ### Via Bundler (Vite, Webpack, etc.)
 
-Recommended: register **all** WebAwesome elements once, up front, so every
-custom element is defined before first render - this eliminates flash of
-undefined custom elements (FOUCE) without maintaining per-page import
-lists:
+Register WebAwesome elements once before rendering, then import the HOT
+components you use:
 
 ```js
 import "@hotosm/ui/dist/style.css";
@@ -197,11 +190,9 @@ export default defineConfig({
 });
 ```
 
-Keep the guard enabled even if you do not split chunks manually. Dependency
-updates can also introduce cycles.
+Keep the guard enabled; dependency updates can introduce chunk cycles.
 
-You can also place WebAwesome in its own chunk. This lets browsers keep it
-cached when the rest of your app changes:
+Optionally cache WebAwesome in a separate chunk:
 
 For Vite 8:
 
@@ -241,16 +232,12 @@ export default defineConfig({
 });
 ```
 
-This cache is per origin, so it is reused across deployments of the same app,
-not across different HOT tools.
+The cache is reused across deployments on the same origin.
 
 ### Via CDN / Plain HTML / HTMX
 
-Load the raw dist files, with an import map to resolve the bare
-`@awesome.me/webawesome/...` imports in `webawesome-all.js`. The map's
-WebAwesome pin must match the version this `@hotosm/ui` release was
-built against. Do not use jsDelivr's `/+esm` URLs - they duplicate
-element registrations and most `wa-*` elements never register.
+Load the dist files with an import map pinned to the matching WebAwesome
+version. Avoid jsDelivr `/+esm` URLs, which break element registration.
 
 <!-- markdownlint-disable MD013 -->
 
@@ -259,8 +246,6 @@ element registrations and most `wa-*` elements never register.
 <!-- wa-cloak: hides the page until all custom elements are defined (2s max) -->
 <html class="wa-theme-default wa-palette-hotosm wa-cloak">
   <head>
-    <!-- Fonts: see "Fonts" above -->
-
     <!-- WebAwesome base styles + HOT theme, self-contained -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hotosm/ui@3.0.0/dist/style.css" />
 
@@ -287,8 +272,6 @@ element registrations and most `wa-*` elements never register.
     <hot-header id="hdr" title="My App" size="s" show-login></hot-header>
 
     <script>
-      // Boolean props default to false.
-      // Include the attribute to make it true.
       const hdr = document.getElementById("hdr");
       hdr.drawer = true; // enable the hamburger drawer
     </script>
@@ -343,6 +326,19 @@ See all available tokens in
 [`src/themes/hot.css`](src/themes/hot.css).
 
 ---
+
+## Consent and tracking
+
+`<hot-tracking>` loads cookieless Matomo without a banner. For cookie-based
+trackers, use `<hot-consent>` and manage tracker loading in your app.
+
+The banner saves Accept and Decline choices. Read the saved choice with
+`consent`, reopen settings with `show()`, and handle changes with `agree` /
+`disagree` events. If storage is blocked, the choice lasts for that component
+instance.
+
+See [Tracking Privacy](https://ui.hotosm.org/?path=/docs/tracking-privacy--docs)
+for setup and examples.
 
 ## Component Guides
 
