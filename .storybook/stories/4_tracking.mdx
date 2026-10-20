@@ -1,0 +1,105 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Tracking Privacy" />
+
+# Tracking Privacy
+
+`<hot-tracking>` loads Matomo with cookies disabled and renders no UI.
+
+```html
+<hot-tracking site-id="1" domain="example.hotosm.org"></hot-tracking>
+```
+
+It sends one page view per page load. Reconnecting the element or adding a
+second instance does not send another. Route changes in a single-page app are
+not tracked.
+
+## Running without a banner
+
+Matomo supports
+[tracking without consent](https://matomo.org/faq/new-to-piwik/how-do-i-use-matomo-analytics-without-consent-or-cookie-banner/)
+only when the whole setup is privacy-preserving, not just the cookies. The
+component handles its part:
+
+- `disableCookies`: no tracking cookies are set, and cookies left over from
+  earlier versions are deleted on the next page view.
+- `setDoNotTrack`: visitors with Do Not Track enabled are not tracked.
+- `disableBrowserFeatureDetection`: screen size, plugins and client hints are
+  not read from the device.
+- Visitors with [Global Privacy Control](https://globalprivacycontrol.org/)
+  enabled are not tracked, and Matomo is not loaded.
+
+The rest depends on the Matomo instance and on your app:
+
+- **IP anonymisation** must be enabled on the Matomo instance. HOT's instance
+  (`matomo.hotosm.org`) is configured this way; if you point `matomoURL`
+  elsewhere, check it.
+- **No personal data in URLs, page titles or referrers.** Matomo records all
+  three. Do not put emails, usernames, user IDs, tokens or similar into paths
+  or query strings, or into `document.title`.
+- **No user IDs or custom dimensions** that identify a person. Do not push
+  `setUserId` or similar into `window._paq` yourself.
+- Your privacy policy should still say that anonymous usage statistics are
+  collected, and give visitors a way to opt out.
+
+If an app can't meet these, it needs its own consent handling.
+`<hot-consent>` is a standalone prompt and does **not** gate `<hot-tracking>`.
+Adding it on its own will not stop tracking.
+
+## Cookie banner for the website and marketing pages
+
+Pages with cookie-based trackers can use `<hot-consent>` to ask first:
+
+```html
+<hot-consent consent-id="website">
+  We use cookies to understand how visitors use this site. Read our
+  <a href="https://www.hotosm.org/privacy">privacy policy</a>.
+</hot-consent>
+```
+
+- It opens automatically until the visitor chooses, and stays closed afterwards.
+  Choices use localStorage key `<consent-id>-consent-agree`. If storage is
+  blocked, the choice lasts for this component instance.
+- Slotted content replaces the default `message`.
+- `consent` returns `"granted"`, `"denied"` or `null`.
+- `show()` reopens it. Give visitors a "Cookie settings" link so they can
+  withdraw consent as easily as they gave it.
+- `whenGranted()` resolves right away for returning visitors who accepted,
+  otherwise when they click Accept.
+- `agree` and `disagree` events fire on each click.
+
+It does not load any tracker itself. Load cookie-based trackers once consent
+is given, and stop them on withdrawal:
+
+```js
+await customElements.whenDefined("hot-consent");
+const banner = document.querySelector("hot-consent");
+
+// App-provided functions: start once; stop tracking and clear its cookies.
+banner.addEventListener("agree", startTrackers);
+banner.addEventListener("disagree", stopTrackers);
+if (banner.consent === "granted") startTrackers();
+```
+
+## Migrating from 3.x
+
+`<hot-tracking>` no longer asks for consent:
+
+| 3.x                                   | 4.x                                    |
+| ------------------------------------- | -------------------------------------- |
+| `show-consent`, `consent-message`     | Removed; ignored if set.               |
+| `agree()`, `disagree()`               | Removed. Delete any calls.             |
+| Consent dialog and toasts             | Removed. The element renders nothing.  |
+| Tracked only after Accept             | Every visit counted, cookieless.       |
+| Declined visitors not tracked         | Counted cookieless, unless GPC or DNT. |
+| Missing config showed an error banner | Logs `console.error` instead.          |
+
+Choices made in the 3.x banner are not carried over. Old
+`hot-matomo-consent-<siteId>` keys stay in visitors' localStorage. They are
+unused and harmless.
+
+### Expect a jump in your numbers
+
+Visits from people who ignored or declined the banner now count, and the
+cookieless visitor ID changes daily, so monthly unique visitors rise further.
+Add an annotation in Matomo on the day you deploy.
