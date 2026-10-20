@@ -70,6 +70,29 @@ describe("<hot-tracking>", () => {
     expect(commands().indexOf("setDoNotTrack")).toBeLessThan(commands().indexOf("trackPageView"));
   });
 
+  it("disables browser feature detection before tracking", async () => {
+    const el = mount(createElement());
+    await el.updateComplete;
+
+    expect(commands()).toContain("disableBrowserFeatureDetection");
+    expect(commands().indexOf("disableBrowserFeatureDetection")).toBeLessThan(
+      commands().indexOf("trackPageView"),
+    );
+  });
+
+  it("does not track when Global Privacy Control is enabled", async () => {
+    Object.defineProperty(navigator, "globalPrivacyControl", { value: true, configurable: true });
+    try {
+      const el = mount(createElement());
+      await el.updateComplete;
+
+      expect(window._paq).toEqual([]);
+      expect(trackerScripts()).toHaveLength(0);
+    } finally {
+      delete (navigator as any).globalPrivacyControl;
+    }
+  });
+
   it("configures the tracker with site id and Matomo URL", async () => {
     const el = mount(createElement({ "site-id": "99" }));
     await el.updateComplete;

@@ -24,6 +24,10 @@ component handles its part:
 - `disableCookies`: no tracking cookies are set, and cookies left over from
   earlier versions are deleted on the next page view.
 - `setDoNotTrack`: visitors with Do Not Track enabled are not tracked.
+- `disableBrowserFeatureDetection`: screen size, plugins and client hints are
+  not read from the device.
+- Visitors with [Global Privacy Control](https://globalprivacycontrol.org/)
+  enabled are not tracked, and Matomo is not loaded.
 
 The rest depends on the Matomo instance and on your app:
 
@@ -36,7 +40,7 @@ The rest depends on the Matomo instance and on your app:
 - **No user IDs or custom dimensions** that identify a person. Do not push
   `setUserId` or similar into `window._paq` yourself.
 - Your privacy policy should still say that anonymous usage statistics are
-  collected.
+  collected, and give visitors a way to opt out.
 
 If an app can't meet these, it needs its own consent handling.
 `<hot-consent>` is a standalone prompt and does **not** gate `<hot-tracking>`.
@@ -81,20 +85,18 @@ if (banner.consent === "granted") startTrackers();
 
 `<hot-tracking>` no longer asks for consent:
 
-| 3.x                                   | 4.x                                      |
-| ------------------------------------- | ---------------------------------------- |
-| `show-consent`, `consent-message`     | Removed; ignored if set.                 |
-| `agree()`, `disagree()`               | Removed. Delete any calls.               |
-| Consent dialog and toasts             | Removed. The element renders nothing.    |
-| Tracked only after Accept             | Every visit counted, cookieless.         |
-| Declined visitors not tracked         | Counted cookieless, unless Do Not Track. |
-| Missing config showed an error banner | Logs `console.error` instead.            |
+| 3.x                                   | 4.x                                    |
+| ------------------------------------- | -------------------------------------- |
+| `show-consent`, `consent-message`     | Removed; ignored if set.               |
+| `agree()`, `disagree()`               | Removed. Delete any calls.             |
+| Consent dialog and toasts             | Removed. The element renders nothing.  |
+| Tracked only after Accept             | Every visit counted, cookieless.       |
+| Declined visitors not tracked         | Counted cookieless, unless GPC or DNT. |
+| Missing config showed an error banner | Logs `console.error` instead.          |
 
-Visitors who declined under 3.x will now be counted without cookies. Make sure
-your app's privacy policy reflects that before upgrading.
-
-Old `hot-matomo-consent-<siteId>` keys stay in visitors' localStorage. They
-are unused and harmless.
+Choices made in the 3.x banner are not carried over. Old
+`hot-matomo-consent-<siteId>` keys stay in visitors' localStorage. They are
+unused and harmless.
 
 ### Expect a jump in your numbers
 
