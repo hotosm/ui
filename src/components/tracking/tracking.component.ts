@@ -32,6 +32,13 @@ export class MatomoTracking extends LitElement {
     }
   `;
 
+  /** Global Privacy Control counts as an objection to tracking. */
+  private hasOptedOut(): boolean {
+    return (
+      (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true
+    );
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
@@ -51,6 +58,8 @@ export class MatomoTracking extends LitElement {
       );
       return;
     }
+
+    if (this.hasOptedOut()) return;
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const _paq = (window._paq = window._paq || []);
