@@ -58,6 +58,7 @@ export class MatomoTracking extends LitElement {
     // Also clears legacy tracking cookies on the next page view.
     _paq.push(["disableCookies"]);
     _paq.push(["setDoNotTrack", true]);
+    _paq.push(["disableBrowserFeatureDetection"]);
     _paq.push(["setDomains", [this.domain]]);
     _paq.push(["enableLinkTracking"]);
     _paq.push(["trackVisibleContentImpressions"]);
