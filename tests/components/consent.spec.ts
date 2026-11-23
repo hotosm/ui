@@ -11,7 +11,6 @@ function clearConsentStorage() {
 describe("<hot-consent>", () => {
   let el: Consent;
 
-  // --- HELPERS ---
   const getOverlay = (node: Consent) => node.shadowRoot?.querySelector(".consent-overlay");
 
   const getAcceptButton = (node: Consent) =>
@@ -30,17 +29,17 @@ describe("<hot-consent>", () => {
   });
 
   afterEach(() => {
-    el.remove(); // Clean up the DOM after each test to prevent state bleeding between tests.
+    vi.restoreAllMocks();
+    el.remove();
     clearConsentStorage();
   });
 
-  // --- TESTS ---
-
-  it("renders (closed by default)", () => {
+  it("opens automatically when no choice is stored", () => {
     expect(el).toBeInTheDocument();
     expect(el.shadowRoot).toBeTruthy();
-    expect(getOverlay(el)).toBeNull();
-    expect(el.isOpen).toBe(false);
+    expect(el.isOpen).toBe(true);
+    expect(getOverlay(el)).toBeTruthy();
+    expect(el.consent).toBeNull();
   });
 
   it("does not render anything when isOpen = false", async () => {
@@ -65,8 +64,7 @@ describe("<hot-consent>", () => {
     expect(agreeSpy).toHaveBeenCalledOnce();
     expect(el.isOpen).toBe(false);
     expect(getOverlay(el)).toBeNull();
-    //Default key is "-consent-agree" because consentId is empty
-    expect(localStorage.getItem("-consent-agree")).toBe("true"); // default consentId = ""
+    expect(localStorage.getItem("-consent-agree")).toBe("true");
   });
 
   it('clicking decline: closes, writes localStorage=false, and emits "disagree"', async () => {
@@ -84,11 +82,10 @@ describe("<hot-consent>", () => {
     expect(disagreeSpy).toHaveBeenCalledOnce();
     expect(el.isOpen).toBe(false);
     expect(getOverlay(el)).toBeNull();
-    expect(localStorage.getItem("-consent-agree")).toBe("false"); // default consentId = ""
+    expect(localStorage.getItem("-consent-agree")).toBe("false");
   });
 
   it("reads previous consent=true on connect and starts closed", async () => {
-    //// Simulate returning user with prior consent=true
     localStorage.setItem("-consent-agree", "true");
 
     const returning = document.createElement("hot-consent") as Consent;
@@ -139,7 +136,139 @@ describe("<hot-consent>", () => {
 
     btn!.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
     await el.updateComplete;
-    // Verify localStorage uses the custom consentId prefix
     expect(localStorage.getItem("map-app-consent-agree")).toBe("true");
+  });
+
+  it("exposes the stored choice via consent", async () => {
+    getAcceptButton(el)!.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    expect(el.consent).toBe("granted");
+
+    el.show();
+    await el.updateComplete;
+    getDeclineButton(el)!.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    expect(el.consent).toBe("denied");
+  });
+
+  it.each(["true", "false"])("uses a saved %s choice when consentId changes", async (choice) => {
+    localStorage.setItem("map-app-consent-agree", choice);
+    el.consentId = "map-app";
+    await el.updateComplete;
+
+    expect(getOverlay(el)).toBeNull();
+    expect(el.consent).toBe(choice === "true" ? "granted" : "denied");
+
+    el.consentId = "";
+    await el.updateComplete;
+    expect(getOverlay(el)).toBeTruthy();
+    expect(el.consent).toBeNull();
+  });
+
+  it("asks again for unrecognised stored values", async () => {
+    localStorage.setItem("map-app-consent-agree", "invalid");
+    el.consentId = "map-app";
+    await el.updateComplete;
+
+    expect(el.consent).toBeNull();
+    expect(getOverlay(el)).toBeTruthy();
+  });
+
+  it.each(["agree", "disagree"])("still emits %s when storage is blocked", async (event) => {
+    el.remove();
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new DOMException("Storage blocked", "SecurityError");
+    });
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("Storage blocked", "SecurityError");
+    });
+    document.body.appendChild(el);
+    await el.updateComplete;
+    expect(el.consent).toBeNull();
+    expect(getOverlay(el)).toBeTruthy();
+
+    const listener = vi.fn();
+    el.addEventListener(event, listener);
+    const button = event === "agree" ? getAcceptButton(el) : getDeclineButton(el);
+    button!.click();
+    await el.updateComplete;
+
+    expect(listener).toHaveBeenCalledOnce();
+    expect(el.consent).toBe(event === "agree" ? "granted" : "denied");
+    expect(getOverlay(el)).toBeNull();
+    if (event === "agree") await expect(el.whenGranted()).resolves.toBeUndefined();
+
+    el.remove();
+    document.body.appendChild(el);
+    await el.updateComplete;
+    expect(getOverlay(el)).toBeNull();
+
+    el.consentId = "map-app";
+    await el.updateComplete;
+    expect(el.consent).toBeNull();
+    expect(getOverlay(el)).toBeTruthy();
+  });
+
+  it("keeps a declined choice when writes fail but reads still work", async () => {
+    localStorage.setItem("-consent-agree", "true");
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("Storage full", "QuotaExceededError");
+    });
+    getDeclineButton(el)!.click();
+    await el.updateComplete;
+
+    expect(el.consent).toBe("denied");
+    expect(getOverlay(el)).toBeNull();
+  });
+
+  it("show() reopens the banner after a choice was made", async () => {
+    getDeclineButton(el)!.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    await el.updateComplete;
+    expect(getOverlay(el)).toBeNull();
+
+    el.show();
+    await el.updateComplete;
+    expect(getOverlay(el)).toBeTruthy();
+  });
+
+  it("whenGranted() resolves immediately for returning visitors", async () => {
+    localStorage.setItem("-consent-agree", "true");
+    await expect(el.whenGranted()).resolves.toBeUndefined();
+  });
+
+  it("whenGranted() resolves on Accept and not on Decline", async () => {
+    const granted = vi.fn();
+    el.whenGranted().then(granted);
+
+    getDeclineButton(el)!.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    await Promise.resolve();
+    expect(granted).not.toHaveBeenCalled();
+
+    el.show();
+    await el.updateComplete;
+    getAcceptButton(el)!.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    await vi.waitFor(() => expect(granted).toHaveBeenCalledOnce());
+  });
+
+  it("renders slotted content instead of the message", async () => {
+    const custom = document.createElement("hot-consent") as Consent;
+    custom.innerHTML = 'Read our <a href="/privacy">privacy policy</a>.';
+    document.body.appendChild(custom);
+    await custom.updateComplete;
+
+    const slot = custom.shadowRoot?.querySelector(
+      ".consent-message slot:not([name])",
+    ) as HTMLSlotElement;
+    expect(
+      slot
+        .assignedNodes()
+        .map((n) => n.textContent)
+        .join(""),
+    ).toContain("privacy policy");
+
+    custom.remove();
+  });
+
+  it("is labelled as a dialog by its title", async () => {
+    const dialog = el.shadowRoot?.querySelector('[role="dialog"]');
+    expect(dialog).toHaveAttribute("aria-labelledby", "consent-header");
   });
 });
